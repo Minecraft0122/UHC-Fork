@@ -36,7 +36,7 @@ not to take unnecessary damage! The original gamemode was
 ## What is a UhcCore scenario?
 
 A scenario in UhcCore is set of custom rules and game mechanics that can be
-activated either manually be the server owner, or by letting the players vote
+activated either manually by the server owner, or by letting the players vote
 before each game starts. UhcCore currently includes over 40 different
 scenarios, such as:
 
