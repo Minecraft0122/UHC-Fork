@@ -1,7 +1,7 @@
 plugins {
 	id "java-library"
 	id "maven-publish"
-	id "com.github.johnrengelman.shadow" version "7.1.2"
+	id "com.github.johnrengelman.shadow" version "8.1.0"
 	id "xyz.jpenilla.run-paper" version "1.0.6"
 }
 
@@ -72,7 +72,7 @@ java {
 }
 
 tasks.named("shadowJar") {
-	classifier = ""
+	archiveClassifier = ""
 	relocate "io.papermc.lib", "com.gmail.val59000mc.paperlib"
 	relocate "net.wesjd.anvilgui", "com.gmail.val59000mc.anvilgui"
 	relocate "com.pieterdebot.biomemapping", "com.gmail.val59000mc.biomemapping"
