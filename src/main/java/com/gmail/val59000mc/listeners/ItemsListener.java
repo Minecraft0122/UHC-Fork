@@ -13,6 +13,9 @@ import com.gmail.val59000mc.scenarios.Scenario;
 import com.gmail.val59000mc.scenarios.ScenarioManager;
 import com.gmail.val59000mc.utils.UniversalMaterial;
 import net.wesjd.anvilgui.AnvilGUI;
+
+import java.util.Collections;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -342,17 +345,17 @@ public class ItemsListener implements Listener {
 				.plugin(UhcCore.getPlugin())
 				.title(Lang.TEAM_INVENTORY_RENAME)
 				.text(team.getTeamName())
-				.item(new ItemStack(Material.NAME_TAG))
-				.onComplete(((p, s) -> {
-					if (teamManager.isValidTeamName(s)){
-						team.setTeamName(s);
-						p.sendMessage(Lang.TEAM_MESSAGE_NAME_CHANGED);
-						return AnvilGUI.Response.close();
-					}else{
-						p.sendMessage(Lang.TEAM_MESSAGE_NAME_CHANGED_ERROR);
-						return AnvilGUI.Response.close();
+				.itemLeft(new ItemStack(Material.NAME_TAG))
+				.onComplete(completion -> {
+					if (teamManager.isValidTeamName(completion.getText())){
+						team.setTeamName(completion.getText());
+						completion.getPlayer().sendMessage(Lang.TEAM_MESSAGE_NAME_CHANGED);
+						return Collections.singletonList(AnvilGUI.ResponseAction.close());
+					} else {
+						completion.getPlayer().sendMessage(Lang.TEAM_MESSAGE_NAME_CHANGED_ERROR);
+						return Collections.singletonList(AnvilGUI.ResponseAction.close());
 					}
-				}))
+				})
 				.open(player);
 	}
 
@@ -361,11 +364,11 @@ public class ItemsListener implements Listener {
 				.plugin(UhcCore.getPlugin())
 				.title(Lang.TEAM_INVENTORY_INVITE_PLAYER)
 				.text("Enter name ...")
-				.item(new ItemStack(Material.NAME_TAG))
-				.onComplete(((p, s) -> {
-					p.performCommand("team invite " + s);
-					return AnvilGUI.Response.close();
-				}))
+				.itemLeft(new ItemStack(Material.NAME_TAG))
+				.onComplete(completion -> {
+					completion.getPlayer().performCommand("team invite " + completion.getText());
+					return Collections.singletonList(AnvilGUI.ResponseAction.close());
+				})
 				.open(player);
 	}
 
