@@ -2,7 +2,7 @@
 
 ## [1.20.3] - 2022-12-17
 
-## New features
+### New features
 
 - Updated the plugin to support Minecraft 1.19.3
 - Added the `log-break-limit` option to `timber` in `scenarios.yml`
