@@ -16,7 +16,7 @@ repositories {
 	}
 	maven { // For PaperLib
 		name "PaperMC"
-		url "https://papermc.io/repo/repository/maven-public/"
+		url "https://repo.papermc.io/repository/maven-public/"
 	}
 	maven { // For UhcCore NMS
 		name "UhcCore"
