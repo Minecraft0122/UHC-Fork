@@ -11,7 +11,7 @@ version = "1.20.4-SNAPSHOT"
 repositories {
 	mavenCentral()
 	maven { // For Spigot API
-		name "SpigotMC"
+		name "spigotmc"
 		url "https://hub.spigotmc.org/nexus/content/groups/public/"
 		content {
 			includeGroup "org.bukkit"
@@ -20,21 +20,21 @@ repositories {
 		}
 	}
 	maven { // For PaperLib
-		name "PaperMC"
+		name "papermc"
 		url "https://repo.papermc.io/repository/maven-public/"
 		content {
 			includeGroup "io.papermc"
 		}
 	}
 	maven { // For UhcCore NMS
-		name "UhcCore"
+		name "uhccore"
 		url "https://gitlab.com/api/v4/groups/uhccore/-/packages/maven"
 		content {
 			includeGroup "net.zerodind"
 		}
 	}
 	maven { // For VaultAPI
-		name "JitPack"
+		name "jitpack"
 		url "https://jitpack.io"
 		content {
 			includeGroup "com.github.MilkBowl"
@@ -48,7 +48,7 @@ repositories {
 		}
 	}
 	maven { // For AnvilGUI
-		name "CodeMC"
+		name "codemc"
 		url "https://repo.codemc.io/repository/maven-snapshots/"
 		content {
 			includeGroup "net.wesjd"

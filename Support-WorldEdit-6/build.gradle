@@ -5,7 +5,7 @@ plugins {
 repositories {
 	mavenCentral()
 	maven { // For Spigot API
-		name "SpigotMC"
+		name "spigotmc"
 		url "https://hub.spigotmc.org/nexus/content/groups/public/"
 		content {
 			includeGroup "org.bukkit"
@@ -14,7 +14,7 @@ repositories {
 		}
 	}
 	maven { // For WorldEdit
-		name "EngineHub"
+		name "enginehub"
 		url "https://maven.enginehub.org/repo/"
 		content {
 			includeGroup "com.sk89q"
