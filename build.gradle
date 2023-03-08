@@ -29,10 +29,6 @@ repositories {
 			includeGroup "com.github.MilkBowl"
 		}
 	}
-	maven { // For WorldEdit
-		name "EngineHub"
-		url "https://maven.enginehub.org/repo/"
-	}
 	maven { // For ProtocolLib
 		name "dmulloy2"
 		url "https://repo.dmulloy2.net/repository/public/"
