@@ -13,14 +13,25 @@ repositories {
 	maven { // For Spigot API
 		name "SpigotMC"
 		url "https://hub.spigotmc.org/nexus/content/groups/public/"
+		content {
+			includeGroup "org.bukkit"
+			includeGroup "org.spigotmc"
+			includeGroup "net.md-5"
+		}
 	}
 	maven { // For PaperLib
 		name "PaperMC"
 		url "https://repo.papermc.io/repository/maven-public/"
+		content {
+			includeGroup "io.papermc"
+		}
 	}
 	maven { // For UhcCore NMS
 		name "UhcCore"
 		url "https://gitlab.com/api/v4/groups/uhccore/-/packages/maven"
+		content {
+			includeGroup "net.zerodind"
+		}
 	}
 	maven { // For VaultAPI
 		name "JitPack"
@@ -32,10 +43,16 @@ repositories {
 	maven { // For ProtocolLib
 		name "dmulloy2"
 		url "https://repo.dmulloy2.net/repository/public/"
+		content {
+			includeGroup "com.comphenix.protocol"
+		}
 	}
 	maven { // For AnvilGUI
 		name "CodeMC"
 		url "https://repo.codemc.io/repository/maven-snapshots/"
+		content {
+			includeGroup "net.wesjd"
+		}
 	}
 	flatDir { // For BiomeMapping
 		dirs "$rootDir/libs"

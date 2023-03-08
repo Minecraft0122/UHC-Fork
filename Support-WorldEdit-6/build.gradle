@@ -3,13 +3,24 @@ plugins {
 }
 
 repositories {
+	mavenCentral()
 	maven { // For Spigot API
 		name "SpigotMC"
 		url "https://hub.spigotmc.org/nexus/content/groups/public/"
+		content {
+			includeGroup "org.bukkit"
+			includeGroup "org.spigotmc"
+			includeGroup "net.md-5"
+		}
 	}
 	maven { // For WorldEdit
 		name "EngineHub"
 		url "https://maven.enginehub.org/repo/"
+		content {
+			includeGroup "com.sk89q"
+			includeGroup "com.sk89q.lib"
+			includeGroup "com.sk89q.worldedit"
+		}
 	}
 }
 
