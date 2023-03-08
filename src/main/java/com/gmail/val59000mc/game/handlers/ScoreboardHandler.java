@@ -177,6 +177,11 @@ public class ScoreboardHandler {
 		}
 	}
 
+	/**
+	 * Updates the display of a player, on the tab list of each player on the server.
+	 *
+	 * @param uhcPlayer the player to update on the tab list
+	 */
 	public void updatePlayerOnTab(UhcPlayer uhcPlayer) {
 		boolean teamColors = config.get(MainConfig.TEAM_COLORS);
 
@@ -195,6 +200,17 @@ public class ScoreboardHandler {
 			}catch (UhcPlayerNotOnlineException ex){
 				// Player left while updating tab.
 			}
+		}
+	}
+
+	/**
+	 * Updates the display of all players in a team, on the tab list of each player on the server.
+	 *
+	 * @param uhcTeam the team to update on the tab list
+	 */
+	public void updateTeamOnTab(UhcTeam uhcTeam) {
+		for (UhcPlayer teamMember : uhcTeam.getMembers()) {
+			updatePlayerOnTab(teamMember);
 		}
 	}
 

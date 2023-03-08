@@ -193,4 +193,9 @@ public class ScoreboardManager {
 	public void updatePlayerOnTab(UhcPlayer uhcPlayer) {
 		scoreboardHandler.updatePlayerOnTab(uhcPlayer);
 	}
+
+	public void updateTeamOnTab(UhcTeam uhcTeam) {
+		scoreboardHandler.updateTeamOnTab(uhcTeam);
+	}
+
 }

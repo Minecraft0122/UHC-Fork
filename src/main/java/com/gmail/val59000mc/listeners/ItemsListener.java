@@ -200,9 +200,7 @@ public class ItemsListener implements Listener {
 
 				// assign color and update color on tab
 				uhcPlayer.getTeam().setPrefix(newPrefix);
-				for (UhcPlayer teamMember : uhcPlayer.getTeam().getMembers()){
-					scoreboardHandler.updatePlayerOnTab(teamMember);
-				}
+				scoreboardHandler.updateTeamOnTab(uhcPlayer.getTeam());
 
 				uhcPlayer.sendMessage(Lang.TEAM_MESSAGE_COLOR_CHANGED);
 				return;
@@ -297,10 +295,11 @@ public class ItemsListener implements Listener {
 				break;
 			case TEAM_LEAVE:
 				try {
-					uhcPlayer.getTeam().leave(uhcPlayer);
+					UhcTeam oldTeam = uhcPlayer.getTeam();
+					oldTeam.leave(uhcPlayer);
 
-					// Update player tab
 					scoreboardHandler.updatePlayerOnTab(uhcPlayer);
+					scoreboardHandler.updateTeamOnTab(oldTeam);
 				} catch (UhcTeamException ignored) {
 					uhcPlayer.sendMessage(Lang.TEAM_MESSAGE_CANT_LEAVE);
 				}

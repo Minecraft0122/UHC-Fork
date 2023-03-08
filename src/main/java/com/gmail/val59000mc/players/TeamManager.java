@@ -81,8 +81,7 @@ public class TeamManager{
 		try{
 			team.join(uhcPlayer);
 
-			// Update player tab
-			scoreboardHandler.updatePlayerOnTab(uhcPlayer);
+			scoreboardHandler.updateTeamOnTab(team);
 		}catch (UhcTeamException ex){
 			uhcPlayer.sendMessage(ex.getMessage());
 		}

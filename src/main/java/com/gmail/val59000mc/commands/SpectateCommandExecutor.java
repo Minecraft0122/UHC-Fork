@@ -8,6 +8,7 @@ import com.gmail.val59000mc.game.handlers.ScoreboardHandler;
 import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.players.PlayerState;
 import com.gmail.val59000mc.players.UhcPlayer;
+import com.gmail.val59000mc.players.UhcTeam;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -64,13 +65,15 @@ public class SpectateCommandExecutor implements CommandExecutor{
 
 		if (!uhcPlayer.getTeam().isSolo()){
 			try {
-				uhcPlayer.getTeam().leave(uhcPlayer);
+				UhcTeam oldTeam = uhcPlayer.getTeam();
+				oldTeam.leave(uhcPlayer);
+
+				scoreboardHandler.updatePlayerOnTab(uhcPlayer);
+				scoreboardHandler.updateTeamOnTab(oldTeam);
 			}catch (UhcTeamException ex){
 				LOGGER.log(Level.WARNING, "Unable to leave team", ex);
 			}
 		}
-
-		scoreboardHandler.updatePlayerOnTab(uhcPlayer);
 	}
 
 	private void setPlayerPlaying(Player player, UhcPlayer uhcPlayer){

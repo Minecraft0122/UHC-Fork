@@ -282,8 +282,7 @@ public class PlayerManager {
 				try {
 					team.join(uhcPlayer);
 
-					// Update player tab
-					scoreboardHandler.updatePlayerOnTab(uhcPlayer);
+					scoreboardHandler.updateTeamOnTab(team);
 				} catch (UhcTeamException ignored) {
 					// Should not happen
 				}

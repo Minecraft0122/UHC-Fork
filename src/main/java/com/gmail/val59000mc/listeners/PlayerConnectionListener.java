@@ -11,6 +11,7 @@ import com.gmail.val59000mc.game.handlers.ScoreboardHandler;
 import com.gmail.val59000mc.players.PlayerState;
 import com.gmail.val59000mc.players.PlayerManager;
 import com.gmail.val59000mc.players.UhcPlayer;
+import com.gmail.val59000mc.players.UhcTeam;
 import com.gmail.val59000mc.threads.KillDisconnectedPlayerThread;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -76,10 +77,11 @@ public class PlayerConnectionListener implements Listener{
 			}
 
 			try{
-				uhcPlayer.getTeam().leave(uhcPlayer);
+				UhcTeam oldTeam = uhcPlayer.getTeam();
+				oldTeam.leave(uhcPlayer);
 
-				// Update player tab
 				scoreboardHandler.updatePlayerOnTab(uhcPlayer);
+				scoreboardHandler.updateTeamOnTab(oldTeam);
 			}catch (UhcTeamException e){
 				// Nothing
 			}

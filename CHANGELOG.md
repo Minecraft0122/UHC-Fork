@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased]
+
+### Bug fixes
+
+- [#29][GL-29] - Teams are sometimes not correctly updated on the tab list
+
+[GL-29]: https://gitlab.com/uhccore/uhccore/-/issues/29
+
 ## [1.20.3] - 2022-12-17
 
 ### New features
