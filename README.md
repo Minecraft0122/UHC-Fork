@@ -51,8 +51,7 @@ need to run it on a standalone server.
 
 After running the plugin for the first time, configuration files will be
 generated in the `plugins/UhcCore/` directory. Changes can be taken into
-effect using the `/uhccore reload` command, but do note that some settings
-require a server restart in order to take effect.
+effect by restarting the server.
 
 Make sure to read [the FAQ][faq] if you're having trouble, or you can also
 ask for help on [the Discord server][discord].
