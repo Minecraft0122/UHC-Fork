@@ -59,6 +59,13 @@ repositories {
 	}
 }
 
+// Configuration for dependencies that need to be included in the shadow JAR for use at runtime.
+// We could use configurations.runtimeOnly in many cases, but the problem is that some
+// dependencies are compiled with a Java version > 8, which means they can't be included
+// on configurations.runtimeClasspath due to Gradle's "variant aware" dependency resolution.
+// See also: https://docs.gradle.org/8.0.2/userguide/variant_model.html#a_more_complicated_example
+configurations.register("shadowJar")
+
 dependencies {
 	compileOnly "org.spigotmc:spigot-api:1.15.2-R0.1-SNAPSHOT"
 	compileOnly "com.google.code.findbugs:jsr305:3.0.2"
@@ -70,10 +77,10 @@ dependencies {
 	implementation project(":Support-WorldEdit-7")
 	implementation ":BiomeMapping-1.3"
 	implementation "net.zerodind:uhccore-nms:1.0.0"
-	runtimeOnly "net.zerodind:uhccore-nms-1_18_R1:1.0.0"
-	runtimeOnly "net.zerodind:uhccore-nms-1_18_R2:1.0.0"
-	runtimeOnly "net.zerodind:uhccore-nms-1_19_R1:1.0.0"
-	runtimeOnly "net.zerodind:uhccore-nms-1_19_R2:1.0.0"
+	shadowJar "net.zerodind:uhccore-nms-1_18_R1:1.0.0"
+	shadowJar "net.zerodind:uhccore-nms-1_18_R2:1.0.0"
+	shadowJar "net.zerodind:uhccore-nms-1_19_R1:1.0.0"
+	shadowJar "net.zerodind:uhccore-nms-1_19_R2:1.0.0"
 }
 
 java {
@@ -86,6 +93,8 @@ java {
 
 tasks.named("shadowJar") {
 	archiveClassifier = ""
+	configurations += [ project.configurations.shadowJar ]
+
 	relocate "io.papermc.lib", "com.gmail.val59000mc.paperlib"
 	relocate "net.wesjd.anvilgui", "com.gmail.val59000mc.anvilgui"
 	relocate "com.pieterdebot.biomemapping", "com.gmail.val59000mc.biomemapping"
