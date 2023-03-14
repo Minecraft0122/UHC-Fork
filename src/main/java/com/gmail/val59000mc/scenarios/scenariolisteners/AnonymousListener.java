@@ -24,6 +24,8 @@ public class AnonymousListener extends ScenarioListener{
 			return;
 		}
 
+		ProtocolUtils.registerNickNameListener();
+
 		for (UhcPlayer uhcPlayer : getPlayerManager().getAllPlayingPlayers()){
 			ProtocolUtils.setPlayerNickName(uhcPlayer, getPlayerNickName(uhcPlayer.getName()));
 			getScoreboardManager().updatePlayerOnTab(uhcPlayer);
@@ -40,6 +42,8 @@ public class AnonymousListener extends ScenarioListener{
 			ProtocolUtils.setPlayerNickName(uhcPlayer, null);
 			getScoreboardManager().updatePlayerOnTab(uhcPlayer);
 		}
+
+		ProtocolUtils.unregisterNickNameListener();
 	}
 
 	@EventHandler

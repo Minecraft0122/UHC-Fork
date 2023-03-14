@@ -28,67 +28,20 @@ public class ProtocolUtils{
 
 	private static final Logger LOGGER = Logger.getLogger(ProtocolUtils.class.getCanonicalName());
 
-	private static ProtocolUtils protocolUtils;
+	private static NickNamePacketListener nickNameListener;
 
-	private ProtocolUtils(){
-		protocolUtils = this;
-
-		ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(UhcCore.getPlugin(), PacketType.Play.Server.PLAYER_INFO) {
-
-			@Override
-			public void onPacketSending(PacketEvent event) {
-				if (event.getPacket().getPlayerInfoAction().read(0) != EnumWrappers.PlayerInfoAction.ADD_PLAYER){
-					return;
-				}
-
-				List<PlayerInfoData> newPlayerInfoDataList = new ArrayList<>();
-				List<PlayerInfoData> playerInfoDataList = event.getPacket().getPlayerInfoDataLists().read(0);
-				PlayerManager pm = GameManager.getGameManager().getPlayerManager();
-
-				for (PlayerInfoData playerInfoData : playerInfoDataList) {
-					if (
-							playerInfoData == null ||
-							playerInfoData.getProfile() == null ||
-							Bukkit.getPlayer(playerInfoData.getProfile().getUUID()) == null
-					){ // Unknown player
-						newPlayerInfoDataList.add(playerInfoData);
-						continue;
-					}
-
-					WrappedGameProfile profile = playerInfoData.getProfile();
-					UhcPlayer uhcPlayer;
-
-					try {
-						uhcPlayer = pm.getUhcPlayer(profile.getUUID());
-					} catch (UhcPlayerDoesNotExistException ignored) {
-						newPlayerInfoDataList.add(playerInfoData);
-						continue;
-					}
-
-					// No display-name so don't change player data.
-					if (!uhcPlayer.hasNickName()){
-						newPlayerInfoDataList.add(playerInfoData);
-						continue;
-					}
-
-					profile = profile.withName(uhcPlayer.getName());
-
-					PlayerInfoData newPlayerInfoData = new PlayerInfoData(profile, playerInfoData.getPing(), playerInfoData.getGameMode(), playerInfoData.getDisplayName());
-					newPlayerInfoDataList.add(newPlayerInfoData);
-				}
-				event.getPacket().getPlayerInfoDataLists().write(0, newPlayerInfoDataList);
-			}
-
-		});
+	public static void registerNickNameListener() {
+		if (nickNameListener == null) {
+			nickNameListener = new NickNamePacketListener();
+			ProtocolLibrary.getProtocolManager().addPacketListener(nickNameListener);
+		}
 	}
 
-	public static void register(){
-		if (protocolUtils != null){
-			ProtocolLibrary.getProtocolManager().removePacketListeners(UhcCore.getPlugin());
-			protocolUtils = null;
+	public static void unregisterNickNameListener() {
+		if (nickNameListener != null) {
+			ProtocolLibrary.getProtocolManager().removePacketListener(nickNameListener);
+			nickNameListener = null;
 		}
-
-		new ProtocolUtils();
 	}
 
 	/***
@@ -134,6 +87,58 @@ public class ProtocolUtils{
 				all.showPlayer(player);
 			}
 		}, 1);
+	}
+
+	private static class NickNamePacketListener extends PacketAdapter {
+
+		public NickNamePacketListener() {
+			super(UhcCore.getPlugin(), PacketType.Play.Server.PLAYER_INFO);
+		}
+
+		@Override
+		public void onPacketSending(PacketEvent event) {
+			if (event.getPacket().getPlayerInfoAction().read(0) != EnumWrappers.PlayerInfoAction.ADD_PLAYER){
+				return;
+			}
+
+			List<PlayerInfoData> newPlayerInfoDataList = new ArrayList<>();
+			List<PlayerInfoData> playerInfoDataList = event.getPacket().getPlayerInfoDataLists().read(0);
+			PlayerManager pm = GameManager.getGameManager().getPlayerManager();
+
+			for (PlayerInfoData playerInfoData : playerInfoDataList) {
+				if (
+					playerInfoData == null ||
+					playerInfoData.getProfile() == null ||
+					Bukkit.getPlayer(playerInfoData.getProfile().getUUID()) == null
+				) { // Unknown player
+					newPlayerInfoDataList.add(playerInfoData);
+					continue;
+				}
+
+				WrappedGameProfile profile = playerInfoData.getProfile();
+				UhcPlayer uhcPlayer;
+
+				try {
+					uhcPlayer = pm.getUhcPlayer(profile.getUUID());
+				} catch (UhcPlayerDoesNotExistException ignored) {
+					newPlayerInfoDataList.add(playerInfoData);
+					continue;
+				}
+
+				// No display-name so don't change player data.
+				if (!uhcPlayer.hasNickName()){
+					newPlayerInfoDataList.add(playerInfoData);
+					continue;
+				}
+
+				profile = profile.withName(uhcPlayer.getName());
+
+				PlayerInfoData newPlayerInfoData = new PlayerInfoData(profile, playerInfoData.getPing(), playerInfoData.getGameMode(), playerInfoData.getDisplayName());
+				newPlayerInfoDataList.add(newPlayerInfoData);
+			}
+			event.getPacket().getPlayerInfoDataLists().write(0, newPlayerInfoDataList);
+		}
+
 	}
 
 }

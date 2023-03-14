@@ -50,14 +50,8 @@ public class Dependencies {
 			return;
 		}
 
-		try {
-			ProtocolUtils.register();
-			protocolLibLoaded = true;
-			LOGGER.info("Hooked with ProtocolLib plugin");
-		}catch (Exception ex){
-			protocolLibLoaded = false;
-			LOGGER.log(Level.WARNING, "Failed to load ProtocolLib, are you using the right version?", ex);
-		}
+		LOGGER.info("Hooked with ProtocolLib plugin");
+		protocolLibLoaded = true;
 	}
 
 	public static boolean getWorldEditLoaded() {
