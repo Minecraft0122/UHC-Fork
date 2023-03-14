@@ -12,7 +12,7 @@ well as [scenarios][scenarios] to bring endless replayability to the gamemode.
 
 You can read more about the project in the [README][readme] file, or visit the
 [UhcCore page on Spigot][spigot-page] to download the plugin. UhcCore is free
-and open source software (see
+and open-source software (see
 ["Is this plugin free? Will it stay that way?"][is-it-free]), and the
 source code is available at [the GitLab repository][repo].
 

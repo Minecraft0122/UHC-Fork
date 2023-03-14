@@ -36,7 +36,7 @@ You can download the plugin from either of these sources:
 
 ## Setup guide
 
-UhcCore can be run on a Spigot-compatible Minecraft server such as
+UhcCore can be run on a Spigot-based Minecraft server such as
 [Spigot](https://www.spigotmc.org) or [Paper](https://papermc.io) for
 Minecraft versions 1.8.8 to 1.19.3. Note that the plugin is incompatible with
 world management plugins such as MultiWorld or Multiverse, so you will
