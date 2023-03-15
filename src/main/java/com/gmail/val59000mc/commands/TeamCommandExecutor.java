@@ -8,7 +8,6 @@ import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.players.PlayerManager;
 import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.players.UhcTeam;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -47,36 +46,14 @@ public class TeamCommandExecutor implements CommandExecutor{
 		String subCommand = args[0].toLowerCase();
 
 		if (subCommand.equals("invite")){
-			if (!uhcPlayer.isTeamLeader()){
-				player.sendMessage(Lang.TEAM_MESSAGE_NOT_LEADER);
-				return true;
-			}
-
 			if (args.length != 2){
 				player.sendMessage("Usage: /team invite <player>");
 				return true;
 			}
 
-			Player invitePlayer = Bukkit.getPlayer(args[1]);
-
-			if (invitePlayer == null){
-				player.sendMessage(Lang.TEAM_MESSAGE_PLAYER_NOT_ONLINE.replace("%player%", args[1]));
-				return true;
-			}
-
-			UhcPlayer uhcInvitePlayer = pm.getUhcPlayer(invitePlayer);
-
-			if (uhcPlayer.getTeam().contains(uhcInvitePlayer)){
-				player.sendMessage(Lang.TEAM_MESSAGE_ALREADY_IN_TEAM);
-				return true;
-			}
-
-			if (uhcInvitePlayer.getTeamInvites().contains(uhcPlayer.getTeam())){
-				uhcPlayer.sendMessage(Lang.TEAM_MESSAGE_INVITE_ALREADY_SENT);
-				return true;
-			}
-
-			uhcInvitePlayer.inviteToTeam(uhcPlayer.getTeam());
+			String inviteeName = args[1];
+			String inviteResult = gameManager.getTeamManager().sendInvite(uhcPlayer, inviteeName);
+			player.sendMessage(inviteResult);
 			return true;
 		}
 

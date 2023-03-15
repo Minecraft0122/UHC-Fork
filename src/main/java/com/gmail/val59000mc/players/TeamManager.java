@@ -4,7 +4,10 @@ import com.gmail.val59000mc.exceptions.UhcTeamException;
 import com.gmail.val59000mc.game.handlers.ScoreboardHandler;
 import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.utils.CompareUtils;
+
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -68,6 +71,35 @@ public class TeamManager{
 			}
 		}
 		return teams;
+	}
+
+	public String sendInvite(Player inviter, String inviteeName) {
+		UhcPlayer uhcInviter = playerManager.getUhcPlayer(inviter);
+		return sendInvite(uhcInviter, inviteeName);
+	}
+
+	public String sendInvite(UhcPlayer inviter, String inviteeName) {
+		if (!inviter.isTeamLeader()) {
+			return Lang.TEAM_MESSAGE_NOT_LEADER;
+		}
+
+		Player bukkitInvitee = Bukkit.getPlayer(inviteeName);
+		if (bukkitInvitee == null) {
+			return Lang.TEAM_MESSAGE_PLAYER_NOT_ONLINE.replace("%player%", inviteeName);
+		}
+
+		UhcTeam team = inviter.getTeam();
+		UhcPlayer uhcInvitee = playerManager.getUhcPlayer(bukkitInvitee);
+		if (team.contains(uhcInvitee)) {
+			return Lang.TEAM_MESSAGE_ALREADY_IN_TEAM.replace("%player%", uhcInvitee.getRealName());
+		}
+		if (uhcInvitee.getTeamInvites().contains(team)) {
+			return Lang.TEAM_MESSAGE_INVITE_ALREADY_SENT.replace("%player%", uhcInvitee.getRealName());
+		}
+
+		// Validation passed, perform the invite
+		uhcInvitee.inviteToTeam(team);
+		return Lang.TEAM_MESSAGE_INVITE_SUCCESS.replace("%player%", uhcInvitee.getRealName());
 	}
 
 	public void replyToTeamInvite(UhcPlayer uhcPlayer, UhcTeam team, boolean accepted){

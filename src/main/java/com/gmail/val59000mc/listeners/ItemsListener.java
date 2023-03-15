@@ -365,7 +365,8 @@ public class ItemsListener implements Listener {
 				.text("Enter name ...")
 				.itemLeft(new ItemStack(Material.NAME_TAG))
 				.onComplete(completion -> {
-					completion.getPlayer().performCommand("team invite " + completion.getText());
+					String inviteResult = teamManager.sendInvite(completion.getPlayer(), completion.getText());
+					completion.getPlayer().sendMessage(inviteResult);
 					return Collections.singletonList(AnvilGUI.ResponseAction.close());
 				})
 				.open(player);

@@ -2,11 +2,17 @@
 
 ## [Unreleased]
 
+### New features
+
+- Added `team.message.invite-success` to `lang.yml`
+
 ### Bug fixes
 
+- [#21][GL-21] - Team invite menu does not validate user input properly
 - [#29][GL-29] - Teams are sometimes not correctly updated on the tab list
 - [#45][GL-45] - Errors are spammed to the server console on Minecraft 1.19.3+ servers if ProtocolLib is installed
 
+[GL-21]: https://gitlab.com/uhccore/uhccore/-/issues/21
 [GL-29]: https://gitlab.com/uhccore/uhccore/-/issues/29
 [GL-45]: https://gitlab.com/uhccore/uhccore/-/issues/45
 
