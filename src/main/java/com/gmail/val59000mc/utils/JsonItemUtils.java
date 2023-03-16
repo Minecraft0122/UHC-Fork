@@ -68,7 +68,7 @@ public class JsonItemUtils{
 				Set<ItemFlag> flags = meta.getItemFlags();
 				JsonArray jsonFlags = new JsonArray();
 
-				flags.forEach(itemFlag -> jsonFlags.add(itemFlag.name()));
+				flags.forEach(itemFlag -> jsonFlags.add(new JsonPrimitive(itemFlag.name())));
 
 				json.add("flags", jsonFlags);
 			}
