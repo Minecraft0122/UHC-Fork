@@ -342,4 +342,9 @@ public class VersionUtils_1_13 extends VersionUtils{
 		meta.setUnbreakable(b);
 	}
 
+	@Override
+	public boolean getItemUnbreakable(ItemMeta meta) {
+		return meta.isUnbreakable();
+	}
+
 }

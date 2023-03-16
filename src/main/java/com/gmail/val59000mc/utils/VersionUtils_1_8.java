@@ -282,18 +282,27 @@ public class VersionUtils_1_8 extends VersionUtils{
 	}
 
 	@Override
-	public void setItemUnbreakable(ItemMeta meta, boolean b){
-		if (!PaperLib.isSpigot()){
-			return; // Unable to set item as unbreakable on a none spigot server.
-		}
-
+	public void setItemUnbreakable(ItemMeta meta, boolean b) {
 		try {
 			Method spigot = NMSUtils.getMethod(meta.getClass(), "spigot");
 			Object spigotInstance = spigot.invoke(meta);
 			Method setUnbreakable = NMSUtils.getMethod(spigotInstance.getClass(), "setUnbreakable", boolean.class);
 			setUnbreakable.invoke(spigotInstance, b);
-		}catch (ReflectiveOperationException ex){
+		} catch (ReflectiveOperationException ex) {
 			LOGGER.log(Level.WARNING, "Unable to make item unbreakable", ex);
+		}
+	}
+
+	@Override
+	public boolean getItemUnbreakable(ItemMeta meta) {
+		try {
+			Method spigot = NMSUtils.getMethod(meta.getClass(), "spigot");
+			Object spigotInstance = spigot.invoke(meta);
+			Method isUnbreakable = NMSUtils.getMethod(spigotInstance.getClass(), "isUnbreakable");
+			return (boolean) isUnbreakable.invoke(spigotInstance);
+		} catch (ReflectiveOperationException ex) {
+			LOGGER.log(Level.WARNING, "Unable to get item unbreakable", ex);
+			return false;
 		}
 	}
 

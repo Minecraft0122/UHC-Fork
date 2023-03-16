@@ -151,6 +151,10 @@ public class JsonItemUtils{
 					savePatterns(json, banner.getPatterns());
 				}
 			}
+
+			if (VersionUtils.getVersionUtils().getItemUnbreakable(meta)) {
+				json.addProperty("unbreakable", true);
+			}
 		}
 		return json.toString();
 	}
@@ -247,6 +251,9 @@ public class JsonItemUtils{
 						break;
 					case "base-color":
 						parseShieldBaseColor(meta, entry.getValue().getAsString());
+						break;
+					case "unbreakable":
+						VersionUtils.getVersionUtils().setItemUnbreakable(meta, entry.getValue().getAsBoolean());
 						break;
 				}
 			}
