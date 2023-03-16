@@ -4,6 +4,7 @@
 
 ### New features
 
+- [#20][GL-20] - Support loading/saving banner patterns on items
 - Added `team.message.invite-success` to `lang.yml`
 
 ### Bug fixes
@@ -12,6 +13,7 @@
 - [#29][GL-29] - Teams are sometimes not correctly updated on the tab list
 - [#45][GL-45] - Errors are spammed to the server console on Minecraft 1.19.3+ servers if ProtocolLib is installed
 
+[GL-20]: https://gitlab.com/uhccore/uhccore/-/issues/20
 [GL-21]: https://gitlab.com/uhccore/uhccore/-/issues/21
 [GL-29]: https://gitlab.com/uhccore/uhccore/-/issues/29
 [GL-45]: https://gitlab.com/uhccore/uhccore/-/issues/45

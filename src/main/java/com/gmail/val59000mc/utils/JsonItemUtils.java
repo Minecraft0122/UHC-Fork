@@ -6,10 +6,16 @@ import com.google.gson.JsonArray;
 import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.block.Banner;
+import org.bukkit.block.banner.Pattern;
+import org.bukkit.block.banner.PatternType;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BannerMeta;
+import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -126,8 +132,44 @@ public class JsonItemUtils{
 				LeatherArmorMeta leatherMeta = (LeatherArmorMeta) meta;
 				json.addProperty("color", leatherMeta.getColor().asRGB());
 			}
+
+			// BannerMeta is used by banner items, but not shields.
+			// The color is based on the damage value (1.8 - 1.12) or material type (1.13+),
+			// so BannerMeta is only used to get/set the patterns, not the color.
+			if (meta instanceof BannerMeta) {
+				BannerMeta bannerMeta = (BannerMeta) meta;
+				savePatterns(json, bannerMeta.getPatterns());
+			}
+
+			// Banner BlockStateMeta is used by shields, but not banner items.
+			// BlockStateMeta is used to get/set both the color and the patterns for shields.
+			if (item.getType() == UniversalMaterial.SHIELD.getType()) {
+				BlockStateMeta blockStateMeta = (BlockStateMeta) meta;
+				if (blockStateMeta.hasBlockState()) {
+					Banner banner = (Banner) blockStateMeta.getBlockState();
+					json.addProperty("base-color", banner.getBaseColor().name());
+					savePatterns(json, banner.getPatterns());
+				}
+			}
 		}
 		return json.toString();
+	}
+
+	private static void savePatterns(JsonObject json, List<Pattern> patterns) {
+		if (patterns.isEmpty()) {
+			return;
+		}
+
+		JsonArray patternsJson = new JsonArray();
+		for (Pattern pattern : patterns) {
+			JsonObject patternJson = new JsonObject();
+
+			patternJson.addProperty("color", pattern.getColor().name());
+			patternJson.addProperty("pattern", pattern.getPattern().name());
+
+			patternsJson.add(patternJson);
+		}
+		json.add("patterns", patternsJson);
 	}
 
 	public static JsonItemStack getItemFromJson(String jsonString) throws ParseException{
@@ -195,6 +237,16 @@ public class JsonItemUtils{
 						break;
 					case "color":
 						meta = parseColor(meta, entry.getValue().getAsInt());
+						break;
+					case "patterns":
+						if (material == UniversalMaterial.SHIELD.getType()) {
+							parseShieldPatterns(meta, entry.getValue().getAsJsonArray());
+						} else {
+							parseBannerPatterns(meta, entry.getValue().getAsJsonArray());
+						}
+						break;
+					case "base-color":
+						parseShieldBaseColor(meta, entry.getValue().getAsString());
 						break;
 				}
 			}
@@ -331,6 +383,44 @@ public class JsonItemUtils{
 		}
 
 		return meta;
+	}
+
+	private static Pattern parsePattern(JsonObject pattern) {
+		return new Pattern(
+			DyeColor.valueOf(pattern.get("color").getAsString()),
+			PatternType.valueOf(pattern.get("pattern").getAsString())
+		);
+	}
+
+	private static void parseBannerPatterns(ItemMeta meta, JsonArray patterns) {
+		BannerMeta bannerMeta = (BannerMeta) meta;
+		for (JsonElement pattern : patterns) {
+			bannerMeta.addPattern(parsePattern((JsonObject) pattern));
+		}
+	}
+
+	private static void parseShieldPatterns(ItemMeta meta, JsonArray patterns) {
+		BlockStateMeta blockStateMeta = (BlockStateMeta) meta;
+		Banner banner = (Banner) blockStateMeta.getBlockState();
+		for (JsonElement pattern : patterns) {
+			banner.addPattern(parsePattern((JsonObject) pattern));
+		}
+
+		// This update() call is important for compatibility with old Spigot versions,
+		// due to the hacky way that shields are implemented using block states.
+		banner.update();
+		blockStateMeta.setBlockState(banner);
+	}
+
+	private static void parseShieldBaseColor(ItemMeta meta, String baseColor) {
+		BlockStateMeta blockStateMeta = (BlockStateMeta) meta;
+		Banner banner = (Banner) blockStateMeta.getBlockState();
+		banner.setBaseColor(DyeColor.valueOf(baseColor));
+
+		// This update() call is important for compatibility with old Spigot versions,
+		// due to the hacky way that shields are implemented using block states.
+		banner.update();
+		blockStateMeta.setBlockState(banner);
 	}
 
 }
