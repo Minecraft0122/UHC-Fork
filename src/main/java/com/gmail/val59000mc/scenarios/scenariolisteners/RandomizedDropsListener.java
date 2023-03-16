@@ -54,7 +54,7 @@ public class RandomizedDropsListener extends ScenarioListener{
 		Location dropLocation = block.getLocation().add(0.5, 0.5, 0.5);
 		dropLocation.getWorld().dropItem(dropLocation, blockDrop);
 
-		UhcPlayer.damageItemInMainHand(event.getPlayer(), 1);
+		UhcPlayer.damageMiningTool(event.getPlayer(), 1);
 	}
 
 }

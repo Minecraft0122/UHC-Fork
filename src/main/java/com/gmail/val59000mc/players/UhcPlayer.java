@@ -9,6 +9,8 @@ import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.scenarios.Scenario;
 import com.gmail.val59000mc.utils.SpigotUtils;
 import com.gmail.val59000mc.utils.TimeUtils;
+import com.gmail.val59000mc.utils.UniversalMaterial;
+
 import io.papermc.lib.PaperLib;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
@@ -440,7 +442,14 @@ public class UhcPlayer {
 		player.getInventory().setArmorContents(originalArmor);
 	}
 
-	public static void damageItemInMainHand(Player player, int amount) {
+	public static void damageMiningTool(Player player, int blocksMined) {
+		int damagePerBlock = UniversalMaterial.getMiningToolDamage(player.getItemInHand().getType());
+		if (damagePerBlock > 0) {
+			damageItemInMainHand(player, damagePerBlock * blocksMined);
+		}
+	}
+
+	private static void damageItemInMainHand(Player player, int amount) {
 		final ItemStack item = player.getItemInHand();
 		item.setDurability((short) (item.getDurability() + amount));
 		if (shouldBreak(item)) {

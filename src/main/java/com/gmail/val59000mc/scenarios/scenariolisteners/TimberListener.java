@@ -42,7 +42,7 @@ public class TimberListener extends ScenarioListener {
 			}
 
 			if (calculateAxeDamage) {
-				UhcPlayer.damageItemInMainHand(e.getPlayer(), treeLogs.size());
+				UhcPlayer.damageMiningTool(e.getPlayer(), treeLogs.size());
 			}
 		}
 	}

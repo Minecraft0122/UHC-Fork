@@ -2,6 +2,10 @@ package com.gmail.val59000mc.utils;
 
 import io.papermc.lib.PaperLib;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -264,6 +268,65 @@ public enum UniversalMaterial{
 			}
 		}
 		return null;
+	}
+
+	private static <T> void putIfSupported(Map<Material, T> map, T value, UniversalMaterial... materials) {
+		for (UniversalMaterial material : materials) {
+			Material key = material.getType();
+			if (key != null) {
+				map.put(key, value);
+			}
+		}
+	}
+
+	private static Map<Material, Integer> buildMiningToolDamage() {
+		Map<Material, Integer> miningDamage = new HashMap<>();
+		putIfSupported(miningDamage, 1,
+			UniversalMaterial.WOODEN_AXE,
+			UniversalMaterial.WOODEN_HOE,
+			UniversalMaterial.WOODEN_PICKAXE,
+			UniversalMaterial.WOODEN_SHOVEL,
+			UniversalMaterial.STONE_AXE,
+			UniversalMaterial.STONE_HOE,
+			UniversalMaterial.STONE_PICKAXE,
+			UniversalMaterial.STONE_SHOVEL,
+			UniversalMaterial.IRON_AXE,
+			UniversalMaterial.IRON_HOE,
+			UniversalMaterial.IRON_PICKAXE,
+			UniversalMaterial.IRON_SHOVEL,
+			UniversalMaterial.GOLDEN_AXE,
+			UniversalMaterial.GOLDEN_HOE,
+			UniversalMaterial.GOLDEN_PICKAXE,
+			UniversalMaterial.GOLDEN_SHOVEL,
+			UniversalMaterial.DIAMOND_AXE,
+			UniversalMaterial.DIAMOND_HOE,
+			UniversalMaterial.DIAMOND_PICKAXE,
+			UniversalMaterial.DIAMOND_SHOVEL,
+			UniversalMaterial.NETHERITE_AXE,
+			UniversalMaterial.NETHERITE_HOE,
+			UniversalMaterial.NETHERITE_PICKAXE,
+			UniversalMaterial.NETHERITE_SHOVEL,
+			UniversalMaterial.SHEARS);
+		putIfSupported(miningDamage, 2,
+			UniversalMaterial.WOODEN_SWORD,
+			UniversalMaterial.STONE_SWORD,
+			UniversalMaterial.IRON_SWORD,
+			UniversalMaterial.GOLDEN_SWORD,
+			UniversalMaterial.DIAMOND_SWORD,
+			UniversalMaterial.NETHERITE_SWORD,
+			UniversalMaterial.TRIDENT);
+		return Collections.unmodifiableMap(miningDamage);
+	}
+
+	private static final Map<Material, Integer> miningToolDamage = buildMiningToolDamage();
+
+	public static int getMiningToolDamage(Material item) {
+		// For now, we only provide reasonable defaults, which don't fully
+		// reflect the vanilla behavior on all Minecraft versions.
+		// For example, we ignore the fact that some tools only take damage
+		// when mining a specific type of block, and that tools usually don't
+		// take damage when mining a block with 0 hardness.
+		return miningToolDamage.getOrDefault(item, 0);
 	}
 
 	public static boolean isLog(Material material) {
