@@ -64,3 +64,5 @@ dragon_rush:
 vein_miner:
   # If true, item damage will be applied to the pickaxe used to mine the vein.
   calculate-tool-damage: true
+  # If true, Vein Miner will only be active while the player is sneaking.
+  require-sneaking: true

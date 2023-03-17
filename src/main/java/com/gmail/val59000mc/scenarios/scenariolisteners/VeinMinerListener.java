@@ -31,11 +31,14 @@ public class VeinMinerListener extends ScenarioListener{
 	@Option(key = "calculate-tool-damage")
 	private boolean calculateToolDamage = true;
 
+	@Option(key = "require-sneaking")
+	private boolean requireSneaking = true;
+
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e){
 		Player player = e.getPlayer();
 
-		if (!player.isSneaking()){
+		if (requireSneaking && !player.isSneaking()) {
 			return;
 		}
 
