@@ -1,5 +1,6 @@
 package com.gmail.val59000mc.scenarios.scenariolisteners;
 
+import com.gmail.val59000mc.configuration.MainConfig;
 import com.gmail.val59000mc.events.UhcStartingEvent;
 import com.gmail.val59000mc.exceptions.UhcPlayerNotOnlineException;
 import com.gmail.val59000mc.game.GameManager;
@@ -10,6 +11,9 @@ import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.players.UhcTeam;
 import com.gmail.val59000mc.scenarios.Option;
 import com.gmail.val59000mc.scenarios.ScenarioListener;
+
+import java.util.logging.Logger;
+
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -21,8 +25,22 @@ import org.bukkit.inventory.ItemStack;
 
 public class LoveAtFirstSightListener extends ScenarioListener{
 
+	private static final Logger LOGGER = Logger.getLogger(LoveAtFirstSightListener.class.getCanonicalName());
+
 	@Option(key = "disable-broadcasts")
 	private boolean disableBroadcasts = false;
+
+	@Option(key = "max-players-per-team")
+	private int maxPlayersPerTeam = -1;
+
+	@Override
+	public void onEnable() {
+		if (maxPlayersPerTeam <= 0 && maxPlayersPerTeam != -1) {
+			LOGGER.warning("Invalid value for love_at_first_sight.max-players-per-team");
+		} else if (getActualTeamSize() == 1) {
+			LOGGER.warning("max-players-per-team is set to 1, this will make Love at First Sight pointless");
+		}
+	}
 
 	// Priority above DoubleDatesListener#onGameStateChanged
 	@EventHandler(priority = EventPriority.HIGH)
@@ -50,7 +68,7 @@ public class LoveAtFirstSightListener extends ScenarioListener{
 			return;
 		}
 
-		if (uhcDamaged.getTeam().isFull() || uhcDamager.getTeam().isFull()){
+		if (isTeamFull(uhcDamaged.getTeam()) || isTeamFull(uhcDamager.getTeam())){
 			return; // One of the teams is full so no team can be made
 		}
 
@@ -76,8 +94,19 @@ public class LoveAtFirstSightListener extends ScenarioListener{
 		}
 	}
 
+	private int getActualTeamSize() {
+		if (maxPlayersPerTeam <= 0) {
+			return getConfiguration().get(MainConfig.MAX_PLAYERS_PER_TEAM);
+		}
+		return maxPlayersPerTeam;
+	}
+
+	private boolean isTeamFull(UhcTeam team) {
+		return getActualTeamSize() == team.getMembers().size();
+	}
+
 	private boolean addPlayerToTeam(UhcPlayer player, UhcTeam team){
-		if (team.isFull()) return false;
+		if (isTeamFull(team)) return false;
 		Inventory teamInventory = team.getTeamInventory();
 
 		for (ItemStack item : player.getTeam().getTeamInventory().getContents()){

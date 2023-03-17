@@ -32,6 +32,11 @@ weakest_link:
 love_at_first_sight:
   # Set to true if you want to disable the broadcasts when teams are created.
   disable-broadcasts: false
+  # Controls the maximum team size in the Love at First Sight scenario,
+  # which will override the max-players-per-team setting from config.yml
+  # when the scenario is enabled. If set to -1, the scenario will instead use
+  # the max-players-per-team setting from config.yml as the maximum team size.
+  max-players-per-team: -1
 achievement_hunter:
   # Amount of health players start with. (1 heart = 2 health)
   health-at-start: 10

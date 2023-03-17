@@ -6,6 +6,8 @@
 
 - [#18][GL-18] - Support loading/saving the Unbreakable NBT tag on items
 - [#20][GL-20] - Support loading/saving banner patterns on items
+- [#30][GL-30] - Option to override max-players-per-team in the Love at First Sight scenario
+    - Added the `max-players-per-team` setting to `love_at_first_sight` in `scenarios.yml`
 - Added `team.message.invite-success` to `lang.yml`
 
 ### Bug fixes
@@ -20,6 +22,7 @@
 [GL-21]: https://gitlab.com/uhccore/uhccore/-/issues/21
 [GL-23]: https://gitlab.com/uhccore/uhccore/-/issues/23
 [GL-29]: https://gitlab.com/uhccore/uhccore/-/issues/29
+[GL-30]: https://gitlab.com/uhccore/uhccore/-/issues/30
 [GL-45]: https://gitlab.com/uhccore/uhccore/-/issues/45
 
 ## [1.20.3] - 2022-12-17
