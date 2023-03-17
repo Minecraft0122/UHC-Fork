@@ -22,6 +22,9 @@ public class TimberListener extends ScenarioListener {
 	@Option(key = "calculate-axe-damage")
 	private boolean calculateAxeDamage = true;
 
+	@Option(key = "require-axe")
+	private boolean requireAxe = true;
+
 	@Option(key = "drop-planks")
 	private boolean dropPlanks = false;
 
@@ -30,10 +33,13 @@ public class TimberListener extends ScenarioListener {
 
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e) {
-		final Block block = e.getBlock();
 		final ItemStack tool = e.getPlayer().getItemInHand();
+		if (requireAxe && !UniversalMaterial.isAxe(tool.getType())) {
+			return;
+		}
 
-		if (UniversalMaterial.isLog(block.getType()) && UniversalMaterial.isAxe(tool.getType())) {
+		final Block block = e.getBlock();
+		if (UniversalMaterial.isLog(block.getType())) {
 			final Set<Vector> treeLogs = FloodFill.floodFind26(block, b -> UniversalMaterial.isLog(b.getType()), logBreakLimit);
 
 			final World world = block.getWorld();

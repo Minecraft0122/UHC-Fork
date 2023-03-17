@@ -52,6 +52,8 @@ hastey_boys:
 timber:
   # If true, item damage will be applied to the axe used to fell the tree.
   calculate-axe-damage: true
+  # If true, Timber will only be active while the player uses an axe for chopping.
+  require-axe: true
   # If true, the tree will drop 4 planks instead of a log, for each log block.
   drop-planks: false
   # The maximum tree size to process, in number of log blocks (to avoid overloading the server).

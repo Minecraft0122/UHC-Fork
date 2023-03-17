@@ -4,6 +4,8 @@
 
 ### New features
 
+- [#10][GL-10] - Option to disable axe requirement in the Timber scenario
+    - Added the `require-axe` setting to `timber` in `scenarios.yml`
 - [#18][GL-18] - Support loading/saving the Unbreakable NBT tag on items
 - [#20][GL-20] - Support loading/saving banner patterns on items
 - [#30][GL-30] - Option to override max-players-per-team in the Love at First Sight scenario
@@ -19,6 +21,7 @@
 - [#29][GL-29] - Teams are sometimes not correctly updated on the tab list
 - [#45][GL-45] - Errors are spammed to the server console on Minecraft 1.19.3+ servers if ProtocolLib is installed
 
+[GL-10]: https://gitlab.com/uhccore/uhccore/-/issues/10
 [GL-18]: https://gitlab.com/uhccore/uhccore/-/issues/18
 [GL-20]: https://gitlab.com/uhccore/uhccore/-/issues/20
 [GL-21]: https://gitlab.com/uhccore/uhccore/-/issues/21
