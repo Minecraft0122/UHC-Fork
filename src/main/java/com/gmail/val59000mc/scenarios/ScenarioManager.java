@@ -312,13 +312,16 @@ public class ScenarioManager {
 	 * </p>
 	 */
 	public void electScenarios() {
+		final MainConfig config = GameManager.getGameManager().getConfig();
 		final Map<Scenario, Integer> scenarioVotes = countVotes();
 
 		final List<Scenario> candidates = registeredScenarios.stream()
-			.filter(this::isVotable).collect(Collectors.toList());
+			.filter(this::isVotable)
+			.filter(s -> scenarioVotes.getOrDefault(s, 0) >= config.get(MainConfig.ELECTION_THRESHOLD))
+		.collect(Collectors.toList());
 		Collections.shuffle(candidates); // Tiebreaker
 
-		final int scenarioCount = GameManager.getGameManager().getConfig().get(MainConfig.ELECTED_SCENARIO_COUNT);
+		final int scenarioCount = config.get(MainConfig.ELECTED_SCENARIO_COUNT);
 		candidates.stream()
 			.sorted(Comparator.comparing(s -> scenarioVotes.getOrDefault(s, 0)).reversed())
 			.limit(scenarioCount)

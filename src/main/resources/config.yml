@@ -130,6 +130,8 @@ customize-game-behavior:
       max-votes: 3
       # The amount of scenarios with the most votes that will get added at the start of the game.
       elected-scenarios: 3
+      # The minimum amount of votes required for a scenario to be elected.
+      election-threshold: 0
       # Black-list, scenarios under this list can not be voted for.
       black-list: [flower_power]
 
