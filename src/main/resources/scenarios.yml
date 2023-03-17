@@ -61,3 +61,6 @@ dragon_rush:
   eye-attempts: 12
   # The probability (where 1 is 100%) of an eye being placed during each attempt.
   eye-probability: 0.34
+vein_miner:
+  # If true, item damage will be applied to the pickaxe used to mine the vein.
+  calculate-tool-damage: true
