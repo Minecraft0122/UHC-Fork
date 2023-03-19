@@ -28,7 +28,7 @@ public class VersionUtils_1_14 extends VersionUtils_1_13{
 	}
 
 	@Override
-	protected boolean isAir(Material material) {
+	public boolean isAir(Material material) {
 		return material.isAir();
 	}
 

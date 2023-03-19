@@ -337,4 +337,9 @@ public class VersionUtils_1_12 extends VersionUtils{
 		return meta.isUnbreakable();
 	}
 
+	@Override
+	public boolean isAir(Material material) {
+		return material == Material.AIR;
+	}
+
 }

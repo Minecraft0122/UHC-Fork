@@ -306,4 +306,9 @@ public class VersionUtils_1_8 extends VersionUtils{
 		}
 	}
 
+	@Override
+	public boolean isAir(Material material) {
+		return material == Material.AIR;
+	}
+
 }

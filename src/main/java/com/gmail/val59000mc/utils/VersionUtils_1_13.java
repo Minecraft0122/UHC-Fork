@@ -316,16 +316,6 @@ public class VersionUtils_1_13 extends VersionUtils{
 		return items;
 	}
 
-	protected boolean isAir(Material material) {
-		// Material#isAir was introduced in 1.14
-		switch (material) {
-			case AIR:
-			case CAVE_AIR:
-			case VOID_AIR: return true;
-			default: return false;
-		}
-	}
-
 	@Nullable
 	@Override
 	public JsonArray getSuspiciousStewEffects(ItemMeta meta){
@@ -345,6 +335,18 @@ public class VersionUtils_1_13 extends VersionUtils{
 	@Override
 	public boolean getItemUnbreakable(ItemMeta meta) {
 		return meta.isUnbreakable();
+	}
+
+	@Override
+	public boolean isAir(Material material) {
+		// Cave air and void air was added in 1.13, but
+		// Material#isAir was not introduced until 1.14
+		switch (material) {
+			case AIR:
+			case CAVE_AIR:
+			case VOID_AIR: return true;
+			default: return false;
+		}
 	}
 
 }

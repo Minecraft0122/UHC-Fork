@@ -125,4 +125,6 @@ public abstract class VersionUtils{
 
 	public abstract boolean getItemUnbreakable(ItemMeta meta);
 
+	public abstract boolean isAir(Material material);
+
 }
