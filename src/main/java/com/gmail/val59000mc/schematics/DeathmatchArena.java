@@ -5,6 +5,8 @@ import com.gmail.val59000mc.configuration.MainConfig;
 import com.gmail.val59000mc.configuration.YamlFile;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.utils.FileUtils;
+import com.gmail.val59000mc.utils.VersionUtils;
+
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -131,7 +133,7 @@ public class DeathmatchArena extends Schematic {
 	private boolean hasAirOnTop(Block block){
 		Block up1 = block.getRelative(BlockFace.UP);
 		Block up2 = up1.getRelative(BlockFace.UP);
-		return up1.getType() == Material.AIR && up2.getType() == Material.AIR;
+		return VersionUtils.getVersionUtils().isAir(up1.getType()) && VersionUtils.getVersionUtils().isAir(up2.getType());
 	}
 
 	public List<Location> getTeleportSpots(){

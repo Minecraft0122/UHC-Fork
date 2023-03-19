@@ -1,6 +1,8 @@
 package com.gmail.val59000mc.maploader;
 
 import com.gmail.val59000mc.utils.UniversalMaterial;
+import com.gmail.val59000mc.utils.VersionUtils;
+
 import io.papermc.lib.PaperLib;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -33,7 +35,7 @@ public class SugarCanePopulator extends BlockPopulator{
 				Block below = loc.getBlock().getRelative(BlockFace.DOWN);
 
 				// Scan down from highest block to find the ground
-				while (below.getType() == Material.AIR || UniversalMaterial.isLeaves(below.getType())) {
+				while (VersionUtils.getVersionUtils().isAir(below.getType()) || UniversalMaterial.isLeaves(below.getType())) {
 					loc.setY(loc.getY()-1);
 					below = loc.getBlock().getRelative(BlockFace.DOWN);
 				}
@@ -48,7 +50,7 @@ public class SugarCanePopulator extends BlockPopulator{
 				Location location = block.getLocation();
 
 				while (height > 0) {
-					if (location.getBlock().getType() != Material.AIR) break;
+					if (!VersionUtils.getVersionUtils().isAir(location.getBlock().getType())) break;
 					world.getBlockAt(location).setType(UniversalMaterial.SUGAR_CANE_BLOCK.getType());
 					location = location.add(0, 1, 0);
 					height--;

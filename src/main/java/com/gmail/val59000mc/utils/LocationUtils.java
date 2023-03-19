@@ -98,7 +98,7 @@ public class LocationUtils {
 		loc.setY(0);
 
 		if (allowCaves){
-			while (loc.getBlock().getType() != Material.AIR){
+			while (!VersionUtils.getVersionUtils().isAir(loc.getBlock().getType())){
 				loc = loc.add(0, 1, 0);
 			}
 		}else {

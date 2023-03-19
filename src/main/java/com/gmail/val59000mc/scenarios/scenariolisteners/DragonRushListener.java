@@ -125,7 +125,7 @@ public class DragonRushListener extends ScenarioListener {
 
 		// Start search at y=150 to avoid placing it on top of the glass box lobby
 		int y = 150;
-		while (world.getBlockAt(x, y, z).getType() == Material.AIR) {
+		while (VersionUtils.getVersionUtils().isAir(world.getBlockAt(x, y, z).getType())) {
 			y--;
 		}
 		return y;
