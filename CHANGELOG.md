@@ -22,6 +22,7 @@
 - [#23][GL-23] - Non-tool items break when mining in the Randomized Drops and Vein Miner scenarios
 - [#29][GL-29] - Teams are sometimes not correctly updated on the tab list
 - [#45][GL-45] - Errors are spammed to the server console on Minecraft 1.19.3+ servers if ProtocolLib is installed
+- [#55][GL-55] - Display names are not obfuscated in the Anonymous scenario if use-team-colors is set to false
 
 [GL-10]: https://gitlab.com/uhccore/uhccore/-/issues/10
 [GL-18]: https://gitlab.com/uhccore/uhccore/-/issues/18
@@ -33,6 +34,7 @@
 [GL-36]: https://gitlab.com/uhccore/uhccore/-/issues/36
 [GL-45]: https://gitlab.com/uhccore/uhccore/-/issues/45
 [GL-47]: https://gitlab.com/uhccore/uhccore/-/issues/47
+[GL-55]: https://gitlab.com/uhccore/uhccore/-/issues/55
 
 ## [1.20.3] - 2022-12-17
 

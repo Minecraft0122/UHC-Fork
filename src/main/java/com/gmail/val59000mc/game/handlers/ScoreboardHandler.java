@@ -183,18 +183,15 @@ public class ScoreboardHandler {
 	 * @param uhcPlayer the player to update on the tab list
 	 */
 	public void updatePlayerOnTab(UhcPlayer uhcPlayer) {
-		boolean teamColors = config.get(MainConfig.TEAM_COLORS);
-
 		for (UhcPlayer scoreboardOwner : gameManager.getPlayerManager().getPlayersList()) {
-			if (teamColors) {
+			if (config.get(MainConfig.TEAM_COLORS)) {
 				updatePlayerOnColoredTab(uhcPlayer, scoreboardOwner);
 			}else {
 				updatePlayerOnFriendEnemyTab(uhcPlayer, scoreboardOwner);
 			}
 		}
 
-		// Change player display name
-		if (teamColors && config.get(MainConfig.CHANGE_DISPLAY_NAMES)) {
+		if (config.get(MainConfig.CHANGE_DISPLAY_NAMES)) {
 			try {
 				uhcPlayer.getPlayer().setDisplayName(uhcPlayer.getDisplayName());
 			}catch (UhcPlayerNotOnlineException ex){
