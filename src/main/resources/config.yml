@@ -14,7 +14,8 @@ max-players-per-team: 2
 #When disabled enemies will be red, team members green.
 use-team-colors: true
 
-# If true the display name of players will change to the color of their team (The display name shows in chat and in messages of other plugins that use display name).
+# If false, UhcCore will not change the display names of players.
+# The display name shows in chat and in messages of other plugins that use the display name.
 change-display-names: true
 
 #Choose if new players will be auto assigned to a not full team.
