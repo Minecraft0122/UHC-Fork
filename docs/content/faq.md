@@ -102,8 +102,7 @@ on how you can solve this problem:
 One way to completely avoid this problem is to set `enable: false` under
 `pre-generate-world` in config.yml. This will disable pre-generation completely,
 which is NOT recommended. Doing so will likely increase the amount of lag while
-playing, but it can also cause players to spawn below ground and suffocate to
-death. As a workaround, you could use another plugin to pre-generate the world,
+playing. As a workaround, you could use another plugin to pre-generate the world,
 such as [Chunky](https://www.spigotmc.org/resources/chunky.81534/).
 
 ## Can I use this plugin on a free hosting service, such as Aternos?
