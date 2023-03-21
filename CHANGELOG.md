@@ -20,6 +20,7 @@
 
 - [#21][GL-21] - Team invite menu does not validate user input properly
 - [#23][GL-23] - Non-tool items break when mining in the Randomized Drops and Vein Miner scenarios
+- [#24][GL-24] - Player starting location is sometimes inside of ground blocks
 - [#29][GL-29] - Teams are sometimes not correctly updated on the tab list
 - [#45][GL-45] - Errors are spammed to the server console on Minecraft 1.19.3+ servers if ProtocolLib is installed
 - [#55][GL-55] - Display names are not obfuscated in the Anonymous scenario if use-team-colors is set to false
@@ -29,6 +30,7 @@
 [GL-20]: https://gitlab.com/uhccore/uhccore/-/issues/20
 [GL-21]: https://gitlab.com/uhccore/uhccore/-/issues/21
 [GL-23]: https://gitlab.com/uhccore/uhccore/-/issues/23
+[GL-24]: https://gitlab.com/uhccore/uhccore/-/issues/24
 [GL-29]: https://gitlab.com/uhccore/uhccore/-/issues/29
 [GL-30]: https://gitlab.com/uhccore/uhccore/-/issues/30
 [GL-36]: https://gitlab.com/uhccore/uhccore/-/issues/36

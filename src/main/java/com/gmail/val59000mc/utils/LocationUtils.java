@@ -1,14 +1,95 @@
 package com.gmail.val59000mc.utils;
 
-import com.gmail.val59000mc.game.GameManager;
+import io.papermc.lib.PaperLib;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.util.Vector;
 
 import javax.annotation.Nullable;
 
 public class LocationUtils {
+
+	/**
+	 * Gets the Y-coordinate of the surface block at the given coordinates in a world.
+	 *
+	 * <p>
+	 *     The exact implementation and behavior depends on the Minecraft
+	 *     version, but some form of heightmap is used. The surface block will
+	 *     generally be either a solid block, or a fluid, such as water or lava.
+	 * </p>
+	 *
+	 * @param world the world for the coordinates
+	 * @param x the X-coordinate
+	 * @param z the Z-coordinate
+	 * @return the Y-coordinate of the surface block at the X and Z coordinates
+	 */
+	public static int getSurfaceLevelAt(World world, int x, int z) {
+		// Spigot API behavior changed in 1.14, see:
+		// https://hub.spigotmc.org/jira/browse/SPIGOT-2595
+		// https://hub.spigotmc.org/jira/browse/SPIGOT-5523
+
+		if (PaperLib.isVersion(14)) {
+			// MOTION_BLOCKING heightmap, 1.14+
+			return world.getHighestBlockYAt(x, z);
+		} else {
+			// Legacy light heightmap, 1.8 - 1.12
+			// LIGHT_BLOCKING heightmap, 1.13
+			return world.getHighestBlockYAt(x, z) - 1;
+		}
+	}
+
+	/**
+	 * Gets the Y-coordinate of the surface block at the given location.
+	 *
+	 * <p>
+	 *     The exact implementation and behavior depends on the Minecraft
+	 *     version, but some form of heightmap is used. The surface block will
+	 *     generally be either a solid block, or a fluid, such as water or lava.
+	 * </p>
+	 *
+	 * @param location the location to find the surface for
+	 * @return the Y-coordinate of the surface block at the X and Z coordinates
+	 */
+	public static int getSurfaceLevelAt(Location location) {
+		return getSurfaceLevelAt(location.getWorld(), location.getBlockX(), location.getBlockZ());
+	}
+
+	/**
+	 * Gets the surface block at the given coordinates in a world.
+	 *
+	 * <p>
+	 *     The exact implementation and behavior depends on the Minecraft
+	 *     version, but some form of heightmap is used. The returned block will
+	 *     generally be either a solid block, or a fluid, such as water or lava.
+	 * </p>
+	 *
+	 * @param world the world for the coordinates
+	 * @param x the X-coordinate
+	 * @param z the Z-coordinate
+	 * @return the surface block at the X and Z coordinates
+	 */
+	public static Block getSurfaceBlockAt(World world, int x, int z) {
+		return world.getBlockAt(x, getSurfaceLevelAt(world, x, z), z);
+	}
+
+	/**
+	 * Gets the surface block at the X and Z coordinates of the given location.
+	 *
+	 * <p>
+	 *     The exact implementation and behavior depends on the Minecraft
+	 *     version, but some form of heightmap is used. The returned block will
+	 *     generally be either a solid block, or a fluid, such as water or lava.
+	 * </p>
+	 *
+	 * @param location the location to find the surface for
+	 * @return the surface block at the X and Z coordinates of the location
+	 */
+	public static Block getSurfaceBlockAt(Location location) {
+		return getSurfaceBlockAt(location.getWorld(), location.getBlockX(), location.getBlockZ());
+	}
 
 	public static boolean isWithinBorder(Location loc){
 		double border = loc.getWorld().getWorldBorder().getSize()/2;
@@ -93,8 +174,6 @@ public class LocationUtils {
 	 * @return Ground location.
 	 */
 	private static Location getGroundLocation(Location loc, boolean allowCaves){
-		World w = loc.getWorld();
-
 		loc.setY(0);
 
 		if (allowCaves){
@@ -102,7 +181,7 @@ public class LocationUtils {
 				loc = loc.add(0, 1, 0);
 			}
 		}else {
-			loc = w.getHighestBlockAt(loc).getLocation();
+			loc = getSurfaceBlockAt(loc).getLocation().add(0, 1, 0);
 		}
 
 		loc = loc.add(.5, 0, .5);
