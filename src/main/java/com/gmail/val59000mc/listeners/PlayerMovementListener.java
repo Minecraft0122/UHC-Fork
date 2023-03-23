@@ -2,6 +2,8 @@ package com.gmail.val59000mc.listeners;
 
 import com.gmail.val59000mc.players.PlayerManager;
 import com.gmail.val59000mc.players.UhcPlayer;
+import com.gmail.val59000mc.utils.LocationUtils;
+
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -31,7 +33,7 @@ public class PlayerMovementListener implements Listener{
 				newLoc.setX(freezeLoc.getBlockX() + .5);
 				newLoc.setZ(freezeLoc.getBlockZ() + .5);
 
-				e.getPlayer().teleport(newLoc);
+				e.getPlayer().teleport(LocationUtils.withSameDirection(newLoc, e.getPlayer()));
 			}
 		}
 	}

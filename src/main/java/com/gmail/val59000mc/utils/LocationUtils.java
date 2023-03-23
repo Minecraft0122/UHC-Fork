@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
@@ -16,6 +17,21 @@ import java.util.logging.Logger;
 public class LocationUtils {
 
 	private static final Logger LOGGER = Logger.getLogger(LocationUtils.class.getCanonicalName());
+
+	/**
+	 * Returns a copy of the specified location, with the yaw and pitch
+	 * set to face the same direction as the specified entity.
+	 *
+	 * @param location the location
+	 * @param entity the entity
+	 * @return the resulting location
+	 */
+	public static Location withSameDirection(Location location, Entity entity) {
+		final Location withSameDirection = location.clone();
+		withSameDirection.setYaw(entity.getLocation().getYaw());
+		withSameDirection.setPitch(entity.getLocation().getPitch());
+		return withSameDirection;
+	}
 
 	/**
 	 * Gets the Y-coordinate of the surface block at the given coordinates in a world.

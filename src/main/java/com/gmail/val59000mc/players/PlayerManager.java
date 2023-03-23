@@ -239,7 +239,7 @@ public class PlayerManager {
 					}
 
 					// Teleport player
-					player.teleport(uhcPlayer.getStartingLocation());
+					player.teleport(LocationUtils.withSameDirection(uhcPlayer.getStartingLocation(), player));
 					uhcPlayer.setHasBeenTeleportedToLocation(true);
 
 					// Remove lobby potion effects.

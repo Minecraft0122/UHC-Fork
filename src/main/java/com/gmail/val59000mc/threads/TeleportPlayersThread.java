@@ -5,6 +5,7 @@ import com.gmail.val59000mc.exceptions.UhcPlayerNotOnlineException;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.players.UhcTeam;
+import com.gmail.val59000mc.utils.LocationUtils;
 
 import java.util.logging.Logger;
 
@@ -43,7 +44,7 @@ public class TeleportPlayersThread implements Runnable{
 
 			uhcPlayer.freezePlayer(team.getStartingLocation());
 
-			player.teleport(team.getStartingLocation());
+			player.teleport(LocationUtils.withSameDirection(team.getStartingLocation(), player));
 
 			player.removePotionEffect(PotionEffectType.BLINDNESS);
 			player.setFireTicks(0);
