@@ -9,9 +9,13 @@ import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Logger;
 
 public class LocationUtils {
+
+	private static final Logger LOGGER = Logger.getLogger(LocationUtils.class.getCanonicalName());
 
 	/**
 	 * Gets the Y-coordinate of the surface block at the given coordinates in a world.
@@ -141,6 +145,7 @@ public class LocationUtils {
 	 */
 	public static Location getRandomSpawnLocation(World world, int maxDistance) {
 		final int maxAttempts = 500;
+		final int[] failedAttempts = new int[2 * maxAttempts];
 		final int maxY = 200; // Workaround to stop people from spawning on top of lobby
 
 		// Try to find safe spawn location at random
@@ -151,9 +156,17 @@ public class LocationUtils {
 			if (safeSpawn != null && safeSpawn.getY() < maxY) {
 				return safeSpawn.getLocation().add(0.5, 1, 0.5);
 			}
+
+			// Save location of failed attempt for debugging purposes
+			failedAttempts[2*i] = x;
+			failedAttempts[2*i + 1] = z;
 		}
 
-		// Otherwise, just pick a completely random location
+		// Otherwise, log failure and just pick a completely random location
+		LOGGER.warning("Unable to find a safe spawn location");
+		LOGGER.warning("World seed: " + world.getSeed());
+		LOGGER.warning("failedAttempts: " + Arrays.toString(failedAttempts));
+
 		final int x = ThreadLocalRandom.current().nextInt(-maxDistance, maxDistance);
 		final int z = ThreadLocalRandom.current().nextInt(-maxDistance, maxDistance);
 		if (world.getEnvironment() == Environment.NETHER) {

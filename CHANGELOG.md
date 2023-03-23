@@ -8,6 +8,7 @@
     - Added the `require-axe` setting to `timber` in `scenarios.yml`
 - [#18][GL-18] - Support loading/saving the Unbreakable NBT tag on items
 - [#20][GL-20] - Support loading/saving banner patterns on items
+- [#26][GL-26] - Log more information when a safe starting location can't be found
 - [#30][GL-30] - Option to override max-players-per-team in the Love at First Sight scenario
     - Added the `max-players-per-team` setting to `love_at_first_sight` in `scenarios.yml`
 - [#36][GL-36] - Option to disable sneaking requirement in the Vein Miner scenario
@@ -34,6 +35,7 @@
 [GL-23]: https://gitlab.com/uhccore/uhccore/-/issues/23
 [GL-24]: https://gitlab.com/uhccore/uhccore/-/issues/24
 [GL-25]: https://gitlab.com/uhccore/uhccore/-/issues/25
+[GL-26]: https://gitlab.com/uhccore/uhccore/-/issues/26
 [GL-29]: https://gitlab.com/uhccore/uhccore/-/issues/29
 [GL-30]: https://gitlab.com/uhccore/uhccore/-/issues/30
 [GL-36]: https://gitlab.com/uhccore/uhccore/-/issues/36

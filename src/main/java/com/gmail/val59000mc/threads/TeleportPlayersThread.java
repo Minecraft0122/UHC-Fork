@@ -35,7 +35,7 @@ public class TeleportPlayersThread implements Runnable{
 				continue;
 			}
 
-			LOGGER.info("Teleporting "+player.getName());
+			LOGGER.info("Teleporting " + player.getName() + " to " + team.getStartingLocation());
 
 			for(PotionEffect effect : gameManager.getConfig().get(MainConfig.POTION_EFFECT_ON_START)){
 				player.addPotionEffect(effect);

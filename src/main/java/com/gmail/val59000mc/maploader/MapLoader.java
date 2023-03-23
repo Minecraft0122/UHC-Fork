@@ -195,6 +195,8 @@ public class MapLoader {
 			copyWorld(copyWorld, worldName);
 		}
 
+		LOGGER.info("World seed: " + wc.seed());
+
 		worldUuids.put(env, worldName);
 
 		YamlFile storage;
