@@ -91,7 +91,7 @@ public class DeathmatchHandler {
 		// Teleport players
 		Location spectatingLocation = new Location(mapLoader.getUhcWorld(World.Environment.NORMAL), 0, 100, 0);
 		for (UhcTeam team : playerManager.listUhcTeams()) {
-			Location teleportSpot = LocationUtils.findRandomSafeLocation(mapLoader.getUhcWorld(World.Environment.NORMAL), config.get(MainConfig.DEATHMATCH_START_SIZE) - 10);
+			Location teleportSpot = LocationUtils.getRandomSpawnLocation(mapLoader.getUhcWorld(World.Environment.NORMAL), config.get(MainConfig.DEATHMATCH_START_SIZE));
 			teleportTeam(team, teleportSpot, spectatingLocation);
 		}
 

@@ -216,8 +216,8 @@ public class PlayerManager {
 					// Only player in team so create random spawn location.
 					if(onlinePlayingMembers.size() <= 1){
 						World world = gm.getMapLoader().getUhcWorld(World.Environment.NORMAL);
-						double maxDistance = 0.9 * gm.getMapLoader().getBorderSize();
-						uhcPlayer.getTeam().setStartingLocation(LocationUtils.findRandomSafeLocation(world, maxDistance));
+						int maxDistance = (int) gm.getMapLoader().getBorderSize();
+						uhcPlayer.getTeam().setStartingLocation(LocationUtils.getRandomSpawnLocation(world, maxDistance));
 					}
 					// Set spawn location at team mate.
 					else{
@@ -451,7 +451,7 @@ public class PlayerManager {
 	public void randomTeleportTeams() {
 		GameManager gm = GameManager.getGameManager();
 		World world = gm.getMapLoader().getUhcWorld(World.Environment.NORMAL);
-		double maxDistance = 0.9 * gm.getConfig().get(MainConfig.BORDER_START_SIZE);
+		int maxDistance = gm.getConfig().get(MainConfig.BORDER_START_SIZE);
 
 		// Fore solo players to join teams
 		if(gm.getConfig().get(MainConfig.FORCE_ASSIGN_SOLO_PLAYER_TO_TEAM_WHEN_STARTING)){
@@ -468,7 +468,7 @@ public class PlayerManager {
 		}
 
 		for(UhcTeam team : listUhcTeams()){
-			Location newLoc = LocationUtils.findRandomSafeLocation(world, maxDistance);
+			Location newLoc = LocationUtils.getRandomSpawnLocation(world, maxDistance);
 			team.setStartingLocation(newLoc);
 		}
 

@@ -6,10 +6,10 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
-import org.bukkit.util.Vector;
 
-import javax.annotation.Nullable;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class LocationUtils {
 
@@ -93,7 +93,7 @@ public class LocationUtils {
 	}
 
 	/**
-	 * Loads and generates a 5x5 area of chunks around the given location.
+	 * Loads and generates a 5x5 area of chunks around the given chunk.
 	 *
 	 * <p>
 	 *     This has to be done on Minecraft 1.8 - 1.12 in order to fully populate
@@ -104,13 +104,13 @@ public class LocationUtils {
 	 *     neighbors in the 5x5 area have been loaded/generated.
 	 * </p>
 	 *
-	 * @param location the location for which to fully populate the chunk
+	 * @param chunk the chunk to fully populate
 	 */
-	public static void fullyPopulateChunk(Location location) {
-		final Chunk chunk = location.getChunk();
+	public static void fullyPopulateChunk(Chunk chunk) {
+		final World world = chunk.getWorld();
 		for (int cx = chunk.getX() - 2; cx <= chunk.getX() + 2; cx++) {
 			for (int cz = chunk.getZ() - 2; cz <= chunk.getZ() + 2; cz++) {
-				location.getWorld().getChunkAt(cx, cz);
+				world.getChunkAt(cx, cz);
 			}
 		}
 	}
@@ -127,79 +127,43 @@ public class LocationUtils {
 		return x < border && z < border;
 	}
 
-	/***
-	 * This method will try found a safe location.
-	 * @param world The world you want to find a location in.
-	 * @param maxDistance Max distance from 0 0 you want the location to be.
-	 * @return Returns save ground location. (When no location can be found a random location in the sky will be returned.)
-	 */
-	public static Location findRandomSafeLocation(World world, double maxDistance) {
-		// 35 is the range findSafeLocationAround() will look for a spawn block
-		maxDistance-=10;
-		Location randomLoc;
-		Location location = null;
-
-		int i = 0;
-		while (location == null){
-			i++;
-			randomLoc = RandomUtils.newRandomLocation(world, maxDistance);
-			location = findSafeLocationAround(randomLoc, 10);
-			if (i > 20){
-				return randomLoc;
-			}
-		}
-
-		return location;
-	}
-
-	/***
-	 * Finds a ground block that is not water or lava 35 blocks around the given location.
-	 * @param loc The location a ground block should be searched around.
-	 * @param searchRadius The radius used to find a safe location.
-	 * @return Returns ground location. Can be null when no safe ground location can be found!
-	 */
-	@Nullable
-	private static Location findSafeLocationAround(Location loc, int searchRadius) {
-		boolean nether = loc.getWorld().getEnvironment() == World.Environment.NETHER;
-		Material material;
-		Location betterLocation;
-
-		for(int i = -searchRadius ; i <= searchRadius ; i +=3){
-			for(int j = -searchRadius ; j <= searchRadius ; j+=3){
-				betterLocation = getGroundLocation(loc.clone().add(new Vector(i,0,j)), nether);
-
-				// Check if location is on the nether roof.
-				if (nether && betterLocation.getBlockY() > 120){
-					continue;
-				}
-
-				// Check if the block below is lava / water
-				material = betterLocation.clone().add(0, -1, 0).getBlock().getType();
-				if(material.equals(UniversalMaterial.STATIONARY_LAVA.getType()) || material.equals(UniversalMaterial.STATIONARY_WATER.getType())){
-					continue;
-				}
-
-				// Stop players from spawning on top of the lobby.
-				if (betterLocation.getBlockY() > 160) {
-					continue;
-				}
-
-				return betterLocation;
-			}
-		}
-
-		return null;
-	}
-
 	/**
-	 * Returns location of ground.
-	 * @param loc Location to look for ground.
-	 * @param allowCaves When set to true, the first location on the y axis is returned. This will include caves.
-	 * @return Ground location.
+	 * Returns a random spawn location for the player in the specified world.
+	 *
+	 * <p>
+	 *     The algorithm tries to pick a "safe" spawn location, but may fail to
+	 *     do so in certain circumstances.
+	 * </p>
+	 *
+	 * @param world the world to spawn in
+	 * @param maxDistance the maximum allowed distance from the world origin in the X or Z direction
+	 * @return the random spawn location
 	 */
-	private static Location getGroundLocation(Location loc, boolean allowCaves){
-		loc.setY(0);
+	public static Location getRandomSpawnLocation(World world, int maxDistance) {
+		final int maxAttempts = 500;
+		final int maxY = 200; // Workaround to stop people from spawning on top of lobby
 
+		// Try to find safe spawn location at random
+		for (int i = 0; i < maxAttempts; i++) {
+			final int x = ThreadLocalRandom.current().nextInt(-maxDistance, maxDistance);
+			final int z = ThreadLocalRandom.current().nextInt(-maxDistance, maxDistance);
+			final Block safeSpawn = findSafeSpawnAt(world, x, z);
+			if (safeSpawn != null && safeSpawn.getY() < maxY) {
+				return safeSpawn.getLocation().add(0.5, 1, 0.5);
+			}
+		}
+
+		// Otherwise, just pick a completely random location
+		final int x = ThreadLocalRandom.current().nextInt(-maxDistance, maxDistance);
+		final int z = ThreadLocalRandom.current().nextInt(-maxDistance, maxDistance);
+		if (world.getEnvironment() == Environment.NETHER) {
+			return new Location(world, x, 64, z).add(0.5, 0, 0.5);
+		} else {
+			return new Location(world, x, getSurfaceLevelAt(world, x, z), z).add(0.5, 1, 0.5);
+		}
+	}
+
+	private static Block findSafeSpawnAt(World world, int x, int z) {
 		// On Minecraft 1.8 - 1.12, World#getHighestBlockYAt and
 		// Location#getBlock does not wait for the chunk to become fully
 		// populated, which means that the returned surface block might
@@ -213,19 +177,54 @@ public class LocationUtils {
 		// surface position ON TOP of any eventual tree.
 		// See also: https://gitlab.com/uhccore/uhccore/-/issues/56
 		if (!PaperLib.isVersion(13)) {
-			fullyPopulateChunk(loc);
+			fullyPopulateChunk(world.getChunkAt(x / 16, z / 16));
 		}
 
-		if (allowCaves){
-			while (!VersionUtils.getVersionUtils().isAir(loc.getBlock().getType())){
-				loc = loc.add(0, 1, 0);
+		if (world.getEnvironment() == Environment.NETHER) {
+			// Search for a spawn location in the range [48, 112) on the Y-axis.
+			// This range was picked based on experimentation. We don't want players
+			// to spawn too low, because they might get stuck on an island in the
+			// lava seas. We also don't need to search near the roof, and we
+			// certainly don't want anyone to spawn on top of the roof.
+			for (int y = 48; y < 112; y++) {
+				final Block candidate = world.getBlockAt(x, y, z);
+				if (isSafeToSpawnOn(candidate)) {
+					return candidate;
+				}
 			}
-		}else {
-			loc = getSurfaceBlockAt(loc).getLocation().add(0, 1, 0);
+			return null;
+		} else {
+			final Block candidate = getSurfaceBlockAt(world, x, z);
+			if (isSafeToSpawnOn(candidate)) {
+				return candidate;
+			} else {
+				return null;
+			}
 		}
+	}
 
-		loc = loc.add(.5, 0, .5);
-		return loc;
+	private static boolean isSafeToSpawnOn(Block block) {
+		Material type = block.getType();
+		return type.isSolid()
+			&& type != UniversalMaterial.CACTUS.getType()
+			&& type != UniversalMaterial.MAGMA_BLOCK.getType()
+			&& type != UniversalMaterial.CAMPFIRE.getType()
+			&& type != UniversalMaterial.SOUL_CAMPFIRE.getType()
+			&& isSafeToSpawnInside(block.getRelative(0, 1, 0))
+			&& isSafeToSpawnInside(block.getRelative(0, 2, 0));
+	}
+
+	private static boolean isSafeToSpawnInside(Block block) {
+		Material type = block.getType();
+		return !type.isSolid()
+			&& !type.isOccluding()
+			&& !block.isLiquid()
+			&& type != UniversalMaterial.FIRE.getType()
+			&& type != UniversalMaterial.SOUL_FIRE.getType()
+			&& type != UniversalMaterial.POWDER_SNOW.getType()
+			&& type != UniversalMaterial.NETHER_PORTAL.getType()
+			&& type != UniversalMaterial.END_PORTAL.getType()
+			&& type != UniversalMaterial.END_GATEWAY.getType();
 	}
 
 }

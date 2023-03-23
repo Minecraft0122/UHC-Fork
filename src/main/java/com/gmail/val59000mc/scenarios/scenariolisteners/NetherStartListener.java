@@ -25,10 +25,10 @@ public class NetherStartListener extends ScenarioListener{
 	@EventHandler
 	public void onPreTeleport(UhcPreTeleportEvent e){
 		World nether = getGameManager().getMapLoader().getUhcWorld(World.Environment.NETHER);
-		double maxDistance = 0.9 * (nether.getWorldBorder().getSize()/2);
+		int maxDistance = (int) (nether.getWorldBorder().getSize() / 2);
 
 		for(UhcTeam team : getPlayerManager().listUhcTeams()){
-			Location newLoc = LocationUtils.findRandomSafeLocation(nether, maxDistance);
+			Location newLoc = LocationUtils.getRandomSpawnLocation(nether, maxDistance);
 			team.setStartingLocation(newLoc);
 		}
 	}
