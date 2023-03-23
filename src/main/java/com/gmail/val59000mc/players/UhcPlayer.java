@@ -186,14 +186,6 @@ public class UhcPlayer {
 	}
 
 	public void releasePlayer(){
-		// Attempt at stopping players from getting stuck in a block at the start of the game.
-		if (freezeLocation != null){
-			try {
-				getPlayer().teleport(freezeLocation);
-			} catch (UhcPlayerNotOnlineException ignored) {
-				// Only teleport when online.
-			}
-		}
 		freezeLocation = null;
 	}
 
