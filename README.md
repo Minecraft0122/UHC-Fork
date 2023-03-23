@@ -22,7 +22,7 @@ over 10 years ago, but this plugin adds many new features:
 - Shrinking world border and deathmatch options
 - Option to pre-generate worlds to avoid lag during the game
 - Option to remove oceans from the terrain generation
-- 2:1 nether scale instead of the default 8:1
+- 4:1 nether scale instead of the default 8:1
 - And many more can be found in the configuration files...
 
 [uhc-origins]: https://www.reddit.com/r/mindcrack/comments/syqitq/the_origins_of_the_uhc_mod_10_years_ago/
