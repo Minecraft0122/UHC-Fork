@@ -346,14 +346,9 @@ public class ItemsListener implements Listener {
 				.text(team.getTeamName())
 				.itemLeft(new ItemStack(Material.NAME_TAG))
 				.onComplete(completion -> {
-					if (teamManager.isValidTeamName(completion.getText())){
-						team.setTeamName(completion.getText());
-						completion.getPlayer().sendMessage(Lang.TEAM_MESSAGE_NAME_CHANGED);
-						return Collections.singletonList(AnvilGUI.ResponseAction.close());
-					} else {
-						completion.getPlayer().sendMessage(Lang.TEAM_MESSAGE_NAME_CHANGED_ERROR);
-						return Collections.singletonList(AnvilGUI.ResponseAction.close());
-					}
+					final String renameResult = teamManager.renameTeam(team, completion.getText());
+					completion.getPlayer().sendMessage(renameResult);
+					return Collections.singletonList(AnvilGUI.ResponseAction.close());
 				})
 				.open(player);
 	}

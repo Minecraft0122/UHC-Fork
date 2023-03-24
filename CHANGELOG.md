@@ -13,6 +13,11 @@
     - Added the `max-players-per-team` setting to `love_at_first_sight` in `scenarios.yml`
 - [#36][GL-36] - Option to disable sneaking requirement in the Vein Miner scenario
     - Added the `require-sneaking` setting to `vein_miner` in `scenarios.yml`
+- [#39][GL-39] - Clarify and remove some team name restrictions
+    - Removed `team.message.name-change-error` from `lang.yml`
+    - Added `team.message.name-empty` to `lang.yml`
+    - Added `team.message.name-too-long` to `lang.yml`
+    - Added `team.message.name-illegal-characters` to `lang.yml`
 - [#47][GL-47] - Option to control the election threshold for scenario voting
     - Added the `customize-game-behavior.scenarios.voting.election-threshold` setting to `config.yml`
 - [#58][GL-58] - Avoid resetting the player's aim when teleporting
@@ -40,6 +45,7 @@
 [GL-29]: https://gitlab.com/uhccore/uhccore/-/issues/29
 [GL-30]: https://gitlab.com/uhccore/uhccore/-/issues/30
 [GL-36]: https://gitlab.com/uhccore/uhccore/-/issues/36
+[GL-39]: https://gitlab.com/uhccore/uhccore/-/issues/39
 [GL-45]: https://gitlab.com/uhccore/uhccore/-/issues/45
 [GL-47]: https://gitlab.com/uhccore/uhccore/-/issues/47
 [GL-55]: https://gitlab.com/uhccore/uhccore/-/issues/55

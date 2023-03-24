@@ -3,7 +3,6 @@ package com.gmail.val59000mc.players;
 import com.gmail.val59000mc.exceptions.UhcTeamException;
 import com.gmail.val59000mc.game.handlers.ScoreboardHandler;
 import com.gmail.val59000mc.languages.Lang;
-import com.gmail.val59000mc.utils.CompareUtils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,8 +11,17 @@ import org.bukkit.entity.Player;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class TeamManager{
+
+	// This limit is imposed by Minecraft 1.8 - 1.17.
+	private static final int TEAM_NAME_MAX_LENGTH = 16;
+
+	// Allow space-separated alphanumeric Unicode words (excluding the Connector Punctuation category).
+	// https://unicode.org/reports/tr18/#Compatibility_Properties
+	// https://unicode.org/reports/tr18/#General_Category_Property
+	private static final Pattern TEAM_NAME_PATTERN = Pattern.compile("[\\p{Alnum}\\p{gc=M}\\p{IsJoin_Control}\\p{gc=Zs}]+", Pattern.UNICODE_CHARACTER_CLASS);
 
 	private static final String[] TEAM_COLORS = new String[]{
 		ChatColor.RED.toString(),
@@ -119,9 +127,17 @@ public class TeamManager{
 		}
 	}
 
-	public boolean isValidTeamName(String name){
-		return CompareUtils.validateName(name)
-				&& getTeamByName(name) == null;
+	public String renameTeam(UhcTeam team, String newName) {
+		if (newName == null || newName.isEmpty()) {
+			return Lang.TEAM_MESSAGE_NAME_EMPTY;
+		} else if (newName.length() > TEAM_NAME_MAX_LENGTH) {
+			return Lang.TEAM_MESSAGE_NAME_TOO_LONG;
+		} else if (!TEAM_NAME_PATTERN.matcher(newName).matches()) {
+			return Lang.TEAM_MESSAGE_NAME_ILLEGAL_CHARACTERS;
+		}
+
+		team.setTeamName(newName);
+		return Lang.TEAM_MESSAGE_NAME_CHANGED;
 	}
 
 	@Nullable
