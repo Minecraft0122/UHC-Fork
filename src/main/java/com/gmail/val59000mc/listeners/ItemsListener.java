@@ -339,32 +339,32 @@ public class ItemsListener implements Listener {
 		teamManager.replyToTeamInvite(uhcPlayer, team, accepted);
 	}
 
-	private void openTeamRenameGUI(Player player, UhcTeam team){
+	private void openTeamRenameGUI(Player player, UhcTeam team) {
 		new AnvilGUI.Builder()
-				.plugin(UhcCore.getPlugin())
-				.title(Lang.TEAM_INVENTORY_RENAME)
-				.text(team.getTeamName())
-				.itemLeft(new ItemStack(Material.NAME_TAG))
-				.onComplete(completion -> {
-					final String renameResult = teamManager.renameTeam(team, completion.getText());
-					completion.getPlayer().sendMessage(renameResult);
-					return Collections.singletonList(AnvilGUI.ResponseAction.close());
-				})
-				.open(player);
+			.plugin(UhcCore.getPlugin())
+			.title(Lang.TEAM_INVENTORY_RENAME)
+			.text(team.getTeamName())
+			.itemLeft(new ItemStack(Material.NAME_TAG))
+			.onComplete(completion -> {
+				final String renameResult = teamManager.renameTeam(team, completion.getText());
+				completion.getPlayer().sendMessage(renameResult);
+				return Collections.singletonList(AnvilGUI.ResponseAction.close());
+			})
+			.open(player);
 	}
 
-	private void openTeamInviteGUI(Player player){
+	private void openTeamInviteGUI(Player player) {
 		new AnvilGUI.Builder()
-				.plugin(UhcCore.getPlugin())
-				.title(Lang.TEAM_INVENTORY_INVITE_PLAYER)
-				.text("Enter name ...")
-				.itemLeft(new ItemStack(Material.NAME_TAG))
-				.onComplete(completion -> {
-					String inviteResult = teamManager.sendInvite(completion.getPlayer(), completion.getText());
-					completion.getPlayer().sendMessage(inviteResult);
-					return Collections.singletonList(AnvilGUI.ResponseAction.close());
-				})
-				.open(player);
+			.plugin(UhcCore.getPlugin())
+			.title(Lang.TEAM_INVENTORY_INVITE_PLAYER)
+			.text("Enter name ...")
+			.itemLeft(new ItemStack(Material.NAME_TAG))
+			.onComplete(completion -> {
+				final String inviteResult = teamManager.sendInvite(completion.getPlayer(), completion.getText());
+				completion.getPlayer().sendMessage(inviteResult);
+				return Collections.singletonList(AnvilGUI.ResponseAction.close());
+			})
+			.open(player);
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)

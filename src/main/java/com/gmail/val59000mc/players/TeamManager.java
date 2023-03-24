@@ -82,7 +82,7 @@ public class TeamManager{
 	}
 
 	public String sendInvite(Player inviter, String inviteeName) {
-		UhcPlayer uhcInviter = playerManager.getUhcPlayer(inviter);
+		final UhcPlayer uhcInviter = playerManager.getUhcPlayer(inviter);
 		return sendInvite(uhcInviter, inviteeName);
 	}
 
@@ -95,13 +95,13 @@ public class TeamManager{
 			return Lang.TEAM_MESSAGE_PLAYER_NAME_EMPTY;
 		}
 
-		Player bukkitInvitee = Bukkit.getPlayer(inviteeName);
+		final Player bukkitInvitee = Bukkit.getPlayer(inviteeName);
 		if (bukkitInvitee == null) {
 			return Lang.TEAM_MESSAGE_PLAYER_NOT_ONLINE.replace("%player%", inviteeName);
 		}
 
-		UhcTeam team = inviter.getTeam();
-		UhcPlayer uhcInvitee = playerManager.getUhcPlayer(bukkitInvitee);
+		final UhcTeam team = inviter.getTeam();
+		final UhcPlayer uhcInvitee = playerManager.getUhcPlayer(bukkitInvitee);
 		if (team.contains(uhcInvitee)) {
 			return Lang.TEAM_MESSAGE_ALREADY_IN_TEAM.replace("%player%", uhcInvitee.getRealName());
 		}
