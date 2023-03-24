@@ -503,10 +503,13 @@ To get started, see
 
 ## When will the next update be released? What features will it have?
 
-There is currently no live updated roadmap, and I generally won't be able
-to give out an ETA unless the release is almost ready. That's simply because
-I don't have that much time (and can't reliably predict when I have it),
-seeing as this is a hobby project that I do besides my studies and work.
+There is currently no complete roadmap, but you can always take a look at
+[the milestones in GitLab][milestones] to get some insight into current and
+future updates, if a milestone has been created for them. Please note that I
+generally won't be able to give out an ETA unless the release is almost ready.
+That's simply because I don't have that much time (and can't reliably predict
+when I have it), seeing as this is a hobby project that I work on
+besides my studies and work.
 
 Having said that, you can always search through the message history on the
 Discord server in case I've hinted at a thing or two, and I may answer some
@@ -520,6 +523,7 @@ familiar with Git, you can also [view the list of commits][compare] since the
 previous version (using its tag) and the head of the `main` branch. Just make
 sure to select the right tag matching the version you want to compare from.
 
+[milestones]: https://gitlab.com/uhccore/uhccore/-/milestones
 [changelog]: https://gitlab.com/uhccore/uhccore/-/blob/main/CHANGELOG.md
 [compare]: https://gitlab.com/uhccore/uhccore/-/compare?from=1.20.3&to=main
 
