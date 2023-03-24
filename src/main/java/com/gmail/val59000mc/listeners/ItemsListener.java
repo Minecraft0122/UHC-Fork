@@ -182,24 +182,21 @@ public class ItemsListener implements Listener {
 			event.setCancelled(true);
 
 			if (item.hasItemMeta() && item.getItemMeta().hasLore()){
-				String selectedColor = item.getItemMeta().getLore().get(0).replace(ChatColor.RESET.toString(), "");
 				player.closeInventory();
 
+				final ChatColor selectedColor = getSelectedColor(event);
+				if (selectedColor == null) {
+					return;
+				}
+
 				// check if already used by this team
-				if (uhcPlayer.getTeam().getColor().contains(selectedColor)){
+				if (uhcPlayer.getTeam().getColor() == selectedColor) {
 					uhcPlayer.sendMessage(Lang.TEAM_MESSAGE_COLOR_ALREADY_SELECTED);
 					return;
 				}
 
-				// check if still available
-				String newPrefix = teamManager.getTeamPrefix(selectedColor);
-				if (newPrefix == null){
-					uhcPlayer.sendMessage(Lang.TEAM_MESSAGE_COLOR_UNAVAILABLE);
-					return;
-				}
-
 				// assign color and update color on tab
-				uhcPlayer.getTeam().setPrefix(newPrefix);
+				uhcPlayer.getTeam().setColor(selectedColor);
 				scoreboardHandler.updateTeamOnTab(uhcPlayer.getTeam());
 
 				uhcPlayer.sendMessage(Lang.TEAM_MESSAGE_COLOR_CHANGED);
@@ -233,6 +230,27 @@ public class ItemsListener implements Listener {
 			final BrewerInventory inv = (BrewerInventory) event.getInventory();
 			final HumanEntity human = event.getWhoClicked();
 			Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), new CheckBrewingStandAfterClick(inv.getHolder(), human),1);
+		}
+	}
+
+	private ChatColor getSelectedColor(InventoryClickEvent clickEvent) {
+		// Temporary workaround until we refactor the GUI menu code
+		// See UhcItems#openTeamColorInventory
+		if (clickEvent.getClickedInventory() != clickEvent.getView().getTopInventory()) {
+			return null;
+		}
+		switch (clickEvent.getSlot()) {
+			case 0: return ChatColor.RED;
+			case 1: return ChatColor.BLUE;
+			case 2: return ChatColor.DARK_GREEN;
+			case 3: return ChatColor.DARK_AQUA;
+			case 4: return ChatColor.DARK_PURPLE;
+			case 5: return ChatColor.YELLOW;
+			case 6: return ChatColor.GOLD;
+			case 7: return ChatColor.GREEN;
+			case 8: return ChatColor.AQUA;
+			case 9: return ChatColor.LIGHT_PURPLE;
+			default: return null;
 		}
 	}
 

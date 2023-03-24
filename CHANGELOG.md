@@ -6,6 +6,9 @@
 
 - [#10][GL-10] - Option to disable axe requirement in the Timber scenario
     - Added the `require-axe` setting to `timber` in `scenarios.yml`
+- [#14][GL-14] - Support more than 80 unique teams in the tab list
+    - Removed `team.message.color-unavailable` from `lang.yml`
+    - Added `display.team-prefix` to `lang.yml`
 - [#18][GL-18] - Support loading/saving the Unbreakable NBT tag on items
 - [#20][GL-20] - Support loading/saving banner patterns on items
 - [#26][GL-26] - Log more information when a safe starting location can't be found
@@ -36,6 +39,7 @@
 - [#56][GL-56] - Players may sometimes fall into the ground (and suffocate) when teleported to their starting location
 
 [GL-10]: https://gitlab.com/uhccore/uhccore/-/issues/10
+[GL-14]: https://gitlab.com/uhccore/uhccore/-/issues/14
 [GL-18]: https://gitlab.com/uhccore/uhccore/-/issues/18
 [GL-20]: https://gitlab.com/uhccore/uhccore/-/issues/20
 [GL-21]: https://gitlab.com/uhccore/uhccore/-/issues/21

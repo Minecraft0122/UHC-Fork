@@ -4,7 +4,6 @@ import com.gmail.val59000mc.configuration.MainConfig;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.players.PlayerState;
-import com.gmail.val59000mc.players.TeamManager;
 import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.players.UhcTeam;
 import com.gmail.val59000mc.utils.UniversalMaterial;
@@ -270,41 +269,17 @@ public class UhcItems{
 	public static void openTeamColorInventory(Player player){
 		int maxSlots = 2*9;
 		Inventory inv = Bukkit.createInventory(null, maxSlots, Lang.TEAM_INVENTORY_COLOR);
-		GameManager gm = GameManager.getGameManager();
-		TeamManager tm = gm.getTeamManager();
 
-		for (String prefix : tm.getFreePrefixes()){
-			if (prefix.contains(ChatColor.RED.toString())){
-				inv.addItem(getWoolItem(ChatColor.RED, Lang.TEAM_COLORS_RED, UniversalMaterial.RED_WOOL));
-			}
-			else if (prefix.contains(ChatColor.BLUE.toString())){
-				inv.addItem(getWoolItem(ChatColor.BLUE, Lang.TEAM_COLORS_BLUE, UniversalMaterial.BLUE_WOOL));
-			}
-			else if (prefix.contains(ChatColor.DARK_GREEN.toString())){
-				inv.addItem(getWoolItem(ChatColor.DARK_GREEN, Lang.TEAM_COLORS_DARK_GREEN, UniversalMaterial.GREEN_WOOL));
-			}
-			else if (prefix.contains(ChatColor.DARK_AQUA.toString())){
-				inv.addItem(getWoolItem(ChatColor.DARK_AQUA, Lang.TEAM_COLORS_DARK_AQUA, UniversalMaterial.CYAN_WOOL));
-			}
-			else if (prefix.contains(ChatColor.DARK_PURPLE.toString())){
-				inv.addItem(getWoolItem(ChatColor.DARK_PURPLE, Lang.TEAM_COLORS_DARK_PURPLE, UniversalMaterial.PURPLE_WOOL));
-			}
-			else if (prefix.contains(ChatColor.YELLOW.toString())){
-				inv.addItem(getWoolItem(ChatColor.YELLOW, Lang.TEAM_COLORS_YELLOW, UniversalMaterial.YELLOW_WOOL));
-			}
-			else if (prefix.contains(ChatColor.GOLD.toString())){
-				inv.addItem(getWoolItem(ChatColor.GOLD, Lang.TEAM_COLORS_GOLD, UniversalMaterial.ORANGE_WOOL));
-			}
-			else if (prefix.contains(ChatColor.GREEN.toString())){
-				inv.addItem(getWoolItem(ChatColor.GREEN, Lang.TEAM_COLORS_GREEN, UniversalMaterial.LIME_WOOL));
-			}
-			else if (prefix.contains(ChatColor.AQUA.toString())){
-				inv.addItem(getWoolItem(ChatColor.AQUA, Lang.TEAM_COLORS_AQUA, UniversalMaterial.LIGHT_BLUE_WOOL));
-			}
-			else if (prefix.contains(ChatColor.LIGHT_PURPLE.toString())){
-				inv.addItem(getWoolItem(ChatColor.LIGHT_PURPLE, Lang.TEAM_COLORS_LIGHT_PURPLE, UniversalMaterial.PINK_WOOL));
-			}
-		}
+		inv.addItem(getWoolItem(ChatColor.RED, Lang.TEAM_COLORS_RED, UniversalMaterial.RED_WOOL));
+		inv.addItem(getWoolItem(ChatColor.BLUE, Lang.TEAM_COLORS_BLUE, UniversalMaterial.BLUE_WOOL));
+		inv.addItem(getWoolItem(ChatColor.DARK_GREEN, Lang.TEAM_COLORS_DARK_GREEN, UniversalMaterial.GREEN_WOOL));
+		inv.addItem(getWoolItem(ChatColor.DARK_AQUA, Lang.TEAM_COLORS_DARK_AQUA, UniversalMaterial.CYAN_WOOL));
+		inv.addItem(getWoolItem(ChatColor.DARK_PURPLE, Lang.TEAM_COLORS_DARK_PURPLE, UniversalMaterial.PURPLE_WOOL));
+		inv.addItem(getWoolItem(ChatColor.YELLOW, Lang.TEAM_COLORS_YELLOW, UniversalMaterial.YELLOW_WOOL));
+		inv.addItem(getWoolItem(ChatColor.GOLD, Lang.TEAM_COLORS_GOLD, UniversalMaterial.ORANGE_WOOL));
+		inv.addItem(getWoolItem(ChatColor.GREEN, Lang.TEAM_COLORS_GREEN, UniversalMaterial.LIME_WOOL));
+		inv.addItem(getWoolItem(ChatColor.AQUA, Lang.TEAM_COLORS_AQUA, UniversalMaterial.LIGHT_BLUE_WOOL));
+		inv.addItem(getWoolItem(ChatColor.LIGHT_PURPLE, Lang.TEAM_COLORS_LIGHT_PURPLE, UniversalMaterial.PINK_WOOL));
 
 		player.openInventory(inv);
 	}

@@ -72,7 +72,7 @@ public class ScoreboardManager {
 		}
 
 		if (returnString.contains("%teamColor%")){
-			returnString = returnString.replace("%teamColor%",uhcPlayer.getTeam().getPrefix());
+			returnString = returnString.replace("%teamColor%", uhcPlayer.getTeam().getColor() + "\u25A0");
 		}
 
 		if (returnString.contains("%border%")){

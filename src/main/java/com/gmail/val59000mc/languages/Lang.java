@@ -54,6 +54,7 @@ public class Lang{
 
 
 	public static String DISPLAY_MESSAGE_PREFIX;
+	public static String DISPLAY_TEAM_PREFIX;
 	public static String DISPLAY_EPISODE_MARK;
 	public static String DISPLAY_SPECTATOR_CHAT;
 	public static String DISPLAY_TEAM_CHAT;
@@ -146,7 +147,6 @@ public class Lang{
 	public static String TEAM_MESSAGE_PLAYER_ALREADY_IN_TEAM;
 	public static String TEAM_MESSAGE_FULL;
 	public static String TEAM_MESSAGE_COLOR_ALREADY_SELECTED;
-	public static String TEAM_MESSAGE_COLOR_UNAVAILABLE;
 	public static String TEAM_MESSAGE_COLOR_CHANGED;
 	public static String TEAM_MESSAGE_NAME_CHANGED;
 	public static String TEAM_MESSAGE_NAME_EMPTY;
@@ -283,6 +283,7 @@ public class Lang{
 
 		// Display
 		DISPLAY_MESSAGE_PREFIX = getString(lang, "display.message-prefix", "&a[UhcCore]&r");
+		DISPLAY_TEAM_PREFIX = getString(lang, "display.team-prefix", "[Team #%teamNumber%] ");
 		DISPLAY_EPISODE_MARK = getString(lang, "display.episode-mark", "End of episode %episode%!");
 		DISPLAY_SPECTATOR_CHAT = getString(lang, "display.spectator-chat", "&7[Spec] &r%player%&r: %message%");
 		DISPLAY_TEAM_CHAT = getString(lang, "display.team-chat", "&a[Team] &r%player%&r: %message%");
@@ -377,7 +378,6 @@ public class Lang{
 		TEAM_MESSAGE_PLAYER_ALREADY_IN_TEAM = getString(lang, "team.message.player-already-in-team", "&c%player% is already in a team");
 		TEAM_MESSAGE_FULL = getString(lang, "team.message.full", "&c%player% cannot join %leader%'s team because the team is full (%limit% players)");
 		TEAM_MESSAGE_COLOR_ALREADY_SELECTED = getString(lang, "team.message.color-already-selected", "&cYou already selected this color.");
-		TEAM_MESSAGE_COLOR_UNAVAILABLE = getString(lang, "team.message.color-unavailable", "&cThis color is no longer available.");
 		TEAM_MESSAGE_COLOR_CHANGED = getString(lang, "team.message.color-changed", "&aYour team color was successfully changed.");
 		TEAM_MESSAGE_NAME_CHANGED = getString(lang, "team.message.name-changed", "&aYour team name was successfully changed.");
 		TEAM_MESSAGE_NAME_EMPTY = getString(lang, "team.message.name-empty", "&cThat team name is empty!");

@@ -6,6 +6,7 @@ import com.gmail.val59000mc.exceptions.UhcTeamException;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.languages.Lang;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -24,7 +25,7 @@ public class UhcTeam {
 	private Location startingLocation;
 	private final int teamNumber;
 	private String teamName;
-	private String prefix;
+	private ChatColor color;
 	private final Inventory teamInventory;
 
 	public UhcTeam(UhcPlayer uhcPlayer) {
@@ -33,7 +34,7 @@ public class UhcTeam {
 		readyToStart = false;
 		teamNumber = GameManager.getGameManager().getTeamManager().getNewTeamNumber();
 		teamName = "Team " + teamNumber;
-		prefix = GameManager.getGameManager().getTeamManager().getTeamPrefix();
+		color = GameManager.getGameManager().getTeamManager().getRandomTeamColor();
 		teamInventory = Bukkit.createInventory(null, 9*3, Lang.SCENARIO_TEAMINVENTORY_TITLE);
 	}
 
@@ -50,15 +51,15 @@ public class UhcTeam {
 	}
 
 	public String getPrefix() {
-		return prefix + "\u25A0 ";
+		return color + Lang.DISPLAY_TEAM_PREFIX.replace("%teamNumber%", Integer.toString(teamNumber));
 	}
 
-	public String getColor(){
-		return prefix;
+	public ChatColor getColor() {
+		return color;
 	}
 
-	public void setPrefix(String prefix){
-		this.prefix = prefix;
+	public void setColor(ChatColor color) {
+		this.color = color;
 	}
 
 	public Inventory getTeamInventory() {

@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Pattern;
 
 public class TeamManager{
@@ -23,40 +24,33 @@ public class TeamManager{
 	// https://unicode.org/reports/tr18/#General_Category_Property
 	private static final Pattern TEAM_NAME_PATTERN = Pattern.compile("[\\p{Alnum}\\p{gc=M}\\p{IsJoin_Control}\\p{gc=Zs}]+", Pattern.UNICODE_CHARACTER_CLASS);
 
-	private static final String[] TEAM_COLORS = new String[]{
-		ChatColor.RED.toString(),
-		ChatColor.BLUE.toString(),
-		ChatColor.DARK_GREEN.toString(),
-		ChatColor.DARK_AQUA.toString(),
-		ChatColor.DARK_PURPLE.toString(),
-		ChatColor.YELLOW.toString(),
-		ChatColor.GOLD.toString(),
-		ChatColor.GREEN.toString(),
-		ChatColor.AQUA.toString(),
-		ChatColor.LIGHT_PURPLE.toString()
-	};
-
-	private static final String[] TEAM_COLOR_VARIATIONS = new String[]{
-		"",
-		ChatColor.BOLD.toString(),
-		ChatColor.ITALIC.toString(),
-		ChatColor.UNDERLINE.toString(),
-		ChatColor.BOLD.toString() + ChatColor.ITALIC.toString(),
-		ChatColor.BOLD.toString() + ChatColor.UNDERLINE.toString(),
-		ChatColor.ITALIC.toString() + ChatColor.UNDERLINE.toString(),
-		ChatColor.ITALIC.toString() + ChatColor.UNDERLINE.toString() + ChatColor.BOLD.toString()
-	};
+	private static ChatColor[] getTeamColors() {
+		return new ChatColor[] {
+			ChatColor.RED,
+			ChatColor.BLUE,
+			ChatColor.DARK_GREEN,
+			ChatColor.DARK_AQUA,
+			ChatColor.DARK_PURPLE,
+			ChatColor.YELLOW,
+			ChatColor.GOLD,
+			ChatColor.GREEN,
+			ChatColor.AQUA,
+			ChatColor.LIGHT_PURPLE
+		};
+	}
 
 	private final PlayerManager playerManager;
 	private final ScoreboardHandler scoreboardHandler;
 	private int lastTeamNumber;
-	private List<String> prefixes;
+	private final ChatColor[] randomColorPool;
+	private int randomColorCounter;
 
 	public TeamManager(PlayerManager playerManager, ScoreboardHandler scoreboardHandler){
 		this.playerManager = playerManager;
 		this.scoreboardHandler = scoreboardHandler;
-		lastTeamNumber = 0;
-		loadPrefixes();
+		this.lastTeamNumber = 0;
+		this.randomColorPool = getTeamColors();
+		this.randomColorCounter = 0;
 	}
 
 	public List<UhcTeam> getPlayingUhcTeams(){
@@ -155,58 +149,31 @@ public class TeamManager{
 		return null;
 	}
 
-	public int getNewTeamNumber(){
+	public int getNewTeamNumber() {
 		lastTeamNumber++;
 		return lastTeamNumber;
 	}
 
-	private void loadPrefixes(){
-		prefixes = new ArrayList<>();
+	public ChatColor getRandomTeamColor() {
+		// In order to avoid color repetitions, we implement a variant of the
+		// algorithm described here: https://www.baeldung.com/cs/non-repeating-random-number-generator#shuffling-during-generation
+		// In our variant, randomColorCounter keeps track of the lowest (inclusive)
+		// free index, and the used elements are swapped to the front of the array,
+		// as opposed to the back. Colors may occasionally repeat when we have
+		// gone through an entire cycle of colors.
 
-		for (String colorVariation : TEAM_COLOR_VARIATIONS){
-			for (String color : TEAM_COLORS){
-				prefixes.add(color + colorVariation);
-			}
-		}
-	}
+		// 1. Pick a random color from the "free" section at the back of the array
+		final int freeIndex = ThreadLocalRandom.current().nextInt(randomColorCounter, randomColorPool.length);
+		final ChatColor randomColor = randomColorPool[freeIndex];
 
-	private List<String> getUsedPrefixes(){
-		List<String> used = new ArrayList<>();
-		for (UhcTeam team : getUhcTeams()){
-			used.add(team.getColor());
-		}
-		return used;
-	}
+		// 2. Swap it to the "used" section at the front of the array
+		randomColorPool[freeIndex] = randomColorPool[randomColorCounter];
+		randomColorPool[randomColorCounter] = randomColor;
 
-	public List<String> getFreePrefixes(){
-		List<String> used = getUsedPrefixes();
-		List<String> free = new ArrayList<>();
-		for (String prefix : prefixes){
-			if (!used.contains(prefix)){
-				free.add(prefix);
-			}
-		}
-		return free;
-	}
+		// 3. Increment the cyclic counter
+		randomColorCounter = (randomColorCounter + 1) % randomColorPool.length;
 
-	public String getTeamPrefix(){
-		List<String> free = getFreePrefixes();
-
-		if (free.isEmpty()){
-			return ChatColor.DARK_GRAY.toString();
-		}
-
-		return free.get(0);
-	}
-
-	public String getTeamPrefix(String preferenceColor){
-		for (String prefix : getFreePrefixes()){
-			if (prefix.contains(preferenceColor)){
-				return prefix;
-			}
-		}
-
-		return null;
+		return randomColor;
 	}
 
 }
