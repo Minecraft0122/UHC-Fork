@@ -1,6 +1,15 @@
 # Changelog
 
-## [Unreleased]
+## [1.20.4] - 2023-03-24
+
+UhcCore version `1.20.4` is now here and brings some important bug fixes, lots
+of little improvements, and support for Minecraft 1.19.4!
+
+A notable improvement is that UhcCore should now be a lot better at spawning
+players at safe locations. Previously, the plugin would sometimes spawn players
+partially (or in some cases, completely) inside the ground, which should no
+longer be the case. Please create an issue at the GitLab repository or reach
+out on the Discord server if you experience any future issues with this.
 
 ### New features
 
