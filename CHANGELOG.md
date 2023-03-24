@@ -14,6 +14,7 @@
 - [#26][GL-26] - Log more information when a safe starting location can't be found
 - [#30][GL-30] - Option to override max-players-per-team in the Love at First Sight scenario
     - Added the `max-players-per-team` setting to `love_at_first_sight` in `scenarios.yml`
+- [#31][GL-31] - Support Minecraft 1.19.4
 - [#36][GL-36] - Option to disable sneaking requirement in the Vein Miner scenario
     - Added the `require-sneaking` setting to `vein_miner` in `scenarios.yml`
 - [#39][GL-39] - Clarify and remove some team name restrictions
@@ -51,6 +52,7 @@
 [GL-26]: https://gitlab.com/uhccore/uhccore/-/issues/26
 [GL-29]: https://gitlab.com/uhccore/uhccore/-/issues/29
 [GL-30]: https://gitlab.com/uhccore/uhccore/-/issues/30
+[GL-31]: https://gitlab.com/uhccore/uhccore/-/issues/31
 [GL-36]: https://gitlab.com/uhccore/uhccore/-/issues/36
 [GL-39]: https://gitlab.com/uhccore/uhccore/-/issues/39
 [GL-45]: https://gitlab.com/uhccore/uhccore/-/issues/45

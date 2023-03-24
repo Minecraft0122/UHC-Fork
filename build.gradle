@@ -81,6 +81,7 @@ dependencies {
 	shadowJar "net.zerodind:uhccore-nms-1_18_R2:1.0.0"
 	shadowJar "net.zerodind:uhccore-nms-1_19_R1:1.0.0"
 	shadowJar "net.zerodind:uhccore-nms-1_19_R2:1.0.0"
+	shadowJar "net.zerodind:uhccore-nms-1_19_R3:1.0.0"
 }
 
 java {
@@ -113,7 +114,7 @@ tasks.named("processResources") {
 tasks.named("runServer") {
 	// The minecraft version to use can be changed via the mcVersion property
 	// For example: gradlew runServer -PmcVersion=1.8.8
-	def mcVersion = project.findProperty("mcVersion") ?: "1.19.3"
+	def mcVersion = project.findProperty("mcVersion") ?: "1.19.4"
 	minecraftVersion mcVersion
 	runDirectory rootProject.file("run/$mcVersion")
 	javaLauncher = javaToolchains.launcherFor {
