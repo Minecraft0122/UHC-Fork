@@ -91,6 +91,10 @@ public class TeamManager{
 			return Lang.TEAM_MESSAGE_NOT_LEADER;
 		}
 
+		if (inviteeName == null || inviteeName.isEmpty()) {
+			return Lang.TEAM_MESSAGE_PLAYER_NAME_EMPTY;
+		}
+
 		Player bukkitInvitee = Bukkit.getPlayer(inviteeName);
 		if (bukkitInvitee == null) {
 			return Lang.TEAM_MESSAGE_PLAYER_NOT_ONLINE.replace("%player%", inviteeName);

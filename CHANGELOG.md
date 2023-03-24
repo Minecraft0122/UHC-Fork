@@ -21,6 +21,7 @@
 - [#47][GL-47] - Option to control the election threshold for scenario voting
     - Added the `customize-game-behavior.scenarios.voting.election-threshold` setting to `config.yml`
 - [#58][GL-58] - Avoid resetting the player's aim when teleporting
+- Added `team.message.player-name-empty` to `lang.yml`
 - Added `team.message.invite-success` to `lang.yml`
 
 ### Bug fixes

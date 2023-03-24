@@ -124,6 +124,7 @@ public class Lang{
 	public static String TEAM_ITEM_NOT_READY;
 
 	// Team Messages
+	public static String TEAM_MESSAGE_PLAYER_NAME_EMPTY;
 	public static String TEAM_MESSAGE_PLAYER_NOT_ONLINE;
 	public static String TEAM_MESSAGE_NOW_READY;
 	public static String TEAM_MESSAGE_NOW_NOT_READY;
@@ -354,6 +355,7 @@ public class Lang{
 		TEAM_ITEM_NOT_READY = getString(lang, "team.item.not-ready", "&cNot Ready");
 
 		// Team Messages
+		TEAM_MESSAGE_PLAYER_NAME_EMPTY = getString(lang, "team.message.player-name-empty", "&cPlayer name cannot be empty.");
 		TEAM_MESSAGE_PLAYER_NOT_ONLINE = getString(lang, "team.message.player-not-online", "&c%player% isn't online.");
 		TEAM_MESSAGE_NOW_READY = getString(lang, "team.message.now-ready", "&6Your team is now ready!");
 		TEAM_MESSAGE_NOW_NOT_READY = getString(lang, "team.message.now-not-ready", "&6Your team is now NOT ready!");
