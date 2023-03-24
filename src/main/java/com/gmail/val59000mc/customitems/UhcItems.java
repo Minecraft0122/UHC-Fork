@@ -213,7 +213,7 @@ public class UhcItems{
 			}
 		}
 
-		if (gm.getConfig().get(MainConfig.TEAM_COLORS)){
+		if (gm.getConfig().get(MainConfig.TEAM_COLORS) && gm.getConfig().get(MainConfig.ENABLE_TEAM_COLOR_MENU)) {
 			items.add(GameItem.TEAM_COLOR_SELECTION.getItem());
 		}
 

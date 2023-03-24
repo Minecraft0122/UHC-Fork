@@ -24,6 +24,8 @@
 - [#47][GL-47] - Option to control the election threshold for scenario voting
     - Added the `customize-game-behavior.scenarios.voting.election-threshold` setting to `config.yml`
 - [#58][GL-58] - Avoid resetting the player's aim when teleporting
+- [#59][GL-59] - Option to disable team color menu
+    - Added the `enable-team-color-menu` setting to `config.yml`
 - Added `team.message.player-name-empty` to `lang.yml`
 - Added `team.message.invite-success` to `lang.yml`
 
@@ -56,6 +58,7 @@
 [GL-55]: https://gitlab.com/uhccore/uhccore/-/issues/55
 [GL-56]: https://gitlab.com/uhccore/uhccore/-/issues/56
 [GL-58]: https://gitlab.com/uhccore/uhccore/-/issues/58
+[GL-59]: https://gitlab.com/uhccore/uhccore/-/issues/59
 
 ## [1.20.3] - 2022-12-17
 

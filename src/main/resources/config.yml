@@ -10,9 +10,13 @@ min-players-to-start: 9999
 #Choose how much players can be in the same team, set it to 1 to play a game with no teams
 max-players-per-team: 2
 
-#If true every team will get a random team color (This color may be changed in the team color selector).
-#When disabled enemies will be red, team members green.
+# If true, every team will be assigned a random team color.
+# If false, enemies will be colored red, and team members will be colored green.
 use-team-colors: true
+
+# If true, the team color menu will be accessible, which allows team leaders to
+# change the color of their team (if use-team-colors is set to true).
+enable-team-color-menu: true
 
 # If false, UhcCore will not change the display names of players.
 # The display name shows in chat and in messages of other plugins that use the display name.

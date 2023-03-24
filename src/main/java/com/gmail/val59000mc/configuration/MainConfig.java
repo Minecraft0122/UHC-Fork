@@ -34,6 +34,7 @@ public class MainConfig extends YamlFile {
 	public static final BasicOption<Integer> MIN_PLAYERS_TO_START = new BasicOption<>("min-players-to-start",20);
 	public static final BasicOption<Integer> MAX_PLAYERS_PER_TEAM = new BasicOption<>("max-players-per-team",2);
 	public static final BasicOption<Boolean> TEAM_COLORS = new BasicOption<>("use-team-colors",true);
+	public static final BasicOption<Boolean> ENABLE_TEAM_COLOR_MENU = new BasicOption<>("enable-team-color-menu", true);
 	public static final BasicOption<Boolean> CHANGE_DISPLAY_NAMES = new BasicOption<>("change-display-names",false);
 	public static final BasicOption<Integer> TIME_BEFORE_START_WHEN_READY = new BasicOption<>("time-to-start-when-ready",15);
 	public static final BasicOption<Boolean> CAN_SPECTATE_AFTER_DEATH = new BasicOption<>("can-spectate-after-death",false);
