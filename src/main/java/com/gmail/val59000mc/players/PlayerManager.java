@@ -242,9 +242,6 @@ public class PlayerManager {
 					player.teleport(LocationUtils.withSameDirection(uhcPlayer.getStartingLocation(), player));
 					uhcPlayer.setHasBeenTeleportedToLocation(true);
 
-					// Remove lobby potion effects.
-					player.removePotionEffect(PotionEffectType.BLINDNESS);
-
 					// Call event
 					Bukkit.getPluginManager().callEvent(new PlayerStartsPlayingEvent(uhcPlayer));
 				}
@@ -331,7 +328,6 @@ public class PlayerManager {
 				{
 					player.removePotionEffect(effect.getType());
 				}
-				player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 999999, 1), false);
 				player.setGameMode(GameMode.SURVIVAL);
 				if(cfg.get(MainConfig.ENABLE_EXTRA_HALF_HEARTS)){
 					VersionUtils.getVersionUtils().setPlayerMaxHealth(player, 20+((double) cfg.get(MainConfig.EXTRA_HALF_HEARTS)));
@@ -484,7 +480,10 @@ public class PlayerManager {
 			}
 
 			for(UhcPlayer uhcPlayer : team.getMembers()){
-				gm.getPlayerManager().setPlayerStartPlaying(uhcPlayer);
+				uhcPlayer.setState(PlayerState.PLAYING);
+				try {
+					clearPlayerInventory(uhcPlayer.getPlayer());
+				} catch (UhcPlayerNotOnlineException ignored) {}
 			}
 
 			Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), new TeleportPlayersThread(GameManager.getGameManager(), team), delayTeleportByTeam);
@@ -604,10 +603,6 @@ public class PlayerManager {
 	}
 
 	public void startWatchPlayerPlayingThread() {
-		for(Player player : Bukkit.getOnlinePlayers()){
-			player.removePotionEffect(PotionEffectType.BLINDNESS);
-		}
-
 		// Unfreeze players
 		for (UhcPlayer uhcPlayer : getPlayersList()){
 			uhcPlayer.releasePlayer();
