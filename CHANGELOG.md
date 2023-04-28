@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased]
+
+### Bug fixes
+
+- [#68][GL-68] - Spectators will still join the game if the Double Dates scenario is enabled
+
+[GL-68]: https://gitlab.com/uhccore/uhccore/-/issues/68
+
 ## [1.20.4] - 2023-03-24
 
 UhcCore version `1.20.4` is now here and brings some important bug fixes, lots
