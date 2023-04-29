@@ -95,7 +95,6 @@ public class DeathmatchHandler {
 		Location spectatingLocation = new Location(mapLoader.getUhcWorld(World.Environment.NORMAL), 0, 100, 0);
 		for (UhcTeam team : playerManager.listUhcTeams()) {
 			Location teleportSpot = LocationUtils.getRandomSpawnLocation(mapLoader.getUhcWorld(World.Environment.NORMAL), config.get(MainConfig.DEATHMATCH_START_SIZE));
-			LOGGER.info("Teleporting team #" + team.getTeamNumber() + " to " + teleportSpot);
 			teleportTeam(team, teleportSpot, spectatingLocation);
 		}
 
@@ -107,6 +106,7 @@ public class DeathmatchHandler {
 	}
 
 	private void teleportTeam(UhcTeam team, Location spawnLocation, Location spectateLocation) {
+		LOGGER.info("Teleporting team #" + team.getTeamNumber() + " to " + spawnLocation);
 		for (UhcPlayer player : team.getMembers()) {
 			Player bukkitPlayer;
 			try {
