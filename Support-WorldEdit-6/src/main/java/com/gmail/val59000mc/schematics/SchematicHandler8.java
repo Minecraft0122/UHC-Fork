@@ -46,6 +46,7 @@ public class SchematicHandler8{
 				.build();
 
 		Operations.complete(operation);
+		editSession.flushQueue();
 
 		ArrayList<Integer> dimensions = new ArrayList<>();
 		dimensions.add(clipboard.getDimensions().getBlockY());
