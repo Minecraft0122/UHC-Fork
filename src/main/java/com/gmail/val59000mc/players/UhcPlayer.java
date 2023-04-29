@@ -38,7 +38,7 @@ public class UhcPlayer {
 	private final Map<String,Integer> craftedItems;
 	private final Set<UhcTeam> teamInvites;
 	private final Set<Scenario> scenarioVotes;
-	private final Set<ItemStack> storedItems;
+	private final List<ItemStack> storedItems;
 
 	private String nickName;
 	private Scoreboard scoreboard;
@@ -61,7 +61,7 @@ public class UhcPlayer {
 		craftedItems = new HashMap<>();
 		teamInvites = new HashSet<>();
 		scenarioVotes = new HashSet<>();
-		storedItems = new HashSet<>();
+		storedItems = new ArrayList<>();
 		offlineZombieUuid = null;
 
 		compassPlayingCurrentPlayer = this;
@@ -197,7 +197,7 @@ public class UhcPlayer {
 		return teamInvites;
 	}
 
-	public synchronized Set<ItemStack> getStoredItems(){
+	public synchronized List<ItemStack> getStoredItems(){
 		return storedItems;
 	}
 
