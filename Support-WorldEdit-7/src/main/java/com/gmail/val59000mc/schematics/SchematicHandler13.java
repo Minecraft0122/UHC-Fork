@@ -34,6 +34,12 @@ public class SchematicHandler13{
 		ClipboardReader reader = format.getReader(new FileInputStream(schematic));
 		Clipboard clipboard = reader.read();
 
+		if (!clipboard.getRegion().contains(clipboard.getOrigin())) {
+			LOGGER.warning("Schematic origin is outside of bounds for " + path);
+			LOGGER.warning("The origin will be set to the center of the schematic");
+			clipboard.setOrigin(clipboard.getRegion().getCenter().toBlockPoint());
+		}
+
 		EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(world, -1);
 
 		enableWatchdog(editSession);

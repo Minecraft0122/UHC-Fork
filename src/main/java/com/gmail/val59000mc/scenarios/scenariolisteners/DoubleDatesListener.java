@@ -12,14 +12,15 @@ public class DoubleDatesListener extends ScenarioListener{
 
 	@EventHandler
 	public void onGameStateChanged(UhcStartingEvent e){
+		List<UhcTeam> teams = getTeamManager().getUhcTeams();
+		teams.removeIf(UhcTeam::isSpectating);
+
 		// Only 1-3 teams so don't match as this would be unfair
-		if (getTeamManager().getUhcTeams().size() < 4){
+		if (teams.size() < 4) {
 			return;
 		}
 
 		// Match teams
-		List<UhcTeam> teams = getTeamManager().getUhcTeams();
-
 		UhcTeam firstTeam;
 		while (teams.size() > 1){
 			firstTeam = teams.get(0);

@@ -22,8 +22,11 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class DeathmatchHandler {
+
+	private static final Logger LOGGER = Logger.getLogger(DeathmatchHandler.class.getCanonicalName());
 
 	private final GameManager gameManager;
 	private final MainConfig config;
@@ -103,6 +106,7 @@ public class DeathmatchHandler {
 	}
 
 	private void teleportTeam(UhcTeam team, Location spawnLocation, Location spectateLocation) {
+		LOGGER.info("Teleporting team #" + team.getTeamNumber() + " to " + spawnLocation);
 		for (UhcPlayer player : team.getMembers()) {
 			Player bukkitPlayer;
 			try {

@@ -93,15 +93,15 @@ public class DeathmatchArena extends Schematic {
 		}
 		else{
 
-			int x = getLocation().getBlockX(),
-					y = getLocation().getBlockY(),
-					z = getLocation().getBlockZ();
+			int x = getLocation().getBlockX();
+			int y = getLocation().getBlockY();
+			int z = getLocation().getBlockZ();
 
 			LOGGER.info("Scanning schematic for arena teleport spots.");
 
-			for (int i = x - getWidth(); i < x + getWidth(); i++) {
+			for (int i = x - getLength(); i < x + getLength(); i++) {
 				for (int j = y - getHeight(); j < y + getHeight(); j++) {
-					for (int k = z - getLength(); k < z + getLength(); k++) {
+					for (int k = z - getWidth(); k < z + getWidth(); k++) {
 						Block block = getLocation().getWorld().getBlockAt(i, j, k);
 						if (block.getType().equals(spotMaterial) && hasAirOnTop(block)) {
 							spots.add(block.getLocation().clone().add(0.5, 1, 0.5));

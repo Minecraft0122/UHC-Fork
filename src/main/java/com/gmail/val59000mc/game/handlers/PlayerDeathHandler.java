@@ -1,7 +1,7 @@
 package com.gmail.val59000mc.game.handlers;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,7 +57,7 @@ public class PlayerDeathHandler {
 		Player player = event.getEntity();
 		UhcPlayer uhcPlayer = playerManager.getUhcPlayer(player);
 
-		Set<ItemStack> modifiedDrops = handlePlayerDeath(uhcPlayer, player.getLocation(), new HashSet<>(event.getDrops()), player.getKiller());
+		List<ItemStack> modifiedDrops = handlePlayerDeath(uhcPlayer, player.getLocation(), new ArrayList<>(event.getDrops()), player.getKiller());
 
 		// Modify event drops
 		event.getDrops().clear();
@@ -79,7 +79,7 @@ public class PlayerDeathHandler {
 	}
 
 	public void handleOfflinePlayerDeath(UhcPlayer uhcPlayer, @Nullable Location location, @Nullable Player killer) {
-		Set<ItemStack> modifiedDrops = handlePlayerDeath(uhcPlayer, location, new HashSet<>(uhcPlayer.getStoredItems()), killer);
+		List<ItemStack> modifiedDrops = handlePlayerDeath(uhcPlayer, location, new ArrayList<>(uhcPlayer.getStoredItems()), killer);
 
 		// Drop player items
 		if (location != null) {
@@ -87,7 +87,7 @@ public class PlayerDeathHandler {
 		}
 	}
 
-	private Set<ItemStack> handlePlayerDeath(UhcPlayer uhcPlayer, @Nullable Location location, Set<ItemStack> playerDrops, @Nullable Player killer) {
+	private List<ItemStack> handlePlayerDeath(UhcPlayer uhcPlayer, @Nullable Location location, List<ItemStack> playerDrops, @Nullable Player killer) {
 		if (uhcPlayer.getState() != PlayerState.PLAYING){
 			LOGGER.warning(uhcPlayer.getName() + " died while already in 'DEAD' mode!");
 			return playerDrops;

@@ -7,7 +7,9 @@ import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.scenarios.Scenario;
 import com.gmail.val59000mc.utils.LocationUtils;
 import com.gmail.val59000mc.utils.VersionUtils;
-import org.bukkit.Bukkit;
+
+import java.util.logging.Logger;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -23,6 +25,8 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 public class TeleportListener implements Listener{
+
+	private static final Logger LOGGER = Logger.getLogger(TeleportListener.class.getCanonicalName());
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerPortalEvent (PlayerPortalEvent event){
@@ -77,7 +81,7 @@ public class TeleportListener implements Listener{
 			World world = gm.getMapLoader().getUhcWorld(Environment.NORMAL);
 			int maxDistance = (int) gm.getMapLoader().getBorderSize();
 			Location loc = LocationUtils.getRandomSpawnLocation(world, maxDistance);
-
+			LOGGER.info("Teleporting " + player.getName() + " to " + loc);
 			player.teleport(loc);
 		}
 	}

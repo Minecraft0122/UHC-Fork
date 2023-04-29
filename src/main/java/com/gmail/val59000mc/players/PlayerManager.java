@@ -22,6 +22,9 @@ import com.gmail.val59000mc.threads.TimeBeforeSendBungeeThread;
 import com.gmail.val59000mc.utils.*;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+
+import io.papermc.lib.PaperLib;
+
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
@@ -242,9 +245,6 @@ public class PlayerManager {
 					player.teleport(LocationUtils.withSameDirection(uhcPlayer.getStartingLocation(), player));
 					uhcPlayer.setHasBeenTeleportedToLocation(true);
 
-					// Remove lobby potion effects.
-					player.removePotionEffect(PotionEffectType.BLINDNESS);
-
 					// Call event
 					Bukkit.getPluginManager().callEvent(new PlayerStartsPlayingEvent(uhcPlayer));
 				}
@@ -331,7 +331,6 @@ public class PlayerManager {
 				{
 					player.removePotionEffect(effect.getType());
 				}
-				player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 999999, 1), false);
 				player.setGameMode(GameMode.SURVIVAL);
 				if(cfg.get(MainConfig.ENABLE_EXTRA_HALF_HEARTS)){
 					VersionUtils.getVersionUtils().setPlayerMaxHealth(player, 20+((double) cfg.get(MainConfig.EXTRA_HALF_HEARTS)));
@@ -354,13 +353,10 @@ public class PlayerManager {
 	private void clearPlayerInventory(Player player) {
 		player.getInventory().clear();
 
-		//clear player armor
-		ItemStack[] emptyArmor = new ItemStack[4];
-		for(int i=0 ; i<emptyArmor.length ; i++){
-			emptyArmor[i] = new ItemStack(Material.AIR);
+		// PlayerInventory#clear does not clear armor contents on Spigot < 1.9
+		if (!PaperLib.isVersion(9)) {
+			player.getInventory().setArmorContents(new ItemStack[4]);
 		}
-		player.getInventory().setArmorContents(emptyArmor);
-
 	}
 
 	public void setPlayerSpectateAtLobby(UhcPlayer uhcPlayer){
@@ -375,7 +371,7 @@ public class PlayerManager {
 
 		Player player;
 		try {
-			player = uhcPlayer.getPlayer();player.getEquipment().clear();
+			player = uhcPlayer.getPlayer();
 			clearPlayerInventory(player);
 			player.setGameMode(GameMode.SPECTATOR);
 
@@ -484,7 +480,10 @@ public class PlayerManager {
 			}
 
 			for(UhcPlayer uhcPlayer : team.getMembers()){
-				gm.getPlayerManager().setPlayerStartPlaying(uhcPlayer);
+				uhcPlayer.setState(PlayerState.PLAYING);
+				try {
+					clearPlayerInventory(uhcPlayer.getPlayer());
+				} catch (UhcPlayerNotOnlineException ignored) {}
 			}
 
 			Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), new TeleportPlayersThread(GameManager.getGameManager(), team), delayTeleportByTeam);
@@ -604,10 +603,6 @@ public class PlayerManager {
 	}
 
 	public void startWatchPlayerPlayingThread() {
-		for(Player player : Bukkit.getOnlinePlayers()){
-			player.removePotionEffect(PotionEffectType.BLINDNESS);
-		}
-
 		// Unfreeze players
 		for (UhcPlayer uhcPlayer : getPlayersList()){
 			uhcPlayer.releasePlayer();
@@ -647,6 +642,15 @@ public class PlayerManager {
 		for (ItemStack item : player.getInventory().getContents()){
 			if (item != null){
 				uhcPlayer.getStoredItems().add(item);
+			}
+		}
+		// PlayerInventory#getContents does not include armor contents on Spigot < 1.9
+		if (!PaperLib.isVersion(9)) {
+			for (ItemStack item : player.getInventory().getArmorContents()) {
+				// PlayerInventory#getArmorContents maps null items to AIR on Spigot < 1.9
+				if (item.getType() != Material.AIR) {
+					uhcPlayer.getStoredItems().add(item);
+				}
 			}
 		}
 

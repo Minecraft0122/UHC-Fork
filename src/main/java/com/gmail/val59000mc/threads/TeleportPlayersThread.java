@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 public class TeleportPlayersThread implements Runnable{
 
@@ -46,8 +45,8 @@ public class TeleportPlayersThread implements Runnable{
 
 			player.teleport(LocationUtils.withSameDirection(team.getStartingLocation(), player));
 
-			player.removePotionEffect(PotionEffectType.BLINDNESS);
-			player.setFireTicks(0);
+			gameManager.getPlayerManager().setPlayerStartPlaying(uhcPlayer);
+
 			uhcPlayer.setHasBeenTeleportedToLocation(true);
 		}
 	}

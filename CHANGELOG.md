@@ -1,5 +1,25 @@
 # Changelog
 
+## [Unreleased]
+
+### Bug fixes
+
+- [#66][GL-66] - Teleport spots for the deathmatch arena are not scanned correctly
+- [#67][GL-67] - Players are set to survival mode and are able to break out of the lobby before being teleported
+- [#68][GL-68] - Spectators will still join the game if the Double Dates scenario is enabled
+- [#69][GL-69] - Offline zombies don't drop their armor on Minecraft < 1.9
+- [#70][GL-70] - Some lobby schematics are not completely destroyed when game starts
+- [#71][GL-71] - Offline zombies sometimes don't drop all player items
+- [#72][GL-72] - Teleport spots for the deathmatch arena are not found when using FastAsyncWorldEdit on Minecraft < 1.13
+
+[GL-66]: https://gitlab.com/uhccore/uhccore/-/issues/66
+[GL-67]: https://gitlab.com/uhccore/uhccore/-/issues/67
+[GL-68]: https://gitlab.com/uhccore/uhccore/-/issues/68
+[GL-69]: https://gitlab.com/uhccore/uhccore/-/issues/69
+[GL-70]: https://gitlab.com/uhccore/uhccore/-/issues/70
+[GL-71]: https://gitlab.com/uhccore/uhccore/-/issues/71
+[GL-72]: https://gitlab.com/uhccore/uhccore/-/issues/72
+
 ## [1.20.4] - 2023-03-24
 
 UhcCore version `1.20.4` is now here and brings some important bug fixes, lots
