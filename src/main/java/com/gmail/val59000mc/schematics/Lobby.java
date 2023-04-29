@@ -32,11 +32,12 @@ public class Lobby extends Schematic {
 		}
 		// Build glass box
 		else {
-			int x = getLocation().getBlockX(), y=getLocation().getBlockY()+2, z=getLocation().getBlockZ();
+			getLocation().add(0, 2, 0);
+			int x = getLocation().getBlockX(), y=getLocation().getBlockY(), z=getLocation().getBlockZ();
 			World world = getLocation().getWorld();
-			for(int i = -width; i <= width; i++){
+			for(int i = -length; i <= length; i++){
 				for(int j = -height; j <= height; j++){
-					for(int k = -length ; k <= length ; k++){
+					for(int k = -width ; k <= width ; k++){
 						if(i == -10
 							|| i == 10
 							|| j == -3
@@ -55,12 +56,12 @@ public class Lobby extends Schematic {
 	}
 
 	public void destroyBoundingBox(){
-		int lobbyX = getLocation().getBlockX(), lobbyY = getLocation().getBlockY()+2, lobbyZ = getLocation().getBlockZ();
+		int lobbyX = getLocation().getBlockX(), lobbyY = getLocation().getBlockY(), lobbyZ = getLocation().getBlockZ();
 
 		World world = getLocation().getWorld();
-		for(int x = -width; x <= width; x++){
+		for(int x = -length; x <= length; x++){
 			for(int y = height; y >= -height; y--){
-				for(int z = -length ; z <= length ; z++){
+				for(int z = -width ; z <= width ; z++){
 					Block block = world.getBlockAt(lobbyX+x,lobbyY+y,lobbyZ+z);
 					if(!block.getType().equals(Material.AIR)){
 						block.setType(Material.AIR);

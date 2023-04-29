@@ -4,11 +4,15 @@
 
 ### Bug fixes
 
+- [#66][GL-66] - Teleport spots for the deathmatch arena are not scanned correctly
 - [#67][GL-67] - Players are set to survival mode and are able to break out of the lobby before being teleported
 - [#68][GL-68] - Spectators will still join the game if the Double Dates scenario is enabled
+- [#70][GL-70] - Some lobby schematics are not completely destroyed when game starts
 
+[GL-66]: https://gitlab.com/uhccore/uhccore/-/issues/66
 [GL-67]: https://gitlab.com/uhccore/uhccore/-/issues/67
 [GL-68]: https://gitlab.com/uhccore/uhccore/-/issues/68
+[GL-70]: https://gitlab.com/uhccore/uhccore/-/issues/70
 
 ## [1.20.4] - 2023-03-24
 
