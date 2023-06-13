@@ -37,10 +37,6 @@ public class TeleportPlayersThread implements Runnable{
 
 			LOGGER.info("Teleporting " + player.getName() + " to " + team.getStartingLocation());
 
-			for(PotionEffect effect : gameManager.getConfig().get(MainConfig.POTION_EFFECT_ON_START)){
-				player.addPotionEffect(effect);
-			}
-
 			uhcPlayer.freezePlayer(team.getStartingLocation());
 
 			UhcPlayer.teleport(player, LocationUtils.withSameDirection(team.getStartingLocation(), player));

@@ -236,11 +236,6 @@ public class PlayerManager {
 						}
 					}
 
-					// Apply start potion effect.
-					for(PotionEffect effect : GameManager.getGameManager().getConfig().get(MainConfig.POTION_EFFECT_ON_START)){
-						player.addPotionEffect(effect);
-					}
-
 					// Teleport player
 					UhcPlayer.teleport(player, LocationUtils.withSameDirection(uhcPlayer.getStartingLocation(), player));
 					uhcPlayer.setHasBeenTeleportedToLocation(true);
@@ -327,10 +322,13 @@ public class PlayerManager {
 				clearPlayerInventory(player);
 				player.setFireTicks(0);
 
-				for(PotionEffect effect : player.getActivePotionEffects())
-				{
+				for (PotionEffect effect : player.getActivePotionEffects()) {
 					player.removePotionEffect(effect.getType());
 				}
+				for (PotionEffect effect : cfg.get(MainConfig.POTION_EFFECT_ON_START)) {
+					player.addPotionEffect(effect);
+				}
+
 				player.setGameMode(GameMode.SURVIVAL);
 				if(cfg.get(MainConfig.ENABLE_EXTRA_HALF_HEARTS)){
 					VersionUtils.getVersionUtils().setPlayerMaxHealth(player, 20+((double) cfg.get(MainConfig.EXTRA_HALF_HEARTS)));
