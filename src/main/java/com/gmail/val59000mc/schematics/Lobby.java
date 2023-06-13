@@ -17,7 +17,7 @@ public class Lobby extends Schematic {
 		// Dimensions for glass box
 		width = 10;
 		length = 10;
-		height = 3;
+		height = 6;
 	}
 
 	@Override
@@ -32,16 +32,15 @@ public class Lobby extends Schematic {
 		}
 		// Build glass box
 		else {
-			getLocation().add(0, 2, 0);
 			int x = getLocation().getBlockX(), y=getLocation().getBlockY(), z=getLocation().getBlockZ();
 			World world = getLocation().getWorld();
-			for(int i = -length; i <= length; i++){
-				for(int j = -height; j <= height; j++){
-					for(int k = -width ; k <= width ; k++){
+			for(int i = -10; i <= 10; i++){
+				for(int j = -1; j <= 5; j++){
+					for(int k = -10 ; k <= 10 ; k++){
 						if(i == -10
 							|| i == 10
-							|| j == -3
-							|| j == 3
+							|| j == -1
+							|| j == 5
 							|| k == -10
 							|| k == 10
 						){
