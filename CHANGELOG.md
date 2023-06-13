@@ -11,6 +11,7 @@
 - [#70][GL-70] - Some lobby schematics are not completely destroyed when game starts
 - [#71][GL-71] - Offline zombies sometimes don't drop all player items
 - [#72][GL-72] - Teleport spots for the deathmatch arena are not found when using FastAsyncWorldEdit on Minecraft < 1.13
+- [#81][GL-81] - Players may sometimes fall through the ground when teleporting on Minecraft 1.8
 
 [GL-66]: https://gitlab.com/uhccore/uhccore/-/issues/66
 [GL-67]: https://gitlab.com/uhccore/uhccore/-/issues/67
@@ -19,6 +20,7 @@
 [GL-70]: https://gitlab.com/uhccore/uhccore/-/issues/70
 [GL-71]: https://gitlab.com/uhccore/uhccore/-/issues/71
 [GL-72]: https://gitlab.com/uhccore/uhccore/-/issues/72
+[GL-81]: https://gitlab.com/uhccore/uhccore/-/issues/81
 
 ## [1.20.4] - 2023-03-24
 

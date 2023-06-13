@@ -242,7 +242,7 @@ public class PlayerManager {
 					}
 
 					// Teleport player
-					player.teleport(LocationUtils.withSameDirection(uhcPlayer.getStartingLocation(), player));
+					UhcPlayer.teleport(player, LocationUtils.withSameDirection(uhcPlayer.getStartingLocation(), player));
 					uhcPlayer.setHasBeenTeleportedToLocation(true);
 
 					// Call event
@@ -297,7 +297,7 @@ public class PlayerManager {
 		Player player;
 		try {
 			player = uhcPlayer.getPlayer();
-			player.teleport(gm.getMapLoader().getLobby().getLocation());
+			UhcPlayer.teleport(player, gm.getMapLoader().getLobby().getLocation());
 			clearPlayerInventory(player);
 			player.setGameMode(GameMode.ADVENTURE);
 			player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 99999999, 0), false);

@@ -7,6 +7,7 @@ import com.gmail.val59000mc.exceptions.UhcPlayerNotOnlineException;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.scenarios.Scenario;
+import com.gmail.val59000mc.utils.LocationUtils;
 import com.gmail.val59000mc.utils.SpigotUtils;
 import com.gmail.val59000mc.utils.TimeUtils;
 import com.gmail.val59000mc.utils.UniversalMaterial;
@@ -456,6 +457,16 @@ public class UhcPlayer {
 		} else { // 1.8.8 - 1.13
 			return item.getDurability() > item.getType().getMaxDurability();
 		}
+	}
+
+	public static void teleport(Player player, Location location) {
+		// On Minecraft < 1.9, the player may fall through the ground if teleported to a location
+		// where the chunk is not loaded, due to vanilla movement code bugs.
+		// See also: https://gitlab.com/uhccore/uhccore/-/issues/81
+		if (!PaperLib.isVersion(9)) { // 1.9+
+			LocationUtils.fullyPopulateChunk(location.getChunk());
+		}
+		player.teleport(location);
 	}
 
 }

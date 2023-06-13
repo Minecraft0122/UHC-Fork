@@ -1,6 +1,5 @@
 package com.gmail.val59000mc.scenarios.scenariolisteners;
 
-import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.scenarios.ScenarioListener;
 
 import java.util.List;
@@ -17,6 +16,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.BlockBreakEvent;
 import com.gmail.val59000mc.languages.Lang;
+import com.gmail.val59000mc.players.UhcPlayer;
 
 public class MonstersIncListener extends ScenarioListener {
 
@@ -66,7 +66,7 @@ public class MonstersIncListener extends ScenarioListener {
 					}
 				} while ((goToLoc == null || goToLoc.equals(block.getLocation())) && doorLocs.size() > 1);
 				if (goToLoc != null) {
-					player.teleport(goToLoc.clone().add(0.5, 0, 0.5));
+					UhcPlayer.teleport(player, goToLoc.clone().add(0.5, 0, 0.5));
 				}
 			}
 		}

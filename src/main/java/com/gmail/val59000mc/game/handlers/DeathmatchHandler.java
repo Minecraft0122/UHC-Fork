@@ -122,7 +122,7 @@ public class DeathmatchHandler {
 					bukkitPlayer.setGameMode(GameMode.SURVIVAL);
 				}
 				player.freezePlayer(spawnLocation);
-				bukkitPlayer.teleport(LocationUtils.withSameDirection(spawnLocation, bukkitPlayer));
+				UhcPlayer.teleport(bukkitPlayer, LocationUtils.withSameDirection(spawnLocation, bukkitPlayer));
 			} else {
 				bukkitPlayer.teleport(LocationUtils.withSameDirection(spectateLocation, bukkitPlayer));
 			}

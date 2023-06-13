@@ -43,7 +43,7 @@ public class TeleportPlayersThread implements Runnable{
 
 			uhcPlayer.freezePlayer(team.getStartingLocation());
 
-			player.teleport(LocationUtils.withSameDirection(team.getStartingLocation(), player));
+			UhcPlayer.teleport(player, LocationUtils.withSameDirection(team.getStartingLocation(), player));
 
 			gameManager.getPlayerManager().setPlayerStartPlaying(uhcPlayer);
 
