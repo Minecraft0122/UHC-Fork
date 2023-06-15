@@ -363,9 +363,12 @@ public class ItemsListener implements Listener {
 			.title(Lang.TEAM_INVENTORY_RENAME)
 			.text(team.getTeamName())
 			.itemLeft(new ItemStack(Material.NAME_TAG))
-			.onComplete(completion -> {
-				final String renameResult = teamManager.renameTeam(team, completion.getText());
-				completion.getPlayer().sendMessage(renameResult);
+			.onClick((slot, stateSnapshot) -> {
+				if (slot != AnvilGUI.Slot.OUTPUT) {
+					return Collections.emptyList();
+				}
+				final String renameResult = teamManager.renameTeam(team, stateSnapshot.getText());
+				stateSnapshot.getPlayer().sendMessage(renameResult);
 				return Collections.singletonList(AnvilGUI.ResponseAction.close());
 			})
 			.open(player);
@@ -377,9 +380,12 @@ public class ItemsListener implements Listener {
 			.title(Lang.TEAM_INVENTORY_INVITE_PLAYER)
 			.text("Enter name ...")
 			.itemLeft(new ItemStack(Material.NAME_TAG))
-			.onComplete(completion -> {
-				final String inviteResult = teamManager.sendInvite(completion.getPlayer(), completion.getText());
-				completion.getPlayer().sendMessage(inviteResult);
+			.onClick((slot, stateSnapshot) -> {
+				if (slot != AnvilGUI.Slot.OUTPUT) {
+					return Collections.emptyList();
+				}
+				final String inviteResult = teamManager.sendInvite(stateSnapshot.getPlayer(), stateSnapshot.getText());
+				stateSnapshot.getPlayer().sendMessage(inviteResult);
 				return Collections.singletonList(AnvilGUI.ResponseAction.close());
 			})
 			.open(player);

@@ -4,6 +4,7 @@
 
 ### New features
 
+- [#80][GL-80] - Support Minecraft 1.20.1
 - [#76][GL-76] - Option to change explosion power in the Timebomb scenario
     - Added the `explosion-power` setting to `timebomb` in `scenarios.yml`
 
@@ -26,6 +27,7 @@
 [GL-71]: https://gitlab.com/uhccore/uhccore/-/issues/71
 [GL-72]: https://gitlab.com/uhccore/uhccore/-/issues/72
 [GL-76]: https://gitlab.com/uhccore/uhccore/-/issues/76
+[GL-80]: https://gitlab.com/uhccore/uhccore/-/issues/80
 [GL-81]: https://gitlab.com/uhccore/uhccore/-/issues/81
 
 ## [1.20.4] - 2023-03-24
