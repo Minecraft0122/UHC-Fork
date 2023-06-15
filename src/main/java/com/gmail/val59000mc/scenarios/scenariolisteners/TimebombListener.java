@@ -28,13 +28,16 @@ public class TimebombListener extends ScenarioListener{
 	@Option
 	private long delay = 30;
 
+	@Option(key = "explosion-power")
+	private float explosionPower = 10;
+
 	@EventHandler (priority = EventPriority.HIGHEST)
 	public void onPlayerDeath(PlayerDeathEvent e) {
 		Player p = e.getEntity().getPlayer();
 		List<ItemStack> drops = new ArrayList<>(e.getDrops());
 		e.getDrops().removeAll(e.getDrops());
 
-		TimebombThread timebombThread = new TimebombThread(drops, p.getLocation().getBlock().getLocation(), p.getName(), delay);
+		TimebombThread timebombThread = new TimebombThread(drops, p.getLocation().getBlock().getLocation(), p.getName(), delay, explosionPower);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), timebombThread,1L);
 	}
 
@@ -47,13 +50,15 @@ public class TimebombListener extends ScenarioListener{
 		private List<ItemStack> drops;
 		private String name;
 		private boolean spawned;
+		private float explosionPower;
 
-		public TimebombThread(List<ItemStack> drops, Location loc, String name, long delay){
+		public TimebombThread(List<ItemStack> drops, Location loc, String name, long delay, float explosionPower) {
 			this.drops = drops;
 			this.loc = loc;
 			this.name = name;
 			timeLeft = delay;
 			spawned = false;
+			this.explosionPower = explosionPower;
 		}
 
 		@Override
@@ -70,7 +75,7 @@ public class TimebombListener extends ScenarioListener{
 				armorStand.remove();
 				block1.setType(Material.AIR);
 				block2.setType(Material.AIR);
-				block1.getWorld().createExplosion(block1.getLocation(), 10, false);
+				block1.getWorld().createExplosion(block1.getLocation(), explosionPower, false);
 			}
 
 		}

@@ -7,6 +7,10 @@ fast_leaves_decay:
 timebomb:
   # Time before exploding chest.
   delay: 30
+  # The explosion power of the Timebomb chest.
+  # For reference, the explosion power of TNT is 4.
+  # Consult the Minecraft Wiki for more details.
+  explosion-power: 10
 best_pve:
   # Time between healing players on best PvE list.
   delay: 600

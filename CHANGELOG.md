@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### New features
+
+- [#76][GL-76] - Option to change explosion power in the Timebomb scenario
+    - Added the `explosion-power` setting to `timebomb` in `scenarios.yml`
+
 ### Bug fixes
 
 - [#66][GL-66] - Teleport spots for the deathmatch arena are not scanned correctly
@@ -20,6 +25,7 @@
 [GL-70]: https://gitlab.com/uhccore/uhccore/-/issues/70
 [GL-71]: https://gitlab.com/uhccore/uhccore/-/issues/71
 [GL-72]: https://gitlab.com/uhccore/uhccore/-/issues/72
+[GL-76]: https://gitlab.com/uhccore/uhccore/-/issues/76
 [GL-81]: https://gitlab.com/uhccore/uhccore/-/issues/81
 
 ## [1.20.4] - 2023-03-24
