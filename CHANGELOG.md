@@ -1,6 +1,9 @@
 # Changelog
 
-## [Unreleased]
+## [1.20.5] - 2023-06-16
+
+UhcCore version `1.20.5` is now here and brings some important bug fixes,
+a new scenario option, and support for Minecraft 1.20.1!
 
 ### New features
 
