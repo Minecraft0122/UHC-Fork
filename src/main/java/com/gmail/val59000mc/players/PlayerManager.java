@@ -244,8 +244,7 @@ public class PlayerManager {
 					Bukkit.getPluginManager().callEvent(new PlayerStartsPlayingEvent(uhcPlayer));
 				}
 				if (uhcPlayer.getOfflineZombieUuid() != null){
-					Optional<LivingEntity> zombie = player.getWorld().getLivingEntities()
-							.stream()
+					Optional<Entity> zombie = Arrays.stream(player.getLocation().getChunk().getEntities())
 							.filter(e -> e.getUniqueId().equals(uhcPlayer.getOfflineZombieUuid()))
 							.findFirst();
 

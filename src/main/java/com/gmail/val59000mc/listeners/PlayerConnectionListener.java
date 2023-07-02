@@ -95,10 +95,11 @@ public class PlayerConnectionListener implements Listener{
 
 				KillDisconnectedPlayerThread killDisconnectedPlayerThread = new KillDisconnectedPlayerThread(
 						playerDeathHandler, event.getPlayer().getUniqueId(),
-						gameManager.getConfig().get(MainConfig.MAX_DISCONNECT_PLAYERS_TIME)
+						gameManager.getConfig().get(MainConfig.MAX_DISCONNECT_PLAYERS_TIME),
+						event.getPlayer().getLocation()
 				);
 
-				Bukkit.getScheduler().runTaskLaterAsynchronously(UhcCore.getPlugin(), killDisconnectedPlayerThread,1);
+				Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), killDisconnectedPlayerThread,1);
 			}
 			if(gameManager.getConfig().get(MainConfig.SPAWN_OFFLINE_PLAYERS) && uhcPlayer.getState().equals(PlayerState.PLAYING)){
 				playerManager.spawnOfflineZombieFor(event.getPlayer());

@@ -8,10 +8,11 @@ import com.gmail.val59000mc.game.handlers.PlayerDeathHandler;
 import com.gmail.val59000mc.players.PlayerManager;
 import com.gmail.val59000mc.players.UhcPlayer;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.bukkit.entity.LivingEntity;
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -24,11 +25,13 @@ public class KillDisconnectedPlayerThread implements Runnable{
 	private final PlayerDeathHandler playerDeathHandler;
 	private final UUID uuid;
 	private int timeLeft;
+	private final Location location;
 
-	public KillDisconnectedPlayerThread(PlayerDeathHandler playerDeathHandler, UUID playerUuid, int maxDisconnectPlayersTime){
+	public KillDisconnectedPlayerThread(PlayerDeathHandler playerDeathHandler, UUID playerUuid, int maxDisconnectPlayersTime, Location location){
 		this.playerDeathHandler = playerDeathHandler;
 		uuid = playerUuid;
 		timeLeft = maxDisconnectPlayersTime;
+		this.location = location;
 	}
 
 	@Override
@@ -57,8 +60,7 @@ public class KillDisconnectedPlayerThread implements Runnable{
 
 			// If using offline zombies kill that zombie.
 			if (uhcPlayer.getOfflineZombieUuid() != null){
-				Optional<LivingEntity> zombie = gm.getMapLoader().getUhcWorld(World.Environment.NORMAL).getLivingEntities()
-						.stream()
+				Optional<Entity> zombie = Arrays.stream(location.getChunk().getEntities())
 						.filter(e -> e.getUniqueId().equals(uhcPlayer.getOfflineZombieUuid()))
 						.findFirst();
 
