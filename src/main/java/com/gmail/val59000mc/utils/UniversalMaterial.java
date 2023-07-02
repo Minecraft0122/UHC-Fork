@@ -186,6 +186,7 @@ public enum UniversalMaterial{
 	MANGROVE_LEAVES,
 	AZALEA_LEAVES,
 	FLOWERING_AZALEA_LEAVES,
+	CHERRY_LEAVES,
 
 	OAK_LOG("LOG", "OAK_LOG", (short) 0),
 	SPRUCE_LOG("LOG", "SPRUCE_LOG", (short) 1),
@@ -194,6 +195,7 @@ public enum UniversalMaterial{
 	ACACIA_LOG("LOG_2", "ACACIA_LOG", (short) 0),
 	DARK_OAK_LOG("LOG_2", "DARK_OAK_LOG", (short) 1),
 	MANGROVE_LOG,
+	CHERRY_LOG,
 	STRIPPED_OAK_LOG,
 	STRIPPED_SPRUCE_LOG,
 	STRIPPED_BIRCH_LOG,
@@ -201,6 +203,7 @@ public enum UniversalMaterial{
 	STRIPPED_ACACIA_LOG,
 	STRIPPED_DARK_OAK_LOG,
 	STRIPPED_MANGROVE_LOG,
+	STRIPPED_CHERRY_LOG,
 
 	COOKED_BEEF("COOKED_BEEF", "COOKED_BEEF"),
 	COOKED_CHICKEN("COOKED_CHICKEN", "COOKED_CHICKEN"),
@@ -346,13 +349,15 @@ public enum UniversalMaterial{
 			|| material == UniversalMaterial.ACACIA_LOG.getType()
 			|| material == UniversalMaterial.DARK_OAK_LOG.getType()
 			|| material == UniversalMaterial.MANGROVE_LOG.getType()
+			|| material == UniversalMaterial.CHERRY_LOG.getType()
 			|| material == UniversalMaterial.STRIPPED_OAK_LOG.getType()
 			|| material == UniversalMaterial.STRIPPED_SPRUCE_LOG.getType()
 			|| material == UniversalMaterial.STRIPPED_BIRCH_LOG.getType()
 			|| material == UniversalMaterial.STRIPPED_JUNGLE_LOG.getType()
 			|| material == UniversalMaterial.STRIPPED_ACACIA_LOG.getType()
 			|| material == UniversalMaterial.STRIPPED_DARK_OAK_LOG.getType()
-			|| material == UniversalMaterial.STRIPPED_MANGROVE_LOG.getType();
+			|| material == UniversalMaterial.STRIPPED_MANGROVE_LOG.getType()
+			|| material == UniversalMaterial.STRIPPED_CHERRY_LOG.getType();
 	}
 
 	public static boolean isLeaves(Material material) {
@@ -364,7 +369,8 @@ public enum UniversalMaterial{
 			|| material == UniversalMaterial.DARK_OAK_LEAVES.getType()
 			|| material == UniversalMaterial.MANGROVE_LEAVES.getType()
 			|| material == UniversalMaterial.AZALEA_LEAVES.getType()
-			|| material == UniversalMaterial.FLOWERING_AZALEA_LEAVES.getType();
+			|| material == UniversalMaterial.FLOWERING_AZALEA_LEAVES.getType()
+			|| material == UniversalMaterial.CHERRY_LEAVES.getType();
 	}
 
 	public static boolean isAxe(Material tool) {

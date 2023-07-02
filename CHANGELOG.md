@@ -4,8 +4,10 @@
 
 ### Bug fixes
 
+- [#84][GL-84] - Cherry trees are not supported in the Timber and Fast Leaves Decay scenarios
 - [#83][GL-83] - The explosion-power option in the Double Dates scenario does not support floating-point values
 
+[GL-84]: https://gitlab.com/uhccore/uhccore/-/issues/84
 [GL-83]: https://gitlab.com/uhccore/uhccore/-/issues/83
 
 ## [1.20.5] - 2023-06-16
