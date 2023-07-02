@@ -29,7 +29,7 @@ public class TimebombListener extends ScenarioListener{
 	private long delay = 30;
 
 	@Option(key = "explosion-power")
-	private float explosionPower = 10;
+	private double explosionPower = 10;
 
 	@EventHandler (priority = EventPriority.HIGHEST)
 	public void onPlayerDeath(PlayerDeathEvent e) {
@@ -37,7 +37,7 @@ public class TimebombListener extends ScenarioListener{
 		List<ItemStack> drops = new ArrayList<>(e.getDrops());
 		e.getDrops().removeAll(e.getDrops());
 
-		TimebombThread timebombThread = new TimebombThread(drops, p.getLocation().getBlock().getLocation(), p.getName(), delay, explosionPower);
+		TimebombThread timebombThread = new TimebombThread(drops, p.getLocation().getBlock().getLocation(), p.getName(), delay, (float) explosionPower);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), timebombThread,1L);
 	}
 

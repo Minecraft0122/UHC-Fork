@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased]
+
+### Bug fixes
+
+- [#83][GL-83] - The explosion-power option in the Double Dates scenario does not support floating-point values
+
+[GL-83]: https://gitlab.com/uhccore/uhccore/-/issues/83
+
 ## [1.20.5] - 2023-06-16
 
 UhcCore version `1.20.5` is now here and brings some important bug fixes,

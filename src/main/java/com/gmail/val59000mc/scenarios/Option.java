@@ -8,6 +8,10 @@ import java.lang.annotation.Target;
 /**
  * This annotation is meant to be added to values in {@link ScenarioListener} classes on fields.
  * The options get added to the scenarios.yml for customisation.
+ *
+ * @implNote The field type must match the type returned from the configuration,
+ * to avoid runtime exceptions. For example, floating-point values must be
+ * {@code double}, not {@code float}.
  */
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = ElementType.FIELD)
