@@ -324,6 +324,13 @@ public class PlayerManager {
 
 			try {
 				player = uhcPlayer.getPlayer();
+				// If the player is being revived, make sure to respawn them
+				// (in case they haven't pressed the respawn button yet).
+				// Otherwise, they can press the respawn button and will
+				// spawn at their vanilla spawnpoint.
+				if (player.isDead()) {
+					player.spigot().respawn();
+				}
 				clearPlayerInventory(player);
 				player.setFireTicks(0);
 
