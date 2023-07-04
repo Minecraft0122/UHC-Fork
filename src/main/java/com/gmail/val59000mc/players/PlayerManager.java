@@ -240,6 +240,12 @@ public class PlayerManager {
 					UhcPlayer.teleport(player, LocationUtils.withSameDirection(uhcPlayer.getStartingLocation(), player));
 					uhcPlayer.setHasBeenTeleportedToLocation(true);
 
+					// Restore inventory if revived
+					if (!uhcPlayer.getStoredItems().isEmpty()) {
+						uhcPlayer.getStoredItems().forEach(item -> player.getWorld().dropItemNaturally(player.getLocation(), item));
+						uhcPlayer.getStoredItems().clear();
+					}
+
 					// Call event
 					Bukkit.getPluginManager().callEvent(new PlayerStartsPlayingEvent(uhcPlayer));
 				}
@@ -336,11 +342,6 @@ public class PlayerManager {
 				UhcItems.giveGameItemTo(player, GameItem.COMPASS_ITEM);
 				UhcItems.giveGameItemTo(player, GameItem.CUSTOM_CRAFT_BOOK);
 				KitsManager.giveKitTo(player);
-
-				if (!uhcPlayer.getStoredItems().isEmpty()){
-					uhcPlayer.getStoredItems().forEach(item -> player.getWorld().dropItemNaturally(player.getLocation(), item));
-					uhcPlayer.getStoredItems().clear();
-				}
 			} catch (UhcPlayerNotOnlineException ignored) {
 				// Nothing done
 			}
@@ -680,6 +681,8 @@ public class PlayerManager {
 			playerJoinsTheGame(uhcPlayer.getPlayer());
 		} catch (UhcPlayerNotOnlineException ignored) {
 			// Player gets revived next time they attempt to join.
+			// We need to support reviving offline players, because they might not be permitted
+			// to be online (before they are revived) due to the can-spectate-after-death setting.
 		}
 	}
 
