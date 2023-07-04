@@ -58,13 +58,12 @@ public class EntityDamageListener implements Listener{
 		boolean isTeamMember = owner.get().isInTeamWith(damager);
 		boolean friendlyFire = cfg.get(MainConfig.ENABLE_FRIENDLY_FIRE);
 
-		// If PvP is false or is team member & friendly fire is off
-		if (!pvp || (isTeamMember && !friendlyFire)){
+		if (isTeamMember && !friendlyFire) {
+			damager.sendMessage(Lang.PLAYERS_FF_OFF);
 			e.setCancelled(true);
-			// Canceled due to friendly fire, so send message
-			if (pvp){
-				damager.sendMessage(Lang.PLAYERS_FF_OFF);
-			}
+		} else if (!pvp) {
+			damager.sendMessage(Lang.PLAYERS_PVP_OFF);
+			e.setCancelled(true);
 		}
 	}
 

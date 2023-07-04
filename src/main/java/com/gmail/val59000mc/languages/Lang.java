@@ -48,6 +48,7 @@ public class Lang{
 	public static String PLAYERS_WON_TEAM;
 	public static String PLAYERS_ALL_HAVE_LEFT;
 	public static String PLAYERS_FF_OFF;
+	public static String PLAYERS_PVP_OFF;
 	public static String PLAYERS_SEND_BUNGEE;
 	public static String PLAYERS_SEND_BUNGEE_NOW;
 	public static String PLAYERS_SEND_BUNGEE_DISABLED;
@@ -277,6 +278,7 @@ public class Lang{
 		PLAYERS_WON_TEAM = getString(lang, "players.won-team", "Team %team% won the game!");
 		PLAYERS_ALL_HAVE_LEFT = getString(lang, "players.all-have-left", "All players have left, game will end in");
 		PLAYERS_FF_OFF = getString(lang, "players.ff-off", "&7Friendly-Fire is disabled");
+		PLAYERS_PVP_OFF = getString(lang, "players.pvp-off", "&7PvP is not enabled yet");
 		PLAYERS_SEND_BUNGEE = getString(lang, "players.send-bungee", "&eSending you to the hub in %time%");
 		PLAYERS_SEND_BUNGEE_NOW = getString(lang, "players.send-bungee-now", "&eConnecting to Hub ...");
 		PLAYERS_SEND_BUNGEE_DISABLED = getString(lang, "players.send-bungee-disabled", "&cThis command is disabled");

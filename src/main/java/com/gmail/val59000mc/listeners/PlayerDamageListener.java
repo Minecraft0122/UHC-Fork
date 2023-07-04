@@ -68,18 +68,16 @@ public class PlayerDamageListener implements Listener{
 
 
 		if(event.getDamager() instanceof Player && event.getEntity() instanceof Player){
-			if(!gameManager.getPvp()){
-				event.setCancelled(true);
-				return;
-			}
-
 			Player damager = (Player) event.getDamager();
 			Player damaged = (Player) event.getEntity();
 			UhcPlayer uhcDamager = pm.getUhcPlayer(damager);
 			UhcPlayer uhcDamaged = pm.getUhcPlayer(damaged);
 
 			if(!friendlyFire && uhcDamager.getState().equals(PlayerState.PLAYING) && uhcDamager.isInTeamWith(uhcDamaged)){
-				damager.sendMessage(Lang.PLAYERS_FF_OFF);
+				uhcDamager.sendMessage(Lang.PLAYERS_FF_OFF);
+				event.setCancelled(true);
+			} else if (!gameManager.getPvp() && uhcDamager.getState().equals(PlayerState.PLAYING)) {
+				uhcDamager.sendMessage(Lang.PLAYERS_PVP_OFF);
 				event.setCancelled(true);
 			}
 		}
@@ -98,17 +96,14 @@ public class PlayerDamageListener implements Listener{
 			Projectile projectile = (Projectile) event.getDamager();
 			final Player shot = (Player) event.getEntity();
 			if(projectile.getShooter() instanceof Player){
-
-				if(!gameManager.getPvp()){
-					event.setCancelled(true);
-					return;
-				}
-
 				UhcPlayer uhcDamager = pm.getUhcPlayer((Player) projectile.getShooter());
 				UhcPlayer uhcDamaged = pm.getUhcPlayer(shot);
 
 				if(!friendlyFire && uhcDamager.getState().equals(PlayerState.PLAYING) && uhcDamager.isInTeamWith(uhcDamaged)){
 					uhcDamager.sendMessage(Lang.PLAYERS_FF_OFF);
+					event.setCancelled(true);
+				} else if (!gameManager.getPvp() && uhcDamager.getState().equals(PlayerState.PLAYING)) {
+					uhcDamager.sendMessage(Lang.PLAYERS_PVP_OFF);
 					event.setCancelled(true);
 				}
 			}

@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### New features
+
+- [#85][GL-85] - Inform players that PvP is not enabled yet if they try to damage a player before PvP has started
+    - Added `players.pvp-off` to `lang.yml`
+
 ### Bug fixes
 
 - [#86][GL-86] - Players may respawn at the wrong location after being revived
@@ -11,6 +16,7 @@
 - [#78][GL-78] - Player inventory items are spawned at the wrong location when using the revive command
 
 [GL-86]: https://gitlab.com/uhccore/uhccore/-/issues/86
+[GL-85]: https://gitlab.com/uhccore/uhccore/-/issues/85
 [GL-84]: https://gitlab.com/uhccore/uhccore/-/issues/84
 [GL-83]: https://gitlab.com/uhccore/uhccore/-/issues/83
 [GL-79]: https://gitlab.com/uhccore/uhccore/-/issues/79
