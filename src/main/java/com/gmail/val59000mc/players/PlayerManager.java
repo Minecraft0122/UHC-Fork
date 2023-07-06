@@ -242,7 +242,7 @@ public class PlayerManager {
 
 					// Restore inventory if revived
 					if (!uhcPlayer.getStoredItems().isEmpty()) {
-						uhcPlayer.getStoredItems().forEach(item -> player.getWorld().dropItemNaturally(player.getLocation(), item));
+						uhcPlayer.getStoredItems().forEach(item -> player.getWorld().dropItem(player.getLocation(), item));
 						uhcPlayer.getStoredItems().clear();
 					}
 

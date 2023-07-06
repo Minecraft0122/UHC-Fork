@@ -21,7 +21,7 @@ public class TeamInventoryListener extends ScenarioListener{
 			{
 				if (stack != null)
 				{
-					world.dropItemNaturally(location, stack);
+					world.dropItem(location, stack);
 				}
 			}
 			team.getTeamInventory().clear();

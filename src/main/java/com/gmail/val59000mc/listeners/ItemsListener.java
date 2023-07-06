@@ -417,7 +417,7 @@ public class ItemsListener implements Listener {
 					human.sendMessage(Lang.ITEMS_POTION_BANNED);
 				}
 
-				stand.getLocation().getWorld().dropItemNaturally(stand.getLocation(), ingredient.clone());
+				stand.getLocation().getWorld().dropItem(stand.getLocation(), ingredient.clone());
 				stand.getInventory().setIngredient(new ItemStack(Material.AIR));
 			}
 		}
