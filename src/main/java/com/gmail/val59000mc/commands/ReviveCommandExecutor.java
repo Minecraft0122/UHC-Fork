@@ -1,26 +1,26 @@
 package com.gmail.val59000mc.commands;
 
-import com.gmail.val59000mc.UhcCore;
-import com.gmail.val59000mc.game.GameManager;
-import com.gmail.val59000mc.game.GameState;
-import com.gmail.val59000mc.players.PlayerManager;
-import com.gmail.val59000mc.players.UhcPlayer;
-import com.gmail.val59000mc.utils.MojangUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.UUID;
+import com.gmail.val59000mc.game.GameManager;
+import com.gmail.val59000mc.game.GameState;
+import com.gmail.val59000mc.players.PlayerManager;
+import com.gmail.val59000mc.players.UhcPlayer;
 
 public class ReviveCommandExecutor implements CommandExecutor{
 
 	private final GameManager gameManager;
+	private final PlayerManager playerManager;
 
 	public ReviveCommandExecutor(GameManager gameManager){
 		this.gameManager = gameManager;
+		this.playerManager = gameManager.getPlayerManager();
 	}
 
 	@Override
@@ -35,42 +35,47 @@ public class ReviveCommandExecutor implements CommandExecutor{
 			return true;
 		}
 
-		sender.sendMessage(ChatColor.GREEN + "Loading player data ...");
-
 		String name = args[0];
-		Player player = Bukkit.getPlayer(name);
 		boolean spawnWithItems = args.length != 2 || !args[1].equalsIgnoreCase("clear");
 
-		if (player != null){
-			uuidCallback(player.getUniqueId(), player.getName(), spawnWithItems, sender);
+		OfflinePlayer player = findOnlineOrOfflinePlayer(name);
+		if (player == null) {
+			sender.sendMessage(ChatColor.RED + "Player not found!");
 			return true;
 		}
 
-		Bukkit.getScheduler().runTaskAsynchronously(UhcCore.getPlugin(), () -> uuidCallback(MojangUtils.getPlayerUuid(name), MojangUtils.getPlayerName(name), spawnWithItems, sender));
+		playerManager.revivePlayer(player.getUniqueId(), player.getName(), spawnWithItems);
+		if (player.isOnline()) {
+			sender.sendMessage(ChatColor.GREEN + name + " has been revived!");
+		} else {
+			sender.sendMessage(ChatColor.GREEN + name + " can now join the game!");
+		}
 		return true;
 	}
 
-	private void uuidCallback(UUID uuid, String name, boolean spawnWithItems, CommandSender caller){
-		if (!Bukkit.isPrimaryThread()){
-			// Run in main bukkit thread
-			Bukkit.getScheduler().runTask(UhcCore.getPlugin(), () -> uuidCallback(uuid, name, spawnWithItems, caller));
-			return;
+	private OfflinePlayer findOnlineOrOfflinePlayer(String name) {
+		Player onlinePlayer = Bukkit.getPlayer(name);
+		if (onlinePlayer != null) {
+			return onlinePlayer; // Found online player with matching name
 		}
 
-		if (uuid == null){
-			caller.sendMessage(ChatColor.RED + "Player not found!");
-			return;
+		// Note: We don't use Bukkit.getOfflinePlayers(), it can be very expensive
+		// since it needs to load all player.dat files from disk.
+		// Instead, we use our own in-memory player list (which also tracks
+		// offline players, as long as they are a UHC player).
+		for (UhcPlayer uhcPlayer : playerManager.getPlayersList()) {
+			if (!uhcPlayer.getRealName().equals(name)) {
+				continue; // Skip reading player.dat file
+			}
+
+			// Found likely match, load the player.dat file.
+			OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uhcPlayer.getUuid());
+			if (offlinePlayer.hasPlayedBefore()) {
+				return offlinePlayer; // Found offline player with matching name
+			}
 		}
 
-		PlayerManager pm = gameManager.getPlayerManager();
-
-		UhcPlayer uhcPlayer = pm.revivePlayer(uuid, name, spawnWithItems);
-
-		if (uhcPlayer.isOnline()){
-			caller.sendMessage(ChatColor.GREEN + name + " has been revived!");
-		}else{
-			caller.sendMessage(ChatColor.GREEN + name + " can now join the game!");
-		}
+		return null; // No player found by that name
 	}
 
 }

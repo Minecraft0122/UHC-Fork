@@ -9,6 +9,7 @@
 
 ### Bug fixes
 
+- [#88][GL-88] - Cannot revive offline players when server is in offline mode
 - [#87][GL-87] - Attacks on the offline zombie of a player are never prevented for ranged attacks
 - [#86][GL-86] - Players may respawn at the wrong location after being revived
 - [#84][GL-84] - Cherry trees are not supported in the Timber and Fast Leaves Decay scenarios
@@ -16,6 +17,7 @@
 - [#79][GL-79] - Offline zombie is not always removed
 - [#78][GL-78] - Player inventory items are spawned at the wrong location when using the revive command
 
+[GL-88]: https://gitlab.com/uhccore/uhccore/-/issues/88
 [GL-87]: https://gitlab.com/uhccore/uhccore/-/issues/87
 [GL-86]: https://gitlab.com/uhccore/uhccore/-/issues/86
 [GL-85]: https://gitlab.com/uhccore/uhccore/-/issues/85
