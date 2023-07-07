@@ -44,6 +44,15 @@ public class ReviveCommandExecutor implements CommandExecutor{
 			return true;
 		}
 
+		boolean playerIsDead = playerManager.getPlayersList().stream()
+			.filter(UhcPlayer::isDeath)
+			.anyMatch(p -> p.getUuid().equals(player.getUniqueId()));
+
+		if (!playerIsDead) {
+			sender.sendMessage(ChatColor.RED + "Player is not dead!");
+			return true;
+		}
+
 		playerManager.revivePlayer(player.getUniqueId(), player.getName(), spawnWithItems);
 		if (player.isOnline()) {
 			sender.sendMessage(ChatColor.GREEN + name + " has been revived!");

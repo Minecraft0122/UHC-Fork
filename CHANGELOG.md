@@ -9,6 +9,7 @@
 
 ### Bug fixes
 
+- [#89][GL-89] - Revive command does not return an error when trying to revive a living player
 - [#88][GL-88] - Cannot revive offline players when server is in offline mode
 - [#87][GL-87] - Attacks on the offline zombie of a player are never prevented for ranged attacks
 - [#86][GL-86] - Players may respawn at the wrong location after being revived
@@ -17,6 +18,7 @@
 - [#79][GL-79] - Offline zombie is not always removed
 - [#78][GL-78] - Player inventory items are spawned at the wrong location when using the revive command
 
+[GL-89]: https://gitlab.com/uhccore/uhccore/-/issues/89
 [GL-88]: https://gitlab.com/uhccore/uhccore/-/issues/88
 [GL-87]: https://gitlab.com/uhccore/uhccore/-/issues/87
 [GL-86]: https://gitlab.com/uhccore/uhccore/-/issues/86
