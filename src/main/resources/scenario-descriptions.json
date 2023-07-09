@@ -4,7 +4,7 @@
 		"description":[
 			"No furnaces required.",
 			"Ores and animal drops are automatically smelted.",
-			"Apple rates are 5%, flint rates are 90%",
+			"Gravel always drops flint.",
 			"No lapis is needed for enchanting."
 		]
 	},
