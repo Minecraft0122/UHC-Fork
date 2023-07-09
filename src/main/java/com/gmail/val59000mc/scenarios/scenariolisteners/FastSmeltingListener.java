@@ -17,6 +17,10 @@ public class FastSmeltingListener extends ScenarioListener{
 
 	@EventHandler
 	public void onFurnaceBurn(FurnaceBurnEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
+
 		Block block = e.getBlock();
 
 		Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), new Runnable() {

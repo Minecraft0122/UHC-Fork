@@ -11,6 +11,10 @@ public class GoldLessListener extends ScenarioListener{
 
 	@EventHandler (priority = EventPriority.LOW)
 	public void onBlockBreak(BlockBreakEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
+
 		if (OreType.isGold(e.getBlock().getType())){
 			e.getBlock().setType(Material.AIR);
 		}

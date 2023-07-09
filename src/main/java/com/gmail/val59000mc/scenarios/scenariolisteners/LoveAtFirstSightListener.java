@@ -56,6 +56,12 @@ public class LoveAtFirstSightListener extends ScenarioListener{
 
 	@EventHandler (priority = EventPriority.LOW)
 	public void onPlayerDamage(EntityDamageByEntityEvent e){
+		// NOTE: We don't check e.isCancelled() here, because we are interested
+		// in the action of left-clicking itself. If the event has been canceled
+		// (as in, the damage is canceled), via the time-before-pvp setting for
+		// example, we still consider this action a valid left click,
+		// for the purposes of joining someone's team.
+
 		if (e.getEntityType() != EntityType.PLAYER || !(e.getDamager() instanceof Player)){
 			return;
 		}

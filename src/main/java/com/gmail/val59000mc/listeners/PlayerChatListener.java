@@ -23,12 +23,11 @@ public class PlayerChatListener implements Listener{
 
 	@EventHandler(priority=EventPriority.HIGH)
 	public void onPlayerChat(AsyncPlayerChatEvent e){
-		Player player = e.getPlayer();
-
 		if (e.isCancelled()){
 			return;
 		}
 
+		Player player = e.getPlayer();
 		UhcPlayer uhcPlayer = playerManager.getUhcPlayer(player);
 
 		// Spec chat

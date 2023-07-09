@@ -9,6 +9,10 @@ public class NoFallListener extends ScenarioListener{
 
 	@EventHandler
 	public void onPlayerDamage(EntityDamageEvent e) {
+		if (e.isCancelled()) {
+			return;
+		}
+
 		if (e.getEntity() instanceof Player) {
 
 			if (e.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {

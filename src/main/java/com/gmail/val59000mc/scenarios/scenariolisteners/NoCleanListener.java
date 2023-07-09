@@ -38,6 +38,9 @@ public class NoCleanListener extends ScenarioListener{
 
 	@EventHandler
 	public void onPlayerDamage(EntityDamageByEntityEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
 
 		if (e.getEntity() instanceof Player && e.getDamager() instanceof Player){
 
@@ -91,8 +94,11 @@ public class NoCleanListener extends ScenarioListener{
 
 	@EventHandler
 	public void onPlayerDamage(EntityDamageEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
 
-		if (e.getEntityType() != EntityType.PLAYER || e.isCancelled()){
+		if (e.getEntityType() != EntityType.PLAYER){
 			return;
 		}
 

@@ -75,6 +75,9 @@ public class CutCleanListener extends ScenarioListener{
 
 	@EventHandler (priority = EventPriority.HIGH)
 	public void onBlockBreak(BlockBreakEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
 
 		if (isEnabled(Scenario.TRIPLE_ORES) || (isEnabled(Scenario.VEIN_MINER) && e.getPlayer().isSneaking())){
 			return;
@@ -118,6 +121,10 @@ public class CutCleanListener extends ScenarioListener{
 
 	@EventHandler
 	public void openInventoryEvent(InventoryOpenEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
+
 		if (!unlimitedLapis) return;
 
 		if (e.getInventory() instanceof EnchantingInventory){
@@ -136,6 +143,10 @@ public class CutCleanListener extends ScenarioListener{
 
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
+
 		Inventory inv = e.getInventory();
 		ItemStack item = e.getCurrentItem();
 		if (!unlimitedLapis) return;

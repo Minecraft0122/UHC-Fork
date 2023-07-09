@@ -25,6 +25,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.Event.Result;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -64,6 +65,10 @@ public class ItemsListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onRightClickItem(PlayerInteractEvent event){
+		if (event.useItemInHand() == Result.DENY) {
+			return;
+		}
+
 		if (
 				event.getAction() != Action.RIGHT_CLICK_AIR &&
 				event.getAction() != Action.RIGHT_CLICK_BLOCK
@@ -97,6 +102,10 @@ public class ItemsListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onClickInInventory(InventoryClickEvent event){
+		if (event.isCancelled()) {
+			return;
+		}
+
 		handleScenarioInventory(event);
 
 		ItemStack item = event.getCurrentItem();
@@ -393,6 +402,10 @@ public class ItemsListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onHopperEvent(InventoryMoveItemEvent event) {
+		if (event.isCancelled()) {
+			return;
+		}
+
 		Inventory inv = event.getDestination();
 		if(inv.getType().equals(InventoryType.BREWING) && config.get(MainConfig.BAN_LEVEL_TWO_POTIONS) && inv.getHolder() instanceof BrewingStand){
 			Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), new CheckBrewingStandAfterClick((BrewingStand) inv.getHolder(), null),1);
@@ -425,6 +438,10 @@ public class ItemsListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerDropItem(PlayerDropItemEvent event) {
+		if (event.isCancelled()) {
+			return;
+		}
+
 		ItemStack item = event.getItemDrop().getItemStack();
 
 		if (gameManager.getGameState() == GameState.WAITING && GameItem.isGameItem(item)){

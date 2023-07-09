@@ -12,6 +12,10 @@ public class SwitcherooListener extends ScenarioListener{
 
 	@EventHandler
 	public void onPlayerDamage(EntityDamageByEntityEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
+
 		if (!(e.getEntity() instanceof Player)){
 			return;
 		}

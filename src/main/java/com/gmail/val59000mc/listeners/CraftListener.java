@@ -18,6 +18,10 @@ public class CraftListener implements Listener{
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onCrafting(CraftItemEvent event){
+		if (event.isCancelled()) {
+			return;
+		}
+
 		ItemStack item = event.getRecipe().getResult();
 		if (!item.hasItemMeta() || !item.getItemMeta().hasDisplayName()){
 			return;

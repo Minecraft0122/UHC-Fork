@@ -29,6 +29,10 @@ public class FastLeavesDecayListener extends ScenarioListener{
 
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e) {
+		if (e.isCancelled()) {
+			return;
+		}
+
 		final Block block = e.getBlock();
 
 		if (!UniversalMaterial.isLog(block.getType())){
@@ -41,6 +45,10 @@ public class FastLeavesDecayListener extends ScenarioListener{
 
 	@EventHandler
 	public void onLeaveDecay(LeavesDecayEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
+
 		onBlockBreak(e.getBlock());
 	}
 

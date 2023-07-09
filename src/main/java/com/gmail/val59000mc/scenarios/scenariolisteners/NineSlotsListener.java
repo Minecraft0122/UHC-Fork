@@ -37,6 +37,10 @@ public class NineSlotsListener extends ScenarioListener{
 
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
+
 		ItemStack item = e.getCurrentItem();
 
 		// Only handle clicked items.

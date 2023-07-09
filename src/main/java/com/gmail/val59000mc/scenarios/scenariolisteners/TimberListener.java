@@ -33,6 +33,10 @@ public class TimberListener extends ScenarioListener {
 
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e) {
+		if (e.isCancelled()) {
+			return;
+		}
+
 		final ItemStack tool = e.getPlayer().getItemInHand();
 		if (requireAxe && !UniversalMaterial.isAxe(tool.getType())) {
 			return;

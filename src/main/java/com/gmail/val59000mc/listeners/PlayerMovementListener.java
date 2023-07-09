@@ -23,6 +23,10 @@ public class PlayerMovementListener implements Listener{
 	}
 
 	private void handleFrozenPlayers(PlayerMoveEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
+
 		UhcPlayer uhcPlayer = playerManager.getUhcPlayer(e.getPlayer());
 		if (uhcPlayer.isFrozen()){
 			Location freezeLoc = uhcPlayer.getFreezeLocation();

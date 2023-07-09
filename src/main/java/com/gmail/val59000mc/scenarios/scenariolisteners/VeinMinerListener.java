@@ -36,6 +36,10 @@ public class VeinMinerListener extends ScenarioListener{
 
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
+
 		Player player = e.getPlayer();
 
 		if (requireSneaking && !player.isSneaking()) {

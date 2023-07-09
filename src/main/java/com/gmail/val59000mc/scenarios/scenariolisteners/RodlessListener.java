@@ -11,6 +11,10 @@ public class RodlessListener extends ScenarioListener {
 
 	@EventHandler
 	public void onCraftItem(CraftItemEvent e) {
+		if (e.isCancelled()) {
+			return;
+		}
+
 		ItemStack item = e.getCurrentItem();
 
 		if (item.getType().equals(Material.FISHING_ROD)) {

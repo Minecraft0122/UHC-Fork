@@ -13,6 +13,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Event.Result;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.BlockBreakEvent;
 import com.gmail.val59000mc.languages.Lang;
@@ -26,8 +27,12 @@ public class MonstersIncListener extends ScenarioListener {
 		doorLocs = new ArrayList<>();
 	}
 
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent e) {
+		if (e.isCancelled()) {
+			return;
+		}
+
 		Block block = e.getBlock();
 		Location loc = e.getBlock().getLocation();
 
@@ -36,8 +41,12 @@ public class MonstersIncListener extends ScenarioListener {
 		}
 	}
 
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler
 	public void onBlockClick(PlayerInteractEvent e) {
+		if (e.useInteractedBlock() == Result.DENY) {
+			return;
+		}
+
 		Block block = e.getClickedBlock();
 		Player player = e.getPlayer();
 		Location goToLoc;
@@ -76,8 +85,12 @@ public class MonstersIncListener extends ScenarioListener {
 		return isDoor(loc.getBlock()) && LocationUtils.isWithinBorder(loc);
 	}
 
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e) {
+		if (e.isCancelled()) {
+			return;
+		}
+
 		Block block = e.getBlock();
 		Block above = block.getRelative(BlockFace.UP);
 

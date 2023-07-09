@@ -30,8 +30,12 @@ public class RandomizedDropsListener extends ScenarioListener{
 		items = VersionUtils.getVersionUtils().getItemList();
 	}
 
-	@EventHandler(ignoreCancelled = true)
+	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
+		if (event.isCancelled()) {
+			return;
+		}
+
 		//Create new HashMap so each each type of broken block drops the same random item every time it is broken (configurable
 		Block block = event.getBlock();
 

@@ -23,6 +23,10 @@ public class HasteyBoysListener extends ScenarioListener{
 
 	@EventHandler
 	public void onPlayerCraft(CraftItemEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
+
 		ItemStack item = e.getCurrentItem();
 
 		// Don't apply hastey boy effects to custom crafted items.

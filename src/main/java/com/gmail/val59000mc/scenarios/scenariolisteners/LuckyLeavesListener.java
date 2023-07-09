@@ -9,8 +9,12 @@ import org.bukkit.inventory.ItemStack;
 
 public class LuckyLeavesListener extends ScenarioListener{
 
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler
 	public void onLeaveDecay(LeavesDecayEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
+
 		int random = RandomUtils.randomInteger(0, 200);
 
 		if (random > 1){

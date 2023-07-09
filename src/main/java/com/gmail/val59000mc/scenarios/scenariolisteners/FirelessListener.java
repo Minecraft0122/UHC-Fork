@@ -9,6 +9,10 @@ public class FirelessListener extends ScenarioListener{
 
 	@EventHandler
 	public void onPlayerDamage(EntityDamageEvent e) {
+		if (e.isCancelled()) {
+			return;
+		}
+
 		if (e.getEntity() instanceof Player) {
 
 			EntityDamageEvent.DamageCause cause = e.getCause();

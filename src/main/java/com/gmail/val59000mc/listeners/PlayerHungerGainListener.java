@@ -18,6 +18,9 @@ public class PlayerHungerGainListener implements Listener {
 
 	@EventHandler
 	public void onPlayerHunger(FoodLevelChangeEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
 
 		if (!(e.getEntity() instanceof Player)){
 			return;

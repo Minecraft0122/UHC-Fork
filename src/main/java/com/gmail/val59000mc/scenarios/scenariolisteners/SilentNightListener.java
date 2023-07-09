@@ -84,7 +84,11 @@ public class SilentNightListener extends ScenarioListener{
 
 	@EventHandler (priority = EventPriority.HIGH)
 	public void onPlayerChat(AsyncPlayerChatEvent e){
-		if (nightMode && !e.isCancelled()){
+		if (e.isCancelled()) {
+			return;
+		}
+
+		if (nightMode) {
 			e.setCancelled(true);
 			e.getPlayer().sendMessage(Lang.SCENARIO_SILENTNIGHT_ERROR);
 		}

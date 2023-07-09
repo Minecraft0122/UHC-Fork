@@ -41,15 +41,15 @@ public class BlockListener implements Listener{
 
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event){
+		handleFrozenPlayers(event);
 		handleBlockLoot(event);
 		handleShearedLeaves(event);
-		handleFrozenPlayers(event);
 	}
 
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent event){
-		handleMaxBuildingHeight(event);
 		handleFrozenPlayers(event);
+		handleMaxBuildingHeight(event);
 	}
 
 	@EventHandler
@@ -58,6 +58,10 @@ public class BlockListener implements Listener{
 	}
 
 	private void handleMaxBuildingHeight(BlockPlaceEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
+
 		if (maxBuildingHeight < 0 || e.getPlayer().getGameMode() != GameMode.SURVIVAL) return;
 
 		if (e.getBlock().getY() > maxBuildingHeight){
@@ -67,6 +71,10 @@ public class BlockListener implements Listener{
 	}
 
 	private void handleBlockLoot(BlockBreakEvent event){
+		if (event.isCancelled()) {
+			return;
+		}
+
 		Material material = event.getBlock().getType();
 		if(blockLoots.containsKey(material)){
 			LootConfiguration<Material> lootConfig = blockLoots.get(material);
@@ -84,6 +92,10 @@ public class BlockListener implements Listener{
 	}
 
 	private void handleShearedLeaves(BlockBreakEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
+
 		if (!configuration.get(MainConfig.APPLE_DROPS_FROM_SHEARING)){
 			return;
 		}
@@ -98,6 +110,10 @@ public class BlockListener implements Listener{
 	}
 
 	private void handleFrozenPlayers(BlockBreakEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
+
 		UhcPlayer uhcPlayer = playerManager.getUhcPlayer(e.getPlayer());
 		if (uhcPlayer.isFrozen()){
 			e.setCancelled(true);
@@ -105,6 +121,10 @@ public class BlockListener implements Listener{
 	}
 
 	private void handleFrozenPlayers(BlockPlaceEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
+
 		UhcPlayer uhcPlayer = playerManager.getUhcPlayer(e.getPlayer());
 		if (uhcPlayer.isFrozen()){
 			e.setCancelled(true);
@@ -112,6 +132,10 @@ public class BlockListener implements Listener{
 	}
 
 	private void handleAppleDrops(LeavesDecayEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
+
 		Block block = e.getBlock();
 		Material type = block.getType();
 		boolean isOak;

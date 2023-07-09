@@ -30,6 +30,10 @@ public class TeleportListener implements Listener{
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerPortalEvent (PlayerPortalEvent event){
+		if (event.isCancelled()) {
+			return;
+		}
+
 		GameManager gm = GameManager.getGameManager();
 		Player player = event.getPlayer();
 
@@ -88,6 +92,10 @@ public class TeleportListener implements Listener{
 
 	@EventHandler
 	public void onPlayerTeleport(PlayerTeleportEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
+
 		if (e.getCause() == TeleportCause.SPECTATE && !GameManager.getGameManager().getConfig().get(MainConfig.SPECTATING_TELEPORT)){
 			Player player = e.getPlayer();
 			if (!player.hasPermission("uhc-core.commands.teleport-admin")){

@@ -9,8 +9,12 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class BloodDiamondsListener extends ScenarioListener{
 
-	@EventHandler (ignoreCancelled = true, priority = EventPriority.LOW)
+	@EventHandler (priority = EventPriority.LOW)
 	public void onBlockBreak(BlockBreakEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
+
 		if (!OreType.DIAMOND.equals(e.getBlock().getType())){
 			return;
 		}

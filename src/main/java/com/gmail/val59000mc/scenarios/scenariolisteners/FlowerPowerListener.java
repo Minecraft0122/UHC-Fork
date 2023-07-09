@@ -76,8 +76,12 @@ public class FlowerPowerListener extends ScenarioListener{
 		}
 	}
 
-	@EventHandler (priority = EventPriority.HIGH, ignoreCancelled = true)
+	@EventHandler (priority = EventPriority.HIGH)
 	public void onBlockBreak(BlockBreakEvent e){
+		if (e.isCancelled()) {
+			return;
+		}
+
 		Block block = e.getBlock();
 
 		// For tall flowers start with the bottom block.

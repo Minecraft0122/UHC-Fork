@@ -11,6 +11,10 @@ public class HorselessListener extends ScenarioListener{
 
 	@EventHandler
 	public void onHorseRide(EntityMountEvent e) {
+		if (e.isCancelled()) {
+			return;
+		}
+
 		if (e.getEntity() instanceof Player) {
 			Player p = ((Player) e.getEntity()).getPlayer();
 			if (isHorseLike(e.getMount().getType())) {
