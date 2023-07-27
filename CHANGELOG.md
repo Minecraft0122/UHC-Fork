@@ -10,6 +10,7 @@
 - [#94][GL-94] - Support loading/saving item attribute modifiers on Minecraft 1.8.8
 - [#85][GL-85] - Inform players that PvP is not enabled yet if they try to damage a player before PvP has started
     - Added `players.pvp-off` to `lang.yml`
+- [#82][GL-82] - Support loading/saving registry namespace for enchantments on items
 
 ### Bug fixes
 
@@ -35,6 +36,7 @@
 [GL-85]: https://gitlab.com/uhccore/uhccore/-/issues/85
 [GL-84]: https://gitlab.com/uhccore/uhccore/-/issues/84
 [GL-83]: https://gitlab.com/uhccore/uhccore/-/issues/83
+[GL-82]: https://gitlab.com/uhccore/uhccore/-/issues/82
 [GL-79]: https://gitlab.com/uhccore/uhccore/-/issues/79
 [GL-78]: https://gitlab.com/uhccore/uhccore/-/issues/78
 

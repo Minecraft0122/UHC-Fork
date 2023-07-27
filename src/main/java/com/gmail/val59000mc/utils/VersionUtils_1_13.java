@@ -279,7 +279,7 @@ public class VersionUtils_1_13 extends VersionUtils{
 
 	@Override
 	public String getEnchantmentKey(Enchantment enchantment){
-		return enchantment.getKey().getKey();
+		return enchantment.getKey().toString();
 	}
 
 	@Nullable
@@ -288,19 +288,47 @@ public class VersionUtils_1_13 extends VersionUtils{
 		Enchantment enchantment = Enchantment.getByName(key);
 
 		if (enchantment != null){
-			LOGGER.warning("Using old deprecated enchantment names, replace: " + key + " with " + enchantment.getKey().getKey());
+			LOGGER.warning("Using old deprecated enchantment names, replace: " + key + " with " + enchantment.getKey().toString());
 			return enchantment;
 		}
 
 		NamespacedKey namespace;
 
 		try{
-			namespace = NamespacedKey.minecraft(key);
+			namespace = namespacedKeyFromString(key);
 		} catch (IllegalArgumentException ignored) {
 			return null;
 		}
 
 		return Enchantment.getByKey(namespace);
+	}
+
+	private NamespacedKey namespacedKeyFromString(String string) {
+        String[] components = string.split(":", 3);
+        if (components.length > 2) {
+            return null;
+        }
+
+		// Key without namespace, use minecraft as default namespace
+        if (components.length == 1) {
+			String key = components[0];
+			if (key.isEmpty()) {
+				return null;
+			}
+            return NamespacedKey.minecraft(key);
+        }
+
+		// Namespace with key
+        String namespace = components[0];
+		String key = components[1];
+        if (namespace.isEmpty()) {
+            return NamespacedKey.minecraft(key);
+        }
+		if (key.isEmpty()) {
+			return null;
+		}
+
+        return new NamespacedKey(namespace, key);
 	}
 
 	@Override
