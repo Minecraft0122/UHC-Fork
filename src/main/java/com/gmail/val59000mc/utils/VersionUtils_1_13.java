@@ -232,6 +232,7 @@ public class VersionUtils_1_13 extends VersionUtils{
 				if (modifier.getSlot() != null){
 					modifierObject.addProperty("slot", modifier.getSlot().name());
 				}
+				modifierObject.addProperty("uuid", modifier.getUniqueId().toString());
 				modifiersJson.add(modifierObject);
 			}
 
@@ -261,12 +262,14 @@ public class VersionUtils_1_13 extends VersionUtils{
 					slot = EquipmentSlot.valueOf(modifier.get("slot").getAsString());
 				}
 
+				UUID uuid = UUID.fromString(modifier.get("uuid").getAsString());
+
 				meta.addAttributeModifier(attribute, new AttributeModifier(
-						UUID.randomUUID(),
-						name,
-						amount,
-						AttributeModifier.Operation.valueOf(operation),
-						slot
+					uuid,
+					name,
+					amount,
+					AttributeModifier.Operation.valueOf(operation),
+					slot
 				));
 			}
 		}

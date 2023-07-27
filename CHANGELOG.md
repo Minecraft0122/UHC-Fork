@@ -13,6 +13,7 @@
 
 ### Bug fixes
 
+- [#95][GL-95] - UUID field is not saved/loaded for attribute modifiers on Minecraft 1.13+
 - [#90][GL-90] - UhcCore often does not ignore canceled events
 - [#89][GL-89] - Revive command does not return an error when trying to revive a living player
 - [#88][GL-88] - Cannot revive offline players when server is in offline mode
@@ -24,6 +25,7 @@
 - [#78][GL-78] - Player inventory items are spawned at the wrong location when using the revive command
 
 [GL-52]: https://gitlab.com/uhccore/uhccore/-/issues/52
+[GL-95]: https://gitlab.com/uhccore/uhccore/-/issues/95
 [GL-94]: https://gitlab.com/uhccore/uhccore/-/issues/94
 [GL-90]: https://gitlab.com/uhccore/uhccore/-/issues/90
 [GL-89]: https://gitlab.com/uhccore/uhccore/-/issues/89
