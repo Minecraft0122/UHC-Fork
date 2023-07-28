@@ -7,6 +7,7 @@
 - [#52][GL-52] - Option to prevent players from disenchanting tools in the Hastey Boys scenario
     - Added `scenarios.hastey_boys.grindstone-error` to `lang.yml`
     - Added the `allow-disenchanting` setting to `hastey_boys` in `scenarios.yml`
+- [#96][GL-96] - Allow empty list in loot configurations
 - [#94][GL-94] - Support loading/saving item attribute modifiers on Minecraft 1.8.8
 - [#85][GL-85] - Inform players that PvP is not enabled yet if they try to damage a player before PvP has started
     - Added `players.pvp-off` to `lang.yml`
@@ -26,6 +27,7 @@
 - [#78][GL-78] - Player inventory items are spawned at the wrong location when using the revive command
 
 [GL-52]: https://gitlab.com/uhccore/uhccore/-/issues/52
+[GL-96]: https://gitlab.com/uhccore/uhccore/-/issues/96
 [GL-95]: https://gitlab.com/uhccore/uhccore/-/issues/95
 [GL-94]: https://gitlab.com/uhccore/uhccore/-/issues/94
 [GL-90]: https://gitlab.com/uhccore/uhccore/-/issues/90

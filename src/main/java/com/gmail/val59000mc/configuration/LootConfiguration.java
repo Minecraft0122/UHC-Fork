@@ -47,11 +47,6 @@ public class LootConfiguration<T extends Enum<T>> {
 			itemStrings = Collections.singletonList(section.getString("loot"));
 		}
 
-		if (itemStrings.isEmpty()){
-			LOGGER.warning("Couldn't parse section '"+section.getName()+"' in custom loot: Missing loot item(s)");
-			return false;
-		}
-
 		for (String itemStr : itemStrings) {
 			try {
 				loot.add(JsonItemUtils.getItemFromJson(itemStr));
