@@ -81,7 +81,6 @@ public class BlockListener implements Listener{
 			Location loc = event.getBlock().getLocation().add(.5,.5,.5);
 
 			event.getBlock().setType(Material.AIR);
-			event.setExpToDrop(lootConfig.getAddXp());
 
 			lootConfig.getLoot().forEach(item -> loc.getWorld().dropItem(loc, item.clone()));
 
