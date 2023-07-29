@@ -4,6 +4,7 @@
 
 ### New features
 
+- [#94][GL-94] - Support loading/saving item attribute modifiers on Minecraft 1.8.8
 - [#85][GL-85] - Inform players that PvP is not enabled yet if they try to damage a player before PvP has started
     - Added `players.pvp-off` to `lang.yml`
 
@@ -19,6 +20,7 @@
 - [#79][GL-79] - Offline zombie is not always removed
 - [#78][GL-78] - Player inventory items are spawned at the wrong location when using the revive command
 
+[GL-94]: https://gitlab.com/uhccore/uhccore/-/issues/94
 [GL-90]: https://gitlab.com/uhccore/uhccore/-/issues/90
 [GL-89]: https://gitlab.com/uhccore/uhccore/-/issues/89
 [GL-88]: https://gitlab.com/uhccore/uhccore/-/issues/88

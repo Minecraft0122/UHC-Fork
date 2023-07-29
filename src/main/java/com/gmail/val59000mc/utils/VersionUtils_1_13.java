@@ -211,7 +211,8 @@ public class VersionUtils_1_13 extends VersionUtils{
 
 	@Nullable
 	@Override
-	public JsonObject getItemAttributes(ItemMeta meta){
+	public JsonObject getItemAttributes(ItemStack itemStack){
+		ItemMeta meta = itemStack.getItemMeta();
 		if (!meta.hasAttributeModifiers()){
 			return null;
 		}
@@ -241,7 +242,8 @@ public class VersionUtils_1_13 extends VersionUtils{
 	}
 
 	@Override
-	public ItemMeta applyItemAttributes(ItemMeta meta, JsonObject attributes){
+	public JsonItemStack applyItemAttributes(JsonItemStack itemStack, JsonObject attributes){
+		ItemMeta meta = itemStack.getItemMeta();
 		Set<Map.Entry<String, JsonElement>> entries = attributes.entrySet();
 
 		for (Map.Entry<String, JsonElement> attributeEntry : entries){
@@ -268,8 +270,8 @@ public class VersionUtils_1_13 extends VersionUtils{
 				));
 			}
 		}
-
-		return meta;
+		itemStack.setItemMeta(meta);
+		return itemStack;
 	}
 
 	@Override

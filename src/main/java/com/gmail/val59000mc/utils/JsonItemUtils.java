@@ -2,7 +2,6 @@ package com.gmail.val59000mc.utils;
 
 import com.gmail.val59000mc.exceptions.ParseException;
 import com.google.gson.*;
-import com.google.gson.JsonArray;
 import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -79,7 +78,7 @@ public class JsonItemUtils{
 				json.add("flags", jsonFlags);
 			}
 
-			JsonObject attributes = VersionUtils.getVersionUtils().getItemAttributes(meta);
+			JsonObject attributes = VersionUtils.getVersionUtils().getItemAttributes(item);
 			if (attributes != null){
 				json.add("attributes", attributes);
 			}
@@ -237,7 +236,9 @@ public class JsonItemUtils{
 						meta = parseCustomPotionEffects(meta, entry.getValue().getAsJsonArray());
 						break;
 					case "attributes":
-						meta = VersionUtils.getVersionUtils().applyItemAttributes(meta, entry.getValue().getAsJsonObject());
+						item.setItemMeta(meta);
+						item = VersionUtils.getVersionUtils().applyItemAttributes(item, entry.getValue().getAsJsonObject());
+						meta = item.getItemMeta();
 						break;
 					case "color":
 						meta = parseColor(meta, entry.getValue().getAsInt());

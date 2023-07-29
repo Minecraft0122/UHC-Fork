@@ -31,7 +31,10 @@ import org.bukkit.scoreboard.Team;
 import javax.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -278,13 +281,13 @@ public class VersionUtils_1_12 extends VersionUtils{
 
 	@Nullable
 	@Override
-	public JsonObject getItemAttributes(ItemMeta meta){
+	public JsonObject getItemAttributes(ItemStack itemStack){
 		return null;
 	}
 
 	@Override
-	public ItemMeta applyItemAttributes(ItemMeta meta, JsonObject attributes){
-		return meta;
+	public JsonItemStack applyItemAttributes(JsonItemStack itemStack, JsonObject attributes){
+		return itemStack;
 	}
 
 	@Override

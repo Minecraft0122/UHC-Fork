@@ -103,9 +103,9 @@ public abstract class VersionUtils{
 	public abstract void handleNetherPortalEvent(PlayerPortalEvent event);
 
 	@Nullable
-	public abstract JsonObject getItemAttributes(ItemMeta meta);
+	public abstract JsonObject getItemAttributes(ItemStack itemStack);
 
-	public abstract ItemMeta applyItemAttributes(ItemMeta meta, JsonObject attributes);
+	public abstract JsonItemStack applyItemAttributes(JsonItemStack itemStack, JsonObject attributes);
 
 	public abstract String getEnchantmentKey(Enchantment enchantment);
 

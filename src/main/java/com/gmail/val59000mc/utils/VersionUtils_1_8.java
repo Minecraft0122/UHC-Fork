@@ -4,6 +4,7 @@ import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.maploader.MapLoader;
 import com.gmail.val59000mc.players.UhcPlayer;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import io.papermc.lib.PaperLib;
 import org.apache.commons.lang.Validate;
@@ -214,13 +215,165 @@ public class VersionUtils_1_8 extends VersionUtils{
 
 	@Nullable
 	@Override
-	public JsonObject getItemAttributes(ItemMeta meta){
-		return null;
+	public JsonObject getItemAttributes(ItemStack itemStack){
+		if (PaperLib.isVersion(9)) {
+			return null;
+		}
+
+		// The following code is tested to work on Minecraft 1.8.8
+		try {
+			// Get the NMS ItemStack by calling CraftItemStack.asNMSCopy(ItemStack). Note: The first argument to Method#invoke is null because it is a static method
+			Object /* net.minecraft.server.ItemStack */ nmsItemStack = NMSUtils.getNMSClass("inventory.CraftItemStack").getMethod("asNMSCopy", ItemStack.class).invoke(null, itemStack);
+			// Get NBTTagCompound through NMSItemStack.getTag()
+			Object /* NBTTagCompound */ nbtTag = NMSUtils.getMethod(nmsItemStack.getClass(), "getTag").invoke(nmsItemStack);
+
+			// Check if the item has previous data, if not then it won't have attribute modifiers therefore return null
+			if (nbtTag == null) return null;
+
+			// Get NBTList of attribute modifiers with NBTTagCompound.getList("AttributeModifiers")
+			Object /* NBTList */ attributeModifiers = NMSUtils.getMethod(nbtTag.getClass(), "getList").invoke(nbtTag, "AttributeModifiers", 10);
+			int length = (int) NMSUtils.getMethod(attributeModifiers.getClass(), "size").invoke(attributeModifiers);
+
+			// Ensure there is actually attribute modifiers to check for
+			if (length == 0) return null;
+
+			JsonObject attributesJson = new JsonObject();
+
+			// All AttributeModifiers on the item. String is the name of the Attribute while JsonArray is all AttributeModifiers that are of that Attribute type
+			Map<String, JsonArray> jsonAttributeModifiers = new HashMap<>();
+
+			// Loop through each AttributeModifier
+			for (int i = 0; i < length; i++) {
+				JsonObject jsonModifier = new JsonObject();
+				// NBTTagCompound using NBTTagList#get(int)
+				Object /* NBTTagCompound */ attributeModifier = NMSUtils.getMethod(attributeModifiers.getClass(), "get").invoke(attributeModifiers, i);
+
+				// Get the method: NBTTagCompound#get
+				Method /* NBTTagCompound#get() */ getterMethod = NMSUtils.getMethod(attributeModifier.getClass(), "get");
+
+				// Get the AttributeName. E.g. NBTTagCompound.get("AttributeName")
+				Object /* NBTTagString */ attributeName = getterMethod.invoke(attributeModifier, "AttributeName");
+				// a_ method is way of obtaining actual String object from NBTTagString
+				String attributeNameValue = (String) NMSUtils.getMethod(attributeName.getClass(), "a_").invoke(attributeName);
+
+
+				// Get the Name
+				Object /* NBTTagString */ name = getterMethod.invoke(attributeModifier, "Name");
+				// a_ method is way of obtaining actual String object from NBTTagString
+				String nameValue = (String) NMSUtils.getMethod(name.getClass(), "a_").invoke(name);
+
+				// Get the Amount
+				Object /* NBTTagFloat */ amount = getterMethod.invoke(attributeModifier, "Amount");
+				// h method is way of obtaining actual float from NBTTagFloat
+				float amountValue = (float) NMSUtils.getMethod(amount.getClass(), "h").invoke(amount);
+
+				// Get the Operation used
+				Object /* NBTTagInt */ operation = getterMethod.invoke(attributeModifier, "Operation");
+				// d method is way of obtaining actual int from NBTTagInt
+				int operationValue = (int) NMSUtils.getMethod(operation.getClass(), "d").invoke(operation);
+
+				// Get the UUIDLeast used
+				Object /* NBTTagLong */ uuidLeast = getterMethod.invoke(attributeModifier, "UUIDLeast");
+				// c method is way of obtaining actual long from NBTTagLong
+				long uuidLeastValue = (long) NMSUtils.getMethod(uuidLeast.getClass(), "c").invoke(uuidLeast);
+
+				// Get the UUIDMost used
+				Object /* NBTTagLong */ uuidMost = getterMethod.invoke(attributeModifier, "UUIDMost");
+				// c method is way of obtaining actual long from NBTTagLong
+				long uuidMostValue = (long) NMSUtils.getMethod(uuidMost.getClass(), "c").invoke(uuidMost);
+
+				UUID uuid = new UUID(uuidMostValue, uuidLeastValue);
+
+				// Add all properties to the JsonObject
+				jsonModifier.addProperty("name", nameValue);
+				jsonModifier.addProperty("amount", amountValue);
+				jsonModifier.addProperty("operation", operationValue);
+				jsonModifier.addProperty("uuid", uuid.toString());
+
+				// Add the AttributeModifier to the JsonArray that matches its Attribute.
+				jsonAttributeModifiers.putIfAbsent(attributeNameValue, new JsonArray());
+				JsonArray array = jsonAttributeModifiers.get(attributeNameValue);
+				array.add(jsonModifier);
+				jsonAttributeModifiers.put(attributeNameValue, array);
+			}
+			// Put the Map into the final JsonObject
+			jsonAttributeModifiers.forEach(attributesJson::add);
+
+			return attributesJson;
+		} catch (ReflectiveOperationException ex) {
+			LOGGER.log(Level.WARNING, "Unable to set item attributes", ex);
+			return null;
+		}
 	}
 
 	@Override
-	public ItemMeta applyItemAttributes(ItemMeta meta, JsonObject attributes){
-		return meta;
+	public JsonItemStack applyItemAttributes(JsonItemStack itemStack, JsonObject attributes){
+		if (PaperLib.isVersion(9)) {
+			return itemStack;
+		}
+
+		// The following code is tested to work on Minecraft 1.8.8
+		try {
+			// Get the NMS ItemStack by calling CraftItemStack.asNMSCopy(ItemStack). Note: The first argument to Method#invoke is null because it is a static method
+			Object /* net.minecraft.server.ItemStack */ nmsItemStack = NMSUtils.getNMSClass("inventory.CraftItemStack").getMethod("asNMSCopy", ItemStack.class).invoke(null, itemStack);
+
+			// Attempt to get any existing NBTTagCompound from the NMSItemStack
+			Object /* NBTTagCompound */ nbtTag = NMSUtils.getMethod(nmsItemStack.getClass(), "getTag").invoke(nmsItemStack);
+
+			// If there is no pre-existing NBTTagCompound, then create a new one
+			if (nbtTag == null)
+				nbtTag = NMSUtils.getNMSClass("NBTTagCompound").getConstructor().newInstance();
+
+
+			// Create a new list for the attribute modifiers
+			Object /* NBTTagList */ attributeModifiers = NMSUtils.getNMSClass("NBTTagList").getConstructor().newInstance();
+
+			// Loop through every entry for the attributes
+			for (Map.Entry<String, JsonElement> entry : attributes.entrySet()) {
+				String attributeName = entry.getKey();
+				// Loop through every attribute modifier for the attribute
+				for (JsonElement element : entry.getValue().getAsJsonArray()) {
+					JsonObject modifier = element.getAsJsonObject();
+
+					// Get relevant attribute modifier data from JsonObject
+					String name = modifier.get("name").getAsString();
+					float amount = modifier.get("amount").getAsFloat();
+					int operation = modifier.get("operation").getAsInt();
+					UUID uuid = UUID.fromString(modifier.get("uuid").getAsString());
+
+					// Create a new NBTTagCompound Object to write these values into
+					Object /* NBTTagCompound */ attributeModifier = NMSUtils.getNMSClass("NBTTagCompound").getConstructor().newInstance();
+
+					// Get the method: NBTTagCompound#set
+					Method /* NBTTagCompound#set() */ setterMethod = NMSUtils.getMethod(attributeModifier.getClass(), "set");
+
+					// Set all the values for each AttributeModifier field.
+					// E.g. NBTTagCompound#set("AttributeName", new NBTTagString(attributeName))
+					setterMethod.invoke(attributeModifier, "AttributeName", NMSUtils.getNMSClass("NBTTagString").getConstructor(String.class).newInstance(attributeName));
+					setterMethod.invoke(attributeModifier, "Name", NMSUtils.getNMSClass("NBTTagString").getConstructor(String.class).newInstance(name));
+					setterMethod.invoke(attributeModifier, "Amount", NMSUtils.getNMSClass("NBTTagFloat").getConstructor(float.class).newInstance(amount));
+					setterMethod.invoke(attributeModifier, "Operation", NMSUtils.getNMSClass("NBTTagInt").getConstructor(int.class).newInstance(operation));
+					setterMethod.invoke(attributeModifier, "UUIDLeast", NMSUtils.getNMSClass("NBTTagLong").getConstructor(long.class).newInstance(uuid.getLeastSignificantBits()));
+					setterMethod.invoke(attributeModifier, "UUIDMost", NMSUtils.getNMSClass("NBTTagLong").getConstructor(long.class).newInstance(uuid.getMostSignificantBits()));
+
+					// Finally, add the NBTTagCompound object to the initial NBTTagList which stores all the Attribute Modifiers
+					NMSUtils.getMethod(attributeModifiers.getClass(), "add").invoke(attributeModifiers, attributeModifier);
+				}
+			}
+
+			// Adds the AttributeModifiers into the data of the item
+			NMSUtils.getMethod(nbtTag.getClass(), "set").invoke(nbtTag, "AttributeModifiers", attributeModifiers);
+			// Sets the item's data
+			NMSUtils.getMethod(nmsItemStack.getClass(), "setTag").invoke(nmsItemStack, nbtTag);
+
+			// Changes the NMS ItemStack object back into a Bukkit ItemStack object, so it can be outputted, using CraftItemStack.asCraftMirror()
+			itemStack = new JsonItemStack((ItemStack) NMSUtils.getNMSClass("inventory.CraftItemStack").getMethod("asCraftMirror",  NMSUtils.getNMSClass("ItemStack")).invoke(null, nmsItemStack));
+		} catch (ReflectiveOperationException ex) {
+			LOGGER.log(Level.WARNING, "Unable to set item attributes", ex);
+			return null;
+		}
+
+		return itemStack;
 	}
 
 	@Override
