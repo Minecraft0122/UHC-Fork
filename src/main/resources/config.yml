@@ -503,6 +503,11 @@ lobby-in-default-world: false
 # The spawn point can be set using the vanilla /setworldspawn command. If false, players are spawned at 0, 100, 0.
 use-default-world-spawn-for-lobby: true
 
+# Defines whether structures (such as villages) can be generated in the UHC worlds.
+# This setting has the same behavior as generate-structures in server.properties,
+# but applies to the UHC worlds instead of the default worlds.
+generate-structures: true
+
 #Write custom seeds to be used when creating a new map
 world-seeds:
   #Set it to true to pick a random seed from this list

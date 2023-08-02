@@ -169,7 +169,7 @@ public class MapLoader {
 		GameManager gm = GameManager.getGameManager();
 
 		WorldCreator wc = new WorldCreator(worldName);
-		wc.generateStructures(true);
+		wc.generateStructures(config.get(MainConfig.GENERATE_STRUCTURES));
 		wc.environment(env);
 
 		List<Long> seeds = gm.getConfig().get(MainConfig.SEEDS);

@@ -50,6 +50,7 @@ public class MainConfig extends YamlFile {
 	public static final BasicOption<Integer> TIME_BEFORE_PVP = new BasicOption<>("time-before-pvp",600);
 	public static final BasicOption<Boolean> ENABLE_FRIENDLY_FIRE = new BasicOption<>("enable-friendly-fire",false);
 	public static final BasicOption<Boolean> DISABLE_ENEMY_NAMETAGS = new BasicOption<>("disable-enemy-nametags",false);
+	public static final BasicOption<Boolean> GENERATE_STRUCTURES = new BasicOption<>("generate-structures", true);
 	public static final BasicOption<Boolean> PICK_RANDOM_SEED_FROM_LIST = new BasicOption<>("world-seeds.pick-random-seed-from-list",false);
 	public static final BasicOption<Boolean> PICK_RANDOM_WORLD_FROM_LIST = new BasicOption<>("world-list.pick-random-world-from-list",false);
 
