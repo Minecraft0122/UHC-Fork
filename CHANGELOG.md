@@ -14,6 +14,7 @@
 - [#85][GL-85] - Inform players that PvP is not enabled yet if they try to damage a player before PvP has started
     - Added `players.pvp-off` to `lang.yml`
 - [#82][GL-82] - Support loading/saving registry namespace for enchantments on items
+- [#63][GL-63] - Support loading/saving custom model data on items
 
 ### Bug fixes
 
@@ -46,6 +47,7 @@
 [GL-82]: https://gitlab.com/uhccore/uhccore/-/issues/82
 [GL-79]: https://gitlab.com/uhccore/uhccore/-/issues/79
 [GL-78]: https://gitlab.com/uhccore/uhccore/-/issues/78
+[GL-63]: https://gitlab.com/uhccore/uhccore/-/issues/63
 
 ## [1.20.5] - 2023-06-16
 

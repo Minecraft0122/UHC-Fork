@@ -2,6 +2,9 @@ package com.gmail.val59000mc.utils;
 
 import com.gmail.val59000mc.exceptions.ParseException;
 import com.google.gson.*;
+
+import io.papermc.lib.PaperLib;
+
 import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -76,6 +79,10 @@ public class JsonItemUtils{
 				flags.forEach(itemFlag -> jsonFlags.add(new JsonPrimitive(itemFlag.name())));
 
 				json.add("flags", jsonFlags);
+			}
+
+			if (PaperLib.isVersion(14) && meta.hasCustomModelData()) {
+				json.addProperty("custom-model-data", meta.getCustomModelData());
 			}
 
 			JsonObject attributes = VersionUtils.getVersionUtils().getItemAttributes(item);
@@ -228,6 +235,11 @@ public class JsonItemUtils{
 						break;
 					case "flags":
 						meta = parseFlags(meta, entry.getValue().getAsJsonArray());
+						break;
+					case "custom-model-data":
+						if (PaperLib.isVersion(14)) {
+							meta.setCustomModelData(entry.getValue().getAsInt());
+						}
 						break;
 					case "base-effect":
 						meta = parseBasePotionEffect(meta, entry.getValue().getAsJsonObject());
