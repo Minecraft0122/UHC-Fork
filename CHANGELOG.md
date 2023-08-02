@@ -15,6 +15,7 @@
 
 ### Bug fixes
 
+- [#98][GL-98] - Unable to find a safe starting location in the overworld on Minecraft 1.14 to 1.15.1
 - [#95][GL-95] - UUID field is not saved/loaded for attribute modifiers on Minecraft 1.13+
 - [#90][GL-90] - UhcCore often does not ignore canceled events
 - [#89][GL-89] - Revive command does not return an error when trying to revive a living player
@@ -27,6 +28,7 @@
 - [#78][GL-78] - Player inventory items are spawned at the wrong location when using the revive command
 
 [GL-52]: https://gitlab.com/uhccore/uhccore/-/issues/52
+[GL-98]: https://gitlab.com/uhccore/uhccore/-/issues/98
 [GL-96]: https://gitlab.com/uhccore/uhccore/-/issues/96
 [GL-95]: https://gitlab.com/uhccore/uhccore/-/issues/95
 [GL-94]: https://gitlab.com/uhccore/uhccore/-/issues/94

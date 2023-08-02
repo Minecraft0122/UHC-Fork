@@ -48,16 +48,19 @@ public class LocationUtils {
 	 * @return the Y-coordinate of the surface block at the X and Z coordinates
 	 */
 	public static int getSurfaceLevelAt(World world, int x, int z) {
-		// Spigot API behavior changed in 1.14, see:
-		// https://hub.spigotmc.org/jira/browse/SPIGOT-2595
-		// https://hub.spigotmc.org/jira/browse/SPIGOT-5523
+		// Spigot API behavior changed in 1.15.2, here is the commit that introduced the breaking change:
+		// https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/commits/807a677e9a59929e27ac1991c3fa1cf6a2ec0f4d
+		// Before that change, Spigot used to add 1 to the vanilla heightmap before returning the value,
+		// which was either a mistake, or intentional, in order avoid breaking API changes when vanilla switched
+		// to the new heightmap system in 1.13.
 
-		if (PaperLib.isVersion(14)) {
-			// MOTION_BLOCKING heightmap, 1.14+
+		if (PaperLib.isVersion(15, 2)) {
+			// MOTION_BLOCKING heightmap + 0, 1.15.2+
 			return world.getHighestBlockYAt(x, z);
 		} else {
 			// Legacy light heightmap, 1.8 - 1.12
-			// LIGHT_BLOCKING heightmap, 1.13
+			// LIGHT_BLOCKING heightmap + 1, 1.13
+			// MOTION_BLOCKING heightmap + 1, 1.14 - 1.15.1
 			return world.getHighestBlockYAt(x, z) - 1;
 		}
 	}
