@@ -1,6 +1,8 @@
 # Changelog
 
-## [Unreleased]
+## [1.20.6] - 2023-08-05
+
+UhcCore version `1.20.6` is now here and brings a whole bunch of bug fixes and new features!
 
 ### New features
 
