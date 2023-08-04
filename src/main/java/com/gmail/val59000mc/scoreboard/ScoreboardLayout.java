@@ -96,7 +96,7 @@ public class ScoreboardLayout {
 
 		for (int i = list.size()-1; i >= 0; i--){
 			if (newList.size() == 15){
-				LOGGER.warning("Scoreboard lines can't have more than 15 lines!");
+				LOGGER.warning("Scoreboards can't have more than 15 lines!");
 				break;
 			}
 			newList.add(ChatColor.translateAlternateColorCodes('&',list.get(i)));
