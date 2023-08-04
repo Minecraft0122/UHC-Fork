@@ -1,7 +1,7 @@
 name: UhcCore
 description: Automates games of the classic UHC gamemode, with endless customization options!
 version: "${version}"
-author: val59000mc, Mezy, zerodind
+authors: [val59000mc, Mezy, zerodind]
 main: com.gmail.val59000mc.UhcCore
 softdepend: [WorldEdit, Vault, ProtocolLib]
 api-version: 1.13
