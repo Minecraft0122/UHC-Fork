@@ -4,6 +4,9 @@
 
 ### New features
 
+- [#52][GL-52] - Option to prevent players from disenchanting tools in the Hastey Boys scenario
+    - Added `scenarios.hastey_boys.grindstone-error` to `lang.yml`
+    - Added the `allow-disenchanting` setting to `hastey_boys` in `scenarios.yml`
 - [#94][GL-94] - Support loading/saving item attribute modifiers on Minecraft 1.8.8
 - [#85][GL-85] - Inform players that PvP is not enabled yet if they try to damage a player before PvP has started
     - Added `players.pvp-off` to `lang.yml`
@@ -20,6 +23,7 @@
 - [#79][GL-79] - Offline zombie is not always removed
 - [#78][GL-78] - Player inventory items are spawned at the wrong location when using the revive command
 
+[GL-52]: https://gitlab.com/uhccore/uhccore/-/issues/52
 [GL-94]: https://gitlab.com/uhccore/uhccore/-/issues/94
 [GL-90]: https://gitlab.com/uhccore/uhccore/-/issues/90
 [GL-89]: https://gitlab.com/uhccore/uhccore/-/issues/89

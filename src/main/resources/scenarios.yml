@@ -53,6 +53,9 @@ hastey_boys:
   durability: 1
   # Set to true if crafting wooden tools should create stone tools instead.
   stone-tools: false
+  # If false, players will be prevented from using a Grindstone to disenchant
+  # tools that were crafted using Hastey Boys.
+  allow-disenchanting: false
 timber:
   # If true, item damage will be applied to the axe used to fell the tree.
   calculate-axe-damage: true

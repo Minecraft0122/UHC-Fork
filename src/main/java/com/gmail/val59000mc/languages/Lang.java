@@ -207,6 +207,7 @@ public class Lang{
 	public static String SCENARIO_BESTPVE_REMOVED;
 	public static String SCENARIO_BESTPVE_BACK;
 	public static String SCENARIO_BOWLESS_ERROR;
+	public static String SCENARIO_HASTEY_BOYS_GRINDSTONE_ERROR;
 	public static String SCENARIO_HORSELESS_ERROR;
 	public static String SCENARIO_NOCLEAN_INVULNERABLE;
 	public static String SCENARIO_NOCLEAN_VULNERABLE;
@@ -474,6 +475,7 @@ public class Lang{
 		SCENARIO_BESTPVE_REMOVED = getString(lang, "scenarios.best_pve.removed", "&4[Best PvE] &cYou are now removed from the PvE list. Getting a kill will add you back to the list.");
 		SCENARIO_BESTPVE_BACK = getString(lang, "scenarios.best_pve.back", "&4[Best PvE] &aYou are added back to the PvE list.");
 		SCENARIO_BOWLESS_ERROR = getString(lang, "scenarios.bowless.error", "&4[Bowless] &cYou can't craft bows!");
+		SCENARIO_HASTEY_BOYS_GRINDSTONE_ERROR = getString(lang, "scenarios.hastey_boys.grindstone-error", "&4[Hastey Boys] &cYou may not disenchant \"Hastey Boys\" tools.");
 		SCENARIO_HORSELESS_ERROR = getString(lang, "scenarios.horseless.error", "&4[Horseless] &cYou can't ride that horse!");
 		SCENARIO_NOCLEAN_INVULNERABLE = getString(lang, "scenarios.no_clean.invulnerable", "&4[NoClean] &aYou are now invulnerable for 30 seconds!");
 		SCENARIO_NOCLEAN_VULNERABLE = getString(lang, "scenarios.no_clean.vulnerable", "&4[NoClean] &cYou can now take damage again!");
