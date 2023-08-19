@@ -92,9 +92,11 @@ public class CaveOresOnlyPopulator extends BlockPopulator{
 			int relY = block.getY();
 			int relZ = block.getZ() & 0x0000000F;
 
-			// We must be sure that we remain within the chunk, otherwise the loading of an
-			// adjacent chunk will be triggered, leading to an infinite recursion
 			if 	(
+					// We must stay witin bounds of the "explored" array
+					!(0 <= relY && relY <= 127) ||
+					// We must be sure that we remain within the chunk, otherwise the loading of an
+					// adjacent chunk will be triggered, leading to an infinite recursion
 					(block.getX() >> 4) != chunk.getX() ||
 					(block.getZ() >> 4) != chunk.getZ() ||
 					block.getType() != type ||
