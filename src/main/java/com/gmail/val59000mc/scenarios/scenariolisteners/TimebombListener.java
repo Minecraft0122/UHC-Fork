@@ -17,7 +17,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -101,10 +100,13 @@ public class TimebombListener extends ScenarioListener{
 			VersionUtils.getVersionUtils().setChestSide(chest1, false);
 			VersionUtils.getVersionUtils().setChestSide(chest2, true);
 
-			Inventory inv = chest1.getInventory();
-
-			for (ItemStack drop : drops){
-				inv.addItem(drop);
+			for (int i = 0; i < drops.size(); i++) {
+				ItemStack drop = drops.get(i);
+				if (i < chest1.getInventory().getSize()) {
+					chest1.getInventory().addItem(drop);
+				} else {
+					chest2.getInventory().addItem(drop);
+				}
 			}
 
 			loc.add(1,-1,.5);

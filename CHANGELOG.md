@@ -5,8 +5,10 @@
 ### Bug fixes
 
 - [#100][GL-100] - ArrayIndexOutOfBoundsException when using the cave-ores-only setting
+- [#99][GL-99] - Items are sometimes missing from the chest in the Timebomb scenario
 
 [GL-100]: https://gitlab.com/uhccore/uhccore/-/issues/100
+[GL-99]: https://gitlab.com/uhccore/uhccore/-/issues/99
 
 ## [1.20.6] - 2023-08-05
 
