@@ -5,7 +5,6 @@ import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.scenarios.Scenario;
 import com.gmail.val59000mc.scenarios.ScenarioManager;
 import com.gmail.val59000mc.scoreboard.Placeholder;
-import com.gmail.val59000mc.scoreboard.ScoreboardType;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -22,7 +21,7 @@ public class ScenariosPlaceholder extends Placeholder {
 	}
 
 	@Override
-	public String getReplacement(UhcPlayer uhcPlayer, Player player, ScoreboardType scoreboardType, String placeholder){
+	public String getReplacement(UhcPlayer uhcPlayer, Player player, String placeholder){
 		ScenarioManager scenarioManager = GameManager.getGameManager().getScenarioManager();
 
 		if (scenarioManager.getEnabledScenarios().isEmpty()){

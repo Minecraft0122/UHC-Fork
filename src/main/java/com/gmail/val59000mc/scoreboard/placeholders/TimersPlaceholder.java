@@ -4,7 +4,6 @@ import com.gmail.val59000mc.configuration.MainConfig;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.scoreboard.Placeholder;
-import com.gmail.val59000mc.scoreboard.ScoreboardType;
 import com.gmail.val59000mc.utils.TimeUtils;
 import org.bukkit.entity.Player;
 
@@ -24,7 +23,7 @@ public class TimersPlaceholder extends Placeholder{
 	}
 
 	@Override
-	public String getReplacement(UhcPlayer uhcPlayer, Player player, ScoreboardType scoreboardType, String placeholder){
+	public String getReplacement(UhcPlayer uhcPlayer, Player player, String placeholder){
 		if (nextEvent == null){
 			nextEvent = getNextEvent();
 		}

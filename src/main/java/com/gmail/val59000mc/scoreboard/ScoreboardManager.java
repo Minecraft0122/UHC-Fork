@@ -45,15 +45,13 @@ public class ScoreboardManager {
 		return scoreboardLayout;
 	}
 
-	public String translatePlaceholders(String s, UhcPlayer uhcPlayer, Player bukkitPlayer, ScoreboardType scoreboardType){
+	public String translatePlaceholders(String s, UhcPlayer uhcPlayer, Player bukkitPlayer){
 
 		String returnString = s;
 		GameManager gm = GameManager.getGameManager();
 		MainConfig cfg = gm.getConfig();
 
-		if (scoreboardType.equals(ScoreboardType.WAITING)){
-			returnString = returnString.replace("%online%",Bukkit.getOnlinePlayers().size() + "").replace("%needed%",cfg.get(MainConfig.MIN_PLAYERS_TO_START) + "");
-		}
+		returnString = returnString.replace("%online%",Bukkit.getOnlinePlayers().size() + "").replace("%needed%",cfg.get(MainConfig.MIN_PLAYERS_TO_START) + "");
 
 		if (returnString.contains("%kit%")){
 			if (uhcPlayer.hasKitSelected()){
@@ -171,7 +169,7 @@ public class ScoreboardManager {
 
 		// Parse custom placeholders
 		for (Placeholder placeholder : placeholders){
-			returnString = placeholder.parseString(returnString, uhcPlayer, bukkitPlayer, scoreboardType);
+			returnString = placeholder.parseString(returnString, uhcPlayer, bukkitPlayer);
 		}
 
 		if (returnString.length() > 32){

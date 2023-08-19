@@ -32,24 +32,22 @@ public abstract class Placeholder{
 	 * This method must be overridden in your custom placeholder!
 	 * @param uhcPlayer The {@link UhcPlayer} the replacement is requested for.
 	 * @param player The {@link Player} the replacement is requested for.
-	 * @param scoreboardType The {@link ScoreboardType} at the time of getting the placeholder.
 	 * @param placeholder The placeholder found in the replacement string.
 	 * @return Returns the replacement.
 	 */
-	public abstract String getReplacement(UhcPlayer uhcPlayer, Player player, ScoreboardType scoreboardType, String placeholder);
+	public abstract String getReplacement(UhcPlayer uhcPlayer, Player player, String placeholder);
 
 	/**
 	 * Used to parse a string trough the placeholder.
 	 * @param string The parsed string.
 	 * @param uhcPlayer The {@link UhcPlayer} the string is parsed for.
 	 * @param player The {@link Player} the string is parsed for.
-	 * @param scoreboardType The {@link ScoreboardType} the string is parsed for.
 	 * @return Returns the string with parsed placeholders.
 	 */
-	public String parseString(String string, UhcPlayer uhcPlayer, Player player, ScoreboardType scoreboardType){
+	public String parseString(String string, UhcPlayer uhcPlayer, Player player){
 		for (String placeholder : placeholders){
 			if (string.contains("%"+placeholder+"%")){
-				string = string.replace("%"+placeholder+"%", getReplacement(uhcPlayer, player, scoreboardType, placeholder));
+				string = string.replace("%"+placeholder+"%", getReplacement(uhcPlayer, player, placeholder));
 			}
 		}
 		return string;

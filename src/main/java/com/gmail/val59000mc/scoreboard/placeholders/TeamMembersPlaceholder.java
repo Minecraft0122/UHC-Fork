@@ -3,7 +3,6 @@ package com.gmail.val59000mc.scoreboard.placeholders;
 import com.gmail.val59000mc.exceptions.UhcPlayerNotOnlineException;
 import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.scoreboard.Placeholder;
-import com.gmail.val59000mc.scoreboard.ScoreboardType;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -21,15 +20,9 @@ public class TeamMembersPlaceholder extends Placeholder {
 	}
 
 	@Override
-	public String getReplacement(UhcPlayer uhcPlayer, Player player, ScoreboardType scoreboardType, String placeholder){
+	public String getReplacement(UhcPlayer uhcPlayer, Player player, String placeholder){
 
-		List<UhcPlayer> teamMembers;
-
-		if (scoreboardType.equals(ScoreboardType.WAITING)){
-			teamMembers = uhcPlayer.getTeam().getMembers();
-		}else{
-			teamMembers = uhcPlayer.getTeam().getMembers(UhcPlayer::isPlaying);
-		}
+		List<UhcPlayer> teamMembers = uhcPlayer.getTeam().getMembers(p -> p.isPlaying() || p.isWaiting());
 
 		if (teamMembers.isEmpty()){
 			return "-";

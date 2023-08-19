@@ -310,7 +310,7 @@ public class ScoreboardHandler {
 
 			if (!line.isEmpty()) {
 
-				String translatedLine = scoreboardManager.translatePlaceholders(line, uhcPlayer, player, scoreboardType);
+				String translatedLine = scoreboardManager.translatePlaceholders(line, uhcPlayer, player);
 
 				if (translatedLine.length() <= 16){
 					first = translatedLine;
