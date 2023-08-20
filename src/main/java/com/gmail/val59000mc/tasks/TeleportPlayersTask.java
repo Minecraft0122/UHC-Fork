@@ -1,6 +1,5 @@
 package com.gmail.val59000mc.tasks;
 
-import com.gmail.val59000mc.configuration.MainConfig;
 import com.gmail.val59000mc.exceptions.UhcPlayerNotOnlineException;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.players.UhcPlayer;
@@ -10,7 +9,6 @@ import com.gmail.val59000mc.utils.LocationUtils;
 import java.util.logging.Logger;
 
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
 
 public class TeleportPlayersTask implements Runnable{
 

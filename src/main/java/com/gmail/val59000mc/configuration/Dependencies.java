@@ -1,8 +1,5 @@
 package com.gmail.val59000mc.configuration;
 
-import com.gmail.val59000mc.utils.ProtocolUtils;
-
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
