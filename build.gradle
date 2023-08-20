@@ -1,8 +1,8 @@
 plugins {
 	id "java-library"
 	id "maven-publish"
-	id "com.github.johnrengelman.shadow" version "8.1.0"
-	id "xyz.jpenilla.run-paper" version "2.0.1"
+	id "com.github.johnrengelman.shadow" version "8.1.1"
+	id "xyz.jpenilla.run-paper" version "2.1.0"
 }
 
 group = "net.zerodind"
@@ -71,7 +71,7 @@ dependencies {
 	compileOnly "com.google.code.findbugs:jsr305:3.0.2"
 	compileOnly "com.github.MilkBowl:VaultAPI:1.7"
 	compileOnly "com.comphenix.protocol:ProtocolLib:4.7.0"
-	implementation "net.wesjd:anvilgui:1.6.6-SNAPSHOT"
+	implementation "net.wesjd:anvilgui:1.7.0-SNAPSHOT"
 	implementation "io.papermc:paperlib:1.0.8"
 	implementation project(":Support-WorldEdit-6")
 	implementation project(":Support-WorldEdit-7")
