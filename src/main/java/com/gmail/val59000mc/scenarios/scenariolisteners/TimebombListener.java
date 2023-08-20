@@ -36,11 +36,11 @@ public class TimebombListener extends ScenarioListener{
 		List<ItemStack> drops = new ArrayList<>(e.getDrops());
 		e.getDrops().removeAll(e.getDrops());
 
-		TimebombThread timebombThread = new TimebombThread(drops, p.getLocation().getBlock().getLocation(), p.getName(), delay, (float) explosionPower);
-		Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), timebombThread,1L);
+		TimebombTask timebombTask = new TimebombTask(drops, p.getLocation().getBlock().getLocation(), p.getName(), delay, (float) explosionPower);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), timebombTask,1L);
 	}
 
-	public static class TimebombThread implements Runnable{
+	public static class TimebombTask implements Runnable{
 
 		private ArmorStand armorStand;
 		private Block block1, block2;
@@ -51,7 +51,7 @@ public class TimebombListener extends ScenarioListener{
 		private boolean spawned;
 		private float explosionPower;
 
-		public TimebombThread(List<ItemStack> drops, Location loc, String name, long delay, float explosionPower) {
+		public TimebombTask(List<ItemStack> drops, Location loc, String name, long delay, float explosionPower) {
 			this.drops = drops;
 			this.loc = loc;
 			this.name = name;

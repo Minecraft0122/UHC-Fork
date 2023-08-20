@@ -1,4 +1,4 @@
-package com.gmail.val59000mc.threads;
+package com.gmail.val59000mc.tasks;
 
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.game.GameManager;
@@ -8,28 +8,28 @@ import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 
-public class EndThread implements Runnable{
+public class EndTask implements Runnable{
 
-	private static final Logger LOGGER = Logger.getLogger(EndThread.class.getCanonicalName());
+	private static final Logger LOGGER = Logger.getLogger(EndTask.class.getCanonicalName());
 
-	private static final EndThread instance;
+	private static final EndTask instance;
 
 	private int timeBeforeEnd;
 	private boolean run;
 
-	private EndThread(){
+	private EndTask(){
 		timeBeforeEnd = 61;
 		run = false;
 	}
 
 	static{
-		instance = new EndThread();
+		instance = new EndTask();
 	}
 
 	@Override
 	public void run() {
 		if (!run){
-			return; // Stop thread
+			return; // Stop task
 		}
 
 		GameManager gm = GameManager.getGameManager();
@@ -42,7 +42,7 @@ public class EndThread implements Runnable{
 				gm.broadcastInfoMessage(Lang.PLAYERS_ALL_HAVE_LEFT+" "+timeBeforeEnd);
 			}
 			timeBeforeEnd--;
-			Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), EndThread.this,20);
+			Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), EndTask.this,20);
 		}
 	}
 

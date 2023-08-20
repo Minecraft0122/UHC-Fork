@@ -12,7 +12,7 @@ import com.gmail.val59000mc.players.PlayerManager;
 import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.players.UhcTeam;
 import com.gmail.val59000mc.schematics.DeathmatchArena;
-import com.gmail.val59000mc.threads.StartDeathmatchThread;
+import com.gmail.val59000mc.tasks.StartDeathmatchTask;
 import com.gmail.val59000mc.utils.LocationUtils;
 import com.gmail.val59000mc.utils.UniversalSound;
 import org.bukkit.Bukkit;
@@ -83,8 +83,8 @@ public class DeathmatchHandler {
 		// Shrink border to arena size
 		mapLoader.setBorderSize(arenaLocation.getWorld(), arenaLocation.getBlockX(), arenaLocation.getBlockZ(), arena.getMaxSize());
 
-		// Start Enable pvp thread
-		Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new StartDeathmatchThread(gameManager, false), 20);
+		// Start Enable pvp task
+		Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new StartDeathmatchTask(gameManager, false), 20);
 	}
 
 	private void startCenterDeathmatch() {
@@ -101,8 +101,8 @@ public class DeathmatchHandler {
 		// Shrink border to arena size
 		mapLoader.setBorderSize(mapLoader.getUhcWorld(World.Environment.NORMAL), 0, 0, config.get(MainConfig.DEATHMATCH_START_SIZE)*2);
 
-		// Start Enable pvp thread
-		Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new StartDeathmatchThread(gameManager, true), 20);
+		// Start Enable pvp task
+		Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new StartDeathmatchTask(gameManager, true), 20);
 	}
 
 	private void teleportTeam(UhcTeam team, Location spawnLocation, Location spectateLocation) {

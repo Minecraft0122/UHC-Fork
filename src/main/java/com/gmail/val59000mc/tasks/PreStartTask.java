@@ -1,4 +1,4 @@
-package com.gmail.val59000mc.threads;
+package com.gmail.val59000mc.tasks;
 
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.configuration.MainConfig;
@@ -10,9 +10,9 @@ import org.bukkit.Bukkit;
 
 import java.util.List;
 
-public class PreStartThread implements Runnable{
+public class PreStartTask implements Runnable{
 
-	private static PreStartThread instance;
+	private static PreStartTask instance;
 
 	private final GameManager gameManager;
 	private final int timeBeforeStart;
@@ -21,7 +21,7 @@ public class PreStartThread implements Runnable{
 	private final boolean teamsAlwaysReady;
 	private boolean pause, force;
 
-	public PreStartThread(GameManager gameManager){
+	public PreStartTask(GameManager gameManager){
 		this.gameManager = gameManager;
 		MainConfig cfg = gameManager.getConfig();
 		instance = this;

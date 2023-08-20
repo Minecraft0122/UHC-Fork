@@ -1,4 +1,4 @@
-package com.gmail.val59000mc.threads;
+package com.gmail.val59000mc.tasks;
 
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.game.GameManager;
@@ -7,13 +7,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldBorder;
 
-public class WorldBorderThread implements Runnable{
+public class WorldBorderTask implements Runnable{
 
 	private long timeBeforeShrink;
 	private final long timeToShrink;
 	private final int endSize;
 
-	public WorldBorderThread(long timeBeforeShrink, int endSize, long timeToShrink){
+	public WorldBorderTask(long timeBeforeShrink, int endSize, long timeToShrink){
 		this.timeBeforeShrink = timeBeforeShrink;
 		this.endSize = endSize;
 		this.timeToShrink = timeToShrink;

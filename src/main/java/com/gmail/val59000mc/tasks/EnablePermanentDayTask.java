@@ -1,14 +1,14 @@
-package com.gmail.val59000mc.threads;
+package com.gmail.val59000mc.tasks;
 
 import com.gmail.val59000mc.maploader.MapLoader;
 import com.gmail.val59000mc.utils.VersionUtils;
 import org.bukkit.World;
 
-public class EnablePermanentDayThread implements Runnable {
+public class EnablePermanentDayTask implements Runnable {
 
 	private final MapLoader mapLoader;
 
-	public EnablePermanentDayThread(MapLoader mapLoader) {
+	public EnablePermanentDayTask(MapLoader mapLoader) {
 		this.mapLoader = mapLoader;
 	}
 

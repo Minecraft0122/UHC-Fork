@@ -26,19 +26,19 @@ public class FastSmeltingListener extends ScenarioListener{
 		Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), new Runnable() {
 			@Override
 			public void run() {
-				// If the furnace is broken stop thread.
+				// If the furnace is broken stop task.
 				if (block.getType() == Material.AIR){
 					return;
 				}
 
 				Furnace furnace = (Furnace) block.getState();
 
-				// If furnace almost stopped burning stop thread. A new FurnaceBurnEvent will be called.
+				// If furnace almost stopped burning stop task. A new FurnaceBurnEvent will be called.
 				if (furnace.getBurnTime() <= 10) {
 					return;
 				}
 
-				// If no item is cooking don't speed up cooking time but show down thread while waiting for the burning to stop.
+				// If no item is cooking don't speed up cooking time but slow down task while waiting for the burning to stop.
 				if (furnace.getCookTime() <= 0){
 					Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), this, 5);
 					return;

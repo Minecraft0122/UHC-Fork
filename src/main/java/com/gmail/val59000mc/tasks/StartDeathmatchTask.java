@@ -1,4 +1,4 @@
-package com.gmail.val59000mc.threads;
+package com.gmail.val59000mc.tasks;
 
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.configuration.MainConfig;
@@ -9,13 +9,13 @@ import com.gmail.val59000mc.utils.UniversalSound;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
-public class StartDeathmatchThread implements Runnable{
+public class StartDeathmatchTask implements Runnable{
 
 	private final GameManager gameManager;
 	private int timeBeforePVP;
 	private final boolean shrinkBorder;
 
-	public StartDeathmatchThread(GameManager gameManager, boolean shrinkBorder){
+	public StartDeathmatchTask(GameManager gameManager, boolean shrinkBorder){
 		this.gameManager = gameManager;
 		this.timeBeforePVP = 31;
 		this.shrinkBorder = shrinkBorder;

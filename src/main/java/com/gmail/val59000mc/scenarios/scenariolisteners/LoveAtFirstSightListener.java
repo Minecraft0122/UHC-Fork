@@ -47,7 +47,7 @@ public class LoveAtFirstSightListener extends ScenarioListener{
 	public void onGameStarting(UhcStartingEvent e) {
 		for (final UhcPlayer player : getPlayerManager().getPlayersList()) {
 			if (!player.getTeam().isSolo() && !player.isTeamLeader()) {
-				// Teams are updated on the tab list by UpdateScoreboardThread once the game starts
+				// Teams are updated on the tab list by UpdateScoreboardTask once the game starts
 				player.getTeam().getMembers().remove(player);
 				player.setTeam(new UhcTeam(player));
 			}

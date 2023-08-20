@@ -7,7 +7,7 @@ import com.gmail.val59000mc.players.PlayerState;
 import com.gmail.val59000mc.players.PlayerManager;
 import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.players.UhcTeam;
-import com.gmail.val59000mc.threads.PreStartThread;
+import com.gmail.val59000mc.tasks.PreStartTask;
 
 import java.util.logging.Logger;
 
@@ -118,13 +118,13 @@ public class UhcCommandExecutor implements CommandExecutor{
 				return true;
 
 			case "pause":
-				String pauseState = PreStartThread.togglePause();
-				sender.sendMessage("The starting thread state is now : "+pauseState);
+				String pauseState = PreStartTask.togglePause();
+				sender.sendMessage("The starting task state is now : "+pauseState);
 				return true;
 
 			case "force":
-				String forceState = PreStartThread.toggleForce();
-				sender.sendMessage("The starting thread state is now : "+forceState);
+				String forceState = PreStartTask.toggleForce();
+				sender.sendMessage("The starting task state is now : "+forceState);
 				return true;
 
 			case "location":

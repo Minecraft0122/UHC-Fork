@@ -1,4 +1,4 @@
-package com.gmail.val59000mc.threads;
+package com.gmail.val59000mc.tasks;
 
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.configuration.MainConfig;
@@ -8,12 +8,12 @@ import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.utils.UniversalSound;
 import org.bukkit.Bukkit;
 
-public class EnablePVPThread implements Runnable{
+public class EnablePVPTask implements Runnable{
 
 	private final GameManager gameManager;
 	private int timeBeforePvp;
 
-	public EnablePVPThread(GameManager gameManager){
+	public EnablePVPTask(GameManager gameManager){
 		this.gameManager = gameManager;
 		timeBeforePvp = gameManager.getConfig().get(MainConfig.TIME_BEFORE_PVP);
 	}
@@ -21,14 +21,14 @@ public class EnablePVPThread implements Runnable{
 	@Override
 	public void run() {
 		if(!gameManager.getGameState().equals(GameState.PLAYING)) {
-			return; // Stop thread
+			return; // Stop task
 		}
 
 		if(timeBeforePvp == 0){
 			GameManager.getGameManager().setPvp(true);
 			GameManager.getGameManager().broadcastInfoMessage(Lang.PVP_ENABLED);
 			GameManager.getGameManager().getPlayerManager().playSoundToAll(UniversalSound.WITHER_SPAWN.getSound());
-			return; // Stop thread
+			return; // Stop task
 		}
 
 		if(timeBeforePvp <= 10 || (timeBeforePvp < 60*5 && timeBeforePvp%60 == 0) || timeBeforePvp%(60*5) == 0){

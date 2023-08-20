@@ -1,4 +1,4 @@
-package com.gmail.val59000mc.threads;
+package com.gmail.val59000mc.tasks;
 
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.game.GameManager;
@@ -6,11 +6,11 @@ import com.gmail.val59000mc.game.GameState;
 import org.bukkit.Bukkit;
 
 
-public class CheckRemainingPlayerThread implements Runnable{
+public class CheckRemainingPlayerTask implements Runnable{
 
 	private final GameManager gameManager;
 
-	public CheckRemainingPlayerThread(GameManager gameManager){
+	public CheckRemainingPlayerTask(GameManager gameManager){
 		this.gameManager = gameManager;
 	}
 

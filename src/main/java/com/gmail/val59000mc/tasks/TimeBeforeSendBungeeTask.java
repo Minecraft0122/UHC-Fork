@@ -1,4 +1,4 @@
-package com.gmail.val59000mc.threads;
+package com.gmail.val59000mc.tasks;
 
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.exceptions.UhcPlayerNotOnlineException;
@@ -10,13 +10,13 @@ import com.gmail.val59000mc.utils.UniversalSound;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class TimeBeforeSendBungeeThread implements Runnable{
+public class TimeBeforeSendBungeeTask implements Runnable{
 
 	private final PlayerManager playerManager;
 	private final UhcPlayer uhcPlayer;
 	private int remainingTime;
 
-	public TimeBeforeSendBungeeThread(PlayerManager playerManager, UhcPlayer uhcPlayer, int remainingTime){
+	public TimeBeforeSendBungeeTask(PlayerManager playerManager, UhcPlayer uhcPlayer, int remainingTime){
 		this.playerManager = playerManager;
 		this.uhcPlayer = uhcPlayer;
 		this.remainingTime = remainingTime;

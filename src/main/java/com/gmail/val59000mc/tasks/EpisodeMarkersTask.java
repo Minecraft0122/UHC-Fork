@@ -1,4 +1,4 @@
-package com.gmail.val59000mc.threads;
+package com.gmail.val59000mc.tasks;
 
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.configuration.MainConfig;
@@ -7,13 +7,13 @@ import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.utils.UniversalSound;
 import org.bukkit.Bukkit;
 
-public class EpisodeMarkersThread implements Runnable{
+public class EpisodeMarkersTask implements Runnable{
 
 	private final GameManager gameManager;
 	private final long delay;
 	private int episodeNr;
 
-	public EpisodeMarkersThread(GameManager gameManager) {
+	public EpisodeMarkersTask(GameManager gameManager) {
 		this.gameManager = gameManager;
 		this.delay = gameManager.getConfig().get(MainConfig.EPISODE_MARKERS_DELAY) * 20;
 		this.episodeNr = 0;

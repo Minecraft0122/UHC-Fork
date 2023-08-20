@@ -1,4 +1,4 @@
-package com.gmail.val59000mc.threads;
+package com.gmail.val59000mc.tasks;
 
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.exceptions.UhcPlayerDoesNotExistException;
@@ -18,16 +18,16 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class KillDisconnectedPlayerThread implements Runnable{
+public class KillDisconnectedPlayerTask implements Runnable{
 
-	private static final Logger LOGGER = Logger.getLogger(KillDisconnectedPlayerThread.class.getCanonicalName());
+	private static final Logger LOGGER = Logger.getLogger(KillDisconnectedPlayerTask.class.getCanonicalName());
 
 	private final PlayerDeathHandler playerDeathHandler;
 	private final UUID uuid;
 	private int timeLeft;
 	private final Location location;
 
-	public KillDisconnectedPlayerThread(PlayerDeathHandler playerDeathHandler, UUID playerUuid, int maxDisconnectPlayersTime, Location location){
+	public KillDisconnectedPlayerTask(PlayerDeathHandler playerDeathHandler, UUID playerUuid, int maxDisconnectPlayersTime, Location location){
 		this.playerDeathHandler = playerDeathHandler;
 		uuid = playerUuid;
 		timeLeft = maxDisconnectPlayersTime;

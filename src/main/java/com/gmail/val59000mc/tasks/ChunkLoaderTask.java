@@ -1,4 +1,4 @@
-package com.gmail.val59000mc.threads;
+package com.gmail.val59000mc.tasks;
 
 import com.gmail.val59000mc.UhcCore;
 import io.papermc.lib.PaperLib;
@@ -10,9 +10,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public abstract class ChunkLoaderThread implements Runnable {
+public abstract class ChunkLoaderTask implements Runnable {
 
-	private static final Logger LOGGER = Logger.getLogger(ChunkLoaderThread.class.getCanonicalName());
+	private static final Logger LOGGER = Logger.getLogger(ChunkLoaderTask.class.getCanonicalName());
 
 	private final World world;
 	private final int restEveryNumOfChunks, restDuration;
@@ -22,7 +22,7 @@ public abstract class ChunkLoaderThread implements Runnable {
 	private final int totalChunksToLoad;
 	private int chunksLoaded;
 
-	public ChunkLoaderThread(World world, int size, int restEveryNumOfChunks, int restDuration) {
+	public ChunkLoaderTask(World world, int size, int restEveryNumOfChunks, int restDuration) {
 		this.world = world;
 		this.restEveryNumOfChunks = restEveryNumOfChunks;
 		this.restDuration = restDuration;

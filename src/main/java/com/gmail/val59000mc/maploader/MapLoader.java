@@ -33,8 +33,8 @@ import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.schematics.DeathmatchArena;
 import com.gmail.val59000mc.schematics.Lobby;
 import com.gmail.val59000mc.schematics.UndergroundNether;
-import com.gmail.val59000mc.threads.ChunkLoaderThread;
-import com.gmail.val59000mc.threads.WorldBorderThread;
+import com.gmail.val59000mc.tasks.ChunkLoaderTask;
+import com.gmail.val59000mc.tasks.WorldBorderTask;
 import com.gmail.val59000mc.utils.FileUtils;
 import com.gmail.val59000mc.utils.VersionUtils;
 import com.pieterdebot.biomemapping.Biome;
@@ -297,7 +297,7 @@ public class MapLoader {
 			int timeToShrink = config.get(MainConfig.BORDER_TIME_TO_SHRINK);
 			int timeBeforeShrink = config.get(MainConfig.BORDER_TIME_BEFORE_SHRINK);
 
-			Bukkit.getScheduler().runTask(UhcCore.getPlugin(), new WorldBorderThread(timeBeforeShrink, endSize, timeToShrink));
+			Bukkit.getScheduler().runTask(UhcCore.getPlugin(), new WorldBorderTask(timeBeforeShrink, endSize, timeToShrink));
 		}
 	}
 
@@ -473,7 +473,7 @@ public class MapLoader {
 		boolean generateVeins = config.get(MainConfig.ENABLE_GENERATE_VEINS);
 		VeinGenerator veinGenerator = new VeinGenerator(config.get(MainConfig.GENERATE_VEINS));
 
-		ChunkLoaderThread chunkLoaderThread = new ChunkLoaderThread(world, size, restEveryNumOfChunks, restDuration) {
+		ChunkLoaderTask chunkLoaderTask = new ChunkLoaderTask(world, size, restEveryNumOfChunks, restDuration) {
 			@Override
 			public void onDoneLoadingWorld() {
 				LOGGER.info("Environment "+env.toString()+" 100% loaded");
@@ -492,12 +492,12 @@ public class MapLoader {
 			}
 		};
 
-		chunkLoaderThread.printSettings();
+		chunkLoaderTask.printSettings();
 
 		if (PaperLib.isPaper() && PaperLib.getMinecraftVersion() >= 13){
-			Bukkit.getScheduler().runTaskAsynchronously(UhcCore.getPlugin(), chunkLoaderThread);
+			Bukkit.getScheduler().runTaskAsynchronously(UhcCore.getPlugin(), chunkLoaderTask);
 		}else {
-			Bukkit.getScheduler().runTask(UhcCore.getPlugin(), chunkLoaderThread);
+			Bukkit.getScheduler().runTask(UhcCore.getPlugin(), chunkLoaderTask);
 		}
 	}
 

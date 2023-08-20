@@ -1,4 +1,4 @@
-package com.gmail.val59000mc.threads;
+package com.gmail.val59000mc.tasks;
 
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.game.GameManager;
@@ -9,12 +9,12 @@ import com.gmail.val59000mc.utils.TimeUtils;
 import com.gmail.val59000mc.utils.UniversalSound;
 import org.bukkit.Bukkit;
 
-public class TimeBeforeDeathmatchThread implements Runnable{
+public class TimeBeforeDeathmatchTask implements Runnable{
 
 	private final GameManager gameManager;
 	private final DeathmatchHandler deathmatchHandler;
 
-	public TimeBeforeDeathmatchThread(GameManager gameManager, DeathmatchHandler deathmatchHandler) {
+	public TimeBeforeDeathmatchTask(GameManager gameManager, DeathmatchHandler deathmatchHandler) {
 		this.gameManager = gameManager;
 		this.deathmatchHandler = deathmatchHandler;
 	}

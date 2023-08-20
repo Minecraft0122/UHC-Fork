@@ -12,7 +12,8 @@ import com.gmail.val59000mc.players.PlayerState;
 import com.gmail.val59000mc.players.PlayerManager;
 import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.players.UhcTeam;
-import com.gmail.val59000mc.threads.KillDisconnectedPlayerThread;
+import com.gmail.val59000mc.tasks.KillDisconnectedPlayerTask;
+
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -93,13 +94,13 @@ public class PlayerConnectionListener implements Listener{
 			UhcPlayer uhcPlayer = playerManager.getUhcPlayer(event.getPlayer());
 			if(gameManager.getConfig().get(MainConfig.ENABLE_KILL_DISCONNECTED_PLAYERS) && uhcPlayer.getState().equals(PlayerState.PLAYING)){
 
-				KillDisconnectedPlayerThread killDisconnectedPlayerThread = new KillDisconnectedPlayerThread(
+				KillDisconnectedPlayerTask killDisconnectedPlayerTask = new KillDisconnectedPlayerTask(
 						playerDeathHandler, event.getPlayer().getUniqueId(),
 						gameManager.getConfig().get(MainConfig.MAX_DISCONNECT_PLAYERS_TIME),
 						event.getPlayer().getLocation()
 				);
 
-				Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), killDisconnectedPlayerThread,1);
+				Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), killDisconnectedPlayerTask,1);
 			}
 			if(gameManager.getConfig().get(MainConfig.SPAWN_OFFLINE_PLAYERS) && uhcPlayer.getState().equals(PlayerState.PLAYING)){
 				playerManager.spawnOfflineZombieFor(event.getPlayer());

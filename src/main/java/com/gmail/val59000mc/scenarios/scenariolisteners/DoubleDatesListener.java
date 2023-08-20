@@ -36,7 +36,7 @@ public class DoubleDatesListener extends ScenarioListener{
 	}
 
 	private void matchTeams(UhcTeam team1, UhcTeam team2){
-		// Teams are updated on the tab list by UpdateScoreboardThread once the game starts
+		// Teams are updated on the tab list by UpdateScoreboardTask once the game starts
 		team2.getMembers().forEach(member -> member.setTeam(team1));
 		team1.getMembers().addAll(team2.getMembers());
 	}

@@ -1,4 +1,4 @@
-package com.gmail.val59000mc.threads;
+package com.gmail.val59000mc.tasks;
 
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.events.UhcTimeEvent;
@@ -10,13 +10,13 @@ import org.bukkit.Bukkit;
 
 import java.util.Set;
 
-public class ElapsedTimeThread implements Runnable{
+public class ElapsedTimeTask implements Runnable{
 
 	private final GameManager gameManager;
 	private final CustomEventHandler customEventHandler;
-	private final ElapsedTimeThread task;
+	private final ElapsedTimeTask task;
 
-	public ElapsedTimeThread(GameManager gameManager, CustomEventHandler customEventHandler) {
+	public ElapsedTimeTask(GameManager gameManager, CustomEventHandler customEventHandler) {
 		this.gameManager = gameManager;
 		this.customEventHandler = customEventHandler;
 		this.task = this;

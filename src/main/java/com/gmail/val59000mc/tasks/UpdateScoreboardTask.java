@@ -1,4 +1,4 @@
-package com.gmail.val59000mc.threads;
+package com.gmail.val59000mc.tasks;
 
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.game.handlers.ScoreboardHandler;
@@ -6,7 +6,7 @@ import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.scoreboard.ScoreboardType;
 import org.bukkit.Bukkit;
 
-public class UpdateScoreboardThread implements Runnable {
+public class UpdateScoreboardTask implements Runnable {
 	private static final long UPDATE_DELAY = 20L;
 
 	private final ScoreboardHandler scoreboardHandler;
@@ -15,7 +15,7 @@ public class UpdateScoreboardThread implements Runnable {
 
 	private ScoreboardType scoreboardType;
 
-	public UpdateScoreboardThread(ScoreboardHandler scoreboardHandler, UhcPlayer uhcPlayer) {
+	public UpdateScoreboardTask(ScoreboardHandler scoreboardHandler, UhcPlayer uhcPlayer) {
 		this.scoreboardHandler = scoreboardHandler;
 		this.uhcPlayer = uhcPlayer;
 	}

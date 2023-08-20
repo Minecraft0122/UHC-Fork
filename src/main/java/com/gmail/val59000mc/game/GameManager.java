@@ -19,7 +19,15 @@ import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.scenarios.ScenarioManager;
 import com.gmail.val59000mc.scoreboard.ScoreboardLayout;
 import com.gmail.val59000mc.scoreboard.ScoreboardManager;
-import com.gmail.val59000mc.threads.*;
+import com.gmail.val59000mc.tasks.ElapsedTimeTask;
+import com.gmail.val59000mc.tasks.EnablePVPTask;
+import com.gmail.val59000mc.tasks.EnablePermanentDayTask;
+import com.gmail.val59000mc.tasks.EndTask;
+import com.gmail.val59000mc.tasks.EpisodeMarkersTask;
+import com.gmail.val59000mc.tasks.FinalHealTask;
+import com.gmail.val59000mc.tasks.PreStartTask;
+import com.gmail.val59000mc.tasks.StopRestartTask;
+import com.gmail.val59000mc.tasks.TimeBeforeDeathmatchTask;
 import com.gmail.val59000mc.utils.*;
 import org.apache.commons.lang.Validate;
 import org.bukkit.*;
@@ -208,7 +216,7 @@ public class GameManager{
 		scenarioManager.loadDefaultScenarios(config);
 
 		LOGGER.info("Players are now allowed to join");
-		Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new PreStartThread(this),0);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new PreStartTask(this),0);
 	}
 
 	public void startGame() {
@@ -232,24 +240,24 @@ public class GameManager{
 
 		mapLoader.setWorldsStartGame();
 
-		playerManager.startWatchPlayerPlayingThread();
-		Bukkit.getScheduler().runTaskAsynchronously(UhcCore.getPlugin(), new ElapsedTimeThread(this, customEventHandler));
-		Bukkit.getScheduler().runTaskAsynchronously(UhcCore.getPlugin(), new EnablePVPThread(this));
+		playerManager.startWatchPlayerPlayingTask();
+		Bukkit.getScheduler().runTaskAsynchronously(UhcCore.getPlugin(), new ElapsedTimeTask(this, customEventHandler));
+		Bukkit.getScheduler().runTaskAsynchronously(UhcCore.getPlugin(), new EnablePVPTask(this));
 
 		if (config.get(MainConfig.ENABLE_EPISODE_MARKERS)){
-			Bukkit.getScheduler().runTaskAsynchronously(UhcCore.getPlugin(), new EpisodeMarkersThread(this));
+			Bukkit.getScheduler().runTaskAsynchronously(UhcCore.getPlugin(), new EpisodeMarkersTask(this));
 		}
 
 		if(config.get(MainConfig.ENABLE_DEATHMATCH)){
-			Bukkit.getScheduler().runTaskAsynchronously(UhcCore.getPlugin(), new TimeBeforeDeathmatchThread(this, deathmatchHandler));
+			Bukkit.getScheduler().runTaskAsynchronously(UhcCore.getPlugin(), new TimeBeforeDeathmatchTask(this, deathmatchHandler));
 		}
 
 		if (config.get(MainConfig.ENABLE_DAY_NIGHT_CYCLE) && config.get(MainConfig.TIME_BEFORE_PERMANENT_DAY) != -1){
-			Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new EnablePermanentDayThread(mapLoader), config.get(MainConfig.TIME_BEFORE_PERMANENT_DAY)*20);
+			Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new EnablePermanentDayTask(mapLoader), config.get(MainConfig.TIME_BEFORE_PERMANENT_DAY)*20);
 		}
 
 		if (config.get(MainConfig.ENABLE_FINAL_HEAL)){
-			Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new FinalHealThread(this, playerManager), config.get(MainConfig.FINAL_HEAL_DELAY)*20);
+			Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new FinalHealTask(this, playerManager), config.get(MainConfig.FINAL_HEAL_DELAY)*20);
 		}
 
 		Bukkit.getPluginManager().callEvent(new UhcStartedEvent());
@@ -374,21 +382,21 @@ public class GameManager{
 			broadcastInfoMessage(Lang.GAME_FINISHED);
 			playerManager.playSoundToAll(UniversalSound.ENDERDRAGON_GROWL.getSound(), 1, 2);
 			playerManager.setAllPlayersEndGame();
-			Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new StopRestartThread(),20);
+			Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new StopRestartTask(),20);
 		}
 	}
 
-	public void startEndGameThread() {
+	public void startEndGameTask() {
 		if(!gameIsEnding && (gameState.equals(GameState.DEATHMATCH) || gameState.equals(GameState.PLAYING))){
 			gameIsEnding = true;
-			EndThread.start();
+			EndTask.start();
 		}
 	}
 
-	public void stopEndGameThread(){
+	public void stopEndGameTask(){
 		if(gameIsEnding && (gameState.equals(GameState.DEATHMATCH) || gameState.equals(GameState.PLAYING))){
 			gameIsEnding = false;
-			EndThread.stop();
+			EndTask.stop();
 		}
 	}
 

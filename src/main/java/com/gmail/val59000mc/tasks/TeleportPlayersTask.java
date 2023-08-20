@@ -1,4 +1,4 @@
-package com.gmail.val59000mc.threads;
+package com.gmail.val59000mc.tasks;
 
 import com.gmail.val59000mc.configuration.MainConfig;
 import com.gmail.val59000mc.exceptions.UhcPlayerNotOnlineException;
@@ -12,14 +12,14 @@ import java.util.logging.Logger;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
-public class TeleportPlayersThread implements Runnable{
+public class TeleportPlayersTask implements Runnable{
 
-	private static final Logger LOGGER = Logger.getLogger(TeleportPlayersThread.class.getCanonicalName());
+	private static final Logger LOGGER = Logger.getLogger(TeleportPlayersTask.class.getCanonicalName());
 
 	private final GameManager gameManager;
 	private final UhcTeam team;
 
-	public TeleportPlayersThread(GameManager gameManager, UhcTeam team) {
+	public TeleportPlayersTask(GameManager gameManager, UhcTeam team) {
 		this.gameManager = gameManager;
 		this.team = team;
 	}

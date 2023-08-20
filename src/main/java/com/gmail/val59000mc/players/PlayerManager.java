@@ -16,9 +16,9 @@ import com.gmail.val59000mc.game.handlers.CustomEventHandler;
 import com.gmail.val59000mc.game.handlers.ScoreboardHandler;
 import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.scenarios.Scenario;
-import com.gmail.val59000mc.threads.CheckRemainingPlayerThread;
-import com.gmail.val59000mc.threads.TeleportPlayersThread;
-import com.gmail.val59000mc.threads.TimeBeforeSendBungeeThread;
+import com.gmail.val59000mc.tasks.CheckRemainingPlayerTask;
+import com.gmail.val59000mc.tasks.TeleportPlayersTask;
+import com.gmail.val59000mc.tasks.TimeBeforeSendBungeeTask;
 import com.gmail.val59000mc.utils.*;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
@@ -412,7 +412,7 @@ public class PlayerManager {
 		// send to bungee
 		if(cfg.get(MainConfig.ENABLE_BUNGEE_SUPPORT) && cfg.get(MainConfig.TIME_BEFORE_SEND_BUNGEE_AFTER_END) >= 0){
 			for(UhcPlayer player : getPlayersList()){
-				Bukkit.getScheduler().runTaskAsynchronously(UhcCore.getPlugin(), new TimeBeforeSendBungeeThread(this, player, cfg.get(MainConfig.TIME_BEFORE_SEND_BUNGEE_AFTER_END)));
+				Bukkit.getScheduler().runTaskAsynchronously(UhcCore.getPlugin(), new TimeBeforeSendBungeeTask(this, player, cfg.get(MainConfig.TIME_BEFORE_SEND_BUNGEE_AFTER_END)));
 			}
 		}
 
@@ -491,7 +491,7 @@ public class PlayerManager {
 				} catch (UhcPlayerNotOnlineException ignored) {}
 			}
 
-			Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), new TeleportPlayersThread(GameManager.getGameManager(), team), delayTeleportByTeam);
+			Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), new TeleportPlayersTask(GameManager.getGameManager(), team), delayTeleportByTeam);
 			LOGGER.info("Teleporting a team in "+delayTeleportByTeam+" ticks");
 			delayTeleportByTeam += 10; // ticks
 		}
@@ -589,7 +589,7 @@ public class PlayerManager {
 		else if(playingPlayers>0 && playingPlayersOnline == 0){
 			// Check if all playing players have left the game
 			if(cfg.get(MainConfig.END_GAME_WHEN_ALL_PLAYERS_HAVE_LEFT)){
-				gm.startEndGameThread();
+				gm.startEndGameTask();
 			}
 		}
 		else if(playingPlayers>0 && playingPlayersOnline > 0 && playingTeamsOnline == 1 && playingTeams == 1 && !cfg.get(MainConfig.ONE_PLAYER_MODE)){
@@ -599,22 +599,22 @@ public class PlayerManager {
 		else if(playingPlayers>0 && playingPlayersOnline > 0 && playingTeamsOnline == 1 && playingTeams > 1){
 			// Check if one playing team remains
 			if(cfg.get(MainConfig.END_GAME_WHEN_ALL_PLAYERS_HAVE_LEFT) && !cfg.get(MainConfig.ONE_PLAYER_MODE)){
-				gm.startEndGameThread();
+				gm.startEndGameTask();
 			}
 		}
 		else if(gm.getGameIsEnding()){
-			gm.stopEndGameThread();
+			gm.stopEndGameTask();
 		}
 	}
 
-	public void startWatchPlayerPlayingThread() {
+	public void startWatchPlayerPlayingTask() {
 		// Unfreeze players
 		for (UhcPlayer uhcPlayer : getPlayersList()){
 			uhcPlayer.releasePlayer();
 			Bukkit.getPluginManager().callEvent(new PlayerStartsPlayingEvent(uhcPlayer));
 		}
 
-		Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), new CheckRemainingPlayerThread(GameManager.getGameManager()) , 40);
+		Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), new CheckRemainingPlayerTask(GameManager.getGameManager()) , 40);
 	}
 
 	public void sendPlayerToBungeeServer(Player player) {

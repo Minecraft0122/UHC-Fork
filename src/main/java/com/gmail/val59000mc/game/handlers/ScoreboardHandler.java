@@ -8,7 +8,7 @@ import com.gmail.val59000mc.players.*;
 import com.gmail.val59000mc.scoreboard.ScoreboardLayout;
 import com.gmail.val59000mc.scoreboard.ScoreboardManager;
 import com.gmail.val59000mc.scoreboard.ScoreboardType;
-import com.gmail.val59000mc.threads.UpdateScoreboardThread;
+import com.gmail.val59000mc.tasks.UpdateScoreboardTask;
 import com.gmail.val59000mc.utils.VersionUtils;
 
 import java.util.logging.Logger;
@@ -88,7 +88,7 @@ public class ScoreboardHandler {
 
 		updatePlayerOnTab(uhcPlayer);
 
-		Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(),new UpdateScoreboardThread(this, uhcPlayer),1L);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(),new UpdateScoreboardTask(this, uhcPlayer),1L);
 	}
 
 	private void setFriendEnemyTeams(UhcPlayer scoreboardPlayer, PlayerManager pm, Scoreboard scoreboard, boolean disableEnemyNameTags, Objective healthTab, Objective healthBelowName) {

@@ -31,35 +31,35 @@ public class SkyHighListener extends ScenarioListener{
 
 	@EventHandler
 	public void onGameStarted(UhcStartedEvent e){
-		taskId = Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new SkyHighThread(this), delay*TimeUtils.SECOND_TICKS);
+		taskId = Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new SkyHighTask(this), delay*TimeUtils.SECOND_TICKS);
 	}
 
 	@Override
 	public void onEnable() {
-		// start thread
+		// start task
 		if (getGameManager().getGameState() == GameState.PLAYING ||
 				getGameManager().getGameState() == GameState.DEATHMATCH){
 			long timeUntilFirstRun = delay - GameManager.getGameManager().getElapsedTime();
 			if (timeUntilFirstRun < 0){
 				timeUntilFirstRun = 0;
 			}
-			taskId = Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new SkyHighThread(this), timeUntilFirstRun*TimeUtils.SECOND_TICKS);
+			taskId = Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new SkyHighTask(this), timeUntilFirstRun*TimeUtils.SECOND_TICKS);
 		}
 	}
 
 	@Override
 	public void onDisable() {
-		// stop thread
+		// stop task
 		if (taskId != -1) {
 			Bukkit.getScheduler().cancelTask(taskId);
 		}
 	}
 
-	public static class SkyHighThread implements Runnable{
+	public static class SkyHighTask implements Runnable{
 
 		private final SkyHighListener listener;
 
-		public SkyHighThread(SkyHighListener listener){
+		public SkyHighTask(SkyHighListener listener){
 			this.listener = listener;
 		}
 

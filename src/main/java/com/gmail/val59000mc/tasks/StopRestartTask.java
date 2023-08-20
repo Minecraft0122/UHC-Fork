@@ -1,4 +1,4 @@
-package com.gmail.val59000mc.threads;
+package com.gmail.val59000mc.tasks;
 
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.configuration.MainConfig;
@@ -9,20 +9,20 @@ import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 
-public class StopRestartThread implements Runnable{
+public class StopRestartTask implements Runnable{
 
-	private static final Logger LOGGER = Logger.getLogger(StopRestartThread.class.getCanonicalName());
+	private static final Logger LOGGER = Logger.getLogger(StopRestartTask.class.getCanonicalName());
 
 	private long timeBeforeStop;
 
-	public StopRestartThread(){
+	public StopRestartTask(){
 		this.timeBeforeStop = GameManager.getGameManager().getConfig().get(MainConfig.TIME_BEFORE_RESTART_AFTER_END);
 	}
 
 	@Override
 	public void run() {
 		if (timeBeforeStop < 0){
-			return; // Stop thread
+			return; // Stop task
 		}
 
 		GameManager gm = GameManager.getGameManager();
