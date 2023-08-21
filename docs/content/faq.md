@@ -546,7 +546,7 @@ there is a button which allows you to browse the job artifacts, where you can
 find the snapshot build.
 
 Apart from the latest snapshot build, old snapshot builds are only kept for a
-maximum of 30 days. If you would like to try an older snapshot version of
+maximum of 10 days. If you would like to try an older snapshot version of
 UhcCore, you can check out the relevant commit using Git, and build the plugin
 from the source code, using the instructions in the project README file.
 
