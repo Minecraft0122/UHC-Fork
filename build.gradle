@@ -3,6 +3,7 @@ plugins {
 	id "maven-publish"
 	id "com.github.johnrengelman.shadow" version "8.1.1"
 	id "xyz.jpenilla.run-paper" version "2.1.0"
+	id "net.kyori.indra.git" version "3.1.2"
 }
 
 group = "net.zerodind"
@@ -93,6 +94,24 @@ java {
 	withSourcesJar()
 }
 
+tasks.named("jar") {
+	manifest {
+		attributes(
+			"Implementation-Title": project.name,
+			"Implementation-Version": project.version
+		)
+	}
+
+	def commit = indraGit.commit()
+	if (commit != null) {
+		manifest {
+			attributes(
+				"Git-Commit": commit.getName()
+			)
+		}
+	}
+}
+
 tasks.named("shadowJar") {
 	archiveClassifier = ""
 	configurations += [ project.configurations.shadowJar ]
@@ -107,8 +126,16 @@ tasks.named("assemble") {
 }
 
 tasks.named("processResources") {
+	def props = [
+		"pluginVersion": getPluginVersion()
+	]
+
+	// Expanded properties must be registered as input for the task, otherwise
+	// it be considered up-to-date even though properties may have changed.
+	// https://docs.gradle.org/8.2.1/userguide/incremental_build.html#sec:task_input_output_runtime_api
+	inputs.properties(props)
 	filesMatching("plugin.yml") {
-		expand(version: version)
+		expand(props)
 	}
 }
 
@@ -160,5 +187,18 @@ int getJavaVersionFor(String mcVersion) {
 		case 8..16: return 8
 		case 17: return 16
 		default: return 17
+	}
+}
+
+boolean isSnapshot() {
+	return project.version.endsWith("-SNAPSHOT");
+}
+
+String getPluginVersion() {
+	def commit = indraGit.commit()
+	if (commit != null && isSnapshot()) {
+		return project.version + "-" + commit.getName()
+	} else {
+		return project.version
 	}
 }

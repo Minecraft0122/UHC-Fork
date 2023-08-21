@@ -1,6 +1,6 @@
 name: UhcCore
 description: Automates games of the classic UHC gamemode, with endless customization options!
-version: "${version}"
+version: "${pluginVersion}"
 authors: [val59000mc, Mezy, zerodind]
 main: com.gmail.val59000mc.UhcCore
 softdepend: [WorldEdit, Vault, ProtocolLib]
