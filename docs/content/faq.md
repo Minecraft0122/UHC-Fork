@@ -527,6 +527,32 @@ sure to select the right tag matching the version you want to compare from.
 [changelog]: https://gitlab.com/uhccore/uhccore/-/blob/main/CHANGELOG.md
 [compare]: https://gitlab.com/uhccore/uhccore/-/compare?from=1.20.6&to=main
 
+## How can I try the latest improvements to UhcCore before they are released?
+
+The easiest way to try the latest UhcCore improvements (if they have not yet
+made it into a release) is to download a snapshot build. Snapshot builds are
+built from specific Git commits, and are, as the name implies, a snapshot of
+the UhcCore release that is currently being developed. Some features may not
+be finalized yet, and could change again before the final release.
+
+[Here is a link to the latest UhcCore snapshot build.][latest-snapshot]
+Simply download the plugin JAR file (not the `javadoc` or `sources` JAR), and
+then install it on your server. Please report any problems you find with the
+snapshot build, via [GitLab][issues] or [Discord][discord].
+
+You can also find previous snapshot builds, by browsing the
+[GitLab CI jobs][ci-jobs] and finding the `build` jobs. On the CI job page,
+there is a button which allows you to browse the job artifacts, where you can
+find the snapshot build.
+
+Apart from the latest snapshot build, old snapshot builds are only kept for a
+maximum of 30 days. If you would like to try an older snapshot version of
+UhcCore, you can check out the relevant commit using Git, and build the plugin
+from the source code, using the instructions in the project README file.
+
+[latest-snapshot]: https://gitlab.com/uhccore/uhccore/-/jobs/artifacts/main/browse/build/libs?job=build
+[ci-jobs]: https://gitlab.com/uhccore/uhccore/-/jobs?statuses=SUCCESS
+
 ## I want to help contribute code to this project, where do I start?
 
 A good starting point is to read the [README][readme] and

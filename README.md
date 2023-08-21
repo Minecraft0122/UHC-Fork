@@ -33,6 +33,7 @@ You can download the plugin from either of these sources:
 - [Spigot plugin page](https://www.spigotmc.org/resources/uhccore.102507/history)
 - [Releases on GitLab](https://gitlab.com/uhccore/uhccore/-/releases)
 - [Permalink to latest release](https://gitlab.com/uhccore/uhccore/-/releases/permalink/latest/downloads/plugin-jar)
+- [Snapshot builds](https://uhccore.zerodind.net/faq/#how-can-i-try-the-latest-improvements-to-uhccore-before-they-are-released)
 
 ## Setup guide
 
