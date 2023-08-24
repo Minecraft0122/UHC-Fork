@@ -4,9 +4,11 @@
 
 ### Bug fixes
 
+- [#101][GL-101] - No feedback from vanilla commands when executed in UHC worlds
 - [#100][GL-100] - ArrayIndexOutOfBoundsException when using the cave-ores-only setting
 - [#99][GL-99] - Items are sometimes missing from the chest in the Timebomb scenario
 
+[GL-101]: https://gitlab.com/uhccore/uhccore/-/issues/101
 [GL-100]: https://gitlab.com/uhccore/uhccore/-/issues/100
 [GL-99]: https://gitlab.com/uhccore/uhccore/-/issues/99
 

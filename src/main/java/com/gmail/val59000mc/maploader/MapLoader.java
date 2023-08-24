@@ -52,7 +52,6 @@ public class MapLoader {
 	public final static String ANNOUNCE_ADVANCEMENTS = "announceAdvancements";
 	public final static String COMMAND_BLOCK_OUTPUT = "commandBlockOutput";
 	public final static String LOG_ADMIN_COMMANDS = "logAdminCommands";
-	public final static String SEND_COMMAND_FEEDBACK = "sendCommandFeedback";
 
 	private final MainConfig config;
 	private final Map<Environment, String> worldUuids;
@@ -356,7 +355,6 @@ public class MapLoader {
 		}
 		VersionUtils.getVersionUtils().setGameRuleValue(world, COMMAND_BLOCK_OUTPUT, false);
 		VersionUtils.getVersionUtils().setGameRuleValue(world, LOG_ADMIN_COMMANDS, false);
-		VersionUtils.getVersionUtils().setGameRuleValue(world, SEND_COMMAND_FEEDBACK, false);
 		world.setDifficulty(difficulty);
 
 		setBorderSize(world, 0, 0, borderSize);
