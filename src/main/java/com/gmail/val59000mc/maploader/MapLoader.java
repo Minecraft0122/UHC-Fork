@@ -194,8 +194,6 @@ public class MapLoader {
 			copyWorld(copyWorld, worldName);
 		}
 
-		LOGGER.info("World seed: " + wc.seed());
-
 		worldUuids.put(env, worldName);
 
 		YamlFile storage;
@@ -215,7 +213,8 @@ public class MapLoader {
 		}
 
 		wc.type(WorldType.NORMAL);
-		Bukkit.getServer().createWorld(wc);
+		World createdWorld = Bukkit.getServer().createWorld(wc);
+		LOGGER.info("World seed: " + createdWorld.getSeed());
 	}
 
 	public void loadOldWorld(Environment env){
@@ -228,7 +227,9 @@ public class MapLoader {
 			final File worldDir = new File(Bukkit.getWorldContainer(), uuid);
 			if(worldDir.exists()){
 				// Loading existing world
-				Bukkit.getServer().createWorld(new WorldCreator(uuid).environment(env));
+				LOGGER.info("Loading existing world : " + uuid);
+				World loadedWorld = Bukkit.getServer().createWorld(new WorldCreator(uuid).environment(env));
+				LOGGER.info("World seed: " + loadedWorld.getSeed());
 			}else{
 				this.createNewWorld(env);
 			}
