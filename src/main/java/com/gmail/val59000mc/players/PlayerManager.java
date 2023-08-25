@@ -383,7 +383,7 @@ public class PlayerManager {
 			player.getActivePotionEffects().forEach(effect -> player.removePotionEffect(effect.getType()));
 			player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 999999, 0));
 
-			if(gm.getGameState().equals(GameState.DEATHMATCH)){
+			if (gm.getGameState().equals(GameState.DEATHMATCH) && gm.getMapLoader().getArena().isUsed()) {
 				player.teleport(gm.getMapLoader().getArena().getLocation());
 			}else{
 				Location loc = gm.getMapLoader().getUhcWorld(World.Environment.NORMAL).getBlockAt(0, 100, 0).getLocation();
