@@ -1,9 +1,9 @@
 package com.gmail.val59000mc.maploader;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -191,7 +191,11 @@ public class MapLoader {
 				copyWorld = copyWorld + "_" + env.name().toLowerCase();
 			}
 
-			copyWorld(copyWorld, worldName);
+			try {
+				copyWorld(copyWorld, worldName);
+			} catch (IOException e) {
+				LOGGER.log(Level.WARNING, "Unable to copy world " + copyWorld, e);
+			}
 		}
 
 		worldUuids.put(env, worldName);
@@ -367,12 +371,21 @@ public class MapLoader {
 		worldborder.setSize(size);
 	}
 
-	private void copyWorld(String randomWorldName, String worldName) {
-		LOGGER.info("Copying " + randomWorldName + " to " + worldName);
-		final File worldDir = new File(Bukkit.getWorldContainer(), randomWorldName);
-		if(worldDir.exists() && worldDir.isDirectory()){
-			recursiveCopy(worldDir, new File(Bukkit.getWorldContainer(), worldName));
+	private void copyWorld(String sourceName, String destinationName) throws IOException {
+		final Path worldsDir = Bukkit.getWorldContainer().toPath().toAbsolutePath().normalize();
+		final Path sourceDir = worldsDir.resolve(sourceName);
+		final Path destinationDir = worldsDir.resolve(destinationName);
+
+		if (!Files.isDirectory(sourceDir)) {
+			LOGGER.warning("Unable to copy world " + sourceName + " as it does not exist");
+			return;
 		}
+
+		// In case the source directory is a symbolic link
+		final Path realSourceDir = sourceDir.toRealPath();
+
+		LOGGER.info("Copying " + sourceName + " to " + destinationName);
+		Files.walkFileTree(realSourceDir, new CopyWorldFileVisitor(realSourceDir, destinationDir));
 	}
 
 	private void deleteOldPlayersFiles() {
@@ -404,57 +417,6 @@ public class MapLoader {
 			for(File advancementFile : advancements.listFiles()){
 				advancementFile.delete();
 			}
-		}
-	}
-
-	private void recursiveCopy(File fSource, File fDest) {
-		try {
-			if (fSource.isDirectory()) {
-				// A simple validation, if the destination is not exist then create it
-				if (!fDest.exists()) {
-					fDest.mkdirs();
-				}
-
-				// Create list of files and directories on the current source
-				// Note: with the recursion 'fSource' changed accordingly
-				String[] fList = fSource.list();
-
-				for (String s : fList) {
-					File dest = new File(fDest, s);
-					File source = new File(fSource, s);
-
-					// Recursion call take place here
-					recursiveCopy(source, dest);
-				}
-			}
-			else {
-				// Found a file. Copy it into the destination, which is already created in 'if' condition above
-
-				// Open a file for read and write (copy)
-				FileInputStream fInStream = new FileInputStream(fSource);
-				FileOutputStream fOutStream = new FileOutputStream(fDest);
-
-				// Read 2K at a time from the file
-				byte[] buffer = new byte[2048];
-				int iBytesReads;
-
-				// In each successful read, write back to the source
-				while ((iBytesReads = fInStream.read(buffer)) >= 0) {
-					fOutStream.write(buffer, 0, iBytesReads);
-				}
-
-				// Safe exit
-				if (fInStream != null) {
-					fInStream.close();
-				}
-
-				if (fOutStream != null) {
-					fOutStream.close();
-				}
-			}
-		}
-		catch (Exception ex) {
-			LOGGER.log(Level.WARNING, "Unable to copy files", ex);
 		}
 	}
 
