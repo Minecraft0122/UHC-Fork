@@ -57,7 +57,9 @@ public class UhcItems{
 			items.add(GameItem.TEAM_SETTINGS.getItem());
 		}
 
-		items.add(GameItem.TEAM_LEAVE.getItem());
+		if (!GameManager.getGameManager().getConfig().get(MainConfig.PREVENT_PLAYER_FROM_LEAVING_TEAM)) {
+			items.add(GameItem.TEAM_LEAVE.getItem());
+		}
 
 		player.openInventory(createInventory(items, Lang.TEAM_INVENTORY_MAIN));
 	}

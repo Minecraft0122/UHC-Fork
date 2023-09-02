@@ -4,12 +4,14 @@
 
 ### Bug fixes
 
+- [#105][GL-105] - The prevent-player-from-leaving-team config option has no effect
 - [#104][GL-104] - NullPointerException when using the pick-random-world-from-list setting
 - [#102][GL-102] - Players are teleported to the wrong location when respawning as spectators after dying during the deathmatch
 - [#101][GL-101] - No feedback from vanilla commands when executed in UHC worlds
 - [#100][GL-100] - ArrayIndexOutOfBoundsException when using the cave-ores-only setting
 - [#99][GL-99] - Items are sometimes missing from the chest in the Timebomb scenario
 
+[GL-105]: https://gitlab.com/uhccore/uhccore/-/issues/105
 [GL-104]: https://gitlab.com/uhccore/uhccore/-/issues/104
 [GL-102]: https://gitlab.com/uhccore/uhccore/-/issues/102
 [GL-101]: https://gitlab.com/uhccore/uhccore/-/issues/101
