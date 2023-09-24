@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "net.zerodind"
-version = "1.20.7-SNAPSHOT"
+version = "1.20.7"
 
 repositories {
 	mavenCentral()

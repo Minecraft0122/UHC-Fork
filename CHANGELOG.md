@@ -1,6 +1,9 @@
 # Changelog
 
-## [Unreleased]
+## [1.20.7] - 2023-09-25
+
+UhcCore version `1.20.7` is now here to squash a few bugs,
+and also brings support for Minecraft 1.20.2!
 
 ### New features
 
