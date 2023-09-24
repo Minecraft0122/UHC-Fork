@@ -139,6 +139,7 @@ public class Lang{
 	public static String TEAM_MESSAGE_LEADER_LEAVES;
 	public static String TEAM_MESSAGE_CANT_LEAVE;
 	public static String TEAM_MESSAGE_DENY_REQUEST;
+	public static String TEAM_MESSAGE_SPECTATORS_CANNOT_JOIN;
 	public static String TEAM_MESSAGE_NO_LONGER_EXISTS;
 	public static String TEAM_MESSAGE_INVITE_ALREADY_SENT;
 	public static String TEAM_MESSAGE_INVITE_SUCCESS;
@@ -372,6 +373,7 @@ public class Lang{
 		TEAM_MESSAGE_LEADER_LEAVES = getString(lang, "team.message.leader-leaves", "&aTeam leader %leader% has left the team, %newleader% is the new leader");
 		TEAM_MESSAGE_CANT_LEAVE = getString(lang, "team.message.cant-leave", "&cYou can't leave your team, you are alone.");
 		TEAM_MESSAGE_DENY_REQUEST = getString(lang, "team.message.deny-request", "&cRequest denied.");
+		TEAM_MESSAGE_SPECTATORS_CANNOT_JOIN = getString(lang, "team.message.spectators-cannot-join", "&cSpectators may not join a team");
 		TEAM_MESSAGE_NO_LONGER_EXISTS = getString(lang, "team.message.no-longer-exists", "&cThat team no longer exists.");
 		TEAM_MESSAGE_INVITE_ALREADY_SENT = getString(lang, "team.message.invite-already-sent", "&cYou have already sent an invite to %player%");
 		TEAM_MESSAGE_INVITE_SUCCESS = getString(lang, "team.message.invite-success", "&a%player% was invited to the team");

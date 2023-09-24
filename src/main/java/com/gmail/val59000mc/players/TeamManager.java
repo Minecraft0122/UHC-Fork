@@ -96,6 +96,11 @@ public class TeamManager{
 
 		final UhcTeam team = inviter.getTeam();
 		final UhcPlayer uhcInvitee = playerManager.getUhcPlayer(bukkitInvitee);
+
+		// Spectators are currently represented by dead players, see SpectateCommandExecutor
+		if (uhcInvitee.isDead()) {
+			return Lang.TEAM_MESSAGE_SPECTATORS_CANNOT_JOIN;
+		}
 		if (team.contains(uhcInvitee)) {
 			return Lang.TEAM_MESSAGE_ALREADY_IN_TEAM.replace("%player%", uhcInvitee.getRealName());
 		}
@@ -113,6 +118,12 @@ public class TeamManager{
 
 		if (!accepted){
 			uhcPlayer.sendMessage(Lang.TEAM_MESSAGE_DENY_REQUEST);
+			return;
+		}
+
+		// Spectators are currently represented by dead players, see SpectateCommandExecutor
+		if (uhcPlayer.isDead()) {
+			uhcPlayer.sendMessage(Lang.TEAM_MESSAGE_SPECTATORS_CANNOT_JOIN);
 			return;
 		}
 
