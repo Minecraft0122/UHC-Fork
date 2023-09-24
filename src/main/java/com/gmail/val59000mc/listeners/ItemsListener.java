@@ -102,9 +102,17 @@ public class ItemsListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onClickInInventory(InventoryClickEvent event){
-		if (event.isCancelled()) {
-			return;
-		}
+		// NOTE: We don't check e.isCancelled() here, because we are interested
+		// in the click itself, rather than the outcome, which is what the
+		// cancellation refers to. Even if the click event was cancelled,
+		// it might still be a valid click, as far as we are concerned.
+
+		// If we were to ignore cancelled events, it would mean that players
+		// in spectator mode become unable to interact with the inventory menu.
+		// Spigot always calls setCancelled(true) for an InventoryClickEvent
+		// that was created by a player in spectator mode, and there is no way
+		// to tell this cancellation apart from other cancellations.
+		// Reference: https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/commits/d4eaf226f97d66f35f4a62bf07626646ea2ec0b0
 
 		handleScenarioInventory(event);
 

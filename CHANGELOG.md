@@ -4,6 +4,7 @@
 
 ### Bug fixes
 
+- [#117][GL-117] - Players in spectator mode are unable to use inventory menus
 - [#116][GL-116] - Spectator admins are able to join a team in the Love at First Sight scenario
 - [#115][GL-115] - Spectators can still be invited to and join a team
     - Added `team.message.spectators-cannot-join` to `lang.yml`
@@ -14,6 +15,7 @@
 - [#100][GL-100] - ArrayIndexOutOfBoundsException when using the cave-ores-only setting
 - [#99][GL-99] - Items are sometimes missing from the chest in the Timebomb scenario
 
+[GL-117]: https://gitlab.com/uhccore/uhccore/-/issues/117
 [GL-116]: https://gitlab.com/uhccore/uhccore/-/issues/116
 [GL-115]: https://gitlab.com/uhccore/uhccore/-/issues/115
 [GL-105]: https://gitlab.com/uhccore/uhccore/-/issues/105
