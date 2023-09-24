@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### New features
+
+- [#111][GL-111] - Support Minecraft 1.20.2
+
 ### Bug fixes
 
 - [#117][GL-117] - Players in spectator mode are unable to use inventory menus
@@ -15,6 +19,7 @@
 - [#100][GL-100] - ArrayIndexOutOfBoundsException when using the cave-ores-only setting
 - [#99][GL-99] - Items are sometimes missing from the chest in the Timebomb scenario
 
+[GL-111]: https://gitlab.com/uhccore/uhccore/-/issues/111
 [GL-117]: https://gitlab.com/uhccore/uhccore/-/issues/117
 [GL-116]: https://gitlab.com/uhccore/uhccore/-/issues/116
 [GL-115]: https://gitlab.com/uhccore/uhccore/-/issues/115
