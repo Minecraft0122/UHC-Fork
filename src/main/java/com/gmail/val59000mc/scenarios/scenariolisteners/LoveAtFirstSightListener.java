@@ -74,6 +74,11 @@ public class LoveAtFirstSightListener extends ScenarioListener{
 			return;
 		}
 
+		// Spectator admins (who may be in creative mode) should be ignored, for example
+		if (!uhcDamager.isPlaying() || !uhcDamaged.isPlaying()) {
+			return;
+		}
+
 		if (isTeamFull(uhcDamaged.getTeam()) || isTeamFull(uhcDamager.getTeam())){
 			return; // One of the teams is full so no team can be made
 		}
