@@ -158,7 +158,7 @@ public class UhcPlayer {
 		return state == PlayerState.PLAYING;
 	}
 
-	public boolean isDeath(){
+	public boolean isDead(){
 		return state == PlayerState.DEAD;
 	}
 
@@ -235,7 +235,7 @@ public class UhcPlayer {
 		return getTeam().getMembers().get(0).equals(this);
 	}
 
-	public boolean canJoinATeam(){
+	public boolean isSolo(){
 		return (getTeam().getMembers().get(0).equals(this) && getTeam().getMembers().size() == 1);
 	}
 

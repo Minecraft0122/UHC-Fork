@@ -22,7 +22,7 @@ public class ReviveItemCraftListener implements Craft.OnCraftListener {
 
 	@Override
 	public boolean onCraft(UhcPlayer uhcPlayer) {
-		List<UhcPlayer> deadMembers = uhcPlayer.getTeam().getMembers(UhcPlayer::isDeath);
+		List<UhcPlayer> deadMembers = uhcPlayer.getTeam().getMembers(UhcPlayer::isDead);
 
 		if (deadMembers.isEmpty()){
 			uhcPlayer.sendMessage(Lang.ITEMS_REVIVE_ERROR);

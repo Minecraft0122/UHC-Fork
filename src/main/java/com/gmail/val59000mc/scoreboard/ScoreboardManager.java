@@ -157,7 +157,7 @@ public class ScoreboardManager {
 		if (returnString.contains("%playerSpectator%")){
 			long count = gm.getPlayerManager().getPlayersList()
 					.stream()
-					.filter(UhcPlayer::isDeath)
+					.filter(UhcPlayer::isDead)
 					.filter(UhcPlayer::isOnline)
 					.count();
 			returnString = returnString.replace("%playerSpectator%", String.valueOf(count));

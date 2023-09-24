@@ -42,7 +42,7 @@ public class PlayerChatListener implements Listener{
 
 			playerManager.getPlayersList()
 					.stream()
-					.filter(UhcPlayer::isDeath)
+					.filter(UhcPlayer::isDead)
 					.forEach(p -> p.sendMessage(message));
 
 			e.setCancelled(true);

@@ -45,7 +45,7 @@ public class ReviveCommandExecutor implements CommandExecutor{
 		}
 
 		boolean playerIsDead = playerManager.getPlayersList().stream()
-			.filter(UhcPlayer::isDeath)
+			.filter(UhcPlayer::isDead)
 			.anyMatch(p -> p.getUuid().equals(player.getUniqueId()));
 
 		if (!playerIsDead) {
