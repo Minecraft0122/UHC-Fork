@@ -182,8 +182,8 @@
 	"superheroes":{
 		"name":"Superheroes",
 		"description":[
-			"Each player will gain a special ability.",
-			"The powers are speed 1, strength 1, resistance 2, invisibility, 10 extra hearts, and jump boost 4."
+			"Each player will gain a unique superpower.",
+			"The superpower is Speed 1, Strength 1, Resistance 2, Invisibility, Jump Boost 4 or Health Boost 5."
 		]
 	},
 	"anonymous":{

@@ -2,10 +2,15 @@
 
 ## [Unreleased]
 
+### New features
+
+- [#121][GL-121] - Apply Health Boost status effect instead of changing max health base in the Superheroes scenario
+
 ### Bug fixes
 
 - [#119][GL-119] - Player max health is not reset to default when a player is spawned
 
+[GL-121]: https://gitlab.com/uhccore/uhccore/-/issues/121
 [GL-119]: https://gitlab.com/uhccore/uhccore/-/issues/119
 
 ## [1.20.7] - 2023-09-25

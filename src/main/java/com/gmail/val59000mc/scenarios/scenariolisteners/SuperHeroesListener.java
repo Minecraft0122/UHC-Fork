@@ -5,7 +5,6 @@ import com.gmail.val59000mc.exceptions.UhcPlayerNotOnlineException;
 import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.scenarios.ScenarioListener;
 import com.gmail.val59000mc.utils.RandomUtils;
-import com.gmail.val59000mc.utils.VersionUtils;
 
 import java.util.logging.Logger;
 
@@ -51,9 +50,12 @@ public class SuperHeroesListener extends ScenarioListener{
 				player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999,3));
 				break;
 			case 5:
-				double maxHealth = 40;
-				VersionUtils.getVersionUtils().setPlayerMaxHealth(player, maxHealth);
-				player.setHealth(maxHealth);
+				player.addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 999999, 4));
+				try {
+					uhcPlayer.healFully(); // Fill the newly added hearts
+				} catch (UhcPlayerNotOnlineException ignored) {
+					// Shouldn't happen
+				}
 				break;
 			default:
 				LOGGER.warning("No effect for: " + effect);
