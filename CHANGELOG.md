@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased]
+
+### Bug fixes
+
+- [#119][GL-119] - Player max health is not reset to default when a player is spawned
+
+[GL-119]: https://gitlab.com/uhccore/uhccore/-/issues/119
+
 ## [1.20.7] - 2023-09-25
 
 UhcCore version `1.20.7` is now here to squash a few bugs,

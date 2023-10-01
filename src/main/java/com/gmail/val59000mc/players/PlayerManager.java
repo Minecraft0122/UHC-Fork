@@ -334,6 +334,12 @@ public class PlayerManager {
 				clearPlayerInventory(player);
 				player.setFireTicks(0);
 
+				final int extraHalfHearts = cfg.get(MainConfig.ENABLE_EXTRA_HALF_HEARTS) ? cfg.get(MainConfig.EXTRA_HALF_HEARTS) : 0;
+				final double maxHealthBase = 20 + extraHalfHearts; // Base value for max health attribute (20 is the vanilla default for a player)
+				// Set base value for max health attribute, restore player to full health
+				VersionUtils.getVersionUtils().setPlayerMaxHealth(player, maxHealthBase);
+				player.setHealth(maxHealthBase);
+
 				for (PotionEffect effect : player.getActivePotionEffects()) {
 					player.removePotionEffect(effect.getType());
 				}
@@ -342,10 +348,6 @@ public class PlayerManager {
 				}
 
 				player.setGameMode(GameMode.SURVIVAL);
-				if(cfg.get(MainConfig.ENABLE_EXTRA_HALF_HEARTS)){
-					VersionUtils.getVersionUtils().setPlayerMaxHealth(player, 20+((double) cfg.get(MainConfig.EXTRA_HALF_HEARTS)));
-					player.setHealth(20+((double) cfg.get(MainConfig.EXTRA_HALF_HEARTS)));
-				}
 				UhcItems.giveGameItemTo(player, GameItem.COMPASS_ITEM);
 				UhcItems.giveGameItemTo(player, GameItem.CUSTOM_CRAFT_BOOK);
 				KitsManager.giveKitTo(player);
