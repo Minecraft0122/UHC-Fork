@@ -34,7 +34,7 @@ public class TeamCommandExecutor implements CommandExecutor{
 		UhcPlayer uhcPlayer = pm.getUhcPlayer(player);
 
 		if (args.length == 0){
-			player.sendMessage("Send command help");
+			sender.sendMessage("Usage: " + command.getUsage().replace("<command>", label));
 			return true;
 		}
 

@@ -67,7 +67,7 @@ commands:
     permission: "uhc-core.commands.deathmatch"
   team:
     description: "Used to manage teams."
-    usage: /<command> <sub-command>
+    usage: /<command> <invite | invite-reply>
   heal:
     description: "Heals a player to full health. If no player is specified, heals all players."
     usage: /<command> [player]
