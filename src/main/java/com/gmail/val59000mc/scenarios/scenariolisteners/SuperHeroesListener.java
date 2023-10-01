@@ -35,22 +35,22 @@ public class SuperHeroesListener extends ScenarioListener{
 
 		switch (effect){
 			case 0:
-				player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999,0));
+				forceApplyPotionEffect(player, new PotionEffect(PotionEffectType.SPEED, 999999,0));
 				break;
 			case 1:
-				player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 999999,0));
+				forceApplyPotionEffect(player, new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 999999,0));
 				break;
 			case 2:
-				player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 999999,1));
+				forceApplyPotionEffect(player, new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 999999,1));
 				break;
 			case 3:
-				player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999,0));
+				forceApplyPotionEffect(player, new PotionEffect(PotionEffectType.INVISIBILITY, 999999,0));
 				break;
 			case 4:
-				player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999,3));
+				forceApplyPotionEffect(player, new PotionEffect(PotionEffectType.JUMP, 999999,3));
 				break;
 			case 5:
-				player.addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 999999, 4));
+				forceApplyPotionEffect(player, new PotionEffect(PotionEffectType.HEALTH_BOOST, 999999, 4));
 				try {
 					uhcPlayer.healFully(); // Fill the newly added hearts
 				} catch (UhcPlayerNotOnlineException ignored) {
@@ -61,6 +61,12 @@ public class SuperHeroesListener extends ScenarioListener{
 				LOGGER.warning("No effect for: " + effect);
 				break;
 		}
+	}
+
+	// Solution for https://gitlab.com/uhccore/uhccore/-/issues/120
+	private void forceApplyPotionEffect(Player player, PotionEffect effect) {
+		player.removePotionEffect(effect.getType());
+		player.addPotionEffect(effect);
 	}
 
 }

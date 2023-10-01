@@ -8,9 +8,11 @@
 
 ### Bug fixes
 
+- [#120][GL-120] - Players sometimes lose their superpower in the Superheroes scenario when using the potion-effect-on-start setting
 - [#119][GL-119] - Player max health is not reset to default when a player is spawned
 
 [GL-121]: https://gitlab.com/uhccore/uhccore/-/issues/121
+[GL-120]: https://gitlab.com/uhccore/uhccore/-/issues/120
 [GL-119]: https://gitlab.com/uhccore/uhccore/-/issues/119
 
 ## [1.20.7] - 2023-09-25
