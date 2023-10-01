@@ -3,7 +3,6 @@ custom-crafts:
   # Name of your craft, then 1, 2, 3 for every line in the crafting table
   # Please respect the json-item syntax! (You can use the /iteminfo command to generate this syntax.)
   # Set limit to -1 to allow unlimited crafts, set to to a value greater than 0 to limit crafts by player
-  # You can add enchantments in the enchants list (see the war-axe example)
   # Set default name to true to keep the default minecraft name. This means the custom crafted items will stack with other items created using default minecraft crafts.
   # (NOTE: When default name is enabled you will not be able to use craft limit and craft permissions!)
   'Light Apple':
