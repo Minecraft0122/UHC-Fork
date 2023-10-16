@@ -297,11 +297,12 @@ public class MapLoader {
 		}
 
 		if(config.get(MainConfig.BORDER_IS_MOVING)){
-			int endSize = config.get(MainConfig.BORDER_END_SIZE);
+			int borderEndApothem = config.get(MainConfig.BORDER_END_SIZE);
+			int borderEndSideLength = 2 * borderEndApothem;
 			int timeToShrink = config.get(MainConfig.BORDER_TIME_TO_SHRINK);
 			int timeBeforeShrink = config.get(MainConfig.BORDER_TIME_BEFORE_SHRINK);
 
-			Bukkit.getScheduler().runTask(UhcCore.getPlugin(), new WorldBorderTask(timeBeforeShrink, endSize, timeToShrink));
+			Bukkit.getScheduler().runTask(UhcCore.getPlugin(), new WorldBorderTask(timeBeforeShrink, borderEndSideLength, timeToShrink));
 		}
 	}
 
@@ -309,10 +310,11 @@ public class MapLoader {
 		Difficulty difficulty = config.get(MainConfig.GAME_DIFFICULTY);
 		boolean healthRegen = config.get(MainConfig.ENABLE_HEALTH_REGEN);
 		boolean announceAdvancements = config.get(MainConfig.ANNOUNCE_ADVANCEMENTS);
-		int startSize = config.get(MainConfig.BORDER_START_SIZE);
+		int borderStartApothem = config.get(MainConfig.BORDER_START_SIZE);
+		int borderStartSideLength = 2 * borderStartApothem;
 
 		World overworld = getUhcWorld(Environment.NORMAL);
-		prepareWorld(overworld, difficulty, healthRegen, announceAdvancements, startSize*2);
+		prepareWorld(overworld, difficulty, healthRegen, announceAdvancements, borderStartSideLength);
 
 		VersionUtils.getVersionUtils().setGameRuleValue(overworld, DO_DAYLIGHT_CYCLE, false);
 		VersionUtils.getVersionUtils().setGameRuleValue(overworld, DO_MOB_SPAWNING, false);
@@ -322,12 +324,12 @@ public class MapLoader {
 
 		if (config.get(MainConfig.ENABLE_NETHER)){
 			World nether = getUhcWorld(Environment.NETHER);
-			prepareWorld(nether, difficulty, healthRegen, announceAdvancements, startSize);
+			prepareWorld(nether, difficulty, healthRegen, announceAdvancements, borderStartSideLength / 2);
 		}
 
 		if (config.get(MainConfig.ENABLE_THE_END)){
 			World theEnd = getUhcWorld(Environment.THE_END);
-			prepareWorld(theEnd, difficulty, healthRegen, announceAdvancements, startSize*2);
+			prepareWorld(theEnd, difficulty, healthRegen, announceAdvancements, borderStartSideLength);
 		}
 
 		if (config.get(MainConfig.LOBBY_IN_DEFAULT_WORLD)){
@@ -350,7 +352,7 @@ public class MapLoader {
 		}
 	}
 
-	private void prepareWorld(World world, Difficulty difficulty, boolean healthRegen, boolean announceAdvancements, int borderSize) {
+	private void prepareWorld(World world, Difficulty difficulty, boolean healthRegen, boolean announceAdvancements, int borderSideLength) {
 		world.save();
 		if (!healthRegen){
 			VersionUtils.getVersionUtils().setGameRuleValue(world, NATURAL_REGENERATION, false);
@@ -362,13 +364,13 @@ public class MapLoader {
 		VersionUtils.getVersionUtils().setGameRuleValue(world, LOG_ADMIN_COMMANDS, false);
 		world.setDifficulty(difficulty);
 
-		setBorderSize(world, 0, 0, borderSize);
+		setWorldBorder(world, 0, 0, borderSideLength);
 	}
 
-	public void setBorderSize(World world, int x, int z, double size) {
+	public void setWorldBorder(World world, int x, int z, double sideLength) {
 		WorldBorder worldborder = world.getWorldBorder();
 		worldborder.setCenter(x, z);
-		worldborder.setSize(size);
+		worldborder.setSize(sideLength);
 	}
 
 	private void copyWorld(String sourceName, String destinationName) throws IOException {

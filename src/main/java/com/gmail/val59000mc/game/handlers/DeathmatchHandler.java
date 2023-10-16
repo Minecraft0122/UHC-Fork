@@ -64,7 +64,7 @@ public class DeathmatchHandler {
 		Location arenaLocation = arena.getLocation();
 
 		//Set big border size to avoid hurting players
-		mapLoader.setBorderSize(arenaLocation.getWorld(), arenaLocation.getBlockX(), arenaLocation.getBlockZ(), 50000);
+		mapLoader.setWorldBorder(arenaLocation.getWorld(), arenaLocation.getBlockX(), arenaLocation.getBlockZ(), 50000);
 
 		// Teleport players
 		List<Location> spots = arena.getTeleportSpots();
@@ -81,7 +81,7 @@ public class DeathmatchHandler {
 		}
 
 		// Shrink border to arena size
-		mapLoader.setBorderSize(arenaLocation.getWorld(), arenaLocation.getBlockX(), arenaLocation.getBlockZ(), arena.getMaxSize());
+		mapLoader.setWorldBorder(arenaLocation.getWorld(), arenaLocation.getBlockX(), arenaLocation.getBlockZ(), arena.getMaxSize());
 
 		// Start Enable pvp task
 		Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new StartDeathmatchTask(gameManager, false), 20);
@@ -89,7 +89,7 @@ public class DeathmatchHandler {
 
 	private void startCenterDeathmatch() {
 		//Set big border size to avoid hurting players
-		mapLoader.setBorderSize(mapLoader.getUhcWorld(World.Environment.NORMAL), 0, 0, 50000);
+		mapLoader.setWorldBorder(mapLoader.getUhcWorld(World.Environment.NORMAL), 0, 0, 50000);
 
 		// Teleport players
 		Location spectatingLocation = new Location(mapLoader.getUhcWorld(World.Environment.NORMAL), 0, 100, 0);
@@ -99,7 +99,9 @@ public class DeathmatchHandler {
 		}
 
 		// Shrink border to arena size
-		mapLoader.setBorderSize(mapLoader.getUhcWorld(World.Environment.NORMAL), 0, 0, config.get(MainConfig.DEATHMATCH_START_SIZE)*2);
+		final int borderStartApothem = config.get(MainConfig.DEATHMATCH_START_SIZE);
+		final int borderStartSideLength = 2 * borderStartApothem;
+		mapLoader.setWorldBorder(mapLoader.getUhcWorld(World.Environment.NORMAL), 0, 0, borderStartSideLength);
 
 		// Start Enable pvp task
 		Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new StartDeathmatchTask(gameManager, true), 20);

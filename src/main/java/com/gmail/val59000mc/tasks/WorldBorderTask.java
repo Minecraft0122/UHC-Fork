@@ -11,11 +11,11 @@ public class WorldBorderTask implements Runnable{
 
 	private long timeBeforeShrink;
 	private final long timeToShrink;
-	private final int endSize;
+	private final int endSideLength;
 
-	public WorldBorderTask(long timeBeforeShrink, int endSize, long timeToShrink){
+	public WorldBorderTask(long timeBeforeShrink, int endSideLength, long timeToShrink){
 		this.timeBeforeShrink = timeBeforeShrink;
-		this.endSize = endSize;
+		this.endSideLength = endSideLength;
 		this.timeToShrink = timeToShrink;
 	}
 
@@ -34,12 +34,12 @@ public class WorldBorderTask implements Runnable{
 
 		World overworld = GameManager.getGameManager().getMapLoader().getUhcWorld(World.Environment.NORMAL);
 		WorldBorder overworldBorder = overworld.getWorldBorder();
-		overworldBorder.setSize(2*endSize, timeToShrink);
+		overworldBorder.setSize(endSideLength, timeToShrink);
 
 		World nether = GameManager.getGameManager().getMapLoader().getUhcWorld(World.Environment.NETHER);
 		if (nether != null) {
 			WorldBorder netherBorder = nether.getWorldBorder();
-			netherBorder.setSize(endSize, timeToShrink);
+			netherBorder.setSize(endSideLength / 2, timeToShrink);
 		}
 	}
 
