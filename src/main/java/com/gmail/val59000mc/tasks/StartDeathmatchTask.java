@@ -37,7 +37,10 @@ public class StartDeathmatchTask implements Runnable{
 
 			// If center deathmatch move border.
 			if (shrinkBorder){
-				gameManager.getMapLoader().getUhcWorld(World.Environment.NORMAL).getWorldBorder().setSize(gameManager.getConfig().get(MainConfig.DEATHMATCH_END_SIZE), gameManager.getConfig().get(MainConfig.DEATHMATCH_TIME_TO_SHRINK));
+				final int borderEndApothem = gameManager.getConfig().get(MainConfig.DEATHMATCH_END_SIZE);
+				final int borderEndSideLength = 2 * borderEndApothem;
+				final int borderTimeToShrink = gameManager.getConfig().get(MainConfig.DEATHMATCH_TIME_TO_SHRINK);
+				gameManager.getMapLoader().getUhcWorld(World.Environment.NORMAL).getWorldBorder().setSize(borderEndSideLength, borderTimeToShrink);
 				gameManager.getMapLoader().getUhcWorld(World.Environment.NORMAL).getWorldBorder().setDamageBuffer(1);
 			}
 		}else{
