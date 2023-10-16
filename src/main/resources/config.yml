@@ -485,7 +485,7 @@ deathmatch:
   center-deathmatch:
     #Starting size of the border (200 means +200x, -200x, +200z, -200z)
     start-size: 125
-    #End size of the border (50means +50x, -50x, +50z, -50z)
+    #End size of the border (50 means +50x, -50x, +50z, -50z)
     end-size: 50
     #If moving is set to true, the time in seconds for the border to shrink to end-size
     time-to-shrink: 600
