@@ -8,10 +8,12 @@
 
 ### Bug fixes
 
+- [#125][GL-125] - Custom craft is sometimes counted toward the limit even though the craft wasn't performed
 - [#122][GL-122] - The deathmatch.center-deathmatch.end-size setting is not interpreted correctly
 - [#120][GL-120] - Players sometimes lose their superpower in the Superheroes scenario when using the potion-effect-on-start setting
 - [#119][GL-119] - Player max health is not reset to default when a player is spawned
 
+[GL-125]: https://gitlab.com/uhccore/uhccore/-/issues/125
 [GL-122]: https://gitlab.com/uhccore/uhccore/-/issues/122
 [GL-121]: https://gitlab.com/uhccore/uhccore/-/issues/121
 [GL-120]: https://gitlab.com/uhccore/uhccore/-/issues/120

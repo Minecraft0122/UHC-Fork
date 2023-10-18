@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.ItemStack;
 
 public class CraftListener implements Listener{
@@ -19,6 +20,12 @@ public class CraftListener implements Listener{
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onCrafting(CraftItemEvent event){
 		if (event.isCancelled()) {
+			return;
+		}
+
+		// Ignore crafts that will not happen. For example, if you click the output slot
+		// with an item that doesn't stack with the recipe result.
+		if (event.getAction() == InventoryAction.NOTHING) {
 			return;
 		}
 
@@ -59,6 +66,13 @@ public class CraftListener implements Listener{
 				return;
 			}
 		}
+
+		// Note: We make a best effort to count the number of times an item was crafted (for the custom craft limit feature),
+		// by trying to make sure that only one item is crafted at a time and by trying to ignore CraftItemEvents where no item is crafted.
+		// This imperfect workaround is required because Bukkit/Spigot/Paper doesn't provide an API for getting the final result of a craft.
+		// There are a couple of issues proposing to add such an API to Paper, see:
+		// https://github.com/PaperMC/Paper/issues/7383
+		// https://github.com/PaperMC/Paper/issues/8439
 
 		if(craft.hasLimit() && !uhcPlayer.addCraftedItem(craft.getName(), craft.getLimit())){
 			uhcPlayer.sendMessage(Lang.ITEMS_CRAFT_LIMIT.replace("%craft%", craft.getName()).replace("%limit%",""+craft.getLimit()));
