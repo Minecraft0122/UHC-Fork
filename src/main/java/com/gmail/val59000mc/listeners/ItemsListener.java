@@ -385,6 +385,7 @@ public class ItemsListener implements Listener {
 					return Collections.emptyList();
 				}
 				final String renameResult = teamManager.renameTeam(team, stateSnapshot.getText());
+				scoreboardHandler.updateTeamOnTab(team);
 				stateSnapshot.getPlayer().sendMessage(renameResult);
 				return Collections.singletonList(AnvilGUI.ResponseAction.close());
 			})

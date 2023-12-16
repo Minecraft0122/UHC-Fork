@@ -51,7 +51,9 @@ public class UhcTeam {
 	}
 
 	public String getPrefix() {
-		return color + Lang.DISPLAY_TEAM_PREFIX.replace("%teamNumber%", Integer.toString(teamNumber));
+		return color + Lang.DISPLAY_TEAM_PREFIX
+			.replace("%teamNumber%", Integer.toString(teamNumber))
+			.replace("%teamName%", teamName);
 	}
 
 	public ChatColor getColor() {
