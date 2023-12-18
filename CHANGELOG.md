@@ -1,6 +1,14 @@
 # Changelog
 
-## [Unreleased]
+## [1.20.8] - 2023-12-18
+
+UhcCore version `1.20.8` is now here to fix more bugs,
+and brings support for Minecraft 1.20.4!
+
+Note that the interpretation of the `deathmatch.center-deathmatch.end-size` setting in `config.yml`
+has been changed to fix [#122][GL-122], so you may want to adjust the setting accordingly.
+Previously, the setting was interpreted as the side length, but now it's correctly
+interpreted as the apothem of the border (which is half of the side length).
 
 ### New features
 
