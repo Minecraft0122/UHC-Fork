@@ -96,7 +96,7 @@ drops:
   - '{"type":"POWERED_RAIL","minimum":1,"maximum":32}'
   - '{"type":"GLASS","minimum":1,"maximum":16}'
   - '{"type":"LEVER","minimum":1,"maximum":16}'
-  - '{"type":"GRASS","minimum":1,"maximum":32}'
+  - '{"type":"GRASS_BLOCK","minimum":1,"maximum":32}'
   - '{"type":"ICE","minimum":1,"maximum":32}'
   - '{"type":"EMERALD_ORE","minimum":1,"maximum":32}'
   - '{"type":"EMERALD_BLOCK","minimum":1,"maximum":8}'
