@@ -4,6 +4,7 @@
 
 ### New features
 
+- [#134][GL-134] - Support Minecraft 1.20.4
 - [#133][GL-133] - Option to use the team name in the team prefix
     - Added the `%teamName%` placeholder to `display.team-prefix` in `lang.yml`
 - [#121][GL-121] - Apply Health Boost status effect instead of changing max health base in the Superheroes scenario
@@ -15,6 +16,7 @@
 - [#120][GL-120] - Players sometimes lose their superpower in the Superheroes scenario when using the potion-effect-on-start setting
 - [#119][GL-119] - Player max health is not reset to default when a player is spawned
 
+[GL-134]: https://gitlab.com/uhccore/uhccore/-/issues/134
 [GL-133]: https://gitlab.com/uhccore/uhccore/-/issues/133
 [GL-125]: https://gitlab.com/uhccore/uhccore/-/issues/125
 [GL-122]: https://gitlab.com/uhccore/uhccore/-/issues/122
