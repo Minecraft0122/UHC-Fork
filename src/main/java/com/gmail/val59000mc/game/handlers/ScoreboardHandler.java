@@ -169,11 +169,26 @@ public class ScoreboardHandler {
 			return;
 		}
 
+		// Note: Player#getHealth() is used for the initial value, but technically it should be
+		// Player#getHealth() + Player#getAbsorptionAmount() to match vanilla behavior.
+		// The problem is that the getAbsorptionAmount API doesn't exist on older Minecraft versions (e.g. 1.8.8).
+		// We could get the absorption amount using NMS, but it should be fine to assume that they have no absorption here.
 		if (healthTab != null) {
-			healthTab.getScore(player.getName()).setScore((int) player.getHealth());
+			setReadOnlyPlayerScore(healthTab.getScore(player.getName()), (int) player.getHealth());
 		}
 		if (healthBelowName != null) {
-			healthBelowName.getScore(player.getName()).setScore((int) player.getHealth());
+			setReadOnlyPlayerScore(healthBelowName.getScore(player.getName()), (int) player.getHealth());
+		}
+	}
+
+	// Workaround for https://bugs.mojang.com/browse/MC-111729
+	private void setReadOnlyPlayerScore(Score score, int value) {
+		if (UhcCore.getNmsAdapter().isPresent()) {
+			// On Minecraft 1.20.3+, we need to use NMS
+			UhcCore.getNmsAdapter().get().setReadOnlyPlayerScore(score, value);
+		} else {
+			// Works on Minecraft 1.20.2 and below, before the fix of https://bugs.mojang.com/browse/MC-163943.
+			score.setScore(value);
 		}
 	}
 
