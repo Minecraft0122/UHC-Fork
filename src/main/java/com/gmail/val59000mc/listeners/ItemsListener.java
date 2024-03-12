@@ -242,6 +242,15 @@ public class ItemsListener implements Listener {
 
 		}
 
+		handleBrewingInventory(event);
+	}
+
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onInventoryDrag(InventoryDragEvent event) {
+		handleBrewingInventory(event);
+	}
+
+	private void handleBrewingInventory(InventoryInteractEvent event) {
 		// Ban level 2 potions
 		if(event.getInventory().getType().equals(InventoryType.BREWING) && config.get(MainConfig.BAN_LEVEL_TWO_POTIONS)){
 			final BrewerInventory inv = (BrewerInventory) event.getInventory();
