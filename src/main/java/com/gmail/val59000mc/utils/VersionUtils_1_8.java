@@ -464,4 +464,10 @@ public class VersionUtils_1_8 extends VersionUtils{
 		return material == Material.AIR;
 	}
 
+	@Override
+	public boolean leavesIsPersistent(Block leaves) {
+		// See https://minecraft.wiki/w/Java_Edition_data_values/Pre-flattening#Leaves
+		return (leaves.getData() & 0x4) != 0;
+	}
+
 }

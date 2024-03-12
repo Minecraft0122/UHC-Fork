@@ -18,6 +18,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Skull;
 import org.bukkit.block.data.type.EndPortalFrame;
+import org.bukkit.block.data.type.Leaves;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -380,6 +381,12 @@ public class VersionUtils_1_13 extends VersionUtils{
 			case VOID_AIR: return true;
 			default: return false;
 		}
+	}
+
+	@Override
+	public boolean leavesIsPersistent(Block leaves) {
+		Leaves leavesData = (Leaves) leaves.getBlockData();
+		return leavesData.isPersistent();
 	}
 
 }

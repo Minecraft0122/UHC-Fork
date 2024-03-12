@@ -1,27 +1,37 @@
 package com.gmail.val59000mc.scenarios.scenariolisteners;
 
-import com.gmail.val59000mc.UhcCore;
-import com.gmail.val59000mc.scenarios.Option;
-import com.gmail.val59000mc.scenarios.ScenarioListener;
-import com.gmail.val59000mc.utils.UniversalMaterial;
-import com.gmail.val59000mc.utils.UniversalSound;
+import java.util.ArrayDeque;
+import java.util.HashSet;
+import java.util.Queue;
+import java.util.Set;
+
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
+import org.bukkit.util.Vector;
+
+import com.gmail.val59000mc.UhcCore;
+import com.gmail.val59000mc.scenarios.Option;
+import com.gmail.val59000mc.scenarios.ScenarioListener;
+import com.gmail.val59000mc.utils.UniversalMaterial;
+import com.gmail.val59000mc.utils.UniversalSound;
+import com.gmail.val59000mc.utils.VersionUtils;
+
+import io.papermc.lib.PaperLib;
 
 public class FastLeavesDecayListener extends ScenarioListener{
 
-	private final static int DECAY_RANGE = 6;
-	private final static BlockFace[] NEIGHBOURS = new BlockFace[]{
-			BlockFace.UP,
-			BlockFace.DOWN,
-			BlockFace.NORTH,
-			BlockFace.EAST,
-			BlockFace.SOUTH,
-			BlockFace.WEST
+	// Leaf decay uses 6-connectivity
+	private final static BlockFace[] NEIGHBOURS = new BlockFace[] {
+		BlockFace.UP,
+		BlockFace.DOWN,
+		BlockFace.NORTH,
+		BlockFace.EAST,
+		BlockFace.SOUTH,
+		BlockFace.WEST
 	};
 
 	@Option(key = "time-decay")
@@ -34,71 +44,90 @@ public class FastLeavesDecayListener extends ScenarioListener{
 		}
 
 		final Block block = e.getBlock();
-
-		if (!UniversalMaterial.isLog(block.getType())){
-			return; // Not a log so breaking it won't cause leaves to decay
+		if (UniversalMaterial.isLog(block.getType()) || UniversalMaterial.isLeaves(block.getType())) {
+			// Delaying as right now the block may still be a log and therefore leaves won't decay
+			scheduleDecayNeighbors(block);
 		}
-
-		// Delaying as right now the block is still a log and therefor leaves won't decay
-		Bukkit.getScheduler().runTask(UhcCore.getPlugin(), () -> onBlockBreak(block));
 	}
 
 	@EventHandler
-	public void onLeaveDecay(LeavesDecayEvent e){
+	public void onLeavesDecay(LeavesDecayEvent e) {
 		if (e.isCancelled()) {
 			return;
 		}
 
-		onBlockBreak(e.getBlock());
+		scheduleDecayNeighbors(e.getBlock());
 	}
 
-	private void onBlockBreak(Block block){
+	private void scheduleDecayNeighbors(Block block) {
+		Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), () -> decayNeighbors(block), timeDecay);
+	}
+
+	private void decayNeighbors(Block block) {
+		// See https://minecraft.wiki/w/History_of_leaf_decay
+		final int decayRange = PaperLib.isVersion(13) ? 6 : 4;
+
 		for (BlockFace face : NEIGHBOURS) {
 			final Block relative = block.getRelative(face);
 
-			if (!UniversalMaterial.isLeaves(relative.getType())){
-				continue; // Not a leave so don't fast decay
+			final boolean canDecay =
+				UniversalMaterial.isLeaves(relative.getType()) &&
+				!VersionUtils.getVersionUtils().leavesIsPersistent(relative) &&
+				!isConnectedToLog(relative, decayRange);
+			if (!canDecay) {
+				continue;
 			}
 
-			if (findLog(relative, DECAY_RANGE)){
-				continue; // A log is too close so don't fast decay
+			// Must be called in order to notify LuckyLeavesListener and others
+			LeavesDecayEvent event = new LeavesDecayEvent(relative);
+			Bukkit.getPluginManager().callEvent(event);
+			if (!event.isCancelled()) {
+				relative.breakNaturally();
+				relative.getWorld().playSound(relative.getLocation(), UniversalSound.BLOCK_GRASS_BREAK.getSound(), 1, 1);
 			}
-
-			Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), () -> {
-				if (!UniversalMaterial.isLeaves(relative.getType())){
-					return; // Double check to make sure the block hasn't changed since
-				}
-
-				LeavesDecayEvent event = new LeavesDecayEvent(relative);
-				Bukkit.getPluginManager().callEvent(event);
-				if (!event.isCancelled()) {
-					relative.breakNaturally();
-					relative.getWorld().playSound(relative.getLocation(), UniversalSound.BLOCK_GRASS_BREAK.getSound(), 1, 1);
-				}
-			}, timeDecay);
 		}
 	}
 
-	private boolean findLog(Block block, int i) {
-		if (UniversalMaterial.isLog(block.getType())){
-			return true;
-		}else if (UniversalMaterial.isLeaves(block.getType())){
-			i--;
-		}else {
-			return false;
-		}
-		if (i > 0){
-			boolean result = false;
-			for (BlockFace face : BlockFace.values()) {
-				if (face.equals(BlockFace.DOWN) || face.equals(BlockFace.UP) || face.equals(BlockFace.NORTH) ||
-						face.equals(BlockFace.EAST) || face.equals(BlockFace.SOUTH) || face.equals(BlockFace.WEST)) {
-					boolean b = findLog(block.getRelative(face), i);
-					if (b) result = b;
+	private boolean isConnectedToLog(Block leaf, int maxDistance) {
+		// Search for any leaf-connected log block within maxDistance blocks of this leaf block.
+		// We need to avoid re-visiting the same block twice in different paths,
+		// since this leads to performance issues, especially on Minecraft 1.8,
+		// where block access seems to be quite slow. BFS works well in this case.
+		final Set<Vector> visited = new HashSet<>();
+		final Queue<Block> queue = new ArrayDeque<>();
+		queue.add(leaf);
+		visited.add(new Vector(leaf.getX(), leaf.getY(), leaf.getZ()));
+
+		int bfsIterationRemainder = queue.size();
+		while (!queue.isEmpty() && maxDistance > 0) {
+			final Block current = queue.remove();
+
+			for (BlockFace dir : NEIGHBOURS) {
+				final Block neighbor = current.getRelative(dir);
+
+				if (UniversalMaterial.isLog(neighbor.getType())) {
+					return true; // Found a connected log
+				}
+
+				// If maxDistance == 1, we are only looking for immediately neighboring logs,
+				// so let's avoid filling up the queue with "dead end" leaves in that case.
+				if (maxDistance > 1) {
+					final Vector neighborPos = new Vector(neighbor.getX(), neighbor.getY(), neighbor.getZ());
+					// If we find non-visited neighboring leaves, add them to the queue.
+					if (UniversalMaterial.isLeaves(neighbor.getType()) && visited.add(neighborPos)) {
+						queue.add(neighbor);
+					}
 				}
 			}
-			return result;
+
+			// Count the number of remaining blocks in this BFS iteration.
+			// When it reaches 0, it's time for the next iteration, with a lower maxDistance.
+			if (--bfsIterationRemainder == 0) {
+				bfsIterationRemainder = queue.size();
+				maxDistance--;
+			}
 		}
-		return false;
+		return false; // No connected logs found within maxDistance
 	}
 
 }

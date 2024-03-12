@@ -23,6 +23,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.material.Leaves;
 import org.bukkit.potion.PotionData;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
@@ -343,6 +344,12 @@ public class VersionUtils_1_12 extends VersionUtils{
 	@Override
 	public boolean isAir(Material material) {
 		return material == Material.AIR;
+	}
+
+	@Override
+	public boolean leavesIsPersistent(Block leaves) {
+		Leaves leavesData = (Leaves) leaves.getState().getData();
+		return !leavesData.isDecayable();
 	}
 
 }

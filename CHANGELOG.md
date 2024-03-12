@@ -1,5 +1,15 @@
 # Changelog
 
+## [Unreleased]
+
+### Bug fixes
+
+- [#152][GL-152] - Persistent leaves are decayed by the Fast Leaves Decay scenario
+- [#150][GL-150] - Fast Leaves Decay scenario causes lag
+
+[GL-152]: https://gitlab.com/uhccore/uhccore/-/issues/152
+[GL-150]: https://gitlab.com/uhccore/uhccore/-/issues/150
+
 ## [1.20.8] - 2023-12-18
 
 UhcCore version `1.20.8` is now here to fix more bugs,

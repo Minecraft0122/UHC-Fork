@@ -127,4 +127,6 @@ public abstract class VersionUtils{
 
 	public abstract boolean isAir(Material material);
 
+	public abstract boolean leavesIsPersistent(Block leaves);
+
 }
