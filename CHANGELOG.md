@@ -2,12 +2,17 @@
 
 ## [Unreleased]
 
+### New features
+
+- [#154][GL-154] - Option to change the time between teleporting each team
+
 ### Bug fixes
 
 - [#153][GL-153] - ban-level-2-potions option can be bypassed
 - [#152][GL-152] - Persistent leaves are decayed by the Fast Leaves Decay scenario
 - [#150][GL-150] - Fast Leaves Decay scenario causes lag
 
+[GL-154]: https://gitlab.com/uhccore/uhccore/-/issues/154
 [GL-153]: https://gitlab.com/uhccore/uhccore/-/issues/153
 [GL-152]: https://gitlab.com/uhccore/uhccore/-/issues/152
 [GL-150]: https://gitlab.com/uhccore/uhccore/-/issues/150

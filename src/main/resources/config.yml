@@ -572,6 +572,10 @@ custom-events:
       - 'msg %name% You won the game!'
       - 'give %name% diamond 128'
 
+# Specifies the delay (in ticks) between teleporting each team when the game starts.
+# Can be increased as an attempt to prevent the server from freezing due to the large amount of chunk loads at once.
+delay-between-team-teleports: 10
+
 # When set to true, the plugin won't delete the last world, it will just load it. It will also ignore the map pre-generator.
 # This is to allow fast-configuration, to avoid creating new worlds when you only want to configure some other features.
 debug: false

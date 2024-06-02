@@ -495,7 +495,7 @@ public class PlayerManager {
 
 			Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), new TeleportPlayersTask(GameManager.getGameManager(), team), delayTeleportByTeam);
 			LOGGER.info("Teleporting a team in "+delayTeleportByTeam+" ticks");
-			delayTeleportByTeam += 10; // ticks
+			delayTeleportByTeam += gm.getConfig().get(MainConfig.DELAY_BETWEEN_TEAM_TELEPORTS); // ticks
 		}
 
 		Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), () -> GameManager.getGameManager().startWatchingEndOfGame(), delayTeleportByTeam + 20);
