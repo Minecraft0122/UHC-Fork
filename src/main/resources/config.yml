@@ -463,6 +463,8 @@ deathmatch:
   enable: true
   # The time in seconds before the deathmatch starts
   delay: 3600
+  # The time in seconds before PvP is enabled and players are released after the deathmatch starts
+  pvp-delay: 30
   # Set it to true if you want players in deathmatch to be in adventure mode. (false = survival mode)
   deathmatch-adventure-mode: false
 

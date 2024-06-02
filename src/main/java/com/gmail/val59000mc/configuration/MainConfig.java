@@ -122,6 +122,7 @@ public class MainConfig extends YamlFile {
 	// Deathmatch
 	public static final BasicOption<Boolean> ENABLE_DEATHMATCH = new BasicOption<>("deathmatch.enable",true);
 	public static final BasicOption<Integer> DEATHMATCH_DELAY = new BasicOption<>("deathmatch.delay", BORDER_TIME_TO_SHRINK);
+	public static final BasicOption<Integer> DEATHMATCH_PVP_DELAY = new BasicOption<>("deathmatch.pvp-delay", 30);
 	public static final BasicOption<Boolean> DEATHMATCH_ADVENTURE_MODE = new BasicOption<>("deathmatch.deathmatch-adventure-mode",true);
 	public static final BasicOption<Boolean> ENABLE_DEATHMATCH_FORCE_END = new BasicOption<>("deathmatch.force-end.enable",false);
 	public static final BasicOption<Integer> DEATHMATCH_FORCE_END_DELAY = new BasicOption<>("deathmatch.force-end.delay",120);

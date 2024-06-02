@@ -17,15 +17,13 @@ public class StartDeathmatchTask implements Runnable{
 
 	public StartDeathmatchTask(GameManager gameManager, boolean shrinkBorder){
 		this.gameManager = gameManager;
-		this.timeBeforePVP = 31;
+		this.timeBeforePVP = gameManager.getConfig().get(MainConfig.DEATHMATCH_PVP_DELAY);
 		this.shrinkBorder = shrinkBorder;
 	}
 
 	@Override
 	public void run() {
-		timeBeforePVP --;
-
-		if(timeBeforePVP == 0){
+		if (timeBeforePVP == 0) {
 			gameManager.setPvp(true);
 			gameManager.broadcastInfoMessage(Lang.PVP_ENABLED);
 			gameManager.getPlayerManager().playSoundToAll(UniversalSound.WITHER_SPAWN.getSound());
@@ -43,16 +41,15 @@ public class StartDeathmatchTask implements Runnable{
 				gameManager.getMapLoader().getUhcWorld(World.Environment.NORMAL).getWorldBorder().setSize(borderEndSideLength, borderTimeToShrink);
 				gameManager.getMapLoader().getUhcWorld(World.Environment.NORMAL).getWorldBorder().setDamageBuffer(1);
 			}
-		}else{
+		} else if (timeBeforePVP <= 5 || (timeBeforePVP % 5 == 0)) {
+			gameManager.broadcastInfoMessage(Lang.PVP_START_IN+" "+timeBeforePVP+"s");
+			gameManager.getPlayerManager().playSoundToAll(UniversalSound.CLICK.getSound());
+		}
 
-			if(timeBeforePVP <= 5 || (timeBeforePVP%5 == 0)){
-				gameManager.broadcastInfoMessage(Lang.PVP_START_IN+" "+timeBeforePVP+"s");
-				gameManager.getPlayerManager().playSoundToAll(UniversalSound.CLICK.getSound());
-			}
+		timeBeforePVP--;
 
-			if(timeBeforePVP > 0){
-				Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), this,20);
-			}
+		if (timeBeforePVP >= 0) {
+			Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), this, 20);
 		}
 	}
 
