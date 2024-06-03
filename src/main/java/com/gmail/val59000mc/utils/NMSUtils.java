@@ -19,7 +19,7 @@ public class NMSUtils{
 
 	private final static String version = getVersion();
 
-	public static String getVersion(){
+	private static String getVersion() {
 		if (version != null){
 			return version;
 		}else{
@@ -98,6 +98,16 @@ public class NMSUtils{
 		return fields;
 	}
 
+	/**
+	 * Returns a class by name relative to the NMS package.
+	 *
+	 * @param name the relative name
+	 * @return the class
+	 * @throws ClassNotFoundException if the class is not found
+	 *
+	 * @deprecated Does not work on Paper 1.20.5+ because the NMS package was removed
+	 */
+	@Deprecated
 	public static Class<?> getNMSClass(String name) throws ClassNotFoundException{
 		try{
 			return getClassWithException(name);
