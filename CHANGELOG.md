@@ -13,11 +13,13 @@
 - [#153][GL-153] - ban-level-2-potions option can be bypassed
 - [#152][GL-152] - Persistent leaves are decayed by the Fast Leaves Decay scenario
 - [#150][GL-150] - Fast Leaves Decay scenario causes lag
+- [#136][GL-136] - Player name is not revealed in elimination message in the Anonymous scenario
 
 [GL-154]: https://gitlab.com/uhccore/uhccore/-/issues/154
 [GL-153]: https://gitlab.com/uhccore/uhccore/-/issues/153
 [GL-152]: https://gitlab.com/uhccore/uhccore/-/issues/152
 [GL-150]: https://gitlab.com/uhccore/uhccore/-/issues/150
+[GL-136]: https://gitlab.com/uhccore/uhccore/-/issues/136
 [GL-135]: https://gitlab.com/uhccore/uhccore/-/issues/135
 [GL-114]: https://gitlab.com/uhccore/uhccore/-/issues/114
 

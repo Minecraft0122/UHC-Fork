@@ -122,11 +122,6 @@ public class PlayerDeathHandler {
 		uhcPlayer.getStoredItems().clear();
 		uhcPlayer.getStoredItems().addAll(playerDrops);
 
-		// eliminations
-		if (shouldAnnounceEliminations()) {
-			gameManager.broadcastInfoMessage(Lang.PLAYERS_ELIMINATED.replace("%player%", uhcPlayer.getName()));
-		}
-
 		if(config.get(MainConfig.REGEN_HEAD_DROP_ON_PLAYER_DEATH)){
 			playerDrops.add(UhcItems.createRegenHead(uhcPlayer));
 		}
@@ -163,6 +158,10 @@ public class PlayerDeathHandler {
 				.ifPresent(playerManager::playSoundToAll);
 		} catch (SoundParseException e) {
 			LOGGER.log(Level.WARNING, "Unable to parse player death sound", e);
+		}
+
+		if (shouldAnnounceEliminations()) {
+			gameManager.broadcastInfoMessage(Lang.PLAYERS_ELIMINATED.replace("%player%", uhcPlayer.getName()));
 		}
 
 		playerManager.checkIfRemainingPlayers();
