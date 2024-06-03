@@ -1,6 +1,9 @@
 # Changelog
 
-## [Unreleased]
+## [1.20.9] - 2024-06-03
+
+UhcCore version `1.20.9` is now here to fix a few bugs,
+add some more options, and most importantly, add support for Minecraft 1.20.6!
 
 ### New features
 
