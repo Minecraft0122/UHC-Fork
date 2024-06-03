@@ -4,6 +4,7 @@
 
 ### New features
 
+- [#157][GL-157] - Support Minecraft 1.20.6
 - [#154][GL-154] - Option to change the time between teleporting each team
 - [#135][GL-135] - Option to change the drop chance of golden apples in the Lucky Leaves scenario
 - [#114][GL-114] - Add config option to decrease delay between teleport and deathmatch start
@@ -15,6 +16,7 @@
 - [#150][GL-150] - Fast Leaves Decay scenario causes lag
 - [#136][GL-136] - Player name is not revealed in elimination message in the Anonymous scenario
 
+[GL-157]: https://gitlab.com/uhccore/uhccore/-/issues/157
 [GL-154]: https://gitlab.com/uhccore/uhccore/-/issues/154
 [GL-153]: https://gitlab.com/uhccore/uhccore/-/issues/153
 [GL-152]: https://gitlab.com/uhccore/uhccore/-/issues/152
