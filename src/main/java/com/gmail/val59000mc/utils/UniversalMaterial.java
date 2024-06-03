@@ -176,6 +176,7 @@ public enum UniversalMaterial{
 	NETHERITE_SWORD,
 
 	TRIDENT,
+	MACE,
 
 	OAK_LEAVES("LEAVES", "OAK_LEAVES", (short) 0),
 	SPRUCE_LEAVES("LEAVES", "SPRUCE_LEAVES", (short) 1),
@@ -326,7 +327,8 @@ public enum UniversalMaterial{
 			UniversalMaterial.GOLDEN_SWORD,
 			UniversalMaterial.DIAMOND_SWORD,
 			UniversalMaterial.NETHERITE_SWORD,
-			UniversalMaterial.TRIDENT);
+			UniversalMaterial.TRIDENT,
+			UniversalMaterial.MACE);
 		return Collections.unmodifiableMap(miningDamage);
 	}
 
