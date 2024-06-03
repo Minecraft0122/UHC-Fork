@@ -5,6 +5,7 @@
 ### New features
 
 - [#154][GL-154] - Option to change the time between teleporting each team
+- [#135][GL-135] - Option to change the drop chance of golden apples in the Lucky Leaves scenario
 - [#114][GL-114] - Add config option to decrease delay between teleport and deathmatch start
 
 ### Bug fixes
@@ -17,6 +18,7 @@
 [GL-153]: https://gitlab.com/uhccore/uhccore/-/issues/153
 [GL-152]: https://gitlab.com/uhccore/uhccore/-/issues/152
 [GL-150]: https://gitlab.com/uhccore/uhccore/-/issues/150
+[GL-135]: https://gitlab.com/uhccore/uhccore/-/issues/135
 [GL-114]: https://gitlab.com/uhccore/uhccore/-/issues/114
 
 ## [1.20.8] - 2023-12-18

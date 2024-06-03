@@ -106,7 +106,7 @@
 	"lucky_leaves":{
 		"name":"Lucky Leaves",
 		"description":[
-			"Trees have a 0.5% chance of dropping a Golden Apple."
+			"Leaves have a 0.5% chance of dropping a Golden Apple when they decay."
 		]
 	},
 	"bleeding_sweets":{
