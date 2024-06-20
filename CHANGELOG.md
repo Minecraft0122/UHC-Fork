@@ -4,8 +4,10 @@
 
 ### New features
 
+- [#164][GL-164] - Support Minecraft 1.21
 - [#131][GL-131] - Option to change the overworld to nether scale factor
 
+[GL-164]: https://gitlab.com/uhccore/uhccore/-/issues/164
 [GL-131]: https://gitlab.com/uhccore/uhccore/-/issues/131
 
 ## [1.20.9] - 2024-06-03

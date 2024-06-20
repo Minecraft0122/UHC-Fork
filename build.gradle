@@ -72,7 +72,7 @@ dependencies {
 	compileOnly "com.google.code.findbugs:jsr305:3.0.2"
 	compileOnly "com.github.MilkBowl:VaultAPI:1.7"
 	compileOnly "com.comphenix.protocol:ProtocolLib:4.7.0"
-	implementation "net.wesjd:anvilgui:1.9.4-SNAPSHOT"
+	implementation "net.wesjd:anvilgui:1.9.5-SNAPSHOT"
 	implementation "io.papermc:paperlib:1.0.8"
 	implementation project(":Support-WorldEdit-6")
 	implementation project(":Support-WorldEdit-7")
@@ -87,6 +87,7 @@ dependencies {
 	shadowJar "net.zerodind:uhccore-nms-1_20_R2:1.0.0"
 	shadowJar "net.zerodind:uhccore-nms-1_20_R3:1.0.0"
 	shadowJar "net.zerodind:uhccore-nms-1_20_R4:1.0.0"
+	shadowJar "net.zerodind:uhccore-nms-1_21_R1:1.0.0"
 }
 
 java {
@@ -145,7 +146,7 @@ tasks.named("processResources") {
 tasks.named("runServer") {
 	// The minecraft version to use can be changed via the mcVersion property
 	// For example: gradlew runServer -PmcVersion=1.8.8
-	def mcVersion = project.findProperty("mcVersion") ?: "1.20.6"
+	def mcVersion = project.findProperty("mcVersion") ?: "1.21"
 	minecraftVersion mcVersion
 	runDirectory rootProject.file("run/$mcVersion")
 	javaLauncher = javaToolchains.launcherFor {
@@ -154,6 +155,11 @@ tasks.named("runServer") {
 	// These options enable remote debugging via JDWP on localhost:5005
 	// See "Testing your changes" in CONTRIBUTING.md for more details
 	jvmArgs += [ "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005" ]
+
+	// Uncomment the lines below to use a custom server jar in the project root folder.
+	// Legacy plugin loading is needed on Spigot servers.
+	//serverJar rootProject.file("spigot-1.21.jar")
+	//legacyPluginLoading()
 }
 
 // Only publish the shadowed JAR
