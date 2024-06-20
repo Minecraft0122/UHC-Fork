@@ -186,8 +186,9 @@ publishing {
 }
 
 int getJavaVersionFor(String mcVersion) {
-	int minorVersion = Integer.parseInt(mcVersion.split("\\.")[1])
-	int patchVersion = Integer.parseInt(mcVersion.split("\\.")[2])
+	String[] versionNumbers = mcVersion.split("\\.")
+	int minorVersion = Integer.parseInt(versionNumbers[1])
+	int patchVersion = versionNumbers.length >= 3 ? Integer.parseInt(versionNumbers[2]) : 0
 	switch (minorVersion) {
 		case 8..16: return 8
 		case 17: return 16
