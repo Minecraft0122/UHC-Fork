@@ -324,7 +324,7 @@ public class MapLoader {
 
 		if (config.get(MainConfig.ENABLE_NETHER)){
 			World nether = getUhcWorld(Environment.NETHER);
-			prepareWorld(nether, difficulty, healthRegen, announceAdvancements, borderStartSideLength / 2);
+			prepareWorld(nether, difficulty, healthRegen, announceAdvancements, borderStartSideLength / config.get(MainConfig.NETHER_SCALE));
 		}
 
 		if (config.get(MainConfig.ENABLE_THE_END)){
@@ -352,7 +352,7 @@ public class MapLoader {
 		}
 	}
 
-	private void prepareWorld(World world, Difficulty difficulty, boolean healthRegen, boolean announceAdvancements, int borderSideLength) {
+	private void prepareWorld(World world, Difficulty difficulty, boolean healthRegen, boolean announceAdvancements, double borderSideLength) {
 		world.save();
 		if (!healthRegen){
 			VersionUtils.getVersionUtils().setGameRuleValue(world, NATURAL_REGENERATION, false);

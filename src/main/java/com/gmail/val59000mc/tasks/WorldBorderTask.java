@@ -1,6 +1,7 @@
 package com.gmail.val59000mc.tasks;
 
 import com.gmail.val59000mc.UhcCore;
+import com.gmail.val59000mc.configuration.MainConfig;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.languages.Lang;
 import org.bukkit.Bukkit;
@@ -30,6 +31,9 @@ public class WorldBorderTask implements Runnable{
 	}
 
 	private void startMoving(){
+		GameManager gm = GameManager.getGameManager();
+		MainConfig cfg = gm.getConfig();
+
 		GameManager.getGameManager().broadcastInfoMessage(Lang.GAME_BORDER_START_SHRINKING);
 
 		World overworld = GameManager.getGameManager().getMapLoader().getUhcWorld(World.Environment.NORMAL);
@@ -39,7 +43,7 @@ public class WorldBorderTask implements Runnable{
 		World nether = GameManager.getGameManager().getMapLoader().getUhcWorld(World.Environment.NETHER);
 		if (nether != null) {
 			WorldBorder netherBorder = nether.getWorldBorder();
-			netherBorder.setSize(endSideLength / 2, timeToShrink);
+			netherBorder.setSize(endSideLength / cfg.get(MainConfig.NETHER_SCALE), timeToShrink);
 		}
 	}
 

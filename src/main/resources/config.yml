@@ -177,6 +177,11 @@ customize-game-behavior:
   # Only set this to true when you are really using it since more worlds loaded means worse performance.
   enable-nether: true
 
+  # Defines the scale of blocks between the two worlds, in a normal world 8 overworld blocks are equal to one nether block (8:1).
+  # The default setting is 2, as four overworld blocks are equal to 1 nether block. You can also make scales like (3:2) by putting decimal numbers like 1.5.
+  # NOTE: It is not recommended to raise this ratio too much, as the nether could be too small.
+  nether-scale: 2.0
+
   # Set it to true to enable the end.
   # Only set this to true when you are really using it since more worlds loaded means worse performance.
   enable-the-end: false

@@ -87,6 +87,7 @@ public class MainConfig extends YamlFile {
 	public static final BasicOption<Boolean> ALLOW_GHAST_TEARS_DROPS = new BasicOption<>("customize-game-behavior.allow-ghast-tears-drops",true);
 	public static final BasicOption<Integer> MAX_BUILDING_HEIGHT = new BasicOption<>("customize-game-behavior.max-building-height", -1);
 	public static final BasicOption<Boolean> ENABLE_NETHER = new BasicOption<>("customize-game-behavior.enable-nether",false);
+	public static final BasicOption<Double> NETHER_SCALE = new BasicOption<>("customize-game-behavior.nether-scale", 2.0);
 	public static final BasicOption<Boolean> ENABLE_THE_END = new BasicOption<>("customize-game-behavior.enable-the-end",false);
 	public static final BasicOption<Boolean> BAN_LEVEL_TWO_POTIONS = new BasicOption<>("customize-game-behavior.ban-level-2-potions",false);
 	public static final BasicOption<Boolean> ENABLE_DAY_NIGHT_CYCLE = new BasicOption<>("customize-game-behavior.day-night-cycle.enable",false);
