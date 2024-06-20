@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased]
+
+### New features
+
+- [#131][GL-131] - Option to change the overworld to nether scale factor
+
+[GL-131]: https://gitlab.com/uhccore/uhccore/-/issues/131
+
 ## [1.20.9] - 2024-06-03
 
 UhcCore version `1.20.9` is now here to fix a few bugs,
