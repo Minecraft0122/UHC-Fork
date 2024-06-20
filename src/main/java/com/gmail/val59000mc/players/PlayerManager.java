@@ -219,7 +219,7 @@ public class PlayerManager {
 					// Only player in team so create random spawn location.
 					if(onlinePlayingMembers.size() <= 1){
 						World world = gm.getMapLoader().getUhcWorld(World.Environment.NORMAL);
-						int maxDistance = (int) gm.getMapLoader().getBorderSize();
+						int maxDistance = (int) gm.getMapLoader().getOverworldBorderApothem();
 						uhcPlayer.getTeam().setStartingLocation(LocationUtils.getRandomSpawnLocation(world, maxDistance));
 					}
 					// Set spawn location at team mate.

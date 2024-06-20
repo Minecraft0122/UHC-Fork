@@ -77,7 +77,7 @@ public class MapLoader {
 		return arena;
 	}
 
-	public double getBorderSize(){
+	public double getOverworldBorderApothem(){
 		World overworld = GameManager.getGameManager().getMapLoader().getUhcWorld(World.Environment.NORMAL);
 		return overworld.getWorldBorder().getSize()/2;
 	}

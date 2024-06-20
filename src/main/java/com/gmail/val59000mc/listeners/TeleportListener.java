@@ -83,7 +83,7 @@ public class TeleportListener implements Listener{
 
 		if (gm.getConfig().get(MainConfig.ENABLE_THE_END) && e.getFrom().getName().equals(gm.getMapLoader().getUhcWorldUuid(Environment.THE_END))){
 			World world = gm.getMapLoader().getUhcWorld(Environment.NORMAL);
-			int maxDistance = (int) gm.getMapLoader().getBorderSize();
+			int maxDistance = (int) gm.getMapLoader().getOverworldBorderApothem();
 			Location loc = LocationUtils.getRandomSpawnLocation(world, maxDistance);
 			LOGGER.info("Teleporting " + player.getName() + " to " + loc);
 			player.teleport(loc);
