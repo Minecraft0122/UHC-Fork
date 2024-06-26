@@ -1,6 +1,9 @@
 # Changelog
 
-## [Unreleased]
+## [1.20.10] - 2024-06-26
+
+UhcCore version `1.20.10` is now here to add support for Minecraft 1.21,
+and also includes an option to change the scale between the overworld and nether dimensions!
 
 ### New features
 
