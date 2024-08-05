@@ -16,6 +16,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -268,6 +269,12 @@ public class ScenarioManager {
 			if (isEnabled(scenario)){
 				scenarioItem.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
 				scenarioItem.setAmount(2);
+
+				// Hide the enchantments, we don't want that text on the display item.
+				// Note: This only works if done AFTER adding the enchantment, as of Minecraft 1.20.5 (see https://github.com/PaperMC/Paper/issues/10693).
+				ItemMeta scenarioItemMeta = scenarioItem.getItemMeta();
+				scenarioItemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+				scenarioItem.setItemMeta(scenarioItemMeta);
 			}
 			inv.addItem(scenarioItem);
 		}

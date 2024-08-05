@@ -3,6 +3,7 @@ package com.gmail.val59000mc.scenarios;
 import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.scenarios.scenariolisteners.*;
 import com.gmail.val59000mc.utils.UniversalMaterial;
+import com.google.common.collect.MultimapBuilder;
 
 import io.papermc.lib.PaperLib;
 
@@ -174,8 +175,16 @@ public class Scenario {
 		ItemMeta meta = item.getItemMeta();
 
 		meta.setDisplayName(Lang.SCENARIO_GLOBAL_ITEM_COLOR + getInfo().getName());
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
 		meta.setLore(Collections.singletonList(Lang.SCENARIO_GLOBAL_ITEM_INFO));
+
+		// Remove/hide all attribute modifiers (including defaults), we don't want that text on the display item and the modifiers don't matter here.
+		// Note: The ItemFlag API on its own can't be used to hide the text anymore, on Paper for Minecraft 1.20.5 (see https://github.com/PaperMC/Paper/issues/10693).
+		// That's why we first have to use setAttributeModifiers, to create the underlying attribute_modifiers data component to which the hide flag can be added.
+		// Having said that, setAttributeModifiers doesn't exist on older Minecraft versions (e.g. 1.8.8), and it isn't needed until 1.20.5, hence the version check.
+		if (PaperLib.isVersion(20, 5)) {
+			meta.setAttributeModifiers(MultimapBuilder.hashKeys().arrayListValues().build());
+		}
+		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 
 		item.setItemMeta(meta);
 		return item;
