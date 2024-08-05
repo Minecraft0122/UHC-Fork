@@ -425,9 +425,10 @@ public class MapLoader {
 	public void generateChunks(Environment env){
 		World world = getUhcWorld(env);
 		int size = config.get(MainConfig.BORDER_START_SIZE);
+		double netherScale = config.get(MainConfig.NETHER_SCALE);
 
 		if(env == Environment.NETHER){
-			size = size/2;
+			size = (int) (size / netherScale);
 		}
 
 		int restEveryNumOfChunks = config.get(MainConfig.REST_EVERY_NUM_OF_CHUNKS);
