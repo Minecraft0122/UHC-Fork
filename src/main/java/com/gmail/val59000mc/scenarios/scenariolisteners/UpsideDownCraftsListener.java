@@ -50,8 +50,10 @@ public class UpsideDownCraftsListener extends ScenarioListener{
 		upsideDown.shape(getUpsideDownShape(recipe.getShape()));
 
 		Map<Character, RecipeChoice> recipeChoiceMap = recipe.getChoiceMap();
-		for (char c : recipeChoiceMap.keySet()){
-			upsideDown.setIngredient(c, recipeChoiceMap.get(c));
+		for (Map.Entry<Character, RecipeChoice> choice : recipeChoiceMap.entrySet()) {
+			if (choice.getValue() != null) {
+				upsideDown.setIngredient(choice.getKey(), choice.getValue());
+			}
 		}
 
 		return upsideDown;

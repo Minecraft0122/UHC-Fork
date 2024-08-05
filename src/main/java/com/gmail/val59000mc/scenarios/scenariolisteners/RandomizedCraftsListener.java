@@ -56,8 +56,10 @@ public class RandomizedCraftsListener extends ScenarioListener{
 		clone.shape(recipe.getShape());
 
 		Map<Character, RecipeChoice> recipeChoiceMap = recipe.getChoiceMap();
-		for (char c : recipeChoiceMap.keySet()){
-			clone.setIngredient(c, recipeChoiceMap.get(c));
+		for (Map.Entry<Character, RecipeChoice> choice : recipeChoiceMap.entrySet()) {
+			if (choice.getValue() != null) {
+				clone.setIngredient(choice.getKey(), choice.getValue());
+			}
 		}
 
 		return clone;

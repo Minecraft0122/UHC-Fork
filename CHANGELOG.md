@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Bug fixes
+
+- [#169][GL-169] - NPE when activating the Randomized Crafts or Upside Down Crafting scenario on Paper servers for Minecraft 1.20.5+
+
+[GL-169]: https://gitlab.com/uhccore/uhccore/-/issues/169
+
 ## [1.20.10] - 2024-06-26
 
 UhcCore version `1.20.10` is now here to add support for Minecraft 1.21,
