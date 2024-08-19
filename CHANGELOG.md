@@ -1,6 +1,9 @@
 # Changelog
 
-## Unreleased
+## [1.20.11] - 2024-08-19
+
+UhcCore version `1.20.11` is now here to fix a few bugs that affect the latest versions
+of Minecraft, which also means that UhcCore is now fully compatible with Minecraft 1.21.1!
 
 ### Bug fixes
 
