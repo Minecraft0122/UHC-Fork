@@ -4,10 +4,12 @@
 
 ### Bug fixes
 
+- [#174][GL-174] - Team rename and invite menu doesn't work on the latest server builds for Minecraft 1.21 and 1.21.1
 - [#173][GL-173] - The pre-generate-world config option doesn't take the nether-scale option into account
 - [#170][GL-170] - Enchantment and attribute modifier text no longer hidden in scenario view, edit and vote menus on Paper servers for Minecraft 1.20.5+
 - [#169][GL-169] - NPE when activating the Randomized Crafts or Upside Down Crafting scenario on Paper servers for Minecraft 1.20.5+
 
+[GL-174]: https://gitlab.com/uhccore/uhccore/-/issues/174
 [GL-173]: https://gitlab.com/uhccore/uhccore/-/issues/173
 [GL-170]: https://gitlab.com/uhccore/uhccore/-/issues/170
 [GL-169]: https://gitlab.com/uhccore/uhccore/-/issues/169
