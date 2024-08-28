@@ -123,6 +123,11 @@ public class VersionUtils_1_13 extends VersionUtils{
 	@Override
 	public JsonObject getBasePotionEffect(PotionMeta potionMeta) {
 		PotionData potionData = potionMeta.getBasePotionData();
+		// As of Minecraft 1.20.5 (with the introduction of data components), PotionData no longer exists,
+		// and the replacement which Spigot has compatibility for is nullable.
+		if (potionData == null) {
+			return null;
+		}
 		JsonObject baseEffect = new JsonObject();
 		baseEffect.addProperty("type", potionData.getType().name());
 

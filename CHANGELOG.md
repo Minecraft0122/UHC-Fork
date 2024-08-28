@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Bug fixes
+
+- [#177][GL-177] - Iteminfo command fails when using it on a potion that has no base effect on Minecraft 1.20.5+
+
+[GL-177]: https://gitlab.com/uhccore/uhccore/-/issues/177
+
 ## [1.20.11] - 2024-08-19
 
 UhcCore version `1.20.11` is now here to fix a few bugs that affect the latest versions
