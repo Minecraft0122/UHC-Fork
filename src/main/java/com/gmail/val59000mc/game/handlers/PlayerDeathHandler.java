@@ -172,6 +172,21 @@ public class PlayerDeathHandler {
 	private void setDeathMessage(PlayerDeathEvent event) {
 		if (Lang.PLAYERS_DEATH_MESSAGE.isEmpty()) {
 			event.setDeathMessage(null);
+		} else if (Lang.PLAYERS_DEATH_MESSAGE.equals("%original%")) {
+			// If the intent is to keep the original, unmodified death message, we should avoid setting the
+			// death message, because even if we call event.setDeathMessage(event.getDeathMessage()), the death
+			// message may change, depending on the server platform/version. This is because the message is in string
+			// form, which means that any translatable chat components will get translated using the server's locale,
+			// which means that the message will no longer be translatable by the client.
+			// However, on CraftBukkit/Spigot for Minecraft 1.6.1+, this is accounted for by the server, such that the
+			// death message will not be changed as long as the final message of the event is equal to the initial one.
+			// But this logic was removed in a Paper patch when the Kyori Adventure API got integrated, and even
+			// though it initially still worked the same way because Paper was now using actual chat components instead
+			// of string messages, that part was later changed so that the server translates chat components to strings:
+			// https://github.com/PaperMC/Paper/commit/c1635eabb41dd5cfdaf012531481079c8d174b20
+			// So in conclusion, we need to avoid setting the death message in order to avoid pre-translating it
+			// server-side on Paper servers for Minecraft 1.16.5+.
+			return; // Avoid setting death message
 		} else {
 			event.setDeathMessage(Lang.PLAYERS_DEATH_MESSAGE.replace("%original%", event.getDeathMessage()));
 		}
