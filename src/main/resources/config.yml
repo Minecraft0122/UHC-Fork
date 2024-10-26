@@ -426,6 +426,13 @@ playing-compass:
 # Set to true if you want to enable hearts on tab.
 hearts-on-tab: true
 
+# Controls the scoreboard render type for the "hearts-on-tab" option.
+# 20 HP will be displayed as 10 heart icons for the "hearts" render type,
+# and as the number 20 for the "integer" render type.
+# Currently only supported on Minecraft 1.13+, on older versions the
+# render type will always be "hearts".
+hearts-on-tab-render-type: hearts
+
 # Set to true if you want to enable hearts below player names.
 hearts-below-name: true
 

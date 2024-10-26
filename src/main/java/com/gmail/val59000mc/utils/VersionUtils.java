@@ -60,7 +60,16 @@ public abstract class VersionUtils{
 
 	public abstract void setSkullOwner(Skull skull, UhcPlayer player);
 
-	public abstract Objective registerObjective(Scoreboard scoreboard, String name, String criteria);
+	// RenderType exists in API since 1.13, internally since 1.8. RenderType.HEARTS is the default for the "health" criteria if left unspecified.
+	public abstract Objective registerNewObjective(Scoreboard scoreboard, String name, String criteria, String displayName, String renderType);
+
+	public Objective registerNewObjective(Scoreboard scoreboard, String name, String criteria, String renderType) {
+		return registerNewObjective(scoreboard, name, criteria, name, renderType);
+	}
+
+	public Objective registerNewObjective(Scoreboard scoreboard, String name, String criteria) {
+		return registerNewObjective(scoreboard, name, criteria, name, null);
+	}
 
 	public abstract void setPlayerMaxHealth(Player player, double maxHealth);
 

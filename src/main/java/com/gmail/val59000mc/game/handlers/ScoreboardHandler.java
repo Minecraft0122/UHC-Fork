@@ -61,12 +61,13 @@ public class ScoreboardHandler {
 		Objective healthBelowName = null;
 
 		if (config.get(MainConfig.HEARTS_ON_TAB)) {
-			healthTab = VersionUtils.getVersionUtils().registerObjective(scoreboard, "health_tab", "health");
+			healthTab = VersionUtils.getVersionUtils().registerNewObjective(scoreboard, "health_tab", "health", config.get(MainConfig.HEARTS_ON_TAB_RENDER_TYPE));
 			healthTab.setDisplaySlot(DisplaySlot.PLAYER_LIST);
 		}
 
 		if (config.get(MainConfig.HEARTS_BELOW_NAME)) {
-			healthBelowName = VersionUtils.getVersionUtils().registerObjective(scoreboard, ChatColor.RED + "\u2764", "health");
+			// Note: renderType option has no effect below name, so no point in specifying it
+			healthBelowName = VersionUtils.getVersionUtils().registerNewObjective(scoreboard, ChatColor.RED + "\u2764", "health");
 			healthBelowName.setDisplaySlot(DisplaySlot.BELOW_NAME);
 		}
 
@@ -293,7 +294,7 @@ public class ScoreboardHandler {
 			objective.unregister();
 		}
 
-		objective = VersionUtils.getVersionUtils().registerObjective(scoreboard, "informations", "dummy");
+		objective = VersionUtils.getVersionUtils().registerNewObjective(scoreboard, "informations", "dummy");
 		objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 		objective.setDisplayName(scoreboardLayout.getTitle());
 

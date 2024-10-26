@@ -61,8 +61,10 @@ public class VersionUtils_1_8 extends VersionUtils{
 	}
 
 	@Override
-	public Objective registerObjective(Scoreboard scoreboard, String name, String criteria) {
-		return scoreboard.registerNewObjective(name, criteria);
+	public Objective registerNewObjective(Scoreboard scoreboard, String name, String criteria, String displayName, String renderType) {
+		final Objective newObjective = scoreboard.registerNewObjective(name, criteria);
+		newObjective.setDisplayName(displayName);
+		return newObjective;
 	}
 
 	@Override

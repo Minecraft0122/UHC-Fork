@@ -71,11 +71,13 @@ public class VersionUtils_1_13 extends VersionUtils{
 	}
 
 	@Override
-	public Objective registerObjective(Scoreboard scoreboard, String name, String criteria) {
-		if (criteria.equals("health")){
-			return scoreboard.registerNewObjective(name, criteria, name, RenderType.HEARTS);
+	public Objective registerNewObjective(Scoreboard scoreboard, String name, String criteria, String displayName, String renderType) {
+		if (renderType == null) {
+			return scoreboard.registerNewObjective(name, criteria, displayName);
+		} else {
+			final RenderType renderTypeEnum = renderType.equals("hearts") ? RenderType.HEARTS : RenderType.INTEGER;
+			return scoreboard.registerNewObjective(name, criteria, displayName, renderTypeEnum);
 		}
-		return scoreboard.registerNewObjective(name, criteria, name);
 	}
 
 	@Override
