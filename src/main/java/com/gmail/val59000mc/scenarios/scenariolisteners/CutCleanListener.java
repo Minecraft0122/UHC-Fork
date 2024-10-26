@@ -92,9 +92,9 @@ public class CutCleanListener extends ScenarioListener{
 		Optional<OreType> oreType = OreType.valueOf(type);
 
 		if (
-				oreType.isPresent() &&
-						oreType.get().needsSmelting() &&
-						(!checkTool || oreType.get().isCorrectTool(tool))
+			oreType.isPresent() &&
+			oreType.get().needsSmelting() &&
+			(!checkTool || oreType.get().isCorrectTool(tool))
 		) {
 			int xp = oreType.get().getXpPerBlock();
 			int count = 1;

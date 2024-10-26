@@ -41,13 +41,13 @@ public class RandomizedDropsListener extends ScenarioListener{
 
 		ItemStack blockDrop;
 		if(dropList.containsKey(block.getType())) {
-			 blockDrop = dropList.get(block.getType());
+			blockDrop = dropList.get(block.getType());
 		}
 		else {
 			int itemindex = RandomUtils.randomInteger(1, items.size())-1;
 			Material material = items.get(itemindex);
 
-			 blockDrop = new ItemStack(material);
+			blockDrop = new ItemStack(material);
 			dropList.put(block.getType(), blockDrop);
 
 			items.remove(material);
