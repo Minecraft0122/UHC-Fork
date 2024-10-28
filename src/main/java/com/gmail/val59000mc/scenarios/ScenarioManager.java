@@ -7,13 +7,18 @@ import com.gmail.val59000mc.customitems.GameItem;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.players.UhcPlayer;
+import com.gmail.val59000mc.scenarios.scenariolisteners.VeinMinerListener;
 import com.gmail.val59000mc.utils.FileUtils;
 import com.gmail.val59000mc.utils.NMSUtils;
+import com.gmail.val59000mc.utils.OreType;
+
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
@@ -206,6 +211,35 @@ public class ScenarioManager {
 	 */
 	public ScenarioListener getScenarioListener(Scenario scenario){
 		return enabledScenarios.get(scenario);
+	}
+
+	// This is an attempt to centralize the priority logic for the custom block drop scenarios.
+	// Previously, the priority was based on logic spread across all listeners, which was hard to reason
+	// about and led to a number of bugs regarding the interaction between these scenarios.
+	// Ideally, this should be made more configurable in the future, and ideally those scenarios
+	// should be made more composable rather than being mutually exclusive.
+	// Also note that some BlockBreakEvent listeners may run before/after block drop scenarios (those with non-normal event priority).
+	public Scenario getActiveBlockDropScenario(Player player, Block minedBlock) {
+		if (isEnabled(Scenario.RANDOMIZED_DROPS)) {
+			return Scenario.RANDOMIZED_DROPS;
+		} else if (isEnabled(Scenario.FLOWER_POWER)) {
+			return Scenario.FLOWER_POWER;
+		} else if (!OreType.valueOf(minedBlock.getType()).isPresent() && isEnabled(Scenario.CUTCLEAN)) {
+			// CutClean has priority over Vein Miner etc. for non-ore blocks
+			return Scenario.CUTCLEAN;
+		} else if (isEnabled(Scenario.VEIN_MINER) && ((VeinMinerListener) getScenarioListener(Scenario.VEIN_MINER)).isVeinMiningActive(player)) {
+			return Scenario.VEIN_MINER;
+		} else if (isEnabled(Scenario.TRIPLE_ORES)) {
+			return Scenario.TRIPLE_ORES;
+		} else if (isEnabled(Scenario.DOUBLE_ORES)) {
+			return Scenario.DOUBLE_ORES;
+		} else if (isEnabled(Scenario.CUTCLEAN)) {
+			return Scenario.CUTCLEAN;
+		} else if (isEnabled(Scenario.DOUBLE_GOLD)) {
+			return Scenario.DOUBLE_GOLD;
+		} else {
+			return null;
+		}
 	}
 
 	public void loadDefaultScenarios(MainConfig cfg){

@@ -3,6 +3,7 @@ package com.gmail.val59000mc.scenarios.scenariolisteners;
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.customitems.UhcItems;
 import com.gmail.val59000mc.exceptions.ParseException;
+import com.gmail.val59000mc.scenarios.Scenario;
 import com.gmail.val59000mc.scenarios.ScenarioListener;
 import com.gmail.val59000mc.utils.*;
 
@@ -14,8 +15,8 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -76,28 +77,31 @@ public class FlowerPowerListener extends ScenarioListener{
 		}
 	}
 
-	@EventHandler (priority = EventPriority.HIGH)
+	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e){
 		if (e.isCancelled()) {
 			return;
 		}
 
-		Block block = e.getBlock();
+		final Player player = e.getPlayer();
+		final Block block = e.getBlock();
 
-		// For tall flowers start with the bottom block.
-		Block below = block.getRelative(BlockFace.DOWN);
-		if (isFlower(below)){
-			block = below;
+		if (getScenarioManager().getActiveBlockDropScenario(player, block) != Scenario.FLOWER_POWER) {
+			return;
 		}
 
-		if (isFlower(block)){
-			Location blockLoc = block.getLocation().add(.5,.5,.5);
-			block.setType(Material.AIR);
-			UhcItems.spawnExtraXp(blockLoc, expPerFlower);
+		// For tall flowers start with the bottom block.
+		final Block blockBelow = block.getRelative(BlockFace.DOWN);
+		final Block blockToBreak = isFlower(blockBelow) ? blockBelow : block;
 
-			int random = RandomUtils.randomInteger(0, flowerDrops.size()-1);
-			ItemStack drop = flowerDrops.get(random);
-			blockLoc.getWorld().dropItem(blockLoc, drop);
+		if (isFlower(blockToBreak)) {
+			final Location breakLoc = blockToBreak.getLocation().add(.5,.5,.5);
+			blockToBreak.setType(Material.AIR);
+			UhcItems.spawnExtraXp(breakLoc, expPerFlower);
+
+			final int random = RandomUtils.randomInteger(0, flowerDrops.size()-1);
+			final ItemStack drop = flowerDrops.get(random);
+			breakLoc.getWorld().dropItem(breakLoc, drop);
 		}
 	}
 

@@ -5,6 +5,7 @@ import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.scenarios.Option;
 import com.gmail.val59000mc.scenarios.Scenario;
 import com.gmail.val59000mc.scenarios.ScenarioListener;
+import com.gmail.val59000mc.scenarios.ScenarioManager;
 import com.gmail.val59000mc.utils.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -34,63 +35,72 @@ public class VeinMinerListener extends ScenarioListener{
 	@Option(key = "require-sneaking")
 	private boolean requireSneaking = true;
 
+	/**
+	 * @see ScenarioManager#getActiveBlockDropScenario(Player, Block)
+	 */
+	public boolean isVeinMiningActive(Player player) {
+		return !requireSneaking || player.isSneaking();
+	}
+
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e){
 		if (e.isCancelled()) {
 			return;
 		}
 
-		Player player = e.getPlayer();
+		final Player player = e.getPlayer();
+		final Block block = e.getBlock();
 
-		if (requireSneaking && !player.isSneaking()) {
+		if (getScenarioManager().getActiveBlockDropScenario(player, block) != Scenario.VEIN_MINER) {
 			return;
 		}
 
-		Block block = e.getBlock();
 		ItemStack tool = player.getItemInHand();
 
-		if (block.getType() == UniversalMaterial.GLOWING_REDSTONE_ORE.getType()){
+		final Material blockType = block.getType();
+		if (blockType == UniversalMaterial.GLOWING_REDSTONE_ORE.getType()){
 			block.setType(Material.REDSTONE_ORE);
 		}
 
-		Optional<OreType> oreType = OreType.valueOf(block.getType());
+		final Optional<OreType> oreType = OreType.valueOf(blockType);
 		if (!oreType.isPresent() || !oreType.get().isCorrectTool(tool.getType())) {
 			return;
 		}
 
-		// find all surrounding blocks
+		// Find and "mine" all surrounding blocks
 		Vein vein = new Vein(block);
 		vein.process();
 
-		int amount = vein.getOres() * getVeinMultiplier(oreType.get());
+		int amount = vein.getSize() * getVeinMultiplier(blockType);
 		ItemStack drops = oreType.get().getDrop().getStack(amount);
 		Location loc = player.getLocation().getBlock().getLocation().add(.5,.5,.5);
 		loc.getWorld().dropItem(loc, drops);
 
-		int xp = oreType.get().getXpPerBlock() * vein.getOres();
+		int xp = oreType.get().getXpPerBlock() * vein.getSize();
 		if (xp != 0) {
 			UhcItems.spawnExtraXp(player.getLocation(), xp);
 		}
 
 		// Process blood diamonds.
 		if (isEnabled(Scenario.BLOOD_DIAMONDS) && oreType.get() == OreType.DIAMOND) {
-			UhcPlayer.damageIrreducible(player, vein.getOres());
+			UhcPlayer.damageIrreducible(player, vein.getSize());
 		}
 
 		if (calculateToolDamage) {
-			UhcPlayer.damageMiningTool(player, vein.getOres());
+			UhcPlayer.damageMiningTool(player, vein.getSize());
 		}
 	}
 
-	private int getVeinMultiplier(OreType oreType) {
-		int multiplier = 1;
+	private int getVeinMultiplier(Material oreType) {
+		int multiplier;
 		if (getScenarioManager().isEnabled(Scenario.TRIPLE_ORES)) {
-			multiplier *= 3;
+			multiplier = 3;
+		} else if (getScenarioManager().isEnabled(Scenario.DOUBLE_ORES)) {
+			multiplier = 2;
+		} else {
+			multiplier = 1;
 		}
-		if (getScenarioManager().isEnabled(Scenario.DOUBLE_ORES)) {
-			multiplier *= 2;
-		}
-		if ((oreType == OreType.GOLD || oreType == OreType.NETHER_GOLD) && getScenarioManager().isEnabled(Scenario.DOUBLE_GOLD)) {
+		if (OreType.isGold(oreType) && isEnabled(Scenario.DOUBLE_GOLD)) {
 			multiplier *= 2;
 		}
 		return multiplier;
@@ -99,22 +109,23 @@ public class VeinMinerListener extends ScenarioListener{
 	private static class Vein {
 		private final Block startBlock;
 		private final Material type;
-		private int ores;
+		private int size;
 
 		public Vein(Block startBlock) {
 			this.startBlock = startBlock;
 			this.type = startBlock.getType();
-			ores = 0;
+			size = 0;
 		}
 
 		public void process() {
 			getVeinBlocks(startBlock, type, 2, 10);
 		}
 
-		public int getOres() {
-			return ores;
+		public int getSize() {
+			return size;
 		}
 
+		// Finds "connected" vein blocks, excluding the start block, and "mine" them
 		private void getVeinBlocks(Block block, Material type, int i, int maxBlocks) {
 			if (maxBlocks == 0) return;
 
@@ -124,14 +135,14 @@ public class VeinMinerListener extends ScenarioListener{
 
 			if (block.getType() == type) {
 				block.setType(Material.AIR);
-				ores++;
+				size++;
 				i = 2;
 			}else {
 				i--;
 			}
 
 			// Max ores per vein is 20 to avoid server lag when mining sand / gravel.
-			if (i > 0 && ores < 20) {
+			if (i > 0 && size < 20) {
 				for (BlockFace face : BLOCK_FACES) {
 					getVeinBlocks(block.getRelative(face), type, i, maxBlocks-1);
 				}

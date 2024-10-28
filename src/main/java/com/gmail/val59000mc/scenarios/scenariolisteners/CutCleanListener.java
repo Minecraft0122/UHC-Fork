@@ -10,8 +10,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -73,19 +73,21 @@ public class CutCleanListener extends ScenarioListener{
 		}
 	}
 
-	@EventHandler (priority = EventPriority.HIGH)
+	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e){
 		if (e.isCancelled()) {
 			return;
 		}
 
-		if (isEnabled(Scenario.TRIPLE_ORES) || (isEnabled(Scenario.VEIN_MINER) && e.getPlayer().isSneaking())){
+		final Player player = e.getPlayer();
+		final Block block = e.getBlock();
+
+		if (getScenarioManager().getActiveBlockDropScenario(player, block) != Scenario.CUTCLEAN) {
 			return;
 		}
 
-		Block block = e.getBlock();
-		Material tool = e.getPlayer().getItemInHand().getType();
-		Location loc = e.getBlock().getLocation().add(0.5, 0, 0.5);
+		Material tool = player.getItemInHand().getType();
+		Location loc = block.getLocation().add(0.5, 0, 0.5);
 		Material type = block.getType();
 		ItemStack drop = null;
 
@@ -99,7 +101,7 @@ public class CutCleanListener extends ScenarioListener{
 			int xp = oreType.get().getXpPerBlock();
 			int count = 1;
 
-			if (oreType.get() == OreType.GOLD && isEnabled(Scenario.DOUBLE_GOLD)) {
+			if (OreType.isGold(type) && isEnabled(Scenario.DOUBLE_GOLD)) {
 				count *= 2;
 			}
 

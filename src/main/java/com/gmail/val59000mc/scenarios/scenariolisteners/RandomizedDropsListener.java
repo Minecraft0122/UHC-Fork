@@ -8,11 +8,13 @@ import com.gmail.val59000mc.utils.VersionUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.gmail.val59000mc.players.UhcPlayer;
+import com.gmail.val59000mc.scenarios.Scenario;
 import com.gmail.val59000mc.scenarios.ScenarioListener;
 import com.gmail.val59000mc.utils.RandomUtils;
 
@@ -36,8 +38,17 @@ public class RandomizedDropsListener extends ScenarioListener{
 			return;
 		}
 
-		//Create new HashMap so each each type of broken block drops the same random item every time it is broken (configurable
-		Block block = event.getBlock();
+		final Player player = event.getPlayer();
+		final Block block = event.getBlock();
+
+		if (getScenarioManager().getActiveBlockDropScenario(player, block) != Scenario.RANDOMIZED_DROPS) {
+			return;
+		}
+
+		// Ignore air, it probably means that some earlier BlockBreakEvent listener has "mined" the block
+		if (block.getType() == Material.AIR) {
+			return;
+		}
 
 		ItemStack blockDrop;
 		if(dropList.containsKey(block.getType())) {
@@ -58,7 +69,7 @@ public class RandomizedDropsListener extends ScenarioListener{
 		Location dropLocation = block.getLocation().add(0.5, 0.5, 0.5);
 		dropLocation.getWorld().dropItem(dropLocation, blockDrop);
 
-		UhcPlayer.damageMiningTool(event.getPlayer(), 1);
+		UhcPlayer.damageMiningTool(player, 1);
 	}
 
 }

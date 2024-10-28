@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -31,7 +32,8 @@ public class TimberListener extends ScenarioListener {
 	@Option(key = "log-break-limit")
 	private int logBreakLimit = 1000;
 
-	@EventHandler
+	// High priority to allow custom block drop scenarios to override Timber
+	@EventHandler(priority = EventPriority.HIGH)
 	public void onBlockBreak(BlockBreakEvent e) {
 		if (e.isCancelled()) {
 			return;

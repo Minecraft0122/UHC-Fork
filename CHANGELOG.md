@@ -8,9 +8,11 @@
 
 ### Bug fixes
 
+- [#184][GL-184] - Various bugs and compatibility issues between scenarios with custom block drops
 - [#180][GL-180] - Player death message is not client-translatable on Paper servers for Minecraft 1.16.5+
 - [#177][GL-177] - Iteminfo command fails when using it on a potion that has no base effect on Minecraft 1.20.5+
 
+[GL-184]: https://gitlab.com/uhccore/uhccore/-/issues/184
 [GL-182]: https://gitlab.com/uhccore/uhccore/-/issues/182
 [GL-180]: https://gitlab.com/uhccore/uhccore/-/issues/180
 [GL-177]: https://gitlab.com/uhccore/uhccore/-/issues/177

@@ -16,6 +16,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -39,11 +40,11 @@ public class BlockListener implements Listener{
 		maxBuildingHeight = configuration.get(MainConfig.MAX_BUILDING_HEIGHT);
 	}
 
-	@EventHandler
+	// Low priority in order to override custom block drop scenarios
+	@EventHandler(priority = EventPriority.LOW)
 	public void onBlockBreak(BlockBreakEvent event){
 		handleFrozenPlayers(event);
 		handleBlockLoot(event);
-		handleShearedLeaves(event);
 	}
 
 	@EventHandler
@@ -90,7 +91,9 @@ public class BlockListener implements Listener{
 		}
 	}
 
-	private void handleShearedLeaves(BlockBreakEvent e){
+	// High priority so that custom block drop scenarios can override it
+	@EventHandler(priority = EventPriority.HIGH)
+	public void handleShearedLeaves(BlockBreakEvent e) {
 		if (e.isCancelled()) {
 			return;
 		}

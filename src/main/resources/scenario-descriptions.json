@@ -4,7 +4,7 @@
 		"description":[
 			"No furnaces required.",
 			"Ores and animal drops are automatically smelted.",
-			"Gravel always drops flint.",
+			"Gravel always drops flint and sand always drops glass.",
 			"No lapis is needed for enchanting."
 		]
 	},
@@ -75,13 +75,15 @@
 	"triple_ores":{
 		"name":"Triple Ores",
 		"description":[
-			"Ores drop in threes."
+			"Ores drop in threes.",
+			"Ore drops are automatically smelted."
 		]
 	},
 	"double_ores":{
 		"name":"Double Ores",
 		"description":[
-			"Ores drop in pairs."
+			"Ores drop in pairs.",
+			"Ore drops are automatically smelted."
 		]
 	},
 	"team_inventory":{
@@ -118,7 +120,8 @@
 	"double_gold":{
 		"name":"Double Gold",
 		"description":[
-			"The original amount of gold will double when mined."
+			"The original amount of gold will double when mined.",
+			"Gold ore drops are automatically smelted into ingots."
 		]
 	},
 	"goldless":{
@@ -143,7 +146,8 @@
 		"name":"Vein Miner",
 		"description":[
 			"Mining a block while crouched breaks blocks of the same type in a chain reaction",
-			"Only works when using the correct tool for the block type"
+			"Only works when using the correct tool for the block type",
+			"Ore drops are automatically smelted."
 		]
 	},
 	"dragon_rush":{

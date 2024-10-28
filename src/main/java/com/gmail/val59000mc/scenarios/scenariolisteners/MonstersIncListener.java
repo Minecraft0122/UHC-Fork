@@ -13,6 +13,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -85,7 +86,8 @@ public class MonstersIncListener extends ScenarioListener {
 		return isDoor(loc.getBlock()) && LocationUtils.isWithinBorder(loc);
 	}
 
-	@EventHandler
+	// Low priority so that it overrides custom block drop scenarios
+	@EventHandler(priority = EventPriority.LOW)
 	public void onBlockBreak(BlockBreakEvent e) {
 		if (e.isCancelled()) {
 			return;

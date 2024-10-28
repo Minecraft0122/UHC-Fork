@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.util.Vector;
@@ -37,7 +38,8 @@ public class FastLeavesDecayListener extends ScenarioListener{
 	@Option(key = "time-decay")
 	private int timeDecay = 5;
 
-	@EventHandler
+	// Low priority to override custom block drop scenarios
+	@EventHandler(priority = EventPriority.LOW)
 	public void onBlockBreak(BlockBreakEvent e) {
 		if (e.isCancelled()) {
 			return;

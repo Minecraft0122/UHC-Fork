@@ -7,6 +7,7 @@ import com.gmail.val59000mc.utils.OreType;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
@@ -19,12 +20,14 @@ public class DoubleGoldListener extends ScenarioListener{
 			return;
 		}
 
-		if (isEnabled(Scenario.CUTCLEAN) || isEnabled(Scenario.TRIPLE_ORES) || isEnabled(Scenario.VEIN_MINER)){
+		final Player player = e.getPlayer();
+		final Block block = e.getBlock();
+
+		if (getScenarioManager().getActiveBlockDropScenario(player, block) != Scenario.DOUBLE_GOLD) {
 			return;
 		}
 
-		Block block = e.getBlock();
-		Location loc = e.getBlock().getLocation().add(0.5, 0, 0.5);
+		Location loc = block.getLocation().add(0.5, 0, 0.5);
 
 		if (OreType.isGold(block.getType())){
 			block.setType(Material.AIR);
