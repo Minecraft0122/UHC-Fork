@@ -375,6 +375,10 @@ public enum UniversalMaterial{
 			|| material == UniversalMaterial.CHERRY_LEAVES.getType();
 	}
 
+	public static boolean isAppleLeaves(Block block) {
+		return UniversalMaterial.OAK_LEAVES.matches(block) || UniversalMaterial.DARK_OAK_LEAVES.matches(block);
+	}
+
 	public static boolean isAxe(Material tool) {
 		return tool == UniversalMaterial.WOODEN_AXE.getType()
 			|| tool == Material.STONE_AXE
@@ -385,7 +389,7 @@ public enum UniversalMaterial{
 	}
 
 	@SuppressWarnings("deprecation")
-	public boolean equals(Block block){
+	public boolean matches(Block block){
 		return block.getType() == getType() && block.getData() == id8;
 	}
 

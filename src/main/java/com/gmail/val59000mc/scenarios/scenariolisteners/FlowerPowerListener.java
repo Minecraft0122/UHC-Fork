@@ -107,7 +107,7 @@ public class FlowerPowerListener extends ScenarioListener{
 
 	private boolean isFlower(Block block){
 		for (UniversalMaterial flower : FLOWERS){
-			if (flower.equals(block)) return true;
+			if (flower.matches(block)) return true;
 		}
 
 		if (PaperLib.getMinecraftVersion() >= 14){

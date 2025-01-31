@@ -167,7 +167,7 @@ public class MainConfig extends YamlFile {
 	public static final BasicOption<Integer> MAX_OCCURRENCES_UNDERGROUND_NETHER = new BasicOption<>("fast-mode.underground-nether.min-ocurrences",10);
 	public static final BasicOption<Boolean> ENABLE_GENERATE_SUGARCANE = new BasicOption<>("fast-mode.generate-sugar-cane.enable",false);
 	public static final BasicOption<Integer> GENERATE_SUGARCANE_PERCENTAGE = new BasicOption<>("fast-mode.generate-sugar-cane.percentage",10);
-	public static final BasicOption<Double> APPLE_DROP_PERCENTAGE = new BasicOption<>("fast-mode.apple-drops.percentage", 0.5);
+	public static final BasicOption<Double> APPLE_DROP_PERCENTAGE = new BasicOption<>("fast-mode.apple-drops.percentage", 0.0);
 	public static final BasicOption<Boolean> APPLE_DROPS_FROM_ALL_TREES = new BasicOption<>("fast-mode.apple-drops.all-trees", false);
 	public static final BasicOption<Boolean> APPLE_DROPS_FROM_SHEARING = new BasicOption<>("fast-mode.apple-drops.allow-shears", false);
 	public static final BasicOption<Boolean> REPLACE_OCEAN_BIOMES = new BasicOption<>("fast-mode.replace-ocean-biomes", false);
