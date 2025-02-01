@@ -336,8 +336,8 @@ public class CraftsManager {
 
 		headRecipe.shape("GGG", "GHG", "GGG");
 
-		Material material = UniversalMaterial.PLAYER_HEAD.getType();
-		MaterialData data = UniversalMaterial.PLAYER_HEAD.getStack().getData();
+		Material material = UniversalMaterial.PLAYER_HEAD_ITEM.getType();
+		MaterialData data = UniversalMaterial.PLAYER_HEAD_ITEM.getStack().getData();
 
 		headRecipe.setIngredient('G', Material.GOLD_INGOT);
 

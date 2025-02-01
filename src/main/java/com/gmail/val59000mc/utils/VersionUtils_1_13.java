@@ -58,7 +58,7 @@ public class VersionUtils_1_13 extends VersionUtils{
 
 	@Override
 	public ItemStack createPlayerSkull(String name, UUID uuid) {
-		ItemStack item = UniversalMaterial.PLAYER_HEAD.getStack();
+		ItemStack item = UniversalMaterial.PLAYER_HEAD_ITEM.getStack();
 		SkullMeta im = (SkullMeta) item.getItemMeta();
 		im.setOwningPlayer(Bukkit.getOfflinePlayer(uuid));
 		item.setItemMeta(im);

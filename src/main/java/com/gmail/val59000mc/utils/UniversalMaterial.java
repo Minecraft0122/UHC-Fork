@@ -10,23 +10,23 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
-public enum UniversalMaterial{
-	WHITE_WOOL("WOOL", "WHITE_WOOL", (short) 0),
-	ORANGE_WOOL("WOOL", "ORANGE_WOOL", (short) 1),
-	MAGENTA_WOOL("WOOL", "MAGENTA_WOOL", (short) 2),
-	LIGHT_BLUE_WOOL("WOOL", "LIGHT_BLUE_WOOL", (short) 3),
-	YELLOW_WOOL("WOOL", "YELLOW_WOOL", (short) 4),
-	LIME_WOOL("WOOL", "LIME_WOOL", (short) 5),
-	PINK_WOOL("WOOL", "PINK_WOOL", (short) 6),
-	GRAY_WOOL("WOOL", "GRAY_WOOL", (short) 7),
-	LIGHT_GRAY_WOOL("WOOL", "LIGHT_GRAY_WOOL", (short) 8),
-	CYAN_WOOL("WOOL", "CYAN_WOOL", (short) 9),
-	PURPLE_WOOL("WOOL", "PURPLE_WOOL", (short) 10),
-	BLUE_WOOL("WOOL", "BLUE_WOOL", (short) 11),
-	BROWN_WOOL("WOOL", "BROWN_WOOL", (short) 12),
-	GREEN_WOOL("WOOL", "GREEN_WOOL", (short) 13),
-	RED_WOOL("WOOL", "RED_WOOL", (short) 14),
-	BLACK_WOOL("WOOL", "BLACK_WOOL", (short) 15),
+public enum UniversalMaterial {
+	WHITE_WOOL("WOOL", 0, DataValueMask.EXCLUDE_NONE, "WHITE_WOOL"),
+	ORANGE_WOOL("WOOL", 1, DataValueMask.EXCLUDE_NONE, "ORANGE_WOOL"),
+	MAGENTA_WOOL("WOOL", 2, DataValueMask.EXCLUDE_NONE, "MAGENTA_WOOL"),
+	LIGHT_BLUE_WOOL("WOOL", 3, DataValueMask.EXCLUDE_NONE, "LIGHT_BLUE_WOOL"),
+	YELLOW_WOOL("WOOL", 4, DataValueMask.EXCLUDE_NONE, "YELLOW_WOOL"),
+	LIME_WOOL("WOOL", 5, DataValueMask.EXCLUDE_NONE, "LIME_WOOL"),
+	PINK_WOOL("WOOL", 6, DataValueMask.EXCLUDE_NONE, "PINK_WOOL"),
+	GRAY_WOOL("WOOL", 7, DataValueMask.EXCLUDE_NONE, "GRAY_WOOL"),
+	LIGHT_GRAY_WOOL("WOOL", 8, DataValueMask.EXCLUDE_NONE, "LIGHT_GRAY_WOOL"),
+	CYAN_WOOL("WOOL", 9, DataValueMask.EXCLUDE_NONE, "CYAN_WOOL"),
+	PURPLE_WOOL("WOOL", 10, DataValueMask.EXCLUDE_NONE, "PURPLE_WOOL"),
+	BLUE_WOOL("WOOL", 11, DataValueMask.EXCLUDE_NONE, "BLUE_WOOL"),
+	BROWN_WOOL("WOOL", 12, DataValueMask.EXCLUDE_NONE, "BROWN_WOOL"),
+	GREEN_WOOL("WOOL", 13, DataValueMask.EXCLUDE_NONE, "GREEN_WOOL"),
+	RED_WOOL("WOOL", 14, DataValueMask.EXCLUDE_NONE, "RED_WOOL"),
+	BLACK_WOOL("WOOL", 15, DataValueMask.EXCLUDE_NONE, "BLACK_WOOL"),
 
 	STATIONARY_WATER("STATIONARY_WATER", "WATER"),
 	STATIONARY_LAVA("STATIONARY_LAVA", "LAVA"),
@@ -34,26 +34,34 @@ public enum UniversalMaterial{
 	CAVE_AIR("CAVE_AIR", "CAVE_AIR"),
 	GRASS_BLOCK("GRASS", "GRASS_BLOCK"),
 
-	SKELETON_SKULL("SKULL_ITEM","SKELETON_SKULL", (short) 0),
-	WITHER_SKELETON_SKULL("SKULL_ITEM","WITHER_SKELETON_SKULL", (short) 1),
-	ZOMBIE_HEAD("SKULL_ITEM","ZOMBIE_HEAD", (short) 2),
-	PLAYER_HEAD("SKULL_ITEM","PLAYER_HEAD", (short) 3),
-	PLAYER_HEAD_BLOCK("SKULL","PLAYER_HEAD", (short) 3),
-	CREEPER_HEAD("SKULL_ITEM", "CREEPER_HEAD", (short) 4),
-	DRAGON_HEAD("SKULL_ITEM", "DRAGON_HEAD", (short) 5),
+	/**
+	 * The 1.8-1.12 skull block stores skull type as a data value in the tile entity rather than the block, so it is
+	 * currently not handled here. Either way, the skull type will be set to "player" once you set the skull owner.
+	 * But this means that this material cannot be used to check whether a block is a player head, for example.
+	 *
+	 * @deprecated Warning: you should only use this material to SET a player head, and only if you set the owner.
+	 */
+	@Deprecated
+	PLAYER_HEAD_BLOCK("SKULL", "PLAYER_HEAD"),
+	SKELETON_SKULL_ITEM("SKULL_ITEM", 0, DataValueMask.EXCLUDE_NONE, "SKELETON_SKULL"),
+	WITHER_SKELETON_SKULL_ITEM("SKULL_ITEM", 1, DataValueMask.EXCLUDE_NONE, "WITHER_SKELETON_SKULL"),
+	ZOMBIE_HEAD_ITEM("SKULL_ITEM", 2, DataValueMask.EXCLUDE_NONE, "ZOMBIE_HEAD"),
+	PLAYER_HEAD_ITEM("SKULL_ITEM", 3, DataValueMask.EXCLUDE_NONE, "PLAYER_HEAD"),
+	CREEPER_HEAD_ITEM("SKULL_ITEM", 4, DataValueMask.EXCLUDE_NONE, "CREEPER_HEAD"),
+	DRAGON_HEAD_ITEM("SKULL_ITEM", 5, DataValueMask.EXCLUDE_NONE, "DRAGON_HEAD"),
 
 	OAK_FENCE("FENCE", "OAK_FENCE"),
 
-	PUFFERFISH("RAW_FISH", "PUFFERFISH", (short) 3),
+	PUFFERFISH("RAW_FISH", 3, DataValueMask.EXCLUDE_NONE, "PUFFERFISH"),
 
-	WHITE_STAINED_GLASS_PANE("STAINED_GLASS_PANE", "WHITE_STAINED_GLASS_PANE", (short) 0),
-	BLACK_STAINED_GLASS_PANE("STAINED_GLASS_PANE", "BLACK_STAINED_GLASS_PANE", (short) 15),
+	WHITE_STAINED_GLASS_PANE("STAINED_GLASS_PANE", 0, DataValueMask.EXCLUDE_NONE, "WHITE_STAINED_GLASS_PANE"),
+	BLACK_STAINED_GLASS_PANE("STAINED_GLASS_PANE", 15, DataValueMask.EXCLUDE_NONE, "BLACK_STAINED_GLASS_PANE"),
 
 	IRON_INGOT,
 	LAVA_BUCKET,
 	BOW,
 	FISHING_ROD,
-	SHIELD("SHIELD", "SHIELD"),
+	SHIELD,
 	DIAMOND,
 	DIAMOND_ORE,
 	EMERALD,
@@ -86,8 +94,8 @@ public enum UniversalMaterial{
 	DEEPSLATE_DIAMOND_ORE,
 	GLOWING_REDSTONE_ORE("GLOWING_REDSTONE_ORE", "REDSTONE_ORE"),
 	NETHER_QUARTZ_ORE("QUARTZ_ORE", "NETHER_QUARTZ_ORE"),
-	LAPIS_LAZULI("INK_SACK", "LAPIS_LAZULI", (short) 4),
-	RED_DYE("INK_SACK", "RED_DYE", (short) 1),
+	LAPIS_LAZULI("INK_SACK", 4, DataValueMask.EXCLUDE_NONE, "LAPIS_LAZULI"),
+	RED_DYE("INK_SACK", 1, DataValueMask.EXCLUDE_NONE, "RED_DYE"),
 	DRAGON_EGG,
 	END_PORTAL_FRAME("ENDER_PORTAL_FRAME", "END_PORTAL_FRAME"),
 	END_PORTAL("ENDER_PORTAL", "END_PORTAL"),
@@ -96,7 +104,7 @@ public enum UniversalMaterial{
 	NETHER_STAR,
 	NAME_TAG,
 	ENCHANTING_TABLE("ENCHANTMENT_TABLE", "ENCHANTING_TABLE"),
-	WOLF_SPAWN_EGG("MONSTER_EGG", "WOLF_SPAWN_EGG", (short) 95),
+	WOLF_SPAWN_EGG("MONSTER_EGG", 95, DataValueMask.EXCLUDE_NONE, "WOLF_SPAWN_EGG"),
 	CLOCK("WATCH", "CLOCK"),
 	EGG,
 	ENCHANTED_BOOK,
@@ -105,12 +113,21 @@ public enum UniversalMaterial{
 	AIR,
 	COMPASS,
 	NETHER_BRICK,
-	RED_BANNER("BANNER", "RED_BANNER", (short) 1),
+	/**
+	 * Note: On 1.8-1.12, even though there is a corresponding block with the same name, its data value is used for
+	 * orientation rather than color, and the color is instead stored in the tile entity.
+	 * Also note that on 1.8-1.12, the color may be stored in the tile entity NBT instead of the data value,
+	 * so this material cannot reliably be used to tell if an item is a red banner.
+	 *
+	 * @deprecated Warning: Cannot reliably be used to tell if an item is a red banner.
+	 */
+	@Deprecated
+	RED_BANNER_ITEM("BANNER", 1, DataValueMask.EXCLUDE_NONE, "RED_BANNER"),
 	ELYTRA,
 	CRAFTING_TABLE("WORKBENCH", "CRAFTING_TABLE"),
 	EXPERIENCE_BOTTLE("EXP_BOTTLE", "EXPERIENCE_BOTTLE"),
 	IRON_DOOR,
-	LIGHT_GRAY_STAINED_GLASS_PANE("STAINED_GLASS_PANE", "LIGHT_GRAY_STAINED_GLASS_PANE", (short) 8),
+	LIGHT_GRAY_STAINED_GLASS_PANE("STAINED_GLASS_PANE", 8, DataValueMask.EXCLUDE_NONE, "LIGHT_GRAY_STAINED_GLASS_PANE"),
 	ANVIL,
 	MAGMA_BLOCK("MAGMA", "MAGMA_BLOCK"),
 	CAMPFIRE,
@@ -121,21 +138,38 @@ public enum UniversalMaterial{
 	POWDER_SNOW,
 
 	// Flowers
-	POPPY("RED_ROSE", "POPPY", (short) 0),
-	BLUE_ORCHID("RED_ROSE", "BLUE_ORCHID", (short) 1),
-	ALLIUM("RED_ROSE", "ALLIUM", (short) 2),
-	AZURE_BLUET("RED_ROSE", "AZURE_BLUET", (short) 3),
-	RED_TULIP("RED_ROSE", "RED_TULIP", (short) 4),
-	ORANGE_TULIP("RED_ROSE", "ORANGE_TULIP", (short) 5),
-	WHITE_TULIP("RED_ROSE", "WHITE_TULIP", (short) 6),
-	PINK_TULIP("RED_ROSE", "PINK_TULIP", (short) 7),
-	OXEYE_DAISY("RED_ROSE", "OXEYE_DAISY", (short) 8),
+	POPPY("RED_ROSE", 0, DataValueMask.EXCLUDE_NONE, "POPPY"),
+	BLUE_ORCHID("RED_ROSE", 1, DataValueMask.EXCLUDE_NONE, "BLUE_ORCHID"),
+	ALLIUM("RED_ROSE", 2, DataValueMask.EXCLUDE_NONE, "ALLIUM"),
+	AZURE_BLUET("RED_ROSE", 3, DataValueMask.EXCLUDE_NONE, "AZURE_BLUET"),
+	RED_TULIP("RED_ROSE", 4, DataValueMask.EXCLUDE_NONE, "RED_TULIP"),
+	ORANGE_TULIP("RED_ROSE", 5, DataValueMask.EXCLUDE_NONE, "ORANGE_TULIP"),
+	WHITE_TULIP("RED_ROSE", 6, DataValueMask.EXCLUDE_NONE, "WHITE_TULIP"),
+	PINK_TULIP("RED_ROSE", 7, DataValueMask.EXCLUDE_NONE, "PINK_TULIP"),
+	OXEYE_DAISY("RED_ROSE", 8, DataValueMask.EXCLUDE_NONE, "OXEYE_DAISY"),
 	DANDELION("YELLOW_FLOWER", "DANDELION"),
 
-	SUNFLOWER("DOUBLE_PLANT", "SUNFLOWER", (short) 0),
-	LILAC("DOUBLE_PLANT", "LILAC", (short) 1),
-	ROSE_BUSH("DOUBLE_PLANT", "ROSE_BUSH", (short) 4),
-	PEONY("DOUBLE_PLANT", "PEONY", (short) 5),
+	/**
+	 * @deprecated Warning: On 1.8-1.12, this is only valid for the item and bottom block. The top double_plant block does not store flower type at all.
+	 */
+	@Deprecated
+	SUNFLOWER("DOUBLE_PLANT", 0, DataValueMask.EXCLUDE_NONE, "SUNFLOWER"),
+	/**
+	 * @deprecated Warning: On 1.8-1.12, this is only valid for the item and bottom block. The top double_plant block does not store flower type at all.
+	 */
+	@Deprecated
+	LILAC("DOUBLE_PLANT", 1, DataValueMask.EXCLUDE_NONE, "LILAC"),
+	/**
+	 * @deprecated Warning: On 1.8-1.12, this is only valid for the item and bottom block. The top double_plant block does not store flower type at all.
+	 */
+	@Deprecated
+	ROSE_BUSH("DOUBLE_PLANT", 4, DataValueMask.EXCLUDE_NONE, "ROSE_BUSH"),
+	/**
+	 * @deprecated Warning: On 1.8-1.12, this is only valid for the item and bottom block. The top double_plant block does not store flower type at all.
+	 */
+	@Deprecated
+	PEONY("DOUBLE_PLANT", 5, DataValueMask.EXCLUDE_NONE, "PEONY"),
+
 	DEAD_BUSH,
 
 	SHEARS,
@@ -178,23 +212,23 @@ public enum UniversalMaterial{
 	TRIDENT,
 	MACE,
 
-	OAK_LEAVES("LEAVES", "OAK_LEAVES", (short) 0),
-	SPRUCE_LEAVES("LEAVES", "SPRUCE_LEAVES", (short) 1),
-	BIRCH_LEAVES("LEAVES", "BIRCH_LEAVES", (short) 2),
-	JUNGLE_LEAVES("LEAVES", "JUNGLE_LEAVES", (short) 3),
-	ACACIA_LEAVES("LEAVES_2", "ACACIA_LEAVES", (short) 0),
-	DARK_OAK_LEAVES("LEAVES_2", "DARK_OAK_LEAVES", (short) 1),
+	OAK_LEAVES("LEAVES", 0, DataValueMask.EXCLUDE_LEAVES_DECAY_BITS, "OAK_LEAVES"),
+	SPRUCE_LEAVES("LEAVES", 1, DataValueMask.EXCLUDE_LEAVES_DECAY_BITS, "SPRUCE_LEAVES"),
+	BIRCH_LEAVES("LEAVES", 2, DataValueMask.EXCLUDE_LEAVES_DECAY_BITS, "BIRCH_LEAVES"),
+	JUNGLE_LEAVES("LEAVES", 3, DataValueMask.EXCLUDE_LEAVES_DECAY_BITS, "JUNGLE_LEAVES"),
+	ACACIA_LEAVES("LEAVES_2", 0, DataValueMask.EXCLUDE_LEAVES_DECAY_BITS, "ACACIA_LEAVES"),
+	DARK_OAK_LEAVES("LEAVES_2", 1, DataValueMask.EXCLUDE_LEAVES_DECAY_BITS, "DARK_OAK_LEAVES"),
 	MANGROVE_LEAVES,
 	AZALEA_LEAVES,
 	FLOWERING_AZALEA_LEAVES,
 	CHERRY_LEAVES,
 
-	OAK_LOG("LOG", "OAK_LOG", (short) 0),
-	SPRUCE_LOG("LOG", "SPRUCE_LOG", (short) 1),
-	BIRCH_LOG("LOG", "BIRCH_LOG", (short) 2),
-	JUNGLE_LOG("LOG", "JUNGLE_LOG", (short) 3),
-	ACACIA_LOG("LOG_2", "ACACIA_LOG", (short) 0),
-	DARK_OAK_LOG("LOG_2", "DARK_OAK_LOG", (short) 1),
+	OAK_LOG("LOG", 0, DataValueMask.EXCLUDE_LOG_ORIENTATION_BITS, "OAK_LOG"),
+	SPRUCE_LOG("LOG", 1, DataValueMask.EXCLUDE_LOG_ORIENTATION_BITS, "SPRUCE_LOG"),
+	BIRCH_LOG("LOG", 2, DataValueMask.EXCLUDE_LOG_ORIENTATION_BITS, "BIRCH_LOG"),
+	JUNGLE_LOG("LOG", 3, DataValueMask.EXCLUDE_LOG_ORIENTATION_BITS, "JUNGLE_LOG"),
+	ACACIA_LOG("LOG_2", 0, DataValueMask.EXCLUDE_LOG_ORIENTATION_BITS, "ACACIA_LOG"),
+	DARK_OAK_LOG("LOG_2", 1, DataValueMask.EXCLUDE_LOG_ORIENTATION_BITS, "DARK_OAK_LOG"),
 	MANGROVE_LOG,
 	CHERRY_LOG,
 	STRIPPED_OAK_LOG,
@@ -218,36 +252,55 @@ public enum UniversalMaterial{
 	RAW_RABBIT("RABBIT", "RABBIT"),
 	RAW_PORK("PORK", "PORKCHOP"),
 
-	OAK_PLANKS("WOOD", "OAK_PLANKS", (short) 0),
-	SPRUCE_PLANKS("WOOD", "SPRUCE_PLANKS", (short) 1),
-	BIRCH_PLANKS("WOOD", "BIRCH_PLANKS", (short) 2),
-	JUNGLE_PLANKS("WOOD", "JUNGLE_PLANKS", (short) 3),
-	ACACIA_PLANKS("WOOD", "ACACIA_PLANKS", (short) 4),
-	DARK_OAK_PLANKS("WOOD", "DARK_OAK_PLANKS", (short) 5);
+	OAK_PLANKS("WOOD", 0, DataValueMask.EXCLUDE_NONE, "OAK_PLANKS"),
+	SPRUCE_PLANKS("WOOD", 1, DataValueMask.EXCLUDE_NONE, "SPRUCE_PLANKS"),
+	BIRCH_PLANKS("WOOD", 2, DataValueMask.EXCLUDE_NONE, "BIRCH_PLANKS"),
+	JUNGLE_PLANKS("WOOD", 3, DataValueMask.EXCLUDE_NONE, "JUNGLE_PLANKS"),
+	ACACIA_PLANKS("WOOD", 4, DataValueMask.EXCLUDE_NONE, "ACACIA_PLANKS"),
+	DARK_OAK_PLANKS("WOOD", 5, DataValueMask.EXCLUDE_NONE, "DARK_OAK_PLANKS");
 
-	private final String name8, name13;
-	private final short id8;
+	private final String name8;
+	private final Integer dataValue8;
+	private final Integer dataValueMask8;
+	private final String name13;
 
 	private Material material;
 
-	UniversalMaterial(String name8, String name13, short id8){
+	UniversalMaterial(String name8, Integer dataValue8, Integer dataValueMask8, String name13) {
 		this.name8 = name8;
+		this.dataValue8 = dataValue8;
+		this.dataValueMask8 = dataValueMask8;
 		this.name13 = name13;
-		this.id8 = id8;
 	}
 
-	UniversalMaterial(String name8, String name13){
+	UniversalMaterial(String name8, String name13) {
 		this.name8 = name8;
+		this.dataValue8 = null;
+		this.dataValueMask8 = null;
 		this.name13 = name13;
-		id8 = 0;
 	}
 
-	UniversalMaterial(){
+	UniversalMaterial() {
 		this.name8 = name();
+		this.dataValue8 = null;
+		this.dataValueMask8 = null;
 		this.name13 = name();
-		id8 = 0;
 	}
 
+	/**
+	 * Used to mask out the important bits in the data value (usually all bits) and as such exclude bits we don't care about.
+	 */
+	private static final class DataValueMask {
+		// This is usually the correct choice, but sometimes we have to add an exclusion mask.
+		private static final int EXCLUDE_NONE = ~0;
+		private static final int EXCLUDE_LEAVES_DECAY_BITS = ~0b1100;
+		private static final int EXCLUDE_LOG_ORIENTATION_BITS = ~0b1100;
+	}
+
+	/**
+	 * @deprecated Warning: Material alone is not enough to uniquely identify a block/item on all game versions.
+	 */
+	@Deprecated
 	public Material getType() {
 		if (material == null) {
 			try {
@@ -261,22 +314,22 @@ public enum UniversalMaterial{
 		return material;
 	}
 
-	public short getData(){
-		return PaperLib.getMinecraftVersion() < 13 ? id8 : 0;
-	}
-
-	@SuppressWarnings("deprecation")
 	public ItemStack getStack(int amount) {
-		return new ItemStack(getType(), amount, getData());
+		return new ItemStack(getType(), amount, dataValue8 == null ? 0 : dataValue8.shortValue());
 	}
 
-	public ItemStack getStack(){
+	public ItemStack getStack() {
 		return getStack(1);
 	}
 
-	public static UniversalMaterial ofType(Material material){
-		for (UniversalMaterial universalMaterial : values()){
-			if (universalMaterial.getType() == material){
+	/**
+	 * @deprecated Warning: Material alone is not enough to uniquely identify a block/item on all game versions.
+	 */
+	@Deprecated
+	public static UniversalMaterial ofType(Material material) {
+		for (final UniversalMaterial universalMaterial : values()) {
+			// TODO: Update this check, use #matches(ItemStack)?
+			if (universalMaterial.getType() == material) {
 				return universalMaterial;
 			}
 		}
@@ -344,6 +397,7 @@ public enum UniversalMaterial{
 	}
 
 	public static boolean isLog(Material material) {
+		// Should probably use .matches on a Block, but actually this is fine for now
 		return material == UniversalMaterial.OAK_LOG.getType()
 			|| material == UniversalMaterial.SPRUCE_LOG.getType()
 			|| material == UniversalMaterial.BIRCH_LOG.getType()
@@ -363,6 +417,7 @@ public enum UniversalMaterial{
 	}
 
 	public static boolean isLeaves(Material material) {
+		// Should probably use .matches on a Block, but actually this is fine for now
 		return material == UniversalMaterial.OAK_LEAVES.getType()
 			|| material == UniversalMaterial.SPRUCE_LEAVES.getType()
 			|| material == UniversalMaterial.BIRCH_LEAVES.getType()
@@ -380,6 +435,7 @@ public enum UniversalMaterial{
 	}
 
 	public static boolean isAxe(Material tool) {
+		// Should probably use .matches on an ItemStack, but actually this is fine for now
 		return tool == UniversalMaterial.WOODEN_AXE.getType()
 			|| tool == Material.STONE_AXE
 			|| tool == Material.IRON_AXE
@@ -388,9 +444,20 @@ public enum UniversalMaterial{
 			|| tool == UniversalMaterial.NETHERITE_AXE.getType();
 	}
 
-	@SuppressWarnings("deprecation")
-	public boolean matches(Block block){
-		return block.getType() == getType() && block.getData() == id8;
+	public boolean matches(Block block) {
+		if (PaperLib.isVersion(13)) {
+			return block.getType() == getType();
+		} else {
+			return block.getType() == getType() && (block.getData() & dataValueMask8) == dataValue8;
+		}
+	}
+
+	public boolean matches(ItemStack itemStack) {
+		if (PaperLib.isVersion(13)) {
+			return itemStack.getType() == getType();
+		} else {
+			return itemStack.getType() == getType() && (itemStack.getDurability() & dataValueMask8) == dataValue8;
+		}
 	}
 
 }

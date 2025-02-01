@@ -14,7 +14,7 @@ import java.util.Collections;
 
 public enum GameItem{
 	// Lobby Items
-	TEAM_LIST(UniversalMaterial.PLAYER_HEAD),
+	TEAM_LIST(UniversalMaterial.PLAYER_HEAD_ITEM),
 	TEAM_SELECTION(UniversalMaterial.IRON_SWORD),
 	KIT_SELECTION(UniversalMaterial.IRON_PICKAXE),
 	SCENARIO_VIEWER(UniversalMaterial.PAPER),

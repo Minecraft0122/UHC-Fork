@@ -140,7 +140,7 @@ public class ItemsListener implements Listener {
 		}
 
 		if (event.getView().getTitle().equals(Lang.TEAM_INVENTORY_INVITE_PLAYER)){
-			if (item.getType() != UniversalMaterial.PLAYER_HEAD.getType() || !item.hasItemMeta()){
+			if (item.getType() != UniversalMaterial.PLAYER_HEAD_ITEM.getType() || !item.hasItemMeta()){
 				return;
 			}
 
@@ -152,7 +152,7 @@ public class ItemsListener implements Listener {
 		}
 
 		if (event.getView().getTitle().equals(Lang.TEAM_INVENTORY_TEAM_VIEW)){
-			if (item.getType() == UniversalMaterial.PLAYER_HEAD.getType() && item.hasItemMeta()){
+			if (item.getType() == UniversalMaterial.PLAYER_HEAD_ITEM.getType() && item.hasItemMeta()){
 				event.setCancelled(true);
 			}
 		}

@@ -7,7 +7,6 @@ import com.google.common.collect.MultimapBuilder;
 
 import io.papermc.lib.PaperLib;
 
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -55,7 +54,7 @@ public class Scenario {
 	public static final Scenario WEAKEST_LINK = new Scenario("weakest_link", UniversalMaterial.DIAMOND_SWORD, WeakestLinkListener.class);
 	public static final Scenario EGGS = new Scenario("eggs", UniversalMaterial.EGG, EggsScenarioListener.class);
 	public static final Scenario NO_GOING_BACK = new Scenario("no_going_back", UniversalMaterial.NETHER_BRICK);
-	public static final Scenario DOUBLE_DATES = new Scenario("double_dates", UniversalMaterial.RED_BANNER, DoubleDatesListener.class);
+	public static final Scenario DOUBLE_DATES = new Scenario("double_dates", UniversalMaterial.RED_BANNER_ITEM, DoubleDatesListener.class);
 	public static final Scenario FLY_HIGH = new Scenario("fly_high", UniversalMaterial.ELYTRA, FlyHighListener.class, 9);
 	public static final Scenario RANDOMIZED_DROPS = new Scenario("randomized_drops", UniversalMaterial.EXPERIENCE_BOTTLE, RandomizedDropsListener.class);
 	public static final Scenario UPSIDE_DOWN_CRAFTING = new Scenario("upside_down_crafting", UniversalMaterial.CRAFTING_TABLE, UpsideDownCraftsListener.class, 13);
@@ -116,33 +115,21 @@ public class Scenario {
 	};
 
 	private final String key;
-	private final Material material;
+	private final UniversalMaterial material;
 	private final Class<? extends ScenarioListener> listener;
 	private final int fromVersion;
 
 	private Info info;
 
-	public Scenario(String key, UniversalMaterial material){
-		this(key, material.getType());
-	}
-
-	public Scenario(String key, Material material){
+	public Scenario(String key, UniversalMaterial material) {
 		this(key, material, null);
 	}
 
-	public Scenario(String key, UniversalMaterial material, Class<? extends ScenarioListener> listener){
-		this(key, material.getType(), listener);
-	}
-
-	public Scenario(String key, Material material, Class<? extends ScenarioListener> listener){
+	public Scenario(String key, UniversalMaterial material, Class<? extends ScenarioListener> listener) {
 		this(key, material, listener, 8);
 	}
 
-	public Scenario(String key, UniversalMaterial material, Class<? extends ScenarioListener> listener, int fromVersion){
-		this(key, material.getType(), listener, fromVersion);
-	}
-
-	public Scenario(String key, Material material, Class<? extends ScenarioListener> listener, int fromVersion){
+	public Scenario(String key, UniversalMaterial material, Class<? extends ScenarioListener> listener, int fromVersion) {
 		this.key = key;
 		this.material = material;
 		this.listener = listener;
@@ -161,17 +148,13 @@ public class Scenario {
 		this.info = info;
 	}
 
-	public Material getMaterial() {
-		return material;
-	}
-
 	@Nullable
 	public Class<? extends ScenarioListener> getListener() {
 		return listener;
 	}
 
 	public ItemStack getScenarioItem() {
-		ItemStack item = new ItemStack(material);
+		ItemStack item = material.getStack();
 		ItemMeta meta = item.getItemMeta();
 
 		meta.setDisplayName(Lang.SCENARIO_GLOBAL_ITEM_COLOR + getInfo().getName());

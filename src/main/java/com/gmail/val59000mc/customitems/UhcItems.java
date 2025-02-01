@@ -184,7 +184,7 @@ public class UhcItems{
 	}
 
 	public static boolean isTeamSkullItem(ItemStack item){
-		return item.getType() == UniversalMaterial.PLAYER_HEAD.getType()
+		return item.getType() == UniversalMaterial.PLAYER_HEAD_ITEM.getType()
 				&& item.hasItemMeta()
 				&& item.getItemMeta().hasLore()
 				&& item.getItemMeta().getLore().contains(Lang.TEAM_INVENTORY_MEMBERS);
@@ -298,7 +298,7 @@ public class UhcItems{
 	public static boolean isRegenHeadItem(ItemStack item) {
 		return (
 				item != null
-				&& item.getType() == UniversalMaterial.PLAYER_HEAD.getType()
+				&& item.getType() == UniversalMaterial.PLAYER_HEAD_ITEM.getType()
 				&& item.hasItemMeta()
 				&& item.getItemMeta().hasLore()
 				&& item.getItemMeta().getLore().contains(Lang.ITEMS_REGEN_HEAD)
