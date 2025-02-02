@@ -12,10 +12,10 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -34,42 +34,41 @@ public class HasteyBoysListener extends ScenarioListener{
 	private boolean allow_disenchanting = false;
 
 	@EventHandler
-	public void onPlayerCraft(CraftItemEvent e){
-		if (e.isCancelled()) {
+	public void onPlayerCraft(PrepareItemCraftEvent e) {
+		ItemStack craftResult = e.getInventory().getResult();
+		if (craftResult == null) {
 			return;
 		}
 
-		ItemStack item = e.getCurrentItem();
-
 		// Don't apply hastey boy effects to custom crafted items.
-		if (CraftsManager.isCraftItem(item)){
+		if (CraftsManager.isCraftItem(craftResult)){
 			return;
 		}
 
 		if (stone_tools){
-			if (item.getType() == UniversalMaterial.WOODEN_SWORD.getType()){
-				item.setType(Material.STONE_SWORD);
-			}else if (item.getType() == UniversalMaterial.WOODEN_PICKAXE.getType()){
-				item.setType(Material.STONE_PICKAXE);
-			}else if (item.getType() == UniversalMaterial.WOODEN_SHOVEL.getType()){
-				item.setType(UniversalMaterial.STONE_SHOVEL.getType());
-			}else if (item.getType() == UniversalMaterial.WOODEN_AXE.getType()){
-				item.setType(Material.STONE_AXE);
-			}else if (item.getType() == UniversalMaterial.WOODEN_HOE.getType()){
-				item.setType(Material.STONE_HOE);
+			if (craftResult.getType() == UniversalMaterial.WOODEN_SWORD.getType()){
+				craftResult.setType(Material.STONE_SWORD);
+			}else if (craftResult.getType() == UniversalMaterial.WOODEN_PICKAXE.getType()){
+				craftResult.setType(Material.STONE_PICKAXE);
+			}else if (craftResult.getType() == UniversalMaterial.WOODEN_SHOVEL.getType()){
+				craftResult.setType(UniversalMaterial.STONE_SHOVEL.getType());
+			}else if (craftResult.getType() == UniversalMaterial.WOODEN_AXE.getType()){
+				craftResult.setType(Material.STONE_AXE);
+			}else if (craftResult.getType() == UniversalMaterial.WOODEN_HOE.getType()){
+				craftResult.setType(Material.STONE_HOE);
 			}
 		}
 
 		// Try to enchant the item, give up if it's not an enchantable tool
 		try {
-			item.addEnchantment(Enchantment.DIG_SPEED, efficiency);
-			item.addEnchantment(Enchantment.DURABILITY, durability);
+			craftResult.addEnchantment(Enchantment.DIG_SPEED, efficiency);
+			craftResult.addEnchantment(Enchantment.DURABILITY, durability);
 
 			// Check if config option is on AND if the MC version is at least 1.14 (Grindstone were only introduced in 1.14)
 			if (!allow_disenchanting && PaperLib.getMinecraftVersion() >= 14) {
-				ItemMeta meta = item.getItemMeta();
+				ItemMeta meta = craftResult.getItemMeta();
 				meta.getPersistentDataContainer().set(new NamespacedKey(UhcCore.getPlugin(), "isHasteyBoysTool"), PersistentDataType.STRING, "true");
-				item.setItemMeta(meta);
+				craftResult.setItemMeta(meta);
 			}
 		} catch (IllegalArgumentException ignored) {}
 
