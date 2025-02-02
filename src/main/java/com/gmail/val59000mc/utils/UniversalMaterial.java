@@ -322,20 +322,6 @@ public enum UniversalMaterial {
 		return getStack(1);
 	}
 
-	/**
-	 * @deprecated Warning: Material alone is not enough to uniquely identify a block/item on all game versions.
-	 */
-	@Deprecated
-	public static UniversalMaterial ofType(Material material) {
-		for (final UniversalMaterial universalMaterial : values()) {
-			// TODO: Update this check, use #matches(ItemStack)?
-			if (universalMaterial.getType() == material) {
-				return universalMaterial;
-			}
-		}
-		return null;
-	}
-
 	private static <T> void putIfSupported(Map<Material, T> map, T value, UniversalMaterial... materials) {
 		for (UniversalMaterial material : materials) {
 			Material key = material.getType();

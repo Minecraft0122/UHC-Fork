@@ -1,15 +1,12 @@
 package com.gmail.val59000mc.scenarios.scenariolisteners;
 
-import com.gmail.val59000mc.customitems.UhcItems;
-import com.gmail.val59000mc.scenarios.Option;
-import com.gmail.val59000mc.scenarios.Scenario;
-import com.gmail.val59000mc.scenarios.ScenarioListener;
-import com.gmail.val59000mc.utils.OreType;
-import com.gmail.val59000mc.utils.UniversalMaterial;
+import java.util.Iterator;
+import java.util.Optional;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -18,10 +15,17 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.EnchantingInventory;
+import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 
-import java.util.Optional;
+import com.gmail.val59000mc.customitems.UhcItems;
+import com.gmail.val59000mc.scenarios.Option;
+import com.gmail.val59000mc.scenarios.Scenario;
+import com.gmail.val59000mc.scenarios.ScenarioListener;
+import com.gmail.val59000mc.utils.OreType;
+import com.gmail.val59000mc.utils.UniversalMaterial;
 
 public class CutCleanListener extends ScenarioListener{
 
@@ -38,38 +42,33 @@ public class CutCleanListener extends ScenarioListener{
 
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent e) {
-		for(int i=0 ; i<e.getDrops().size() ; i++){
-			UniversalMaterial replaceBy = null;
-			UniversalMaterial type = UniversalMaterial.ofType(e.getDrops().get(i).getType());
-			if (type != null) {
-				switch (type) {
-					case RAW_BEEF:
-						replaceBy = UniversalMaterial.COOKED_BEEF;
-						break;
-					case RAW_CHICKEN:
-						replaceBy = UniversalMaterial.COOKED_CHICKEN;
-						break;
-					case RAW_MUTTON:
-						replaceBy = UniversalMaterial.COOKED_MUTTON;
-						break;
-					case RAW_RABBIT:
-						replaceBy = UniversalMaterial.COOKED_RABBIT;
-						break;
-					case RAW_PORK:
-						replaceBy = UniversalMaterial.COOKED_PORKCHOP;
-						break;
-					default:
-						break;
+		// Hmm, this means that Donkey/Mule chest drops will smelt too...
+		// Then again, not the biggest issue, we can just say it's "intended".
+		for(int i = 0 ; i < e.getDrops().size(); i++) {
+			// Cloned because we may end up having to mutate it, see below
+			final ItemStack drop = e.getDrops().get(i).clone();
+			// Note: On modern Minecraft versions, we could probably use Server#craftItem,
+			// but it doesn't exist on older game versions such as 1.8.8.
+			for (Iterator<Recipe> recipes = Bukkit.recipeIterator(); recipes.hasNext();) {
+				final Recipe recipe = recipes.next();
+				if (recipe instanceof FurnaceRecipe) {
+					// Note: getInputChoice would be more future-proof, but it doesn't exist on
+					// older Minecraft versions such as 1.8.8. Should be fine to ignore it for now.
+					final ItemStack smeltInput = ((FurnaceRecipe) recipe).getInput();
+					// Note	: On older game versions such as 1.8.8, the recipe input ItemStack
+					// may have a damage value of 32767, i.e. Short.MAX_VALUE (for a special reason),
+					// so ItemStack#isSimilar will always return false.
+					// For reference, see: https://www.spigotmc.org/threads/malformed-itemstack.60990/#post-677215
+					if (smeltInput.getDurability() == Short.MAX_VALUE) {
+						drop.setDurability(Short.MAX_VALUE);
+					}
+					if (smeltInput.isSimilar(drop)) {
+						final ItemStack smeltResult = recipe.getResult();
+						smeltResult.setAmount(drop.getAmount());
+						e.getDrops().set(i, smeltResult);
+					}
 				}
 			}
-			if(replaceBy != null){
-				ItemStack cookedFood = e.getDrops().get(i).clone();
-				cookedFood.setType(replaceBy.getType());
-				e.getDrops().set(i, cookedFood);
-			}
-		}
-		if (e.getEntityType() == EntityType.COW) {
-			e.getDrops().add(new ItemStack(Material.LEATHER));
 		}
 	}
 
