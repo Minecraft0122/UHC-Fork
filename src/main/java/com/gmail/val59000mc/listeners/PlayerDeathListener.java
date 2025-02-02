@@ -23,7 +23,7 @@ public class PlayerDeathListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerDeath(PlayerDeathEvent event) {
-		playerDeathHandler.handlePlayerDeath(event);
+		playerDeathHandler.handleOnlinePlayerDeath(event);
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)

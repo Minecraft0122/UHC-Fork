@@ -11,6 +11,7 @@ import com.gmail.val59000mc.utils.LocationUtils;
 import com.gmail.val59000mc.utils.SpigotUtils;
 import com.gmail.val59000mc.utils.TimeUtils;
 import com.gmail.val59000mc.utils.UniversalMaterial;
+import com.gmail.val59000mc.utils.snapshot.Snapshot;
 
 import io.papermc.lib.PaperLib;
 import org.apache.commons.lang.Validate;
@@ -39,7 +40,10 @@ public class UhcPlayer {
 	private final Map<String,Integer> craftedItems;
 	private final Set<UhcTeam> teamInvites;
 	private final Set<Scenario> scenarioVotes;
-	private final List<ItemStack> storedItems;
+	// Note: Using Snapshot here to avoid storing live ItemStack objects,
+	// which may become invalid depending on the server version/implementation.
+	// Relevant issue: https://github.com/PaperMC/Paper/issues/11520
+	private final List<Snapshot<ItemStack>> storedItems;
 
 	private String nickName;
 	private Scoreboard scoreboard;
@@ -198,7 +202,7 @@ public class UhcPlayer {
 		return teamInvites;
 	}
 
-	public synchronized List<ItemStack> getStoredItems(){
+	public synchronized List<Snapshot<ItemStack>> getStoredItems() {
 		return storedItems;
 	}
 

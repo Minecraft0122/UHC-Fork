@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
@@ -33,6 +34,8 @@ import com.gmail.val59000mc.tasks.TimeBeforeSendBungeeTask;
 import com.gmail.val59000mc.utils.UniversalMaterial;
 import com.gmail.val59000mc.utils.UniversalSound;
 import com.gmail.val59000mc.utils.UniversalSound.SoundParseException;
+import com.gmail.val59000mc.utils.snapshot.ItemStackSnapshot;
+import com.gmail.val59000mc.utils.snapshot.Snapshot;
 import com.gmail.val59000mc.utils.VersionUtils;
 
 public class PlayerDeathHandler {
@@ -53,7 +56,7 @@ public class PlayerDeathHandler {
 		this.customEventHandler = customEventHandler;
 	}
 
-	public void handlePlayerDeath(PlayerDeathEvent event) {
+	public void handleOnlinePlayerDeath(PlayerDeathEvent event) {
 		Player player = event.getEntity();
 		UhcPlayer uhcPlayer = playerManager.getUhcPlayer(player);
 
@@ -79,7 +82,7 @@ public class PlayerDeathHandler {
 	}
 
 	public void handleOfflinePlayerDeath(UhcPlayer uhcPlayer, @Nullable Location location, @Nullable Player killer) {
-		List<ItemStack> modifiedDrops = handlePlayerDeath(uhcPlayer, location, new ArrayList<>(uhcPlayer.getStoredItems()), killer);
+		List<ItemStack> modifiedDrops = handlePlayerDeath(uhcPlayer, location, uhcPlayer.getStoredItems().stream().map(Snapshot::makeCopy).collect(Collectors.toList()), killer);
 
 		// Drop player items
 		if (location != null) {
@@ -120,7 +123,7 @@ public class PlayerDeathHandler {
 
 		// Store drops in case player gets re-spawned.
 		uhcPlayer.getStoredItems().clear();
-		uhcPlayer.getStoredItems().addAll(playerDrops);
+		uhcPlayer.getStoredItems().addAll(playerDrops.stream().map(ItemStackSnapshot::of).collect(Collectors.toList()));
 
 		if(config.get(MainConfig.REGEN_HEAD_DROP_ON_PLAYER_DEATH)){
 			playerDrops.add(UhcItems.createRegenHead(uhcPlayer));

@@ -20,6 +20,7 @@ import com.gmail.val59000mc.tasks.CheckRemainingPlayerTask;
 import com.gmail.val59000mc.tasks.TeleportPlayersTask;
 import com.gmail.val59000mc.tasks.TimeBeforeSendBungeeTask;
 import com.gmail.val59000mc.utils.*;
+import com.gmail.val59000mc.utils.snapshot.ItemStackSnapshot;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
@@ -242,7 +243,7 @@ public class PlayerManager {
 
 					// Restore inventory if revived
 					if (!uhcPlayer.getStoredItems().isEmpty()) {
-						uhcPlayer.getStoredItems().forEach(item -> player.getWorld().dropItem(player.getLocation(), item));
+						uhcPlayer.getStoredItems().forEach(item -> player.getWorld().dropItem(player.getLocation(), item.reanimate()));
 						uhcPlayer.getStoredItems().clear();
 					}
 
@@ -648,7 +649,7 @@ public class PlayerManager {
 		uhcPlayer.getStoredItems().clear();
 		for (ItemStack item : player.getInventory().getContents()){
 			if (item != null){
-				uhcPlayer.getStoredItems().add(item);
+				uhcPlayer.getStoredItems().add(ItemStackSnapshot.of(item));
 			}
 		}
 		// PlayerInventory#getContents does not include armor contents on Spigot < 1.9
@@ -656,7 +657,7 @@ public class PlayerManager {
 			for (ItemStack item : player.getInventory().getArmorContents()) {
 				// PlayerInventory#getArmorContents maps null items to AIR on Spigot < 1.9
 				if (item.getType() != Material.AIR) {
-					uhcPlayer.getStoredItems().add(item);
+					uhcPlayer.getStoredItems().add(ItemStackSnapshot.of(item));
 				}
 			}
 		}
