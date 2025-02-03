@@ -27,6 +27,8 @@ import com.gmail.val59000mc.scenarios.ScenarioListener;
 import com.gmail.val59000mc.utils.OreType;
 import com.gmail.val59000mc.utils.UniversalMaterial;
 
+import io.papermc.lib.PaperLib;
+
 public class CutCleanListener extends ScenarioListener{
 
 	private final ItemStack lapis;
@@ -154,11 +156,10 @@ public class CutCleanListener extends ScenarioListener{
 		if (inv == null || item == null) return;
 
 		if (inv instanceof EnchantingInventory){
-
-			if (item.getType().equals(lapis.getType())){
+			// Lapis slot was introduced in Minecraft 1.8. For raw/protocol slot numbers,
+			// see https://minecraft.wiki/w/Minecraft_Wiki:Projects/wiki.vg_merge/Inventory
+			if (PaperLib.isVersion(8) && e.getRawSlot() == 1) {
 				e.setCancelled(true);
-			}else {
-				e.getInventory().setItem(1, lapis);
 			}
 		}
 	}

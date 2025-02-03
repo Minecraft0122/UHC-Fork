@@ -9,6 +9,7 @@
 
 ### Bug fixes
 
+- [#196][GL-196] - Some items cannot be moved in the enchanting inventory in the CutClean scenario
 - [#195][GL-195] - Not all entity drops are smelted in the CutClean scenario
 - [#194][GL-194] - Revived players do not receive their items on Paper servers for Minecraft 1.21.1+
 - [#191][GL-191] - Extra apples from the apple-drops option are only dropped when leaves decay and not when a player breaks leaves
@@ -19,6 +20,7 @@
 - [#180][GL-180] - Player death message is not client-translatable on Paper servers for Minecraft 1.16.5+
 - [#177][GL-177] - Iteminfo command fails when using it on a potion that has no base effect on Minecraft 1.20.5+
 
+[GL-196]: https://gitlab.com/uhccore/uhccore/-/issues/196
 [GL-195]: https://gitlab.com/uhccore/uhccore/-/issues/195
 [GL-194]: https://gitlab.com/uhccore/uhccore/-/issues/194
 [GL-193]: https://gitlab.com/uhccore/uhccore/-/issues/193
