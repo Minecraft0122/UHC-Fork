@@ -21,7 +21,7 @@ public interface Snapshot<T> {
 	T reanimate();
 
 	/**
-	 * Tells wether this snapshot object has been reanimated before (and as such, is still valid).
+	 * Tells wether this snapshot object has been reanimated before (and as such, has become invalid).
 	 *
 	 * @return {@code true} if it has been reanimated before, {@code false} otherwise
 	 */
