@@ -260,8 +260,8 @@ public enum UniversalMaterial {
 	DARK_OAK_PLANKS("WOOD", 5, DataValueMask.EXCLUDE_NONE, "DARK_OAK_PLANKS");
 
 	private final String name8;
-	private final Integer dataValue8;
-	private final Integer dataValueMask8;
+	private final int dataValue8;
+	private final int dataValueMask8;
 	private final String name13;
 
 	private Material material;
@@ -275,15 +275,15 @@ public enum UniversalMaterial {
 
 	UniversalMaterial(String name8, String name13) {
 		this.name8 = name8;
-		this.dataValue8 = null;
-		this.dataValueMask8 = null;
+		this.dataValue8 = 0;
+		this.dataValueMask8 = DataValueMask.EXCLUDE_ALL;
 		this.name13 = name13;
 	}
 
 	UniversalMaterial() {
 		this.name8 = name();
-		this.dataValue8 = null;
-		this.dataValueMask8 = null;
+		this.dataValue8 = 0;
+		this.dataValueMask8 = DataValueMask.EXCLUDE_ALL;
 		this.name13 = name();
 	}
 
@@ -291,7 +291,9 @@ public enum UniversalMaterial {
 	 * Used to mask out the important bits in the data value (usually all bits) and as such exclude bits we don't care about.
 	 */
 	private static final class DataValueMask {
-		// This is usually the correct choice, but sometimes we have to add an exclusion mask.
+		// The default, don't care about any data value bits, e.g. ignore tool item damage and so on.
+		private static final int EXCLUDE_ALL = 0;
+		// This is usually a good choice, but sometimes we have to add an exclusion mask.
 		private static final int EXCLUDE_NONE = ~0;
 		private static final int EXCLUDE_LEAVES_DECAY_BITS = ~0b1100;
 		private static final int EXCLUDE_LOG_ORIENTATION_BITS = ~0b1100;
@@ -315,7 +317,7 @@ public enum UniversalMaterial {
 	}
 
 	public ItemStack getStack(int amount) {
-		return new ItemStack(getType(), amount, dataValue8 == null ? 0 : dataValue8.shortValue());
+		return new ItemStack(getType(), amount, (short) dataValue8);
 	}
 
 	public ItemStack getStack() {
