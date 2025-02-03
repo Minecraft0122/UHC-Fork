@@ -11,6 +11,7 @@ import com.gmail.val59000mc.scenarios.scenariolisteners.VeinMinerListener;
 import com.gmail.val59000mc.utils.FileUtils;
 import com.gmail.val59000mc.utils.NMSUtils;
 import com.gmail.val59000mc.utils.OreType;
+import com.gmail.val59000mc.utils.UniversalMaterial;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
@@ -222,7 +223,8 @@ public class ScenarioManager {
 	public Scenario getActiveBlockDropScenario(Player player, Block minedBlock) {
 		if (isEnabled(Scenario.RANDOMIZED_DROPS)) {
 			return Scenario.RANDOMIZED_DROPS;
-		} else if (isEnabled(Scenario.FLOWER_POWER)) {
+		} else if (UniversalMaterial.isFlowerOrDeadBush(minedBlock) && isEnabled(Scenario.FLOWER_POWER)) {
+			// Flower Power has high priority, but only for flower blocks
 			return Scenario.FLOWER_POWER;
 		} else if (!OreType.valueOf(minedBlock.getType()).isPresent() && isEnabled(Scenario.CUTCLEAN)) {
 			// CutClean has priority over Vein Miner etc. for non-ore blocks
