@@ -155,20 +155,44 @@ public enum UniversalMaterial {
 	@Deprecated
 	SUNFLOWER("DOUBLE_PLANT", 0, DataValueMask.EXCLUDE_NONE, "SUNFLOWER"),
 	/**
+	 * @deprecated Only relevant (with caveats) on older Minecraft versions, see:
+	 * https://minecraft.wiki/w/Java_Edition_pre-flattening_data_values#Large_Flowers
+	 */
+	@Deprecated
+	SUNFLOWER_TOP("DOUBLE_PLANT", 8, DataValueMask.EXCLUDE_DOUBLE_PLANT_TOP_ORIENTATION_BITS, "SUNFLOWER"),
+	/**
 	 * @deprecated Warning: On 1.8-1.12, this is only valid for the item and bottom block. The top double_plant block does not store flower type at all.
 	 */
 	@Deprecated
 	LILAC("DOUBLE_PLANT", 1, DataValueMask.EXCLUDE_NONE, "LILAC"),
+	/**
+	 * @deprecated Only relevant (with caveats) on older Minecraft versions, see:
+	 * https://minecraft.wiki/w/Java_Edition_pre-flattening_data_values#Large_Flowers
+	 */
+	@Deprecated
+	LILAC_TOP("DOUBLE_PLANT", 8, DataValueMask.EXCLUDE_DOUBLE_PLANT_TOP_ORIENTATION_BITS, "LILAC"),
 	/**
 	 * @deprecated Warning: On 1.8-1.12, this is only valid for the item and bottom block. The top double_plant block does not store flower type at all.
 	 */
 	@Deprecated
 	ROSE_BUSH("DOUBLE_PLANT", 4, DataValueMask.EXCLUDE_NONE, "ROSE_BUSH"),
 	/**
+	 * @deprecated Only relevant (with caveats) on older Minecraft versions, see:
+	 * https://minecraft.wiki/w/Java_Edition_pre-flattening_data_values#Large_Flowers
+	 */
+	@Deprecated
+	ROSE_BUSH_TOP("DOUBLE_PLANT", 8, DataValueMask.EXCLUDE_DOUBLE_PLANT_TOP_ORIENTATION_BITS, "ROSE_BUSH"),
+	/**
 	 * @deprecated Warning: On 1.8-1.12, this is only valid for the item and bottom block. The top double_plant block does not store flower type at all.
 	 */
 	@Deprecated
 	PEONY("DOUBLE_PLANT", 5, DataValueMask.EXCLUDE_NONE, "PEONY"),
+	/**
+	 * @deprecated Only relevant (with caveats) on older Minecraft versions, see:
+	 * https://minecraft.wiki/w/Java_Edition_pre-flattening_data_values#Large_Flowers
+	 */
+	@Deprecated
+	PEONY_TOP("DOUBLE_PLANT", 8, DataValueMask.EXCLUDE_DOUBLE_PLANT_TOP_ORIENTATION_BITS, "PEONY"),
 
 	DEAD_BUSH,
 
@@ -297,6 +321,7 @@ public enum UniversalMaterial {
 		private static final int EXCLUDE_NONE = ~0;
 		private static final int EXCLUDE_LEAVES_DECAY_BITS = ~0b1100;
 		private static final int EXCLUDE_LOG_ORIENTATION_BITS = ~0b1100;
+		private static final int EXCLUDE_DOUBLE_PLANT_TOP_ORIENTATION_BITS = ~0b0111;
 	}
 
 	/**

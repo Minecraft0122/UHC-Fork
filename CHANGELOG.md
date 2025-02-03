@@ -17,6 +17,7 @@
 - [#193][GL-193] - The apple-drops.all-trees option can only be disabled on Minecraft 1.13+
 - [#187][GL-187] - Only the first tool is enchanted when shift-clicking recipe result in the Hastey Boys scenario
 - [#184][GL-184] - Various bugs and compatibility issues between scenarios with custom block drops
+- [#183][GL-183] - Flowers break when you mine any block above them in the Flower Power scenario
 - [#180][GL-180] - Player death message is not client-translatable on Paper servers for Minecraft 1.16.5+
 - [#177][GL-177] - Iteminfo command fails when using it on a potion that has no base effect on Minecraft 1.20.5+
 
@@ -29,6 +30,7 @@
 [GL-190]: https://gitlab.com/uhccore/uhccore/-/issues/190
 [GL-187]: https://gitlab.com/uhccore/uhccore/-/issues/187
 [GL-184]: https://gitlab.com/uhccore/uhccore/-/issues/184
+[GL-183]: https://gitlab.com/uhccore/uhccore/-/issues/183
 [GL-182]: https://gitlab.com/uhccore/uhccore/-/issues/182
 [GL-180]: https://gitlab.com/uhccore/uhccore/-/issues/180
 [GL-177]: https://gitlab.com/uhccore/uhccore/-/issues/177

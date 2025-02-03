@@ -41,9 +41,13 @@ public class FlowerPowerListener extends ScenarioListener{
 			UniversalMaterial.PINK_TULIP,
 			UniversalMaterial.OXEYE_DAISY,
 			UniversalMaterial.SUNFLOWER,
+			UniversalMaterial.SUNFLOWER_TOP,
 			UniversalMaterial.LILAC,
+			UniversalMaterial.LILAC_TOP,
 			UniversalMaterial.ROSE_BUSH,
+			UniversalMaterial.ROSE_BUSH_TOP,
 			UniversalMaterial.PEONY,
+			UniversalMaterial.PEONY_TOP,
 			UniversalMaterial.DEAD_BUSH,
 			UniversalMaterial.DANDELION
 	};
@@ -94,7 +98,7 @@ public class FlowerPowerListener extends ScenarioListener{
 		final Block blockBelow = block.getRelative(BlockFace.DOWN);
 		final Block blockToBreak = isFlower(blockBelow) ? blockBelow : block;
 
-		if (isFlower(blockToBreak)) {
+		if (isFlower(blockToBreak) && isFlower(block)) {
 			final Location breakLoc = blockToBreak.getLocation().add(.5,.5,.5);
 			blockToBreak.setType(Material.AIR);
 			UhcItems.spawnExtraXp(breakLoc, expPerFlower);
