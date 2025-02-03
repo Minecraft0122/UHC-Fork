@@ -30,28 +30,6 @@ public class FlowerPowerListener extends ScenarioListener{
 
 	private static final Logger LOGGER = Logger.getLogger(FlowerPowerListener.class.getCanonicalName());
 
-	private static final UniversalMaterial[] FLOWERS = new UniversalMaterial[]{
-			UniversalMaterial.POPPY,
-			UniversalMaterial.BLUE_ORCHID,
-			UniversalMaterial.ALLIUM,
-			UniversalMaterial.AZURE_BLUET,
-			UniversalMaterial.RED_TULIP,
-			UniversalMaterial.ORANGE_TULIP,
-			UniversalMaterial.WHITE_TULIP,
-			UniversalMaterial.PINK_TULIP,
-			UniversalMaterial.OXEYE_DAISY,
-			UniversalMaterial.SUNFLOWER,
-			UniversalMaterial.SUNFLOWER_TOP,
-			UniversalMaterial.LILAC,
-			UniversalMaterial.LILAC_TOP,
-			UniversalMaterial.ROSE_BUSH,
-			UniversalMaterial.ROSE_BUSH_TOP,
-			UniversalMaterial.PEONY,
-			UniversalMaterial.PEONY_TOP,
-			UniversalMaterial.DEAD_BUSH,
-			UniversalMaterial.DANDELION
-	};
-
 	private List<JsonItemStack> flowerDrops;
 	private int expPerFlower;
 
@@ -96,9 +74,9 @@ public class FlowerPowerListener extends ScenarioListener{
 
 		// For tall flowers start with the bottom block.
 		final Block blockBelow = block.getRelative(BlockFace.DOWN);
-		final Block blockToBreak = isFlower(blockBelow) ? blockBelow : block;
+		final Block blockToBreak = UniversalMaterial.isFlowerOrDeadBush(blockBelow) ? blockBelow : block;
 
-		if (isFlower(blockToBreak) && isFlower(block)) {
+		if (UniversalMaterial.isFlowerOrDeadBush(blockToBreak) && UniversalMaterial.isFlowerOrDeadBush(block)) {
 			final Location breakLoc = blockToBreak.getLocation().add(.5,.5,.5);
 			blockToBreak.setType(Material.AIR);
 			UhcItems.spawnExtraXp(breakLoc, expPerFlower);
@@ -107,18 +85,6 @@ public class FlowerPowerListener extends ScenarioListener{
 			final ItemStack drop = flowerDrops.get(random);
 			breakLoc.getWorld().dropItem(breakLoc, drop);
 		}
-	}
-
-	private boolean isFlower(Block block){
-		for (UniversalMaterial flower : FLOWERS){
-			if (flower.matches(block)) return true;
-		}
-
-		if (PaperLib.getMinecraftVersion() >= 14){
-			String material = block.getType().toString();
-			return material.equals("LILY_OF_THE_VALLEY") || material.equals("CORNFLOWER");
-		}
-		return false;
 	}
 
 }

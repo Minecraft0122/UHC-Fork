@@ -148,6 +148,11 @@ public enum UniversalMaterial {
 	PINK_TULIP("RED_ROSE", 7, DataValueMask.EXCLUDE_NONE, "PINK_TULIP"),
 	OXEYE_DAISY("RED_ROSE", 8, DataValueMask.EXCLUDE_NONE, "OXEYE_DAISY"),
 	DANDELION("YELLOW_FLOWER", "DANDELION"),
+	CORNFLOWER,
+	LILY_OF_THE_VALLEY,
+	WITHER_ROSE,
+	TORCHFLOWER,
+	PITCHER_PLANT,
 
 	/**
 	 * @deprecated Warning: On 1.8-1.12, this is only valid for the item and bottom block. The top double_plant block does not store flower type at all.
@@ -445,6 +450,33 @@ public enum UniversalMaterial {
 
 	public static boolean isAppleLeaves(Block block) {
 		return UniversalMaterial.OAK_LEAVES.matches(block) || UniversalMaterial.DARK_OAK_LEAVES.matches(block);
+	}
+
+	public static boolean isFlowerOrDeadBush(Block block) {
+		return UniversalMaterial.POPPY.matches(block)
+			|| UniversalMaterial.BLUE_ORCHID.matches(block)
+			|| UniversalMaterial.ALLIUM.matches(block)
+			|| UniversalMaterial.AZURE_BLUET.matches(block)
+			|| UniversalMaterial.RED_TULIP.matches(block)
+			|| UniversalMaterial.ORANGE_TULIP.matches(block)
+			|| UniversalMaterial.WHITE_TULIP.matches(block)
+			|| UniversalMaterial.PINK_TULIP.matches(block)
+			|| UniversalMaterial.OXEYE_DAISY.matches(block)
+			|| UniversalMaterial.DANDELION.matches(block)
+			|| UniversalMaterial.CORNFLOWER.matches(block)
+			|| UniversalMaterial.LILY_OF_THE_VALLEY.matches(block)
+			|| UniversalMaterial.WITHER_ROSE.matches(block)
+			|| UniversalMaterial.TORCHFLOWER.matches(block)
+			|| UniversalMaterial.PITCHER_PLANT.matches(block)
+			|| UniversalMaterial.SUNFLOWER.matches(block)
+			|| UniversalMaterial.SUNFLOWER_TOP.matches(block)
+			|| UniversalMaterial.LILAC.matches(block)
+			|| UniversalMaterial.LILAC_TOP.matches(block)
+			|| UniversalMaterial.ROSE_BUSH.matches(block)
+			|| UniversalMaterial.ROSE_BUSH_TOP.matches(block)
+			|| UniversalMaterial.PEONY.matches(block)
+			|| UniversalMaterial.PEONY_TOP.matches(block)
+			|| UniversalMaterial.DEAD_BUSH.matches(block);
 	}
 
 	public static boolean isAxe(Material tool) {
