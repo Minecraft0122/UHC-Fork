@@ -4,6 +4,7 @@
 
 ### New features
 
+- [#181][GL-181] - Support Minecraft 1.21.4
 - [#190][GL-190] - Clarify apple-drops option behavior
 - [#182][GL-182] - Option to change scoreboard render type for the hearts-on-tab option
 
@@ -34,6 +35,7 @@
 [GL-184]: https://gitlab.com/uhccore/uhccore/-/issues/184
 [GL-183]: https://gitlab.com/uhccore/uhccore/-/issues/183
 [GL-182]: https://gitlab.com/uhccore/uhccore/-/issues/182
+[GL-181]: https://gitlab.com/uhccore/uhccore/-/issues/181
 [GL-180]: https://gitlab.com/uhccore/uhccore/-/issues/180
 [GL-177]: https://gitlab.com/uhccore/uhccore/-/issues/177
 

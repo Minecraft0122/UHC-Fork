@@ -153,6 +153,8 @@ public enum UniversalMaterial {
 	WITHER_ROSE,
 	TORCHFLOWER,
 	PITCHER_PLANT,
+	OPEN_EYEBLOSSOM,
+	CLOSED_EYEBLOSSOM,
 
 	/**
 	 * @deprecated Warning: On 1.8-1.12, this is only valid for the item and bottom block. The top double_plant block does not store flower type at all.
@@ -251,6 +253,7 @@ public enum UniversalMaterial {
 	AZALEA_LEAVES,
 	FLOWERING_AZALEA_LEAVES,
 	CHERRY_LEAVES,
+	PALE_OAK_LEAVES,
 
 	OAK_LOG("LOG", 0, DataValueMask.EXCLUDE_LOG_ORIENTATION_BITS, "OAK_LOG"),
 	SPRUCE_LOG("LOG", 1, DataValueMask.EXCLUDE_LOG_ORIENTATION_BITS, "SPRUCE_LOG"),
@@ -260,6 +263,7 @@ public enum UniversalMaterial {
 	DARK_OAK_LOG("LOG_2", 1, DataValueMask.EXCLUDE_LOG_ORIENTATION_BITS, "DARK_OAK_LOG"),
 	MANGROVE_LOG,
 	CHERRY_LOG,
+	PALE_OAK_LOG,
 	STRIPPED_OAK_LOG,
 	STRIPPED_SPRUCE_LOG,
 	STRIPPED_BIRCH_LOG,
@@ -268,6 +272,7 @@ public enum UniversalMaterial {
 	STRIPPED_DARK_OAK_LOG,
 	STRIPPED_MANGROVE_LOG,
 	STRIPPED_CHERRY_LOG,
+	STRIPPED_PALE_OAK_LOG,
 
 	COOKED_BEEF("COOKED_BEEF", "COOKED_BEEF"),
 	COOKED_CHICKEN("COOKED_CHICKEN", "COOKED_CHICKEN"),
@@ -424,6 +429,7 @@ public enum UniversalMaterial {
 			|| material == UniversalMaterial.DARK_OAK_LOG.getType()
 			|| material == UniversalMaterial.MANGROVE_LOG.getType()
 			|| material == UniversalMaterial.CHERRY_LOG.getType()
+			|| material == UniversalMaterial.PALE_OAK_LOG.getType()
 			|| material == UniversalMaterial.STRIPPED_OAK_LOG.getType()
 			|| material == UniversalMaterial.STRIPPED_SPRUCE_LOG.getType()
 			|| material == UniversalMaterial.STRIPPED_BIRCH_LOG.getType()
@@ -431,7 +437,8 @@ public enum UniversalMaterial {
 			|| material == UniversalMaterial.STRIPPED_ACACIA_LOG.getType()
 			|| material == UniversalMaterial.STRIPPED_DARK_OAK_LOG.getType()
 			|| material == UniversalMaterial.STRIPPED_MANGROVE_LOG.getType()
-			|| material == UniversalMaterial.STRIPPED_CHERRY_LOG.getType();
+			|| material == UniversalMaterial.STRIPPED_CHERRY_LOG.getType()
+			|| material == UniversalMaterial.STRIPPED_PALE_OAK_LOG.getType();
 	}
 
 	public static boolean isLeaves(Material material) {
@@ -445,7 +452,8 @@ public enum UniversalMaterial {
 			|| material == UniversalMaterial.MANGROVE_LEAVES.getType()
 			|| material == UniversalMaterial.AZALEA_LEAVES.getType()
 			|| material == UniversalMaterial.FLOWERING_AZALEA_LEAVES.getType()
-			|| material == UniversalMaterial.CHERRY_LEAVES.getType();
+			|| material == UniversalMaterial.CHERRY_LEAVES.getType()
+			|| material == UniversalMaterial.PALE_OAK_LEAVES.getType();
 	}
 
 	public static boolean isAppleLeaves(Block block) {
@@ -468,6 +476,8 @@ public enum UniversalMaterial {
 			|| UniversalMaterial.WITHER_ROSE.matches(block)
 			|| UniversalMaterial.TORCHFLOWER.matches(block)
 			|| UniversalMaterial.PITCHER_PLANT.matches(block)
+			|| UniversalMaterial.OPEN_EYEBLOSSOM.matches(block)
+			|| UniversalMaterial.CLOSED_EYEBLOSSOM.matches(block)
 			|| UniversalMaterial.SUNFLOWER.matches(block)
 			|| UniversalMaterial.SUNFLOWER_TOP.matches(block)
 			|| UniversalMaterial.LILAC.matches(block)
