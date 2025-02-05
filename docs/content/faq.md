@@ -331,7 +331,7 @@ values, just delete the file (or move/rename it, to keep a backup). When the
 server is started, UhcCore will generate a new config file with the default
 values.
 
-[configs]: https://gitlab.com/uhccore/uhccore/-/tree/1.20.11/src/main/resources
+[configs]: https://gitlab.com/uhccore/uhccore/-/tree/1.20.12/src/main/resources
 
 ## Where can I read more about configuration, commands etc? Is there a wiki?
 
@@ -411,7 +411,7 @@ snippets in case you're interested:
         Add this to `dependencies` in your `build.gradle`:
 
         ```groovy
-        compileOnly "net.zerodind:uhccore:1.20.11"
+        compileOnly "net.zerodind:uhccore:1.20.12"
         ```
 
     === "Gradle (Kotlin DSL)"
@@ -419,7 +419,7 @@ snippets in case you're interested:
         Add this to `dependencies` in your `build.gradle.kts`:
 
         ```kotlin
-        compileOnly("net.zerodind:uhccore:1.20.11")
+        compileOnly("net.zerodind:uhccore:1.20.12")
         ```
 
     === "Maven"
@@ -430,7 +430,7 @@ snippets in case you're interested:
         <dependency>
             <groupId>net.zerodind</groupId>
             <artifactId>uhccore</artifactId>
-            <version>1.20.11</version>
+            <version>1.20.12</version>
             <scope>provided</scope>
         </dependency>
         ```
@@ -525,7 +525,7 @@ sure to select the right tag matching the version you want to compare from.
 
 [milestones]: https://gitlab.com/uhccore/uhccore/-/milestones
 [changelog]: https://gitlab.com/uhccore/uhccore/-/blob/main/CHANGELOG.md
-[compare]: https://gitlab.com/uhccore/uhccore/-/compare?from=1.20.11&to=main
+[compare]: https://gitlab.com/uhccore/uhccore/-/compare?from=1.20.12&to=main
 
 ## How can I try the latest improvements to UhcCore before they are released?
 
