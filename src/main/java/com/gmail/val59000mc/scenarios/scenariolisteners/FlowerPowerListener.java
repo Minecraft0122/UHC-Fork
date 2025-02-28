@@ -82,7 +82,7 @@ public class FlowerPowerListener extends ScenarioListener{
 			UhcItems.spawnExtraXp(breakLoc, expPerFlower);
 
 			final int random = RandomUtils.randomInteger(0, flowerDrops.size()-1);
-			final ItemStack drop = flowerDrops.get(random);
+			final ItemStack drop = flowerDrops.get(random).rollStack();
 			breakLoc.getWorld().dropItem(breakLoc, drop);
 		}
 	}

@@ -1,9 +1,9 @@
 package com.gmail.val59000mc.configuration;
 
 import com.gmail.val59000mc.exceptions.ParseException;
+import com.gmail.val59000mc.utils.JsonItemStack;
 import com.gmail.val59000mc.utils.JsonItemUtils;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,7 +18,7 @@ public class LootConfiguration<T extends Enum<T>> {
 	private final Class<T> classType;
 
 	private T type;
-	private final List<ItemStack> loot;
+	private final List<JsonItemStack> loot;
 	private int addXp;
 
 	public LootConfiguration(Class<T> classType) {
@@ -64,7 +64,7 @@ public class LootConfiguration<T extends Enum<T>> {
 		return type;
 	}
 
-	public List<ItemStack> getLoot() {
+	public List<JsonItemStack> getLoot() {
 		return loot;
 	}
 

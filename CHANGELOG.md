@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Bug fixes
+
+- [#198][GL-198] - Minimum and maximum options for JSON item stacks don't work on Paper servers for Minecraft 1.21+
+
+[GL-198]: https://gitlab.com/uhccore/uhccore/-/issues/198
+
 ## [1.20.12] - 2025-02-05
 
 UhcCore version `1.20.12` is now finally here! This update fixes lots of bugs,

@@ -37,17 +37,17 @@ public class JsonItemStack extends ItemStack{
 		this.maximum = maximum;
 	}
 
-	@Override
-	public int getAmount(){
+	public int rollAmount() {
 		if (maximum == 1) {
 			return super.getAmount();
 		}
 		return RandomUtils.randomInteger(minimum, maximum);
 	}
 
-	@Override
-	public String toString() {
-		return JsonItemUtils.getItemJson(this);
+	public ItemStack rollStack() {
+		final ItemStack clonedStack = clone();
+		clonedStack.setAmount(rollAmount());
+		return clonedStack;
 	}
 
 }
