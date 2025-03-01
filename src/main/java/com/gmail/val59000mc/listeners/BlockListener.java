@@ -103,7 +103,7 @@ public class BlockListener implements Listener{
 		if (itemInMainHand.getType() == Material.SHEARS && !configuration.get(MainConfig.APPLE_DROPS_FROM_SHEARING)) {
 			return;
 		}
-		if (itemInMainHand.getItemMeta().hasEnchant(Enchantment.SILK_TOUCH)) {
+		if (itemInMainHand.hasItemMeta() && itemInMainHand.getItemMeta().hasEnchant(Enchantment.SILK_TOUCH)) {
 			return;
 		}
 

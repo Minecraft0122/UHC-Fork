@@ -4,8 +4,10 @@
 
 ### Bug fixes
 
+- [#199][GL-199] - NPE when breaking leaves without any item in hand
 - [#198][GL-198] - Minimum and maximum options for JSON item stacks don't work on Paper servers for Minecraft 1.21+
 
+[GL-199]: https://gitlab.com/uhccore/uhccore/-/issues/199
 [GL-198]: https://gitlab.com/uhccore/uhccore/-/issues/198
 
 ## [1.20.12] - 2025-02-05
