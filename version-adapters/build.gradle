@@ -1,0 +1,22 @@
+plugins {
+	id "java-library"
+}
+
+repositories {
+	mavenCentral()
+	maven { // For Spigot API
+		name "spigotmc"
+		url "https://hub.spigotmc.org/nexus/content/groups/public/"
+		content {
+			includeGroup "org.bukkit"
+			includeGroup "org.spigotmc"
+			includeGroup "net.md-5"
+		}
+	}
+}
+
+dependencies {
+	compileOnly "org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT"
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)

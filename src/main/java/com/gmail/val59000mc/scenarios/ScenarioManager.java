@@ -12,6 +12,7 @@ import com.gmail.val59000mc.utils.FileUtils;
 import com.gmail.val59000mc.utils.NMSUtils;
 import com.gmail.val59000mc.utils.OreType;
 import com.gmail.val59000mc.utils.UniversalMaterial;
+import com.gmail.val59000mc.versionadapters.adapters.SetMaxStackSizeAdapter;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
@@ -304,6 +305,10 @@ public class ScenarioManager {
 			ItemStack scenarioItem = scenario.getScenarioItem();
 			if (isEnabled(scenario)){
 				scenarioItem.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+
+				final ItemMeta stackSizeMeta = scenarioItem.getItemMeta();
+				UhcCore.getVersionAdapterLoader().getVersionAdapter(SetMaxStackSizeAdapter.class).setMaxStackSize(stackSizeMeta, 64);
+				scenarioItem.setItemMeta(stackSizeMeta);
 				scenarioItem.setAmount(2);
 
 				// Hide the enchantments, we don't want that text on the display item.
@@ -333,6 +338,10 @@ public class ScenarioManager {
 
 			if (playerVotes.contains(scenario)) {
 				item.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+
+				final ItemMeta stackSizeMeta = item.getItemMeta();
+				UhcCore.getVersionAdapterLoader().getVersionAdapter(SetMaxStackSizeAdapter.class).setMaxStackSize(stackSizeMeta, 64);
+				item.setItemMeta(stackSizeMeta);
 				item.setAmount(2);
 			}
 			inv.addItem(item);

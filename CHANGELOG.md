@@ -6,9 +6,11 @@
 
 - [#199][GL-199] - NPE when breaking leaves without any item in hand
 - [#198][GL-198] - Minimum and maximum options for JSON item stacks don't work on Paper servers for Minecraft 1.21+
+- [#171][GL-171] - Some selected scenarios in the scenario menu are no longer displayed with a stack size of 2
 
 [GL-199]: https://gitlab.com/uhccore/uhccore/-/issues/199
 [GL-198]: https://gitlab.com/uhccore/uhccore/-/issues/198
+[GL-171]: https://gitlab.com/uhccore/uhccore/-/issues/171
 
 ## [1.20.12] - 2025-02-05
 

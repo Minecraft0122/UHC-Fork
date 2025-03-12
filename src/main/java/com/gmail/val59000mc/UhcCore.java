@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.utils.PluginForwardingHandler;
+import com.gmail.val59000mc.versionadapters.VersionAdapterLoader;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,6 +21,7 @@ public class UhcCore extends JavaPlugin{
 
 	private static UhcCore pl;
 	private static Optional<NmsAdapter> nmsAdapter;
+	private static VersionAdapterLoader versionAdapterLoader;
 	private Logger forwardingLogger;
 	private GameManager gameManager;
 
@@ -31,6 +33,7 @@ public class UhcCore extends JavaPlugin{
 
 		gameManager.loadConfig();
 		loadNmsAdapter();
+		versionAdapterLoader = VersionAdapterLoader.loadAll(getClassLoader());
 		Bukkit.getScheduler().runTaskLater(this, () -> gameManager.loadNewGame(), 1);
 	}
 
@@ -55,6 +58,10 @@ public class UhcCore extends JavaPlugin{
 
 	public static Optional<NmsAdapter> getNmsAdapter() {
 		return nmsAdapter;
+	}
+
+	public static VersionAdapterLoader getVersionAdapterLoader() {
+		return versionAdapterLoader;
 	}
 
 }
