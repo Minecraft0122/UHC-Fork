@@ -155,6 +155,7 @@ public enum UniversalMaterial {
 	PITCHER_PLANT,
 	OPEN_EYEBLOSSOM,
 	CLOSED_EYEBLOSSOM,
+	CACTUS_FLOWER,
 
 	/**
 	 * @deprecated Warning: On 1.8-1.12, this is only valid for the item and bottom block. The top double_plant block does not store flower type at all.
@@ -478,6 +479,7 @@ public enum UniversalMaterial {
 			|| UniversalMaterial.PITCHER_PLANT.matches(block)
 			|| UniversalMaterial.OPEN_EYEBLOSSOM.matches(block)
 			|| UniversalMaterial.CLOSED_EYEBLOSSOM.matches(block)
+			|| UniversalMaterial.CACTUS_FLOWER.matches(block)
 			|| UniversalMaterial.SUNFLOWER.matches(block)
 			|| UniversalMaterial.SUNFLOWER_TOP.matches(block)
 			|| UniversalMaterial.LILAC.matches(block)

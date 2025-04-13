@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### New features
+
+- [#201][GL-201] - Support Minecraft 1.21.5
+
 ### Bug fixes
 
 - [#200][GL-200] - Exception when loading JSON item stack attribute modifiers without UUID
@@ -9,6 +13,7 @@
 - [#198][GL-198] - Minimum and maximum options for JSON item stacks don't work on Paper servers for Minecraft 1.21+
 - [#171][GL-171] - Some selected scenarios in the scenario menu are no longer displayed with a stack size of 2
 
+[GL-201]: https://gitlab.com/uhccore/uhccore/-/issues/201
 [GL-200]: https://gitlab.com/uhccore/uhccore/-/issues/200
 [GL-199]: https://gitlab.com/uhccore/uhccore/-/issues/199
 [GL-198]: https://gitlab.com/uhccore/uhccore/-/issues/198
