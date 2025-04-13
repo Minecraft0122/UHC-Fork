@@ -281,7 +281,12 @@ public class VersionUtils_1_13 extends VersionUtils{
 					slot = EquipmentSlot.valueOf(modifier.get("slot").getAsString());
 				}
 
-				UUID uuid = UUID.fromString(modifier.get("uuid").getAsString());
+				final UUID uuid;
+				if (modifier.has("uuid")) {
+					uuid = UUID.fromString(modifier.get("uuid").getAsString());
+				} else {
+					uuid = UUID.randomUUID();
+				}
 
 				meta.addAttributeModifier(attribute, new AttributeModifier(
 					uuid,

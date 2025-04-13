@@ -279,7 +279,7 @@ public class JsonItemUtils{
 			}
 
 			ParseException exception = new ParseException(ex.getMessage());
-			ex.setStackTrace(ex.getStackTrace());
+			exception.setStackTrace(ex.getStackTrace());
 			throw exception;
 		}
 	}
