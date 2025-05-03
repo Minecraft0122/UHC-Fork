@@ -595,13 +595,13 @@ public class PlayerManager {
 				gm.startEndGameTask();
 			}
 		}
-		else if(playingPlayers>0 && playingPlayersOnline > 0 && playingTeamsOnline == 1 && playingTeams == 1 && !cfg.get(MainConfig.ONE_PLAYER_MODE)){
+		else if(playingPlayers>0 && playingPlayersOnline > 0 && playingTeamsOnline == 1 && playingTeams == 1){
 			// Check if one playing team remains
 			gm.endGame();
 		}
 		else if(playingPlayers>0 && playingPlayersOnline > 0 && playingTeamsOnline == 1 && playingTeams > 1){
 			// Check if one playing team remains
-			if(cfg.get(MainConfig.END_GAME_WHEN_ALL_PLAYERS_HAVE_LEFT) && !cfg.get(MainConfig.ONE_PLAYER_MODE)){
+			if(cfg.get(MainConfig.END_GAME_WHEN_ALL_PLAYERS_HAVE_LEFT)){
 				gm.startEndGameTask();
 			}
 		}
