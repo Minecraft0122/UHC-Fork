@@ -29,6 +29,8 @@ public class MainConfig extends YamlFile {
 
 	private static final Logger LOGGER = Logger.getLogger(MainConfig.class.getCanonicalName());
 
+	public static final BasicOption<Boolean> ENABLE_UHC = new BasicOption<>("enable-uhc", true);
+
 	public static final BasicOption<Integer> MINIMAL_READY_TEAMS_PERCENTAGE_TO_START = new BasicOption<>("minimal-ready-teams-percentage-to-start",50);
 	public static final BasicOption<Integer> MINIMAL_READY_TEAMS_TO_START = new BasicOption<>("minimal-ready-teams-to-start",2);
 	public static final BasicOption<Integer> MIN_PLAYERS_TO_START = new BasicOption<>("min-players-to-start",20);

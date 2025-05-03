@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.gmail.val59000mc.configuration.MainConfig;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.utils.PluginForwardingHandler;
 import com.gmail.val59000mc.versionadapters.VersionAdapterLoader;
@@ -34,7 +35,11 @@ public class UhcCore extends JavaPlugin{
 		gameManager.loadConfig();
 		loadNmsAdapter();
 		versionAdapterLoader = VersionAdapterLoader.loadAll(getClassLoader());
-		Bukkit.getScheduler().runTaskLater(this, () -> gameManager.loadNewGame(), 1);
+		if (gameManager.getConfig().get(MainConfig.ENABLE_UHC)) {
+			Bukkit.getScheduler().runTaskLater(this, () -> gameManager.loadNewGame(), 1);
+		} else {
+			LOGGER.warning("NOTE: UHC is disabled, by the enable-uhc option in plugins/UhcCore/config.yml");
+		}
 	}
 
 	private void loadNmsAdapter() {

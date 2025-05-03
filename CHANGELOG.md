@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### New features
+
+- [#202][GL-202] - Security system when loading the config for the first time
+
+[GL-202]: https://gitlab.com/uhccore/uhccore/-/issues/202
+
 ## [1.20.13] - 2025-04-13
 
 UhcCore version `1.20.13` is now available! This update fixes some bugs, and adds support for Minecraft 1.21.5.

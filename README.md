@@ -46,8 +46,10 @@ need to run it on a standalone server.
 **Setup steps**
 
 1. Download the plugin to the `plugins/` directory and start the server.
-2. Wait for the world to pre-generate (see console output for progress).
-3. Your players can now join! The game starts when enough players have joined
+2. Set the `enable-uhc` option to `true` in `plugins/UhcCore/config.yml` (NOTE: This will erase player data, e.g. inventories).
+3. Restart the server.
+4. Wait for the world to pre-generate (see console output for progress).
+5. Your players can now join! The game starts when enough players have joined
 (according to the configuration file), or when the `/start` command is issued.
 
 After running the plugin for the first time, configuration files will be

@@ -1,3 +1,9 @@
+# Set to true in order to enable the UHC gamemode.
+# NOTE! This will erase player data and teleport your players to the lobby
+# when the plugin starts. UhcCore should therefore be installed to a new
+# server, not to an existing server where you have important player data.
+enable-uhc: false
+
 #Choose the percentage threshold of ready teams at which the game should start (Ignored when 'team-always-ready' is set to true)
 minimal-ready-teams-percentage-to-start: 60
 
