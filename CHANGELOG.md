@@ -5,7 +5,9 @@
 ### New features
 
 - [#202][GL-202] - Security system when loading the config for the first time
+- [#178][GL-178] - The game should end immediately if only one living team remains online, even if there are living teams offline
 
+[GL-178]: https://gitlab.com/uhccore/uhccore/-/issues/178
 [GL-202]: https://gitlab.com/uhccore/uhccore/-/issues/202
 
 ## [1.20.13] - 2025-04-13

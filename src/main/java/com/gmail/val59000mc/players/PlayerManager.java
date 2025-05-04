@@ -429,6 +429,8 @@ public class PlayerManager {
 	}
 
 	private List<UhcPlayer> getWinners(){
+		// Note: There may be multiple winner teams in case the game ended early, e.g. because of deathmatch.force-end.
+		// There may also be no winners if count-offline-teams-as-dead is false and all teams left the server.
 		List<UhcPlayer> winners = new ArrayList<>();
 		for(UhcPlayer player : getPlayersList()){
 			try{
@@ -550,8 +552,6 @@ public class PlayerManager {
 			return;
 		}
 
-		int playingPlayers = 0;
-		int playingPlayersOnline = 0;
 		int playingTeams = 0;
 		int playingTeamsOnline = 0;
 
@@ -562,11 +562,9 @@ public class PlayerManager {
 
 			for(UhcPlayer player : team.getMembers()){
 				if(player.getState().equals(PlayerState.PLAYING)){
-					playingPlayers++;
 					teamIsPlaying = 1;
 					try{
 						player.getPlayer();
-						playingPlayersOnline++;
 						teamIsOnline = 1;
 					} catch (UhcPlayerNotOnlineException ignored) {
 						// Player isn't online
@@ -578,34 +576,22 @@ public class PlayerManager {
 			playingTeams += teamIsPlaying;
 		}
 
-		if(playingPlayers == 0){
+		if (playingTeams <= 1) {
 			gm.endGame();
-		}
-		else if(
-				gm.getGameState() == GameState.DEATHMATCH &&
-				cfg.get(MainConfig.ENABLE_DEATHMATCH_FORCE_END) &&
-				gm.getPvp() &&
-				(lastDeathTime+(cfg.get(MainConfig.DEATHMATCH_FORCE_END_DELAY)*TimeUtils.SECOND)) < System.currentTimeMillis()
-		){
+		} else if (playingTeamsOnline <= 1 && cfg.get(MainConfig.COUNT_OFFLINE_TEAMS_AS_DEAD)) {
 			gm.endGame();
-		}
-		else if(playingPlayers>0 && playingPlayersOnline == 0){
-			// Check if all playing players have left the game
-			if(cfg.get(MainConfig.END_GAME_WHEN_ALL_PLAYERS_HAVE_LEFT)){
-				gm.startEndGameTask();
-			}
-		}
-		else if(playingPlayers>0 && playingPlayersOnline > 0 && playingTeamsOnline == 1 && playingTeams == 1){
-			// Check if one playing team remains
+		} else if (playingTeamsOnline <= 1 && cfg.get(MainConfig.END_GAME_WHEN_ALL_PLAYERS_HAVE_LEFT)) {
+			gm.startEndGameTask();
+		} else if (
+			// deathmatch.force-end option
+			gm.getGameState() == GameState.DEATHMATCH &&
+			cfg.get(MainConfig.ENABLE_DEATHMATCH_FORCE_END) &&
+			gm.getPvp() &&
+			(lastDeathTime+(cfg.get(MainConfig.DEATHMATCH_FORCE_END_DELAY)*TimeUtils.SECOND)) < System.currentTimeMillis()
+		) {
 			gm.endGame();
-		}
-		else if(playingPlayers>0 && playingPlayersOnline > 0 && playingTeamsOnline == 1 && playingTeams > 1){
-			// Check if one playing team remains
-			if(cfg.get(MainConfig.END_GAME_WHEN_ALL_PLAYERS_HAVE_LEFT)){
-				gm.startEndGameTask();
-			}
-		}
-		else if(gm.getGameIsEnding()){
+		} else if (gm.getGameIsEnding()) {
+			// Game went from ending to not ending (e.g. player re-joined)
 			gm.stopEndGameTask();
 		}
 	}

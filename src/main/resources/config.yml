@@ -100,8 +100,12 @@ spawn-offline-players: true
 #Timer in seconds to auto stop/restart the server when the game as ended (Set to -1 to disable)
 time-before-restart-after-end: 30
 
-#Set it to false to prevent the end of the game if there are no players left (may be useful for private servers with friends playing over several days,
-# it still requires the server to be left running while there are no players on it)
+# If true, offline teams count as dead, meaning the game will end if all but one team leave the server.
+count-offline-teams-as-dead: true
+
+# If true, the game will end after a countdown if all or all but one teams leave the server.
+# Set it and count-offline-teams-as-dead to false to prevent the end of the game if there are no players left
+# (may be useful for private servers with friends playing over several days, which requires the server to be left running while there are no players on it).
 countdown-ending-game-when-all-players-have-left: true
 
 # Enable to have a message and sound every x minutes. (This can be used for youtubers to know when to end their episodes.)
