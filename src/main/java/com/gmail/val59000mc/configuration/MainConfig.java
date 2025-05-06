@@ -53,6 +53,12 @@ public class MainConfig extends YamlFile {
 	public static final BasicOption<Boolean> ENABLE_FRIENDLY_FIRE = new BasicOption<>("enable-friendly-fire",false);
 	public static final BasicOption<Boolean> DISABLE_ENEMY_NAMETAGS = new BasicOption<>("disable-enemy-nametags",false);
 	public static final BasicOption<Boolean> GENERATE_STRUCTURES = new BasicOption<>("generate-structures", true);
+	public static final BasicOption<String> CHUNK_GENERATOR_OVERWORLD = new BasicOption<>("chunk-generator.overworld", "");
+	public static final BasicOption<String> CHUNK_GENERATOR_NETHER = new BasicOption<>("chunk-generator.nether", "");
+	public static final BasicOption<String> CHUNK_GENERATOR_END = new BasicOption<>("chunk-generator.end", "");
+	public static final BasicOption<String> BIOME_PROVIDER_OVERWORLD = new BasicOption<>("biome-provider.overworld", "");
+	public static final BasicOption<String> BIOME_PROVIDER_NETHER = new BasicOption<>("biome-provider.nether", "");
+	public static final BasicOption<String> BIOME_PROVIDER_END = new BasicOption<>("biome-provider.end", "");
 	public static final BasicOption<Boolean> PICK_RANDOM_SEED_FROM_LIST = new BasicOption<>("world-seeds.pick-random-seed-from-list",false);
 	public static final BasicOption<Boolean> PICK_RANDOM_WORLD_FROM_LIST = new BasicOption<>("world-list.pick-random-world-from-list",false);
 

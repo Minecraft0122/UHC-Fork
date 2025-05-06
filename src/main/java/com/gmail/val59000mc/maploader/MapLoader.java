@@ -37,6 +37,7 @@ import com.gmail.val59000mc.tasks.ChunkLoaderTask;
 import com.gmail.val59000mc.tasks.WorldBorderTask;
 import com.gmail.val59000mc.utils.FileUtils;
 import com.gmail.val59000mc.utils.VersionUtils;
+import com.gmail.val59000mc.versionadapters.adapters.SetBiomeProviderAdapter;
 import com.pieterdebot.biomemapping.Biome;
 import com.pieterdebot.biomemapping.BiomeMappingAPI;
 
@@ -169,6 +170,37 @@ public class MapLoader {
 
 		WorldCreator wc = new WorldCreator(worldName);
 		wc.generateStructures(config.get(MainConfig.GENERATE_STRUCTURES));
+		if (env == Environment.NORMAL) {
+			final String cgOverworld = config.get(MainConfig.CHUNK_GENERATOR_OVERWORLD);
+			if (!cgOverworld.isEmpty()) {
+				wc.generator(cgOverworld);
+			}
+			final String bpOverworld = config.get(MainConfig.BIOME_PROVIDER_OVERWORLD);
+			if (!bpOverworld.isEmpty()) {
+				UhcCore.getVersionAdapterLoader().getVersionAdapter(SetBiomeProviderAdapter.class)
+					.setBiomeProvider(wc, bpOverworld);
+			}
+		} else if (env == Environment.NETHER) {
+			final String cgNether = config.get(MainConfig.CHUNK_GENERATOR_NETHER);
+			if (!cgNether.isEmpty()) {
+				wc.generator(cgNether);
+			}
+			final String bpNether = config.get(MainConfig.BIOME_PROVIDER_NETHER);
+			if (!bpNether.isEmpty()) {
+				UhcCore.getVersionAdapterLoader().getVersionAdapter(SetBiomeProviderAdapter.class)
+					.setBiomeProvider(wc, bpNether);
+			}
+		} else if (env == Environment.THE_END) {
+			final String cgEnd = config.get(MainConfig.CHUNK_GENERATOR_END);
+			if (!cgEnd.isEmpty()) {
+				wc.generator(cgEnd);
+			}
+			final String bpEnd = config.get(MainConfig.BIOME_PROVIDER_END);
+			if (!bpEnd.isEmpty()) {
+				UhcCore.getVersionAdapterLoader().getVersionAdapter(SetBiomeProviderAdapter.class)
+					.setBiomeProvider(wc, bpEnd);
+			}
+		}
 		wc.environment(env);
 
 		List<Long> seeds = gm.getConfig().get(MainConfig.SEEDS);

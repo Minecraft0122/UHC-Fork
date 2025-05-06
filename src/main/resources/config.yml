@@ -534,6 +534,22 @@ use-default-world-spawn-for-lobby: true
 # but applies to the UHC worlds instead of the default worlds.
 generate-structures: true
 
+chunk-generator:
+  # Controls the ChunkGenerator used in the UHC overworld.
+  overworld: ""
+  # Controls the ChunkGenerator used in the UHC nether.
+  nether: ""
+  # Controls the ChunkGenerator used in the UHC end.
+  end: ""
+
+biome-provider:
+  # Controls the BiomeProvider used in the UHC overworld.
+  overworld: ""
+  # Controls the BiomeProvider used in the UHC nether.
+  nether: ""
+  # Controls the BiomeProvider used in the UHC end.
+  end: ""
+
 #Write custom seeds to be used when creating a new map
 world-seeds:
   #Set it to true to pick a random seed from this list

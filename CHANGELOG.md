@@ -4,9 +4,11 @@
 
 ### New features
 
+- [#130][GL-130] - Option to change chunk generator and biome provider for the UHC worlds
 - [#202][GL-202] - Security system when loading the config for the first time
 - [#178][GL-178] - The game should end immediately if only one living team remains online, even if there are living teams offline
 
+[GL-130]: https://gitlab.com/uhccore/uhccore/-/issues/130
 [GL-178]: https://gitlab.com/uhccore/uhccore/-/issues/178
 [GL-202]: https://gitlab.com/uhccore/uhccore/-/issues/202
 

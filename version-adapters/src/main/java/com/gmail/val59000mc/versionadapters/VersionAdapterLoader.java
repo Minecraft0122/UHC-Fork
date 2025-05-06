@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 
+import com.gmail.val59000mc.versionadapters.adapters.SetBiomeProviderAdapter;
 import com.gmail.val59000mc.versionadapters.adapters.SetMaxStackSizeAdapter;
 
 public class VersionAdapterLoader {
@@ -19,6 +20,7 @@ public class VersionAdapterLoader {
 		final HashMap<Class<?>, VersionAdapter> loadedAdapters = new HashMap<>();
 
 		requireVersionAdapter(loadedAdapters, classLoader, SetMaxStackSizeAdapter.class);
+		requireVersionAdapter(loadedAdapters, classLoader, SetBiomeProviderAdapter.class);
 
 		return new VersionAdapterLoader(Collections.unmodifiableMap(loadedAdapters));
 	}
