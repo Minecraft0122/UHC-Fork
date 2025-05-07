@@ -10,6 +10,7 @@ import com.gmail.val59000mc.scoreboard.ScoreboardManager;
 import com.gmail.val59000mc.scoreboard.ScoreboardType;
 import com.gmail.val59000mc.tasks.UpdateScoreboardTask;
 import com.gmail.val59000mc.utils.VersionUtils;
+import com.gmail.val59000mc.versionadapters.adapters.SetTeamColorAdapter;
 
 import java.util.logging.Logger;
 
@@ -145,6 +146,9 @@ public class ScoreboardHandler {
 
 			team.setPrefix(uhcTeam.getPrefix());
 			team.setSuffix(ChatColor.RESET + "");
+			if (config.get(MainConfig.SET_SCOREBOARD_TEAM_COLORS)) {
+				UhcCore.getVersionAdapterLoader().getVersionAdapter(SetTeamColorAdapter.class).setTeamColor(team, uhcTeam.getColor());
+			}
 
 			for (UhcPlayer member : uhcTeam.getMembers()) {
 

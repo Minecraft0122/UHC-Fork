@@ -7,6 +7,7 @@ import java.util.ServiceLoader;
 
 import com.gmail.val59000mc.versionadapters.adapters.SetBiomeProviderAdapter;
 import com.gmail.val59000mc.versionadapters.adapters.SetMaxStackSizeAdapter;
+import com.gmail.val59000mc.versionadapters.adapters.SetTeamColorAdapter;
 
 public class VersionAdapterLoader {
 
@@ -21,6 +22,7 @@ public class VersionAdapterLoader {
 
 		requireVersionAdapter(loadedAdapters, classLoader, SetMaxStackSizeAdapter.class);
 		requireVersionAdapter(loadedAdapters, classLoader, SetBiomeProviderAdapter.class);
+		requireVersionAdapter(loadedAdapters, classLoader, SetTeamColorAdapter.class);
 
 		return new VersionAdapterLoader(Collections.unmodifiableMap(loadedAdapters));
 	}

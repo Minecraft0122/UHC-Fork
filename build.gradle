@@ -78,6 +78,7 @@ dependencies {
 	implementation project(":Support-WorldEdit-7")
 	implementation project(":version-adapters")
 	shadowJar project(":version-adapters:spigot_1_8_8")
+	shadowJar project(":version-adapters:spigot_1_12")
 	shadowJar project(":version-adapters:spigot_1_17_1")
 	shadowJar project(":version-adapters:spigot_1_20_5")
 	implementation ":BiomeMapping-1.3"

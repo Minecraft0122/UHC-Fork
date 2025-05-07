@@ -70,6 +70,7 @@ public class MainConfig extends YamlFile {
 	public static final BasicOption<Boolean> HEARTS_ON_TAB = new BasicOption<>("hearts-on-tab", true);
 	public static final BasicOption<String> HEARTS_ON_TAB_RENDER_TYPE = new BasicOption<>("hearts-on-tab-render-type", "hearts");
 	public static final BasicOption<Boolean> HEARTS_BELOW_NAME = new BasicOption<>("hearts-below-name", false);
+	public static final BasicOption<Boolean> SET_SCOREBOARD_TEAM_COLORS = new BasicOption<>("set-scoreboard-team-colors", false);
 	public static final BasicOption<Boolean> SPECTATING_TELEPORT = new BasicOption<>("spectating-teleport",false);
 	public static final BasicOption<Boolean> ENABLE_KITS_PERMISSIONS = new BasicOption<>("enable-kits-permissions",false);
 
