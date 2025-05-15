@@ -9,6 +9,7 @@ import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.utils.PluginForwardingHandler;
 import com.gmail.val59000mc.versionadapters.VersionAdapterLoader;
 
+import com.gmail.val59000mc.UhcCorePlaceholderExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -37,6 +38,10 @@ public class UhcCore extends JavaPlugin{
 		versionAdapterLoader = VersionAdapterLoader.loadAll(getClassLoader());
 		if (gameManager.getConfig().get(MainConfig.ENABLE_UHC)) {
 			Bukkit.getScheduler().runTaskLater(this, () -> gameManager.loadNewGame(), 1);
+			// register placeholderAPI;
+			if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){
+				new UhcCorePlaceholderExpansion(pl).register();
+			}
 		} else {
 			LOGGER.warning("NOTE: UHC is disabled, by the enable-uhc option in plugins/UhcCore/config.yml");
 		}

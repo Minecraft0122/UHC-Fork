@@ -13,6 +13,7 @@ import com.gmail.val59000mc.scoreboard.placeholders.ScenariosPlaceholder;
 import com.gmail.val59000mc.scoreboard.placeholders.TeamMembersPlaceholder;
 import com.gmail.val59000mc.scoreboard.placeholders.TimersPlaceholder;
 import com.gmail.val59000mc.utils.TimeUtils;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -71,6 +72,10 @@ public class ScoreboardManager {
 
 		if (returnString.contains("%teamColor%")){
 			returnString = returnString.replace("%teamColor%", uhcPlayer.getTeam().getColor() + "\u25A0");
+		}
+
+		if (returnString.contains("%teamNumber%")){
+			returnString = returnString.replace("%teamNumber%",uhcPlayer.getTeam().getTeamNumber() + "");
 		}
 
 		if (returnString.contains("%border%")){
@@ -167,16 +172,18 @@ public class ScoreboardManager {
 			returnString = returnString.replace("%money%", String.format("%.2f", VaultManager.getPlayerMoney(bukkitPlayer)));
 		}
 
-		// Parse custom placeholders
 		for (Placeholder placeholder : placeholders){
 			returnString = placeholder.parseString(returnString, uhcPlayer, bukkitPlayer);
+		}
+
+		if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){
+			returnString = PlaceholderAPI.setPlaceholders(bukkitPlayer, returnString);
 		}
 
 		if (returnString.length() > 32){
 			LOGGER.warning("Scoreboard line is too long: '" + returnString + "'!");
 			returnString = "";
 		}
-
 		return returnString;
 	}
 

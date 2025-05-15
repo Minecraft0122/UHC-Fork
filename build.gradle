@@ -55,6 +55,15 @@ repositories {
 			includeGroup "net.wesjd"
 		}
 	}
+    maven { // For PlaceholderAPI
+		name "placeholderapi"
+		url "https://repo.extendedclip.com/content/repositories/placeholderapi/"
+		content {
+			includeGroup "me.clip"
+		}
+	}
+
+
 	flatDir { // For BiomeMapping
 		dirs "$rootDir/libs"
 	}
@@ -71,6 +80,7 @@ dependencies {
 	compileOnly "org.spigotmc:spigot-api:1.15.2-R0.1-SNAPSHOT"
 	compileOnly "com.google.code.findbugs:jsr305:3.0.2"
 	compileOnly "com.github.MilkBowl:VaultAPI:1.7"
+	compileOnly "me.clip:placeholderapi:2.11.3"
 	compileOnly "com.comphenix.protocol:ProtocolLib:4.7.0"
 	implementation "net.wesjd:anvilgui:1.10.5-SNAPSHOT"
 	implementation "io.papermc:paperlib:1.0.8"

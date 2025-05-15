@@ -71,18 +71,20 @@ public class ScoreboardLayout {
 	public void setLines(ScoreboardType scoreboardType, List<String> lines){
 		Validate.isTrue(lines.size() <= 15, "Scoreboards can't have more than 15 lines!");
 
+		lines = getOpsideDownLines(lines); 
+
 		switch (scoreboardType){
 			case WAITING:
-				waiting = getOpsideDownLines(lines);
+				waiting = lines;
 				break;
 			case PLAYING:
-				playing = getOpsideDownLines(lines);
+				playing = lines;
 				break;
 			case DEATHMATCH:
-				deathmatch = getOpsideDownLines(lines);
+				deathmatch = lines;
 				break;
 			case SPECTATING:
-				spectating = getOpsideDownLines(lines);
+				spectating = lines;
 				break;
 		}
 	}
