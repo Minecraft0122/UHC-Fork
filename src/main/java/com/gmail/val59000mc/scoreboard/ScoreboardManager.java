@@ -176,7 +176,7 @@ public class ScoreboardManager {
 			returnString = placeholder.parseString(returnString, uhcPlayer, bukkitPlayer);
 		}
 
-		if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){
+		if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
 			returnString = PlaceholderAPI.setPlaceholders(bukkitPlayer, returnString);
 		}
 
