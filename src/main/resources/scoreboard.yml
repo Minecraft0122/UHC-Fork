@@ -8,9 +8,10 @@
 #  %timers% = Shows one of three timers (PvP, Deathmatch & Border) depending on which one is first. (Formatted as "name: time")
 #  %timer-name% = Shows the name of one of three timers (PvP, Deathmatch & Border) depending on which one is first.
 #  %timer-time% = Shows the time of one of three timers (PvP, Deathmatch & Border) depending on which one is first.
-#  %teamAlive% = Show number of team alive.
+#  %alive% = Show number of players alive who are online.
+#  %teamAlive% = Show number of teams alive.
 #  %playerSpectator% = Show number of spectator.
-#  %playerAlive% = Show number of player alive.
+#  %playerAlive% = Show number of players alive.
 #  %border% = Show the size of World Border.
 #  %kills% = Number of kills that the player has.
 #  %teamKills% = Number of kills that the team of the player has.
@@ -29,6 +30,10 @@
 #  %needed% = Show number of needed players to start the game.
 # On game started or waiting:
 #  %teamColor% = The color of the team on tab. (Only a color so you need to put text behind it inorder for it to show.)
+
+# All the above placeholders can also be used externally if PlaceholderAPI is installed,
+# by adding the "uhccore_" prefix. For example, %uhccore_deathmatch% instead of %deathmatch%.
+# If PlaceholderAPI is installed, you can also use other PlaceholderAPI placeholders in the scoreboard below.
 
 # Title of the scoreboard
 title: '&6&lUhcCore'
