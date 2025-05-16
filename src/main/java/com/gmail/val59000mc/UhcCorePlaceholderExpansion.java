@@ -1,11 +1,10 @@
 package com.gmail.val59000mc;
 
-import com.gmail.val59000mc.players.PlayerManager;
-import com.gmail.val59000mc.scoreboard.ScoreboardManager;
+import org.bukkit.entity.Player;
+
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.players.UhcPlayer;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
+
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 
 public class UhcCorePlaceholderExpansion extends PlaceholderExpansion {
@@ -36,18 +35,16 @@ public class UhcCorePlaceholderExpansion extends PlaceholderExpansion {
 	}
 
 	@Override
-	public String onRequest(OfflinePlayer player, String params) {
+	public String onPlaceholderRequest(Player player, String params) {
+		if (player == null) {
+			return null;
+		}
 
-		GameManager gm = GameManager.getGameManager();
-
-		PlayerManager manager = gm.getPlayerManager();
-		Player bukkitPlayer = player.getPlayer();
-		UhcPlayer uhcPlayer = manager.getUhcPlayer(bukkitPlayer);
-		ScoreboardManager scoreboardManager = gm.getScoreboardManager();
+		final GameManager gm = GameManager.getGameManager();
 
 		String placeholder = "%" + params + "%";
-
-		String translatedPlaceholder = scoreboardManager.translatePlaceholders(placeholder, uhcPlayer, bukkitPlayer);
+		UhcPlayer uhcPlayer = gm.getPlayerManager().getUhcPlayer(player);
+		String translatedPlaceholder = gm.getScoreboardManager().translatePlaceholders(placeholder, uhcPlayer, player);
 		if (!translatedPlaceholder.equals(placeholder)) {
 			return translatedPlaceholder;
 		} else {
