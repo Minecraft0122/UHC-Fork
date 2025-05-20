@@ -4,29 +4,28 @@ import com.gmail.val59000mc.configuration.VeinConfiguration;
 import com.gmail.val59000mc.utils.RandomUtils;
 import com.gmail.val59000mc.utils.UniversalMaterial;
 import org.bukkit.Chunk;
-import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.generator.BlockPopulator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 
-public class VeinGenerator {
+public class VeinGeneratorPopulator extends BlockPopulator {
 
 	private final Map<Material, VeinConfiguration> generateVeins;
 
-	public VeinGenerator(Map<Material, VeinConfiguration> generateVeins){
+	public VeinGeneratorPopulator(Map<Material, VeinConfiguration> generateVeins){
 		this.generateVeins = generateVeins;
 	}
 
-	/**
-	 * Generate random veins in the given chunk based on the configuration
-	 * @param chunk : the chunk to generate the veins into
-	 */
-	public void generateVeinsInChunk(Chunk chunk) {
+	@Override
+	public void populate(World world, Random random, Chunk source) {
 		for(Entry<Material, VeinConfiguration> entry : generateVeins.entrySet()){
 			VeinConfiguration veinCfg = entry.getValue();
 			Material material = entry.getKey();
@@ -39,7 +38,7 @@ public class VeinGenerator {
 					int randX = RandomUtils.randomInteger(0, 15);
 					int randY = RandomUtils.randomInteger(veinCfg.getMinY(),veinCfg.getMaxY());
 					int randZ = RandomUtils.randomInteger(0, 15);
-					Block randBlock = tryAdjustingToProperBlock(chunk.getBlock(randX, randY, randZ));
+					Block randBlock = tryAdjustingToProperBlock(source.getBlock(randX, randY, randZ));
 					if(randBlock != null){
 						generateVein(material,randBlock,randNbrBlocks);
 					}
@@ -48,11 +47,6 @@ public class VeinGenerator {
 		}
 	}
 
-	/**
-	 * Look in a 5 blocks radius to find a non AIR or WATER block
-	 * @param randBlock
-	 * @return a non AIR/WATER Block if found, else null
-	 */
 	private Block tryAdjustingToProperBlock(Block randBlock) {
 		if(randBlock.getType().equals(Material.STONE)){
 			return randBlock;
@@ -67,18 +61,6 @@ public class VeinGenerator {
 				return randBlock;
 			}
 		}
-
-		// Find proper block nearby
-		for(int i = -5; i<=5 ; i++){
-			for(int j = -5; j<=5 ; j++){
-				for(int k = -5; k<=5 ; k++){
-					Block relativeBlock = randBlock.getRelative(i, j, k);
-					if(relativeBlock.getType().equals(Material.STONE)){
-						return relativeBlock;
-					}
-				}
-			}
-		}
 		return null;
 	}
 
@@ -91,7 +73,8 @@ public class VeinGenerator {
 	private void generateVein(Material material, Block startBlock, int nbrBlocks){
 		List<Block> blocks = getAdjacentsBlocks(startBlock,nbrBlocks);
 		for(Block block : blocks){
-			block.setType(material);
+			// Don't send block updates to neighboring chunk, to avoid infinite recursion
+			block.setType(material, false);
 		}
 	}
 
@@ -111,10 +94,17 @@ public class VeinGenerator {
 
 			// RandomFace
 			BlockFace face = RandomUtils.randomAdjacentFace();
-			Location blockLocation = block.getLocation();
-			if( (blockLocation.getBlockY() <= 1 && face.equals(BlockFace.DOWN)) || (blockLocation.getBlockY() >= 255 && face.equals(BlockFace.UP))){
+			if (
+				(face == BlockFace.DOWN && block.getY() <= 1) ||
+				(face == BlockFace.UP && block.getY() >= 255) ||
+				// Make sure to stay within bounds of the source chunk to avoid infinite recursion
+				(face == BlockFace.NORTH && block.getZ() % 16 == 0) ||
+				(face == BlockFace.EAST && block.getX() % 16 == 15) ||
+				(face == BlockFace.SOUTH && block.getZ() % 16 == 15) ||
+				(face == BlockFace.WEST && block.getX() % 16 == 0)
+			) {
 				failedAttempts++;
-			}else{
+			} else {
 				// Find random adjacent block to this block
 				Block adjacent = block.getRelative(face);
 				if(adjacentBlocks.contains(adjacent) || !adjacent.getType().equals(Material.STONE)){

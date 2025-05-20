@@ -466,9 +466,6 @@ public class MapLoader {
 		int restEveryNumOfChunks = config.get(MainConfig.REST_EVERY_NUM_OF_CHUNKS);
 		int restDuration = config.get(MainConfig.REST_DURATION);
 
-		boolean generateVeins = config.get(MainConfig.ENABLE_GENERATE_VEINS);
-		VeinGenerator veinGenerator = new VeinGenerator(config.get(MainConfig.GENERATE_VEINS));
-
 		ChunkLoaderTask chunkLoaderTask = new ChunkLoaderTask(world, size, restEveryNumOfChunks, restDuration) {
 			@Override
 			public void onDoneLoadingWorld() {
@@ -481,11 +478,7 @@ public class MapLoader {
 			}
 
 			@Override
-			public void onDoneLoadingChunk(Chunk chunk) {
-				if(generateVeins && env.equals(Environment.NORMAL)){
-					veinGenerator.generateVeinsInChunk(chunk);
-				}
-			}
+			public void onDoneLoadingChunk(Chunk chunk) {}
 		};
 
 		chunkLoaderTask.printSettings();

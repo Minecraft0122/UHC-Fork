@@ -4,6 +4,8 @@ import com.gmail.val59000mc.configuration.MainConfig;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.maploader.CaveOresOnlyPopulator;
 import com.gmail.val59000mc.maploader.SugarCanePopulator;
+import com.gmail.val59000mc.maploader.VeinGeneratorPopulator;
+
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,6 +23,9 @@ public class WorldListener implements Listener{
 
 		if (world.getName().equals(overworldUuid) && cfg.get(MainConfig.ENABLE_GENERATE_SUGARCANE)){
 			world.getPopulators().add(new SugarCanePopulator(cfg.get(MainConfig.GENERATE_SUGARCANE_PERCENTAGE)));
+		}
+		if (world.getName().equals(overworldUuid) && cfg.get(MainConfig.ENABLE_GENERATE_VEINS)) {
+			world.getPopulators().add(new VeinGeneratorPopulator(cfg.get(MainConfig.GENERATE_VEINS)));
 		}
 		if (world.getName().equals(overworldUuid) && cfg.get(MainConfig.CAVE_ORES_ONLY)){
 			world.getPopulators().add(new CaveOresOnlyPopulator());

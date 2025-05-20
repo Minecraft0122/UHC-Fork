@@ -11,6 +11,11 @@
 - [#202][GL-202] - Security system when loading the config for the first time
 - [#178][GL-178] - The game should end immediately if only one living team remains online, even if there are living teams offline
 
+### Bug fixes
+
+- [#37][GL-37] - The generate-vein config option doesn't work in debug mode or with pre-generation disabled
+
+[GL-37]: https://gitlab.com/uhccore/uhccore/-/issues/37
 [GL-42]: https://gitlab.com/uhccore/uhccore/-/issues/42
 [GL-43]: https://gitlab.com/uhccore/uhccore/-/issues/43
 [GL-103]: https://gitlab.com/uhccore/uhccore/-/issues/103
