@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 
+import com.gmail.val59000mc.versionadapters.adapters.GetWorldMinHeightAdapter;
 import com.gmail.val59000mc.versionadapters.adapters.SetBiomeProviderAdapter;
 import com.gmail.val59000mc.versionadapters.adapters.SetMaxStackSizeAdapter;
 import com.gmail.val59000mc.versionadapters.adapters.SetTeamColorAdapter;
@@ -23,6 +24,7 @@ public class VersionAdapterLoader {
 		requireVersionAdapter(loadedAdapters, classLoader, SetMaxStackSizeAdapter.class);
 		requireVersionAdapter(loadedAdapters, classLoader, SetBiomeProviderAdapter.class);
 		requireVersionAdapter(loadedAdapters, classLoader, SetTeamColorAdapter.class);
+		requireVersionAdapter(loadedAdapters, classLoader, GetWorldMinHeightAdapter.class);
 
 		return new VersionAdapterLoader(Collections.unmodifiableMap(loadedAdapters));
 	}

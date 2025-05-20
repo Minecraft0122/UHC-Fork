@@ -54,10 +54,6 @@ public class VeinConfiguration {
 
 		minY = section.getInt("min-y",0);
 		maxY = section.getInt("max-y",65);
-		if(minY < 0 || minY > 255 || maxY < 0 || maxY > 255){
-			LOGGER.warning("Couldn't parse section '"+section.getName()+"' in generate-vein. The min and max Y must be between 0 and 255.");
-			return false;
-		}
 
 		return true;
 	}

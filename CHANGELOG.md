@@ -13,8 +13,10 @@
 
 ### Bug fixes
 
+- [#4][GL-4] - The generate-vein config option doesn't generate veins below y=0 on Minecraft 1.18+
 - [#37][GL-37] - The generate-vein config option doesn't work in debug mode or with pre-generation disabled
 
+[GL-4]: https://gitlab.com/uhccore/uhccore/-/issues/4
 [GL-37]: https://gitlab.com/uhccore/uhccore/-/issues/37
 [GL-42]: https://gitlab.com/uhccore/uhccore/-/issues/42
 [GL-43]: https://gitlab.com/uhccore/uhccore/-/issues/43

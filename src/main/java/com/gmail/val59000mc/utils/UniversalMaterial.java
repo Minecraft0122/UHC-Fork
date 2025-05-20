@@ -292,7 +292,14 @@ public enum UniversalMaterial {
 	BIRCH_PLANKS("WOOD", 2, DataValueMask.EXCLUDE_NONE, "BIRCH_PLANKS"),
 	JUNGLE_PLANKS("WOOD", 3, DataValueMask.EXCLUDE_NONE, "JUNGLE_PLANKS"),
 	ACACIA_PLANKS("WOOD", 4, DataValueMask.EXCLUDE_NONE, "ACACIA_PLANKS"),
-	DARK_OAK_PLANKS("WOOD", 5, DataValueMask.EXCLUDE_NONE, "DARK_OAK_PLANKS");
+	DARK_OAK_PLANKS("WOOD", 5, DataValueMask.EXCLUDE_NONE, "DARK_OAK_PLANKS"),
+
+	STONE("STONE", 0, DataValueMask.EXCLUDE_NONE, "STONE"),
+	GRANITE("STONE", 1, DataValueMask.EXCLUDE_NONE, "GRANITE"),
+	DIORITE("STONE", 3, DataValueMask.EXCLUDE_NONE, "DIORITE"),
+	ANDESITE("STONE", 5, DataValueMask.EXCLUDE_NONE, "ANDESITE"),
+	DEEPSLATE,
+	TUFF;
 
 	private final String name8;
 	private final int dataValue8;
@@ -489,6 +496,15 @@ public enum UniversalMaterial {
 			|| UniversalMaterial.PEONY.matches(block)
 			|| UniversalMaterial.PEONY_TOP.matches(block)
 			|| UniversalMaterial.DEAD_BUSH.matches(block);
+	}
+
+	public static boolean isOreReplaceableBlock(Block block) {
+		return UniversalMaterial.STONE.matches(block)
+			|| UniversalMaterial.GRANITE.matches(block)
+			|| UniversalMaterial.DIORITE.matches(block)
+			|| UniversalMaterial.ANDESITE.matches(block)
+			|| UniversalMaterial.DEEPSLATE.matches(block)
+			|| UniversalMaterial.TUFF.matches(block);
 	}
 
 	public static boolean isAxe(Material tool) {

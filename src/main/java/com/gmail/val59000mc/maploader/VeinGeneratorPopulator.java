@@ -1,8 +1,11 @@
 package com.gmail.val59000mc.maploader;
 
+import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.configuration.VeinConfiguration;
 import com.gmail.val59000mc.utils.RandomUtils;
 import com.gmail.val59000mc.utils.UniversalMaterial;
+import com.gmail.val59000mc.versionadapters.adapters.GetWorldMinHeightAdapter;
+
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -48,7 +51,7 @@ public class VeinGeneratorPopulator extends BlockPopulator {
 	}
 
 	private Block tryAdjustingToProperBlock(Block randBlock) {
-		if(randBlock.getType().equals(Material.STONE)){
+		if (UniversalMaterial.isOreReplaceableBlock(randBlock)) {
 			return randBlock;
 		}
 
@@ -57,7 +60,7 @@ public class VeinGeneratorPopulator extends BlockPopulator {
 			while(randBlock.getType().equals(UniversalMaterial.STATIONARY_WATER.getType()) && randBlock.getY() > 10){
 				randBlock = randBlock.getRelative(0, -10, 0);
 			}
-			if(randBlock.getType().equals(Material.STONE)){
+			if (UniversalMaterial.isOreReplaceableBlock(randBlock)) {
 				return randBlock;
 			}
 		}
@@ -95,8 +98,8 @@ public class VeinGeneratorPopulator extends BlockPopulator {
 			// RandomFace
 			BlockFace face = RandomUtils.randomAdjacentFace();
 			if (
-				(face == BlockFace.DOWN && block.getY() <= 1) ||
-				(face == BlockFace.UP && block.getY() >= 255) ||
+				(face == BlockFace.DOWN && block.getY() <= UhcCore.getVersionAdapterLoader().getVersionAdapter(GetWorldMinHeightAdapter.class).getWorldMinHeight(block.getWorld()) + 1) ||
+				(face == BlockFace.UP && block.getY() >= block.getWorld().getMaxHeight() - 1) ||
 				// Make sure to stay within bounds of the source chunk to avoid infinite recursion
 				(face == BlockFace.NORTH && block.getZ() % 16 == 0) ||
 				(face == BlockFace.EAST && block.getX() % 16 == 15) ||
@@ -107,8 +110,11 @@ public class VeinGeneratorPopulator extends BlockPopulator {
 			} else {
 				// Find random adjacent block to this block
 				Block adjacent = block.getRelative(face);
-				if(adjacentBlocks.contains(adjacent) || !adjacent.getType().equals(Material.STONE)){
-					// We only want to find new discovered block inside stone to avoid placing ores in mid-air in the caves.
+				if (
+					adjacentBlocks.contains(adjacent) ||
+					!UniversalMaterial.isOreReplaceableBlock(adjacent)
+				) {
+					// We only want to find new discovered block inside stone/deepslate etc to avoid placing ores in mid-air in the caves.
 					failedAttempts++;
 				}else{
 					adjacentBlocks.add(adjacent);
