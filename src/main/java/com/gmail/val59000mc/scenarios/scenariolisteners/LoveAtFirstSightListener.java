@@ -48,8 +48,7 @@ public class LoveAtFirstSightListener extends ScenarioListener{
 		for (final UhcPlayer player : getPlayerManager().getPlayersList()) {
 			if (!player.getTeam().isSolo() && !player.isTeamLeader()) {
 				// Teams are updated on the tab list by UpdateScoreboardTask once the game starts
-				player.getTeam().getMembers().remove(player);
-				player.setTeam(new UhcTeam(player));
+				player.setTeam(new UhcTeam());
 			}
 		}
 	}
@@ -138,7 +137,6 @@ public class LoveAtFirstSightListener extends ScenarioListener{
 		}
 
 		player.setTeam(team);
-		team.getMembers().add(player);
 
 		team.sendMessage(Lang.TEAM_MESSAGE_PLAYER_JOINS.replace("%player%", player.getName()));
 		GameManager gm = GameManager.getGameManager();

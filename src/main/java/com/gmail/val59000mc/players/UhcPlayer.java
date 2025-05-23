@@ -57,7 +57,7 @@ public class UhcPlayer {
 		this.uuid = uuid;
 		this.name = name;
 
-		team = new UhcTeam(this);
+		setTeam(new UhcTeam());
 		setState(PlayerState.WAITING);
 		globalChat = false;
 		kills = 0;
@@ -146,8 +146,17 @@ public class UhcPlayer {
 		return team;
 	}
 
-	public synchronized void setTeam(UhcTeam team) {
-		this.team = team;
+	public synchronized void setTeam(UhcTeam newTeam) {
+		final UhcTeam oldTeam = this.team;
+		if (oldTeam != null) {
+			// Free team number for old team if you are last player to leave
+			if (oldTeam.isSolo()) {
+				GameManager.getGameManager().getTeamManager().freeTeamNumber(oldTeam);
+			}
+			oldTeam.getMembers().remove(this);
+		}
+		newTeam.getMembers().add(this);
+		this.team = newTeam;
 	}
 
 	public PlayerState getState() {

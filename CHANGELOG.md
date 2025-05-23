@@ -6,6 +6,7 @@
 
 - [#42][GL-42] - Provide placeholders from UhcCore via a PlaceholderAPI expansion
 - [#43][GL-43] - Support using PlaceholderAPI placeholders in UhcCore
+- [#74][GL-74] - Always choose the smallest available number when allocating team numbers
 - [#103][GL-103] - Player glow color
 - [#130][GL-130] - Option to change chunk generator and biome provider for the UHC worlds
 - [#202][GL-202] - Security system when loading the config for the first time
@@ -20,6 +21,7 @@
 [GL-37]: https://gitlab.com/uhccore/uhccore/-/issues/37
 [GL-42]: https://gitlab.com/uhccore/uhccore/-/issues/42
 [GL-43]: https://gitlab.com/uhccore/uhccore/-/issues/43
+[GL-74]: https://gitlab.com/uhccore/uhccore/-/issues/74
 [GL-103]: https://gitlab.com/uhccore/uhccore/-/issues/103
 [GL-130]: https://gitlab.com/uhccore/uhccore/-/issues/130
 [GL-178]: https://gitlab.com/uhccore/uhccore/-/issues/178

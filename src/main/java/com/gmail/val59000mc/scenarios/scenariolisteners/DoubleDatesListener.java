@@ -6,6 +6,7 @@ import com.gmail.val59000mc.scenarios.ScenarioListener;
 import com.gmail.val59000mc.utils.RandomUtils;
 import org.bukkit.event.EventHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DoubleDatesListener extends ScenarioListener{
@@ -37,8 +38,8 @@ public class DoubleDatesListener extends ScenarioListener{
 
 	private void matchTeams(UhcTeam team1, UhcTeam team2){
 		// Teams are updated on the tab list by UpdateScoreboardTask once the game starts
-		team2.getMembers().forEach(member -> member.setTeam(team1));
-		team1.getMembers().addAll(team2.getMembers());
+		// Copy the member list to avoid ConcurrentModificationException
+		new ArrayList<>(team2.getMembers()).forEach(member -> member.setTeam(team1));
 	}
 
 }

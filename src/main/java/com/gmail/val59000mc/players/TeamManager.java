@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Pattern;
 
@@ -44,6 +45,7 @@ public class TeamManager{
 	private int lastTeamNumber;
 	private final ChatColor[] randomColorPool;
 	private int randomColorCounter;
+	private final PriorityQueue<Integer> freeTeamNumbers;
 
 	public TeamManager(PlayerManager playerManager, ScoreboardHandler scoreboardHandler){
 		this.playerManager = playerManager;
@@ -51,6 +53,7 @@ public class TeamManager{
 		this.lastTeamNumber = 0;
 		this.randomColorPool = getTeamColors();
 		this.randomColorCounter = 0;
+		this.freeTeamNumbers = new PriorityQueue<>();
 	}
 
 	public List<UhcTeam> getPlayingUhcTeams(){
@@ -161,8 +164,15 @@ public class TeamManager{
 	}
 
 	public int getNewTeamNumber() {
+		if (!freeTeamNumbers.isEmpty()) {
+			return freeTeamNumbers.poll();
+		}
 		lastTeamNumber++;
 		return lastTeamNumber;
+	}
+
+	public void freeTeamNumber(UhcTeam team) {
+		freeTeamNumbers.add(team.getTeamNumber());
 	}
 
 	public ChatColor getRandomTeamColor() {

@@ -87,6 +87,8 @@ public class PlayerConnectionListener implements Listener{
 				// Nothing
 			}
 
+			// The team can be freed because we are removing its only player
+			gameManager.getTeamManager().freeTeamNumber(uhcPlayer.getTeam());
 			playerManager.getPlayersList().remove(uhcPlayer);
 		}
 

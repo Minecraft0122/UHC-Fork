@@ -28,9 +28,8 @@ public class UhcTeam {
 	private ChatColor color;
 	private final Inventory teamInventory;
 
-	public UhcTeam(UhcPlayer uhcPlayer) {
+	public UhcTeam() {
 		members = new ArrayList<>();
-		members.add(uhcPlayer);
 		readyToStart = false;
 		teamNumber = GameManager.getGameManager().getTeamManager().getNewTeamNumber();
 		teamName = "Team " + teamNumber;
@@ -137,7 +136,6 @@ public class UhcTeam {
 				for(UhcPlayer teamMember : getMembers()){
 					teamMember.sendMessage(Lang.TEAM_MESSAGE_PLAYER_JOINS.replace("%player%",player.getName()));
 				}
-				getMembers().add(player);
 				player.setTeam(this);
 			}
 		}else{
@@ -154,8 +152,7 @@ public class UhcTeam {
 		if(player.canLeaveTeam()){
 
 			boolean isLeader = player.isTeamLeader();
-			getMembers().remove(player);
-			player.setTeam(new UhcTeam(player));
+			player.setTeam(new UhcTeam());
 
 			UhcPlayer newLeader = getMembers().get(0);
 
