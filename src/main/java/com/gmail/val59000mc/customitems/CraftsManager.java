@@ -99,6 +99,10 @@ public class CraftsManager {
 				LOGGER.warning("custom-crafts." + name + " section does not exist");
 				continue;
 			}
+			// Defaulting to true for enabled since that is the old behavior
+			if (!section.getBoolean("enabled", true)) {
+				continue;
+			}
 
 			List<ItemStack> recipe = new ArrayList<>();
 			ItemStack craftItem;

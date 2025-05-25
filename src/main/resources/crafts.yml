@@ -12,6 +12,7 @@ custom-crafts:
     craft: '{"type":"GOLDEN_APPLE"}'
     default-name: true
     limit: -1
+    enabled: true
 
   'Light Anvil':
     '1': '{"type":"IRON_INGOT"} {"type":"IRON_INGOT"} {"type":"IRON_INGOT"}'
@@ -20,6 +21,7 @@ custom-crafts:
     craft: '{"type":"ANVIL"}'
     default-name: false
     limit: 2
+    enabled: true
 
   # Example of item that when crafted will revive a team member.
   # Remove '#' symbols to enable.
@@ -32,6 +34,7 @@ custom-crafts:
   #  revive-item: true
   #  revive-with-inventory: true
   #  limit: -1
+  #  enabled: true
 
 #A list of items that you don't want players to be able to craft
 # Please respect the json-item syntax! (You can use the /iteminfo command to generate this syntax.)

@@ -71,6 +71,10 @@ public class KitsManager{
 
 		Set<String> kitsKeys = kitsSection.getKeys(false);
 		for(String kitKey : kitsKeys){
+			// Defaulting to true for enabled since that is the old behavior
+			if (!cfg.getBoolean("kits." + kitKey + ".enabled", true)) {
+				continue;
+			}
 
 			try{
 				LOGGER.info("Loading kit " + kitKey);

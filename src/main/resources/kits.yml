@@ -13,6 +13,7 @@ kits:
       - '{"type":"STONE_SWORD"}'
       - '{"type":"STONE_PICKAXE"}'
       - '{"type":"STONE_AXE"}'
+    enabled: true
 
   # Write other kits
   ench:
@@ -22,3 +23,4 @@ kits:
     items:
       - '{"type":"PAPER","amount":15}'
       - '{"type":"LEATHER","amount":5}'
+    enabled: true
