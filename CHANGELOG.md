@@ -7,6 +7,7 @@
 - [#42][GL-42] - Provide placeholders from UhcCore via a PlaceholderAPI expansion
 - [#43][GL-43] - Support using PlaceholderAPI placeholders in UhcCore
 - [#60][GL-60] - Option to enable or disable specific kits and crafts
+- [#203][GL-203] - Option to hide specific crafts from the crafts menu
 - [#74][GL-74] - Always choose the smallest available number when allocating team numbers
 - [#103][GL-103] - Player glow color
 - [#130][GL-130] - Option to change chunk generator and biome provider for the UHC worlds
@@ -28,6 +29,7 @@
 [GL-130]: https://gitlab.com/uhccore/uhccore/-/issues/130
 [GL-178]: https://gitlab.com/uhccore/uhccore/-/issues/178
 [GL-202]: https://gitlab.com/uhccore/uhccore/-/issues/202
+[GL-203]: https://gitlab.com/uhccore/uhccore/-/issues/203
 
 ## [1.20.13] - 2025-04-13
 

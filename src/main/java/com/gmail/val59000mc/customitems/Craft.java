@@ -21,14 +21,16 @@ public class Craft {
 	private final List<ItemStack> recipe;
 	private final ItemStack displayItem, craft;
 	private final int limit;
+	private final boolean hidden;
 	private final Set<OnCraftListener> onCraftListeners;
 	private final Set<OnConsumeListener> onConsumeListeners;
 
-	public Craft(String name, List<ItemStack> recipe, ItemStack craft, int limit, boolean defaultName){
+	public Craft(String name, List<ItemStack> recipe, ItemStack craft, int limit, boolean defaultName, boolean hidden) {
 		this.name = name;
 		this.recipe = recipe;
 		this.craft = craft;
 		this.limit = limit;
+		this.hidden = hidden;
 		onCraftListeners = new HashSet<>();
 		onConsumeListeners = new HashSet<>();
 
@@ -73,6 +75,10 @@ public class Craft {
 
 	public boolean hasLimit(){
 		return limit != -1;
+	}
+
+	public boolean isHidden() {
+		return hidden;
 	}
 
 	public Set<OnCraftListener> getOnCraftListeners() {
@@ -180,7 +186,7 @@ public class Craft {
 				throw new IllegalArgumentException("Craft item is not assigned!");
 			}
 
-			return new Craft(name, recipeList, craft, limit, defaultName);
+			return new Craft(name, recipeList, craft, limit, defaultName, false);
 		}
 
 	}

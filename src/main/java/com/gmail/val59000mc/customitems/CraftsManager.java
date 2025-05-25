@@ -107,7 +107,7 @@ public class CraftsManager {
 			List<ItemStack> recipe = new ArrayList<>();
 			ItemStack craftItem;
 			int limit;
-			boolean defaultName, reviveItem, reviveWithInventory;
+			boolean defaultName, reviveItem, reviveWithInventory, hidden;
 
 			try{
 				LOGGER.info("Loading custom craft "+name);
@@ -146,8 +146,9 @@ public class CraftsManager {
 				if (reviveItem) {
 					defaultName = false;
 				}
+				hidden = section.getBoolean("hidden", false);
 
-				Craft craft = new Craft(name, recipe, craftItem, limit, defaultName);
+				Craft craft = new Craft(name, recipe, craftItem, limit, defaultName, hidden);
 
 				if (reviveItem) {
 					PlayerManager pm = GameManager.getGameManager().getPlayerManager();
@@ -260,7 +261,7 @@ public class CraftsManager {
 		Inventory inv = Bukkit.createInventory(null, maxSlots, Lang.ITEMS_CRAFT_BOOK_INVENTORY);
 		int slot = 0;
 		for(Craft craft : getCrafts()){
-			if(slot < maxSlots){
+			if(!craft.isHidden() && slot < maxSlots){
 				inv.setItem(slot, craft.getDisplayItem());
 				slot++;
 			}
