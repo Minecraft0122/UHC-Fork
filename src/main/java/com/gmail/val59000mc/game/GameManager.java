@@ -29,6 +29,8 @@ import com.gmail.val59000mc.tasks.PreStartTask;
 import com.gmail.val59000mc.tasks.StopRestartTask;
 import com.gmail.val59000mc.tasks.TimeBeforeDeathmatchTask;
 import com.gmail.val59000mc.utils.*;
+import com.gmail.val59000mc.versionadapters.adapters.ChunkyPreGenerator;
+
 import org.apache.commons.lang.Validate;
 import org.bukkit.*;
 import org.bukkit.World.Environment;
@@ -41,6 +43,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -200,7 +203,29 @@ public class GameManager{
 		mapLoader.loadWorlds(debug);
 
 		if(config.get(MainConfig.ENABLE_PRE_GENERATE_WORLD) && !debug) {
-			mapLoader.generateChunks(Environment.NORMAL);
+			final ChunkyPreGenerator chunkyPreGenerator = UhcCore.getVersionAdapterLoader().getVersionAdapter(ChunkyPreGenerator.class);
+			if (chunkyPreGenerator != null) {
+				final List<CompletableFuture<Void>> preGenerationTasks = new ArrayList<>();
+
+				final World overworld = mapLoader.getUhcWorld(Environment.NORMAL);
+				final int overworldSize = config.get(MainConfig.BORDER_START_SIZE);
+				preGenerationTasks.add(chunkyPreGenerator.preGenerateChunks(overworld.getName(), overworldSize));
+
+				if (config.get(MainConfig.ENABLE_NETHER)) {
+					final World nether = mapLoader.getUhcWorld(Environment.NETHER);
+					final double netherScale = config.get(MainConfig.NETHER_SCALE);
+					final int netherSize = (int) (overworldSize / netherScale);
+					preGenerationTasks.add(chunkyPreGenerator.preGenerateChunks(nether.getName(), netherSize));
+				}
+
+				CompletableFuture.allOf(preGenerationTasks.stream().toArray(CompletableFuture[]::new))
+					.thenRun(() -> Bukkit.getScheduler().runTask(UhcCore.getPlugin(), () -> {
+						startWaitingPlayers();
+					}));
+			} else {
+				// Calls startWaitingPlayers when done
+				mapLoader.generateChunks(Environment.NORMAL);
+			}
 		} else {
 			startWaitingPlayers();
 		}

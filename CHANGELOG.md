@@ -4,6 +4,7 @@
 
 ### New features
 
+- [#38][GL-38] - Use Chunky if installed as an alternative for pre-generation on supported Minecraft versions
 - [#42][GL-42] - Provide placeholders from UhcCore via a PlaceholderAPI expansion
 - [#43][GL-43] - Support using PlaceholderAPI placeholders in UhcCore
 - [#60][GL-60] - Option to enable or disable specific kits and crafts
@@ -21,6 +22,7 @@
 
 [GL-4]: https://gitlab.com/uhccore/uhccore/-/issues/4
 [GL-37]: https://gitlab.com/uhccore/uhccore/-/issues/37
+[GL-38]: https://gitlab.com/uhccore/uhccore/-/issues/38
 [GL-42]: https://gitlab.com/uhccore/uhccore/-/issues/42
 [GL-43]: https://gitlab.com/uhccore/uhccore/-/issues/43
 [GL-60]: https://gitlab.com/uhccore/uhccore/-/issues/60
