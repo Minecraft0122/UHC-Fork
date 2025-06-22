@@ -62,8 +62,6 @@ repositories {
 			includeGroup "me.clip"
 		}
 	}
-
-
 	flatDir { // For BiomeMapping
 		dirs "$rootDir/libs"
 	}
@@ -82,7 +80,7 @@ dependencies {
 	compileOnly "com.github.MilkBowl:VaultAPI:1.7"
 	compileOnly "me.clip:placeholderapi:2.11.5"
 	compileOnly "com.comphenix.protocol:ProtocolLib:4.7.0"
-	implementation "net.wesjd:anvilgui:1.10.5-SNAPSHOT"
+	implementation "net.wesjd:anvilgui:1.10.6-SNAPSHOT"
 	implementation "io.papermc:paperlib:1.0.8"
 	implementation project(":Support-WorldEdit-6")
 	implementation project(":Support-WorldEdit-7")
@@ -108,6 +106,7 @@ dependencies {
 	shadowJar "net.zerodind:uhccore-nms-1_21_R2:1.0.0"
 	shadowJar "net.zerodind:uhccore-nms-1_21_R3:1.0.0"
 	shadowJar "net.zerodind:uhccore-nms-1_21_R4:1.0.0"
+	shadowJar "net.zerodind:uhccore-nms-1_21_R5:1.0.0"
 }
 
 java {
@@ -167,7 +166,7 @@ tasks.named("processResources") {
 tasks.named("runServer") {
 	// The minecraft version to use can be changed via the mcVersion property
 	// For example: gradlew runServer -PmcVersion=1.8.8
-	def mcVersion = project.findProperty("mcVersion") ?: "1.21.5"
+	def mcVersion = project.findProperty("mcVersion") ?: "1.21.6"
 	minecraftVersion mcVersion
 	runDirectory rootProject.file("run/$mcVersion")
 	javaLauncher = javaToolchains.launcherFor {

@@ -4,6 +4,7 @@
 
 ### New features
 
+- [#204][GL-204] - Support Minecraft 1.21.6
 - [#38][GL-38] - Use Chunky if installed as an alternative for pre-generation on supported Minecraft versions
 - [#42][GL-42] - Provide placeholders from UhcCore via a PlaceholderAPI expansion
 - [#43][GL-43] - Support using PlaceholderAPI placeholders in UhcCore
@@ -32,6 +33,7 @@
 [GL-178]: https://gitlab.com/uhccore/uhccore/-/issues/178
 [GL-202]: https://gitlab.com/uhccore/uhccore/-/issues/202
 [GL-203]: https://gitlab.com/uhccore/uhccore/-/issues/203
+[GL-204]: https://gitlab.com/uhccore/uhccore/-/issues/204
 
 ## [1.20.13] - 2025-04-13
 
