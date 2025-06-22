@@ -1,6 +1,9 @@
 # Changelog
 
-## Unreleased
+## [1.20.14] - 2025-06-22
+
+UhcCore version `1.20.14` is now released! This update brings support for Minecraft 1.21.6,
+but also adds integrations with the PlaceholderAPI and Chunky plugins, as well as various other features and bug fixes.
 
 ### New features
 
