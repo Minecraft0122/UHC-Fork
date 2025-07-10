@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### New features
+
+- [#205][GL-205] - Option to control the locator bar on Minecraft 1.21.6+
+
+[GL-205]: https://gitlab.com/uhccore/uhccore/-/issues/205
+
 ## [1.20.14] - 2025-06-22
 
 UhcCore version `1.20.14` is now released! This update brings support for Minecraft 1.21.6,

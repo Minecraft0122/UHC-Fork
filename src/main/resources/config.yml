@@ -89,6 +89,9 @@ announce-advancements: true
 # This feature might not make a lot of sense for UHC but if you want to enable natural health regen you can do it here.
 enable-health-regen: false
 
+# Whether to enable the locator bar on Minecraft 1.21.6+
+enable-locator-bar: false
+
 #Configure after how many seconds a disconnected player should be considered dead and eliminated
 kill-disconnected-players-after-delay:
   enable: false

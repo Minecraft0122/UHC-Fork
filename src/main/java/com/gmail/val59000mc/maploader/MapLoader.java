@@ -50,6 +50,7 @@ public class MapLoader {
 	public final static String DO_DAYLIGHT_CYCLE = "doDaylightCycle";
 	public final static String DO_MOB_SPAWNING = "doMobSpawning";
 	public final static String NATURAL_REGENERATION = "naturalRegeneration";
+	public final static String LOCATOR_BAR = "locatorBar";
 	public final static String ANNOUNCE_ADVANCEMENTS = "announceAdvancements";
 	public final static String COMMAND_BLOCK_OUTPUT = "commandBlockOutput";
 	public final static String LOG_ADMIN_COMMANDS = "logAdminCommands";
@@ -341,12 +342,13 @@ public class MapLoader {
 	public void prepareWorlds() {
 		Difficulty difficulty = config.get(MainConfig.GAME_DIFFICULTY);
 		boolean healthRegen = config.get(MainConfig.ENABLE_HEALTH_REGEN);
+		boolean locatorBar = config.get(MainConfig.ENABLE_LOCATOR_BAR);
 		boolean announceAdvancements = config.get(MainConfig.ANNOUNCE_ADVANCEMENTS);
 		int borderStartApothem = config.get(MainConfig.BORDER_START_SIZE);
 		int borderStartSideLength = 2 * borderStartApothem;
 
 		World overworld = getUhcWorld(Environment.NORMAL);
-		prepareWorld(overworld, difficulty, healthRegen, announceAdvancements, borderStartSideLength);
+		prepareWorld(overworld, difficulty, healthRegen, locatorBar, announceAdvancements, borderStartSideLength);
 
 		VersionUtils.getVersionUtils().setGameRuleValue(overworld, DO_DAYLIGHT_CYCLE, false);
 		VersionUtils.getVersionUtils().setGameRuleValue(overworld, DO_MOB_SPAWNING, false);
@@ -356,12 +358,12 @@ public class MapLoader {
 
 		if (config.get(MainConfig.ENABLE_NETHER)){
 			World nether = getUhcWorld(Environment.NETHER);
-			prepareWorld(nether, difficulty, healthRegen, announceAdvancements, borderStartSideLength / config.get(MainConfig.NETHER_SCALE));
+			prepareWorld(nether, difficulty, healthRegen, locatorBar, announceAdvancements, borderStartSideLength / config.get(MainConfig.NETHER_SCALE));
 		}
 
 		if (config.get(MainConfig.ENABLE_THE_END)){
 			World theEnd = getUhcWorld(Environment.THE_END);
-			prepareWorld(theEnd, difficulty, healthRegen, announceAdvancements, borderStartSideLength);
+			prepareWorld(theEnd, difficulty, healthRegen, locatorBar, announceAdvancements, borderStartSideLength);
 		}
 
 		if (config.get(MainConfig.LOBBY_IN_DEFAULT_WORLD)){
@@ -384,10 +386,13 @@ public class MapLoader {
 		}
 	}
 
-	private void prepareWorld(World world, Difficulty difficulty, boolean healthRegen, boolean announceAdvancements, double borderSideLength) {
+	private void prepareWorld(World world, Difficulty difficulty, boolean healthRegen, boolean locatorBar, boolean announceAdvancements, double borderSideLength) {
 		world.save();
 		if (!healthRegen){
 			VersionUtils.getVersionUtils().setGameRuleValue(world, NATURAL_REGENERATION, false);
+		}
+		if (!locatorBar && PaperLib.isVersion(21, 6)) {
+			VersionUtils.getVersionUtils().setGameRuleValue(world, LOCATOR_BAR, false);
 		}
 		if (!announceAdvancements && PaperLib.getMinecraftVersion() >= 12){
 			VersionUtils.getVersionUtils().setGameRuleValue(world, ANNOUNCE_ADVANCEMENTS, false);
