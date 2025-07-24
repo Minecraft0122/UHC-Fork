@@ -101,10 +101,11 @@ public class VeinGeneratorPopulator extends BlockPopulator {
 				(face == BlockFace.DOWN && block.getY() <= UhcCore.getVersionAdapterLoader().getVersionAdapter(GetWorldMinHeightAdapter.class).getWorldMinHeight(block.getWorld()) + 1) ||
 				(face == BlockFace.UP && block.getY() >= block.getWorld().getMaxHeight() - 1) ||
 				// Make sure to stay within bounds of the source chunk to avoid infinite recursion
-				(face == BlockFace.NORTH && block.getZ() % 16 == 0) ||
-				(face == BlockFace.EAST && block.getX() % 16 == 15) ||
-				(face == BlockFace.SOUTH && block.getZ() % 16 == 15) ||
-				(face == BlockFace.WEST && block.getX() % 16 == 0)
+				// Using Math.floorMod instead of % (remainder) to handle negative coordinates correctly
+				(face == BlockFace.NORTH && Math.floorMod(block.getZ(), 16) == 0) ||
+				(face == BlockFace.EAST && Math.floorMod(block.getX(), 16) == 15) ||
+				(face == BlockFace.SOUTH && Math.floorMod(block.getZ(), 16) == 15) ||
+				(face == BlockFace.WEST && Math.floorMod(block.getX(), 16) == 0)
 			) {
 				failedAttempts++;
 			} else {

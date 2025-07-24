@@ -6,6 +6,11 @@
 
 - [#205][GL-205] - Option to control the locator bar on Minecraft 1.21.6+
 
+### Bug fixes
+
+- [#206][GL-206] - Crash on world pregen for veins
+
+[GL-206]: https://gitlab.com/uhccore/uhccore/-/issues/206
 [GL-205]: https://gitlab.com/uhccore/uhccore/-/issues/205
 
 ## [1.20.14] - 2025-06-22
