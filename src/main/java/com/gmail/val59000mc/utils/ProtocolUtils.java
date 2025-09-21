@@ -18,7 +18,6 @@ import com.gmail.val59000mc.players.UhcPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -72,7 +71,7 @@ public class ProtocolUtils{
 		packet.getChatComponents().write(1, WrappedChatComponent.fromText(footer));
 		try {
 			ProtocolLibrary.getProtocolManager().sendServerPacket(player, packet);
-		}catch (InvocationTargetException ex){
+		}catch (Exception ex){
 			LOGGER.log(Level.WARNING, "Unable to set tab header/footer", ex);
 		}
 	}
