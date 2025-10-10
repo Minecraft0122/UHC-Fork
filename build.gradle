@@ -2,8 +2,8 @@ plugins {
 	id "java-library"
 	id "maven-publish"
 	id "com.gradleup.shadow" version "9.2.2"
-	id "xyz.jpenilla.run-paper" version "2.3.1"
-	id "net.kyori.indra.git" version "3.1.3"
+	id "xyz.jpenilla.run-paper" version "3.0.1"
+	id "net.kyori.indra.git" version "3.2.0"
 }
 
 group = "net.zerodind"
