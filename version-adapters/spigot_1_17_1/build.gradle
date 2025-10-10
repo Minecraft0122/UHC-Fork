@@ -5,8 +5,8 @@ plugins {
 repositories {
 	mavenCentral()
 	maven { // For Spigot API
-		name "spigotmc"
-		url "https://hub.spigotmc.org/nexus/content/groups/public/"
+		name = "spigotmc"
+		url = "https://hub.spigotmc.org/nexus/content/groups/public/"
 		content {
 			includeGroup "org.bukkit"
 			includeGroup "org.spigotmc"
@@ -14,8 +14,8 @@ repositories {
 		}
 	}
 	maven { // For PaperLib
-		name "papermc"
-		url "https://repo.papermc.io/repository/maven-public/"
+		name = "papermc"
+		url = "https://repo.papermc.io/repository/maven-public/"
 		content {
 			includeGroup "io.papermc"
 		}

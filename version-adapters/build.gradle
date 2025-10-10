@@ -5,8 +5,8 @@ plugins {
 repositories {
 	mavenCentral()
 	maven { // For Spigot API
-		name "spigotmc"
-		url "https://hub.spigotmc.org/nexus/content/groups/public/"
+		name = "spigotmc"
+		url = "https://hub.spigotmc.org/nexus/content/groups/public/"
 		content {
 			includeGroup "org.bukkit"
 			includeGroup "org.spigotmc"
