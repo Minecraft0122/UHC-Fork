@@ -4,12 +4,14 @@
 
 ### New features
 
+- [#209][GL-209] - Support Minecraft 1.21.10
 - [#205][GL-205] - Option to control the locator bar on Minecraft 1.21.6+
 
 ### Bug fixes
 
 - [#206][GL-206] - Crash on world pregen for veins
 
+[GL-209]: https://gitlab.com/uhccore/uhccore/-/issues/209
 [GL-206]: https://gitlab.com/uhccore/uhccore/-/issues/206
 [GL-205]: https://gitlab.com/uhccore/uhccore/-/issues/205
 

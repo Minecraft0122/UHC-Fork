@@ -73,7 +73,7 @@ dependencies {
 	compileOnly "com.github.MilkBowl:VaultAPI:1.7"
 	compileOnly "me.clip:placeholderapi:2.11.5"
 	compileOnly "net.dmulloy2:ProtocolLib:5.3.0"
-	implementation "net.wesjd:anvilgui:1.10.6-SNAPSHOT"
+	implementation "net.wesjd:anvilgui:1.10.10-SNAPSHOT"
 	implementation "io.papermc:paperlib:1.0.8"
 	implementation project(":Support-WorldEdit-6")
 	implementation project(":Support-WorldEdit-7")
@@ -100,6 +100,7 @@ dependencies {
 	shadowJar "net.zerodind:uhccore-nms-1_21_R3:1.0.0"
 	shadowJar "net.zerodind:uhccore-nms-1_21_R4:1.0.0"
 	shadowJar "net.zerodind:uhccore-nms-1_21_R5:1.0.0"
+	shadowJar "net.zerodind:uhccore-nms-1_21_R6:1.0.0"
 }
 
 java {
@@ -168,7 +169,7 @@ tasks.named("processResources") {
 tasks.named("runServer") {
 	// The minecraft version to use can be changed via the mcVersion property
 	// For example: gradlew runServer -PmcVersion=1.8.8
-	def mcVersion = project.findProperty("mcVersion") ?: "1.21.8"
+	def mcVersion = project.findProperty("mcVersion") ?: "1.21.10"
 	minecraftVersion mcVersion
 	runDirectory rootProject.file("run/$mcVersion")
 	javaLauncher = javaToolchains.launcherFor {

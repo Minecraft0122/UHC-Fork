@@ -208,6 +208,7 @@ public enum UniversalMaterial {
 
 	WOODEN_AXE("WOOD_AXE", "WOODEN_AXE"),
 	STONE_AXE,
+	COPPER_AXE,
 	IRON_AXE,
 	GOLDEN_AXE("GOLD_AXE", "GOLDEN_AXE"),
 	DIAMOND_AXE,
@@ -215,6 +216,7 @@ public enum UniversalMaterial {
 
 	WOODEN_HOE("WOOD_HOE", "WOODEN_HOE"),
 	STONE_HOE,
+	COPPER_HOE,
 	IRON_HOE,
 	GOLDEN_HOE("GOLD_HOE", "GOLDEN_HOE"),
 	DIAMOND_HOE,
@@ -222,6 +224,7 @@ public enum UniversalMaterial {
 
 	WOODEN_PICKAXE("WOOD_PICKAXE", "WOODEN_PICKAXE"),
 	STONE_PICKAXE,
+	COPPER_PICKAXE,
 	IRON_PICKAXE,
 	GOLDEN_PICKAXE("GOLD_PICKAXE", "GOLDEN_PICKAXE"),
 	DIAMOND_PICKAXE,
@@ -229,6 +232,7 @@ public enum UniversalMaterial {
 
 	WOODEN_SHOVEL("WOOD_SPADE", "WOODEN_SHOVEL"),
 	STONE_SHOVEL("STONE_SPADE", "STONE_SHOVEL"),
+	COPPER_SHOVEL,
 	IRON_SHOVEL("IRON_SPADE", "IRON_SHOVEL"),
 	GOLDEN_SHOVEL("GOLD_SPADE", "GOLDEN_SHOVEL"),
 	DIAMOND_SHOVEL("DIAMOND_SPADE", "DIAMOND_SHOVEL"),
@@ -236,6 +240,7 @@ public enum UniversalMaterial {
 
 	WOODEN_SWORD("WOOD_SWORD", "WOODEN_SWORD"),
 	STONE_SWORD,
+	COPPER_SWORD,
 	IRON_SWORD,
 	GOLDEN_SWORD("GOLD_SWORD", "GOLDEN_SWORD"),
 	DIAMOND_SWORD,
@@ -387,6 +392,10 @@ public enum UniversalMaterial {
 			UniversalMaterial.STONE_HOE,
 			UniversalMaterial.STONE_PICKAXE,
 			UniversalMaterial.STONE_SHOVEL,
+			UniversalMaterial.COPPER_AXE,
+			UniversalMaterial.COPPER_HOE,
+			UniversalMaterial.COPPER_PICKAXE,
+			UniversalMaterial.COPPER_SHOVEL,
 			UniversalMaterial.IRON_AXE,
 			UniversalMaterial.IRON_HOE,
 			UniversalMaterial.IRON_PICKAXE,
@@ -407,6 +416,7 @@ public enum UniversalMaterial {
 		putIfSupported(miningDamage, 2,
 			UniversalMaterial.WOODEN_SWORD,
 			UniversalMaterial.STONE_SWORD,
+			UniversalMaterial.COPPER_SWORD,
 			UniversalMaterial.IRON_SWORD,
 			UniversalMaterial.GOLDEN_SWORD,
 			UniversalMaterial.DIAMOND_SWORD,
@@ -511,6 +521,7 @@ public enum UniversalMaterial {
 		// Should probably use .matches on an ItemStack, but actually this is fine for now
 		return tool == UniversalMaterial.WOODEN_AXE.getType()
 			|| tool == Material.STONE_AXE
+			|| tool == UniversalMaterial.COPPER_AXE.getType()
 			|| tool == Material.IRON_AXE
 			|| tool == UniversalMaterial.GOLDEN_AXE.getType()
 			|| tool == Material.DIAMOND_AXE

@@ -58,6 +58,7 @@ public enum OreType {
 						tool == Material.DIAMOND_PICKAXE ||
 						tool == UniversalMaterial.GOLDEN_PICKAXE.getType() ||
 						tool == Material.IRON_PICKAXE ||
+						tool == UniversalMaterial.COPPER_PICKAXE.getType() ||
 						tool == Material.STONE_PICKAXE ||
 						tool == UniversalMaterial.WOODEN_PICKAXE.getType();
 			case COPPER:
@@ -67,6 +68,7 @@ public enum OreType {
 						tool == Material.DIAMOND_PICKAXE ||
 						tool == UniversalMaterial.GOLDEN_PICKAXE.getType() ||
 						tool == Material.IRON_PICKAXE ||
+						tool == UniversalMaterial.COPPER_PICKAXE.getType() ||
 						tool == Material.STONE_PICKAXE;
 			case GOLD:
 			case REDSTONE:
