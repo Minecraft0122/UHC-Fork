@@ -1,6 +1,9 @@
 # Changelog
 
-## Unreleased
+## [1.20.15] - 2025-10-12
+
+UhcCore version `1.20.15` is now here! The update brings a few small fixes,
+but most importantly, adds support for Minecraft 1.21.10.
 
 ### New features
 
