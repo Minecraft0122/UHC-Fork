@@ -34,7 +34,8 @@ over 10 years ago, but this plugin adds many new features:
 ## Downloads
 
 Build this fork from source with `gradlew build`. The plugin JAR is written to
-`build/libs/` and uses the `UHC-Fork-2.x.x` artifact name.
+`build/libs/` and uses the `UHC-Fork-2.x.x` artifact name. GitHub Actions also
+builds the plugin on pushes, pull requests, and manual workflow runs.
 
 The original public UhcCore release page is still available on
 [Spigot](https://www.spigotmc.org/resources/uhccore.102507/history), but this

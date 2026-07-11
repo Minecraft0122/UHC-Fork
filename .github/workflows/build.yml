@@ -1,0 +1,46 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build plugin
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: gradle
+
+      - name: Make Gradle wrapper executable
+        run: chmod +x gradlew
+
+      - name: Build
+        run: ./gradlew build --stacktrace
+
+      - name: Upload plugin jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: UHC-Fork-plugin
+          path: |
+            build/libs/UHC-Fork-*.jar
+            !build/libs/*-sources.jar
+            !build/libs/*-javadoc.jar
+          if-no-files-found: error
+          retention-days: 14

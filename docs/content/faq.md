@@ -672,16 +672,17 @@ familiar with Git, you can also inspect the commit history on the `main` branch.
 
 ## How can I try the latest improvements to UHC-Fork before they are released?
 
-The easiest way to try the latest UHC-Fork improvements is to build the plugin
-from the `main` branch with `gradlew build`. Snapshot builds are tied to
+The easiest way to try the latest UHC-Fork improvements is to download the
+`UHC-Fork-plugin` artifact from the latest `Build` workflow run, or build the
+plugin from the `main` branch with `gradlew build`. Snapshot builds are tied to
 specific Git commits, and are, as the name implies, a snapshot of the fork that
 is currently being developed. Some features may not be finalized yet, and could
 change again before the final release.
 
-If GitHub Actions is enabled for the repository, the latest workflow artifacts
-can be found on [the Actions page][latest-snapshot]. Download the plugin JAR
-file (not the `javadoc` or `sources` JAR), and then install it on your server.
-Please report any problems you find via [GitHub][issues] or [Discord][discord].
+The latest workflow artifacts can be found on [the Actions page][latest-snapshot].
+Download the plugin JAR file from the `UHC-Fork-plugin` artifact, and then
+install it on your server. Please report any problems you find via
+[GitHub][issues] or [Discord][discord].
 
 You can also find previous workflow runs by browsing the
 [GitHub Actions runs][ci-jobs].
