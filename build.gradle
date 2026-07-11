@@ -6,8 +6,8 @@ plugins {
 	id "net.kyori.indra.git" version "3.2.0"
 }
 
-group = "net.zerodind"
-version = "1.20.16-SNAPSHOT"
+group = "io.github.minecraft0122"
+version = "2.0.0-SNAPSHOT"
 
 def supportedMinecraftVersion = "26.1.2"
 def spigotApiVersion = "${supportedMinecraftVersion}-R0.1-SNAPSHOT"
@@ -178,14 +178,11 @@ publishing {
 
 	repositories {
 		maven {
-			name = "GitLab"
-			url = "https://gitlab.com/api/v4/projects/${System.getenv("CI_PROJECT_ID")}/packages/maven"
-			credentials(HttpHeaderCredentials) {
-				name = "Job-Token"
-				value = System.getenv("CI_JOB_TOKEN")
-			}
-			authentication {
-				header(HttpHeaderAuthentication)
+			name = "GitHubPackages"
+			url = uri("https://maven.pkg.github.com/Minecraft0122/UHC-Fork")
+			credentials {
+				username = findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+				password = findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
 			}
 		}
 	}

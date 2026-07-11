@@ -319,7 +319,7 @@ values, just delete the file (or move/rename it, to keep a backup). When the
 server is started, UhcCore will generate a new config file with the default
 values.
 
-[configs]: https://gitlab.com/uhccore/uhccore/-/tree/main/src/main/resources
+[configs]: https://github.com/Minecraft0122/UHC-Fork/tree/main/src/main/resources
 
 ## Where can I read more about configuration, commands etc? Is there a wiki?
 
@@ -365,7 +365,7 @@ softdepend: [UhcCore]
 
 Below are Gradle/Maven dependency snippets for compiling against the API:
 
-!!! example "Snippet: UhcCore repository"
+!!! example "Snippet: UHC-Fork repository"
 
     === "Gradle (Groovy DSL)"
 
@@ -373,8 +373,12 @@ Below are Gradle/Maven dependency snippets for compiling against the API:
 
         ```groovy
         maven {
-            name "uhccore"
-            url "https://gitlab.com/api/v4/groups/uhccore/-/packages/maven"
+            name "uhcFork"
+            url "https://maven.pkg.github.com/Minecraft0122/UHC-Fork"
+            credentials {
+                username = findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+                password = findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+            }
         }
         ```
 
@@ -384,8 +388,12 @@ Below are Gradle/Maven dependency snippets for compiling against the API:
 
         ```kotlin
         maven {
-            name = "uhccore"
-            url = uri("https://gitlab.com/api/v4/groups/uhccore/-/packages/maven")
+            name = "uhcFork"
+            url = uri("https://maven.pkg.github.com/Minecraft0122/UHC-Fork")
+            credentials {
+                username = findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
+                password = findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+            }
         }
         ```
 
@@ -395,19 +403,19 @@ Below are Gradle/Maven dependency snippets for compiling against the API:
 
         ```xml
         <repository>
-            <id>uhccore</id>
-            <url>https://gitlab.com/api/v4/groups/uhccore/-/packages/maven</url>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/Minecraft0122/UHC-Fork</url>
         </repository>
         ```
 
-!!! example "Snippet: UhcCore plugin JAR dependency"
+!!! example "Snippet: UHC-Fork plugin JAR dependency"
 
     === "Gradle (Groovy DSL)"
 
         Add this to `dependencies` in your `build.gradle`:
 
         ```groovy
-        compileOnly "net.zerodind:uhccore:1.20.16-SNAPSHOT"
+        compileOnly "io.github.minecraft0122:UHC-Fork:2.0.0-SNAPSHOT"
         ```
 
     === "Gradle (Kotlin DSL)"
@@ -415,7 +423,7 @@ Below are Gradle/Maven dependency snippets for compiling against the API:
         Add this to `dependencies` in your `build.gradle.kts`:
 
         ```kotlin
-        compileOnly("net.zerodind:uhccore:1.20.16-SNAPSHOT")
+        compileOnly("io.github.minecraft0122:UHC-Fork:2.0.0-SNAPSHOT")
         ```
 
     === "Maven"
@@ -424,9 +432,9 @@ Below are Gradle/Maven dependency snippets for compiling against the API:
 
         ```xml
         <dependency>
-            <groupId>net.zerodind</groupId>
-            <artifactId>uhccore</artifactId>
-            <version>1.20.16-SNAPSHOT</version>
+            <groupId>io.github.minecraft0122</groupId>
+            <artifactId>UHC-Fork</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         ```
@@ -627,7 +635,7 @@ implementation alternatives). The more details you go into, the less work it is
 for me when implementing the feature.
 
 - While you *can* discuss feature requests and bug fixes on the Discord server,
-consider [opening an issue][issues] on GitLab. This helps me keep track of
+consider [opening an issue][issues] on GitHub. This helps me keep track of
 the feature request or bug, and makes sure it doesn't get lost in an old
 Discord conversation if it takes a while before I have time to fix it.
 
@@ -637,12 +645,12 @@ previous knowledge of Java programming and/or Minecraft plugin development.
 To get started, see
 ["I want to help contribute code to this project, where do I start?"][q6].
 
-[issues]: https://gitlab.com/uhccore/uhccore/-/issues
+[issues]: https://github.com/Minecraft0122/UHC-Fork/issues
 
 ## When will the next update be released? What features will it have?
 
 There is currently no complete roadmap, but you can always take a look at
-[the milestones in GitLab][milestones] to get some insight into current and
+[the milestones in GitHub][milestones] to get some insight into current and
 future updates, if a milestone has been created for them. Please note that I
 generally won't be able to give out an ETA unless the release is almost ready.
 That's simply because I don't have that much time (and can't reliably predict
@@ -659,34 +667,32 @@ You can also read the `[Unreleased]` section at the top of
 already been implemented and will be released in the next update. If you are
 familiar with Git, you can also inspect the commit history on the `main` branch.
 
-[milestones]: https://gitlab.com/uhccore/uhccore/-/milestones
-[changelog]: https://gitlab.com/uhccore/uhccore/-/blob/main/CHANGELOG.md
+[milestones]: https://github.com/Minecraft0122/UHC-Fork/milestones
+[changelog]: https://github.com/Minecraft0122/UHC-Fork/blob/main/CHANGELOG.md
 
-## How can I try the latest improvements to UhcCore before they are released?
+## How can I try the latest improvements to UHC-Fork before they are released?
 
-The easiest way to try the latest UhcCore improvements (if they have not yet
-made it into a release) is to download a snapshot build. Snapshot builds are
-built from specific Git commits, and are, as the name implies, a snapshot of
-the UhcCore release that is currently being developed. Some features may not
-be finalized yet, and could change again before the final release.
+The easiest way to try the latest UHC-Fork improvements is to build the plugin
+from the `main` branch with `gradlew build`. Snapshot builds are tied to
+specific Git commits, and are, as the name implies, a snapshot of the fork that
+is currently being developed. Some features may not be finalized yet, and could
+change again before the final release.
 
-[Here is a link to the latest UhcCore snapshot build.][latest-snapshot]
-Simply download the plugin JAR file (not the `javadoc` or `sources` JAR), and
-then install it on your server. Please report any problems you find with the
-snapshot build, via [GitLab][issues] or [Discord][discord].
+If GitHub Actions is enabled for the repository, the latest workflow artifacts
+can be found on [the Actions page][latest-snapshot]. Download the plugin JAR
+file (not the `javadoc` or `sources` JAR), and then install it on your server.
+Please report any problems you find via [GitHub][issues] or [Discord][discord].
 
-You can also find previous snapshot builds, by browsing the
-[GitLab CI jobs][ci-jobs] and finding the `build` jobs. On the CI job page,
-there is a button which allows you to browse the job artifacts, where you can
-find the snapshot build.
+You can also find previous workflow runs by browsing the
+[GitHub Actions runs][ci-jobs].
 
-Apart from the latest snapshot build, old snapshot builds are only kept for a
-maximum of 10 days. If you would like to try an older snapshot version of
-UhcCore, you can check out the relevant commit using Git, and build the plugin
-from the source code, using the instructions in the project README file.
+Older workflow artifacts may expire according to the repository's GitHub
+Actions retention settings. If you would like to try an older snapshot version
+of UHC-Fork, you can check out the relevant commit using Git, and build the
+plugin from the source code, using the instructions in the project README file.
 
-[latest-snapshot]: https://gitlab.com/uhccore/uhccore/-/jobs/artifacts/main/browse/build/libs?job=build
-[ci-jobs]: https://gitlab.com/uhccore/uhccore/-/jobs?statuses=SUCCESS
+[latest-snapshot]: https://github.com/Minecraft0122/UHC-Fork/actions
+[ci-jobs]: https://github.com/Minecraft0122/UHC-Fork/actions
 
 ## I want to help contribute code to this project, where do I start?
 
@@ -698,8 +704,8 @@ I would highly encourage you to join [the Discord server][discord] and ask in
 the `#dev` channel if you have any questions. You can also use this channel
 to ask questions about and discuss the UhcCore source code.
 
-[readme]: https://gitlab.com/uhccore/uhccore/-/blob/main/README.md
-[contributing]: https://gitlab.com/uhccore/uhccore/-/blob/main/CONTRIBUTING.md
+[readme]: https://github.com/Minecraft0122/UHC-Fork/blob/main/README.md
+[contributing]: https://github.com/Minecraft0122/UHC-Fork/blob/main/CONTRIBUTING.md
 
 ## Is this plugin free? Will it stay that way?
 

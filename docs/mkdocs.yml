@@ -1,10 +1,10 @@
 docs_dir: content
-repo_url: https://gitlab.com/uhccore/uhccore
+repo_url: https://github.com/Minecraft0122/UHC-Fork
 edit_uri: blob/main/docs/content/
 
-site_name: UhcCore
-site_description: Minecraft server plugin which automates games of the classic UHC gamemode, with endless customization options!
-site_url: https://uhccore.zerodind.net/
+site_name: UHC-Fork
+site_description: Minecraft server plugin fork which automates games of the classic UHC gamemode, with latest-version support and addon APIs.
+site_url: https://github.com/Minecraft0122/UHC-Fork/
 copyright: Copyright &copy; 2022-2025 Odin Dahlström and others
 
 markdown_extensions:
@@ -59,4 +59,7 @@ extra:
       name: UhcCore Discord server
     - icon: fontawesome/brands/gitlab
       link: https://gitlab.com/uhccore
-      name: UhcCore GitLab group
+      name: Upstream UhcCore GitLab group
+    - icon: fontawesome/brands/github
+      link: https://github.com/Minecraft0122/UHC-Fork
+      name: UHC-Fork GitHub repository

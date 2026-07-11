@@ -2,7 +2,7 @@ plugins {
 	id "org.gradle.toolchains.foojay-resolver-convention" version "1.0.0"
 }
 
-rootProject.name = "uhccore"
+rootProject.name = "UHC-Fork"
 
 include "Support-WorldEdit-7"
 include "version-adapters"

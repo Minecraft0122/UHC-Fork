@@ -1,4 +1,4 @@
-# Contributing to UhcCore
+# Contributing to UHC-Fork
 
 Thank you for your interest in contributing to this plugin!
 If you have any questions, don't hestitate to ask in the `#dev` channel
@@ -9,13 +9,13 @@ on [the Discord server][discord-invite].
 ## Submitting feature requests and bug reports
 
 If you have an idea for a new feature, or found a bug that needs to be
-fixed, you can [create an issue][issue-tracker] at the GitLab repository.
+fixed, you can [create an issue][issue-tracker] at the GitHub repository.
 Please be as descriptive as possible and include all relevant information,
 such as error messages and/or server logs when submitting a bug report.
 You are also welcome to discuss the matter on
 [the Discord server][discord-invite], in the `#bugs` or `#suggestions` channel.
 
-[issue-tracker]: https://gitlab.com/uhccore/uhccore/-/issues
+[issue-tracker]: https://github.com/Minecraft0122/UHC-Fork/issues
 
 ## Contributing features and bug fixes
 
@@ -43,23 +43,11 @@ you can skip this step.
 3. Wait for the projects to be imported, and then start coding!
 4. When you think you are done, make sure to [test your changes][testing].
 5. Commit and push your changes **on a new Git branch** in your forked repository.
-6. [Create a merge request][merging] for your contribution.
+6. [Create a pull request][pull-request] for your contribution.
 
-*Note 1: A GitLab "merge request" is analogous to a GitHub "pull request".*
-
-*Note 2: Please avoid creating a merge request from your main branch.
-Instead, create a new branch for the merge request, based on your main branch.*
-
-Another recommendation is to [disable GitLab CI/CD][disable-cicd] in your forked repository.
-CI/CD is used in the main UhcCore repository to automate releases and deployments,
-but is not needed in your fork. If you leave it enabled, you might see a few errors
-stating that the CI/CD pipelines can't run on your merge requests, unless you have
-gained access to GitLab's shared runners by verifying with your credit card.
-
-[forking]: https://docs.gitlab.com/ee/user/project/repository/forking_workflow.html
+[forking]: https://docs.github.com/en/get-started/quickstart/fork-a-repo
 [testing]: #testing-your-changes
-[merging]: https://docs.gitlab.com/ee/user/project/repository/forking_workflow.html#merging-upstream
-[disable-cicd]: https://docs.gitlab.com/ee/ci/enable_or_disable_ci.html
+[pull-request]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests
 
 ### Testing your changes
 

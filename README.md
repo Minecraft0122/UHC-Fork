@@ -1,4 +1,8 @@
-# UhcCore
+# UHC-Fork
+
+UHC-Fork is a Minecraft 26.1.2-focused fork of UhcCore. The in-game plugin
+name, commands, configuration folder, and Java package names are still UhcCore
+for compatibility with existing servers and addons.
 
 UHC, or Ultra Hardcore, is a classic PvP gamemode in which players or teams
 fight to be the last one standing in survival mode, with natural health
@@ -29,11 +33,12 @@ over 10 years ago, but this plugin adds many new features:
 
 ## Downloads
 
-You can download the plugin from either of these sources:
-- [Spigot plugin page](https://www.spigotmc.org/resources/uhccore.102507/history)
-- [Releases on GitLab](https://gitlab.com/uhccore/uhccore/-/releases)
-- [Permalink to latest release](https://gitlab.com/uhccore/uhccore/-/releases/permalink/latest/downloads/plugin-jar)
-- [Snapshot builds](https://uhccore.zerodind.net/faq/#how-can-i-try-the-latest-improvements-to-uhccore-before-they-are-released)
+Build this fork from source with `gradlew build`. The plugin JAR is written to
+`build/libs/` and uses the `UHC-Fork-2.x.x` artifact name.
+
+The original public UhcCore release page is still available on
+[Spigot](https://www.spigotmc.org/resources/uhccore.102507/history), but this
+fork has diverged for latest-version support and addon API work.
 
 ## Setup guide
 
@@ -71,13 +76,13 @@ or bugs, or just chat with the community, feel free to join
 ## Submitting feature requests and bug reports
 
 If you have an idea for a new feature, or found a bug that needs to be
-fixed, you can [create an issue][issue-tracker] at the GitLab repository.
+fixed, you can [create an issue][issue-tracker] at the GitHub repository.
 Please be as descriptive as possible and include all relevant information,
 such as error messages and/or server logs when submitting a bug report.
 You are also welcome to discuss the matter on
 [the Discord server][discord], in the `#bugs` or `#suggestions` channel.
 
-[issue-tracker]: https://gitlab.com/uhccore/uhccore/-/issues
+[issue-tracker]: https://github.com/Minecraft0122/UHC-Fork/issues
 
 ## Documentation and API
 
@@ -93,12 +98,12 @@ Please see the FAQ for more details:
 
 ## Contributing
 
-Contributions are highly appreciated and can be sent as merge requests to
-[the GitLab repository][gitlab-repo]! See [CONTRIBUTING.md][contributing-md]
+Contributions are highly appreciated and can be sent as pull requests to
+[the GitHub repository][github-repo]! See [CONTRIBUTING.md][contributing-md]
 and [the FAQ][faq-contrib] more for more details.
 
-[gitlab-repo]: https://gitlab.com/uhccore/uhccore
-[contributing-md]: https://gitlab.com/uhccore/uhccore/-/blob/main/CONTRIBUTING.md
+[github-repo]: https://github.com/Minecraft0122/UHC-Fork
+[contributing-md]: https://github.com/Minecraft0122/UHC-Fork/blob/main/CONTRIBUTING.md
 [faq-contrib]: https://uhccore.zerodind.net/faq/#i-want-to-help-contribute-code-to-this-project-where-do-i-start
 
 ## Building the plugin from source code

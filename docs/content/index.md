@@ -4,23 +4,21 @@ hide:
   - navigation
 ---
 
-# UhcCore
+# UHC-Fork
 
-UhcCore is a Spigot/Paper-compatible Minecraft server plugin which automates
-games of the classic UHC gamemode, and adds numerous configuration options as
-well as [scenarios][scenarios] to bring endless replayability to the gamemode.
+UHC-Fork is a Spigot/Paper-compatible fork of UhcCore which automates games of
+the classic UHC gamemode, adds numerous configuration options, and provides
+latest-version support plus addon APIs for custom gameplay systems.
 
 You can read more about the project in the [README][readme] file, or visit the
-[UhcCore page on Spigot][spigot-page] to download the plugin. UhcCore is free
-and open-source software (see
-["Is this plugin free? Will it stay that way?"][is-it-free]), and the
-source code is available at [the GitLab repository][repo].
+[UhcCore page on Spigot][spigot-page] for the original public plugin. UHC-Fork
+keeps the in-game UhcCore plugin name for compatibility, while the source code
+is maintained in [the GitHub repository][repo].
 
 [scenarios]: #what-is-a-uhccore-scenario
-[readme]: https://gitlab.com/uhccore/uhccore/-/blob/main/README.md
+[readme]: https://github.com/Minecraft0122/UHC-Fork/blob/main/README.md
 [spigot-page]: https://www.spigotmc.org/resources/uhccore.102507/
-[is-it-free]: faq#is-this-plugin-free-will-it-stay-that-way
-[repo]: https://gitlab.com/uhccore/uhccore
+[repo]: https://github.com/Minecraft0122/UHC-Fork
 
 ## What is UHC?
 
