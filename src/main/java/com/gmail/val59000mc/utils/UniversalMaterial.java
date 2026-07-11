@@ -1,7 +1,5 @@
 package com.gmail.val59000mc.utils;
 
-import io.papermc.lib.PaperLib;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,8 +33,7 @@ public enum UniversalMaterial {
 	GRASS_BLOCK("GRASS", "GRASS_BLOCK"),
 
 	/**
-	 * The 1.8-1.12 skull block stores skull type as a data value in the tile entity rather than the block, so it is
-	 * currently not handled here. Either way, the skull type will be set to "player" once you set the skull owner.
+	 * The skull type will be set to "player" once you set the skull owner.
 	 * But this means that this material cannot be used to check whether a block is a player head, for example.
 	 *
 	 * @deprecated Warning: you should only use this material to SET a player head, and only if you set the owner.
@@ -114,10 +111,7 @@ public enum UniversalMaterial {
 	COMPASS,
 	NETHER_BRICK,
 	/**
-	 * Note: On 1.8-1.12, even though there is a corresponding block with the same name, its data value is used for
-	 * orientation rather than color, and the color is instead stored in the tile entity.
-	 * Also note that on 1.8-1.12, the color may be stored in the tile entity NBT instead of the data value,
-	 * so this material cannot reliably be used to tell if an item is a red banner.
+	 * Note: Banner item color is not always enough to infer placed banner state.
 	 *
 	 * @deprecated Warning: Cannot reliably be used to tell if an item is a red banner.
 	 */
@@ -158,45 +152,45 @@ public enum UniversalMaterial {
 	CACTUS_FLOWER,
 
 	/**
-	 * @deprecated Warning: On 1.8-1.12, this is only valid for the item and bottom block. The top double_plant block does not store flower type at all.
+	 * @deprecated Legacy alias for double-plant data values.
 	 */
 	@Deprecated
 	SUNFLOWER("DOUBLE_PLANT", 0, DataValueMask.EXCLUDE_NONE, "SUNFLOWER"),
 	/**
-	 * @deprecated Only relevant (with caveats) on older Minecraft versions, see:
+	 * @deprecated Legacy alias for double-plant top data values, see:
 	 * https://minecraft.wiki/w/Java_Edition_pre-flattening_data_values#Large_Flowers
 	 */
 	@Deprecated
 	SUNFLOWER_TOP("DOUBLE_PLANT", 8, DataValueMask.EXCLUDE_DOUBLE_PLANT_TOP_ORIENTATION_BITS, "SUNFLOWER"),
 	/**
-	 * @deprecated Warning: On 1.8-1.12, this is only valid for the item and bottom block. The top double_plant block does not store flower type at all.
+	 * @deprecated Legacy alias for double-plant data values.
 	 */
 	@Deprecated
 	LILAC("DOUBLE_PLANT", 1, DataValueMask.EXCLUDE_NONE, "LILAC"),
 	/**
-	 * @deprecated Only relevant (with caveats) on older Minecraft versions, see:
+	 * @deprecated Legacy alias for double-plant top data values, see:
 	 * https://minecraft.wiki/w/Java_Edition_pre-flattening_data_values#Large_Flowers
 	 */
 	@Deprecated
 	LILAC_TOP("DOUBLE_PLANT", 8, DataValueMask.EXCLUDE_DOUBLE_PLANT_TOP_ORIENTATION_BITS, "LILAC"),
 	/**
-	 * @deprecated Warning: On 1.8-1.12, this is only valid for the item and bottom block. The top double_plant block does not store flower type at all.
+	 * @deprecated Legacy alias for double-plant data values.
 	 */
 	@Deprecated
 	ROSE_BUSH("DOUBLE_PLANT", 4, DataValueMask.EXCLUDE_NONE, "ROSE_BUSH"),
 	/**
-	 * @deprecated Only relevant (with caveats) on older Minecraft versions, see:
+	 * @deprecated Legacy alias for double-plant top data values, see:
 	 * https://minecraft.wiki/w/Java_Edition_pre-flattening_data_values#Large_Flowers
 	 */
 	@Deprecated
 	ROSE_BUSH_TOP("DOUBLE_PLANT", 8, DataValueMask.EXCLUDE_DOUBLE_PLANT_TOP_ORIENTATION_BITS, "ROSE_BUSH"),
 	/**
-	 * @deprecated Warning: On 1.8-1.12, this is only valid for the item and bottom block. The top double_plant block does not store flower type at all.
+	 * @deprecated Legacy alias for double-plant data values.
 	 */
 	@Deprecated
 	PEONY("DOUBLE_PLANT", 5, DataValueMask.EXCLUDE_NONE, "PEONY"),
 	/**
-	 * @deprecated Only relevant (with caveats) on older Minecraft versions, see:
+	 * @deprecated Legacy alias for double-plant top data values, see:
 	 * https://minecraft.wiki/w/Java_Edition_pre-flattening_data_values#Large_Flowers
 	 */
 	@Deprecated
@@ -354,8 +348,7 @@ public enum UniversalMaterial {
 	public Material getType() {
 		if (material == null) {
 			try {
-				if (PaperLib.getMinecraftVersion() > 12) material = Material.valueOf(name13);
-				else material = Material.valueOf(name8);
+				material = Material.valueOf(name13);
 			} catch (IllegalArgumentException ignored) {
 
 			}
@@ -365,7 +358,7 @@ public enum UniversalMaterial {
 	}
 
 	public ItemStack getStack(int amount) {
-		return new ItemStack(getType(), amount, (short) dataValue8);
+		return new ItemStack(getType(), amount);
 	}
 
 	public ItemStack getStack() {
@@ -529,19 +522,11 @@ public enum UniversalMaterial {
 	}
 
 	public boolean matches(Block block) {
-		if (PaperLib.isVersion(13)) {
-			return block.getType() == getType();
-		} else {
-			return block.getType() == getType() && (block.getData() & dataValueMask8) == dataValue8;
-		}
+		return block.getType() == getType();
 	}
 
 	public boolean matches(ItemStack itemStack) {
-		if (PaperLib.isVersion(13)) {
-			return itemStack.getType() == getType();
-		} else {
-			return itemStack.getType() == getType() && (itemStack.getDurability() & dataValueMask8) == dataValue8;
-		}
+		return itemStack.getType() == getType();
 	}
 
 }

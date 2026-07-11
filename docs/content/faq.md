@@ -85,11 +85,9 @@ console, to get an idea of when it will be done.
 
 ## Why does my server crash/freeze while generating the world?
 
-The chunk pre-generator used by UhcCore does not play well with some
-older versions of Minecraft (in particular, `1.12.2`). If you are running
-UhcCore on such a version, or if your server doesn't have enough performance,
-the server might crash or freeze during pre-generation. Here are a few tips
-on how you can solve this problem:
+The chunk pre-generator can put heavy load on underpowered servers. If your
+server doesn't have enough performance, it might crash or freeze during
+pre-generation. Here are a few tips on how you can solve this problem:
 
 1. If the server just appears frozen, wait a few more minutes.
 
@@ -133,19 +131,9 @@ such as item type, amount, display name, lore, enchantments etc.
 
 !!! warning
 
-    When upgrading (or downgrading) the Minecraft version of your server,
-    it is possible that some of your kits/crafts no longer work correctly if
-    the Minecraft item format has changed significantly. One example of such
-    an update would be ["The Flattening"][flattening] which happened in
-    Minecraft 1.13.
-
-    In order to fix the items in your configuration files, you can put all
-    the items into your inventory (or a chest) before upgrading, and then use
-    the `/iteminfo` command again after Minecraft has upgraded your items to
-    the new format. Note that this only works when upgrading your Minecraft
-    version. If you are downgrading, you will need to re-create the items.
-
-[flattening]: https://minecraft.fandom.com/wiki/Java_Edition_1.13/Flattening
+    This fork targets Minecraft 26.1.2 only. If you import old kit or craft
+    configuration, put the items into your inventory or a chest on a 26.1.2
+    server, then use `/iteminfo` again to regenerate the JSON strings.
 
 ## Why is my config/kit/craft not working or missing?
 
@@ -331,7 +319,7 @@ values, just delete the file (or move/rename it, to keep a backup). When the
 server is started, UhcCore will generate a new config file with the default
 values.
 
-[configs]: https://gitlab.com/uhccore/uhccore/-/tree/1.20.15/src/main/resources
+[configs]: https://gitlab.com/uhccore/uhccore/-/tree/main/src/main/resources
 
 ## Where can I read more about configuration, commands etc? Is there a wiki?
 
@@ -355,19 +343,27 @@ source code, if that's your thing.
 
 ## Does UhcCore have an addon API?
 
-There is currently not a proper API for UhcCore, but stay tuned, because this
-is planned for a future UhcCore release! As of yet, there is no ETA (see also:
-["When will the next update be released? What features will it have?"][q7]),
-but I would estimate it to be at least a few months away, because it takes time
-to design a *good* and easy-to-use API. There are also a number of old systems
-in UhcCore that will need to be rewritten to better support such an API.
+Yes. UhcCore exposes `com.gmail.val59000mc.api.UhcCoreApi`, which is registered
+with Bukkit's `ServicesManager` when UhcCore enables. Addons can use this API to
+query game state, players, teams, scenarios, timers, and to perform common
+actions such as broadcasting messages, starting or ending the game, and
+registering custom scenarios.
 
-Either way, if you're *really* eager to make an addon, and you are already
-familiar with Java programming and plugin development, you *can* technically
-use the UhcCore plugin JAR as a dependency and pretend that it's an API.
-This has been done in the past, since the previous plugin maintainer used
-to refer to the plugin JAR as an API. Below are Gradle/Maven dependency
-snippets in case you're interested:
+If your plugin needs UhcCore to be available during `onEnable`, add it as a
+dependency in your `plugin.yml`:
+
+```yaml
+depend: [UhcCore]
+```
+
+If UhcCore is optional for your plugin, use `softdepend` and check whether the
+API is available before using it:
+
+```yaml
+softdepend: [UhcCore]
+```
+
+Below are Gradle/Maven dependency snippets for compiling against the API:
 
 !!! example "Snippet: UhcCore repository"
 
@@ -411,7 +407,7 @@ snippets in case you're interested:
         Add this to `dependencies` in your `build.gradle`:
 
         ```groovy
-        compileOnly "net.zerodind:uhccore:1.20.15"
+        compileOnly "net.zerodind:uhccore:1.20.16-SNAPSHOT"
         ```
 
     === "Gradle (Kotlin DSL)"
@@ -419,7 +415,7 @@ snippets in case you're interested:
         Add this to `dependencies` in your `build.gradle.kts`:
 
         ```kotlin
-        compileOnly("net.zerodind:uhccore:1.20.15")
+        compileOnly("net.zerodind:uhccore:1.20.16-SNAPSHOT")
         ```
 
     === "Maven"
@@ -430,34 +426,88 @@ snippets in case you're interested:
         <dependency>
             <groupId>net.zerodind</groupId>
             <artifactId>uhccore</artifactId>
-            <version>1.20.15</version>
+            <version>1.20.16-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         ```
 
 !!! warning
 
-    Again, the plugin JAR is ***not*** a proper API, so you should expect
-    breakages even for "patch" versions (for example, a method may be renamed,
-    or a class might be removed). There will be no documentation on how to use
-    the plugin JAR as some kind of API, you will have to look at the source code
-    yourself. With that said, if you have questions about the source code, you
-    are welcome to ask in the `#dev` channel on [the Discord server][discord].
+    The classes in `com.gmail.val59000mc.api` are the supported integration
+    surface. Direct access to managers such as `GameManager`, `PlayerManager`,
+    `TeamManager`, and `ScenarioManager` is available for advanced use, but the
+    higher-level methods on `UhcCoreApi` should be preferred when possible.
+
+!!! example "Snippet: Getting the API"
+
+    ```java
+    import com.gmail.val59000mc.api.UhcCoreApi;
+    import com.gmail.val59000mc.api.UhcCoreProvider;
+
+    public void doSomething() {
+        UhcCoreApi api = UhcCoreProvider.require();
+
+        api.getGameState().ifPresent(state ->
+            api.broadcastInfo("The current UHC state is " + state.name())
+        );
+    }
+    ```
+
+!!! example "Snippet: Bukkit ServicesManager"
+
+    ```java
+    import com.gmail.val59000mc.api.UhcCoreApi;
+
+    import org.bukkit.Bukkit;
+    import org.bukkit.plugin.RegisteredServiceProvider;
+
+    public UhcCoreApi getUhcCoreApi() {
+        RegisteredServiceProvider<UhcCoreApi> registration =
+            Bukkit.getServicesManager().getRegistration(UhcCoreApi.class);
+
+        return registration == null ? null : registration.getProvider();
+    }
+    ```
 
 ## Can I add my own custom scenarios?
 
-You will be able to in the future, once UhcCore has an API. Technically you
-can already create an addon with scenarios by compiling against the plugin JAR,
-but this is not recommended unless you know what you're getting into. See
-["Does UhcCore have an addon API?"][q8] for more details.
+Yes. Create a `Scenario`, give it display information, and register it through
+`UhcCoreApi`.
 
-Another way of adding your own scenario would be to edit the source code of
-the plugin, which might be easier until there is an API, since you don't have
-to deal with dependencies. If you do this, please consider making a contribution
-to add your scenario to the plugin, which means that everyone can enjoy it
-once the next UhcCore update is released. See
-["I want to help contribute code to this project, where do I start?"][q6]
-for more details on how to contribute your code.
+!!! example "Snippet: Registering a custom scenario"
+
+    ```java
+    import com.gmail.val59000mc.api.UhcCoreApi;
+    import com.gmail.val59000mc.api.UhcCoreProvider;
+    import com.gmail.val59000mc.scenarios.Scenario;
+    import com.gmail.val59000mc.utils.UniversalMaterial;
+
+    import java.util.List;
+
+    public final class MyAddon {
+
+        public void registerScenario() {
+            UhcCoreApi api = UhcCoreProvider.require();
+
+            Scenario scenario = new Scenario(
+                "my_scenario",
+                UniversalMaterial.DIAMOND,
+                MyScenarioListener.class
+            );
+            scenario.setInfo(new Scenario.Info(
+                "My Scenario",
+                List.of("A short description shown in the scenario menu.")
+            ));
+
+            api.registerScenario(scenario);
+        }
+
+    }
+    ```
+
+The listener class should extend `ScenarioListener`. If the scenario has
+configuration options, use the existing `@Option` annotation on listener fields
+so UhcCore can load the values from `scenarios.yml`.
 
 ## Who is the main developer/maintainer/owner of this plugin?
 
@@ -519,13 +569,10 @@ an answer).
 You can also read the `[Unreleased]` section at the top of
 [the changelog][changelog] if it exists to see what features and bug fixes have
 already been implemented and will be released in the next update. If you are
-familiar with Git, you can also [view the list of commits][compare] since the
-previous version (using its tag) and the head of the `main` branch. Just make
-sure to select the right tag matching the version you want to compare from.
+familiar with Git, you can also inspect the commit history on the `main` branch.
 
 [milestones]: https://gitlab.com/uhccore/uhccore/-/milestones
 [changelog]: https://gitlab.com/uhccore/uhccore/-/blob/main/CHANGELOG.md
-[compare]: https://gitlab.com/uhccore/uhccore/-/compare?from=1.20.15&to=main
 
 ## How can I try the latest improvements to UhcCore before they are released?
 

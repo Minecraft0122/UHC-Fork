@@ -5,7 +5,7 @@ import com.gmail.val59000mc.scenarios.ScenarioListener;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.spigotmc.event.entity.EntityMountEvent;
+import org.bukkit.event.entity.EntityMountEvent;
 
 public class HorselessListener extends ScenarioListener{
 

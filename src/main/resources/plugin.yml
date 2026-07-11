@@ -4,7 +4,7 @@ version: "${pluginVersion}"
 authors: [val59000mc, Mezy, zerodind]
 main: com.gmail.val59000mc.UhcCore
 softdepend: [WorldEdit, Vault, ProtocolLib, PlaceholderAPI, Chunky]
-api-version: 1.13
+api-version: 26.1.2
 commands:
   uhccore:
     description: "Type '/uhccore help' to see a list of commands"

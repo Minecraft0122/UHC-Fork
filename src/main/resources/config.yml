@@ -83,13 +83,13 @@ disable-motd: false
 # Game difficulty (Choose from this list: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Difficulty.html)
 game-difficulty: HARD
 
-# When set to false, Advancements (1.12+) will not be announced in chat. Achievements (1.8-1.11) can be turned off in your server.properties
+# When set to false, advancements will not be announced in chat.
 announce-advancements: true
 
 # This feature might not make a lot of sense for UHC but if you want to enable natural health regen you can do it here.
 enable-health-regen: false
 
-# Whether to enable the locator bar on Minecraft 1.21.6+
+# Whether to enable the locator bar.
 enable-locator-bar: false
 
 #Configure after how many seconds a disconnected player should be considered dead and eliminated
@@ -234,7 +234,6 @@ customize-game-behavior:
   # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/bukkit/browse/src/main/java/org/bukkit/Sound.java
   # NOTE that the org.bukkit.Sound names may change between Minecraft versions,
   # so it is your responsibility to update this configuration accordingly.
-  # For older Minecraft versions, use the "History" drop-down menu on the page linked above.
   # The special values "default" (currently the wither spawn sound) and "none" work across Minecraft versions.
   player-death-sound: default
 
@@ -442,8 +441,7 @@ hearts-on-tab: true
 # Controls the scoreboard render type for the "hearts-on-tab" option.
 # 20 HP will be displayed as 10 heart icons for the "hearts" render type,
 # and as the number 20 for the "integer" render type.
-# Currently only supported on Minecraft 1.13+, on older versions the
-# render type will always be "hearts".
+# Controls whether tab health is rendered as hearts or as an integer.
 hearts-on-tab-render-type: hearts
 
 # Set to true if you want to enable hearts below player names.

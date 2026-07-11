@@ -7,8 +7,6 @@ import com.gmail.val59000mc.scenarios.Scenario;
 import com.gmail.val59000mc.scenarios.ScenarioListener;
 import com.gmail.val59000mc.utils.*;
 
-import io.papermc.lib.PaperLib;
-
 import com.gmail.val59000mc.configuration.YamlFile;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -37,7 +35,7 @@ public class FlowerPowerListener extends ScenarioListener{
 	public void onEnable(){
 		flowerDrops = new ArrayList<>();
 
-		String source = PaperLib.getMinecraftVersion() < 13 ? "flowerpower-1.8.yml" : "flowerpower-1.13.yml";
+		String source = "flowerpower-26.1.2.yml";
 		YamlFile cfg;
 
 		try{

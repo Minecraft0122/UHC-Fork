@@ -10,7 +10,6 @@ import com.gmail.val59000mc.scoreboard.ScoreboardManager;
 import com.gmail.val59000mc.scoreboard.ScoreboardType;
 import com.gmail.val59000mc.tasks.UpdateScoreboardTask;
 import com.gmail.val59000mc.utils.VersionUtils;
-import com.gmail.val59000mc.versionadapters.adapters.SetTeamColorAdapter;
 
 import java.util.logging.Logger;
 
@@ -147,7 +146,7 @@ public class ScoreboardHandler {
 			team.setPrefix(uhcTeam.getPrefix());
 			team.setSuffix(ChatColor.RESET + "");
 			if (config.get(MainConfig.SET_SCOREBOARD_TEAM_COLORS)) {
-				UhcCore.getVersionAdapterLoader().getVersionAdapter(SetTeamColorAdapter.class).setTeamColor(team, uhcTeam.getColor());
+				team.setColor(uhcTeam.getColor());
 			}
 
 			for (UhcPlayer member : uhcTeam.getMembers()) {
@@ -176,8 +175,7 @@ public class ScoreboardHandler {
 
 		// Note: Player#getHealth() is used for the initial value, but technically it should be
 		// Player#getHealth() + Player#getAbsorptionAmount() to match vanilla behavior.
-		// The problem is that the getAbsorptionAmount API doesn't exist on older Minecraft versions (e.g. 1.8.8).
-		// We could get the absorption amount using NMS, but it should be fine to assume that they have no absorption here.
+		// It should be fine to assume players have no absorption here.
 		if (healthTab != null) {
 			setReadOnlyPlayerScore(healthTab.getScore(player.getName()), (int) player.getHealth());
 		}

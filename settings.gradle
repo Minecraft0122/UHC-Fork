@@ -4,12 +4,6 @@ plugins {
 
 rootProject.name = "uhccore"
 
-include "Support-WorldEdit-6"
 include "Support-WorldEdit-7"
 include "version-adapters"
-include "version-adapters:spigot_1_8_8"
-include "version-adapters:spigot_1_12"
-include "version-adapters:spigot_1_17"
-include "version-adapters:spigot_1_17_1"
-include "version-adapters:spigot_1_20_5"
 include "version-adapters:chunky"

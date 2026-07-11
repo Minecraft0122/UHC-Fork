@@ -27,8 +27,6 @@ import com.gmail.val59000mc.scenarios.ScenarioListener;
 import com.gmail.val59000mc.utils.OreType;
 import com.gmail.val59000mc.utils.UniversalMaterial;
 
-import io.papermc.lib.PaperLib;
-
 public class CutCleanListener extends ScenarioListener{
 
 	private final ItemStack lapis;
@@ -49,22 +47,10 @@ public class CutCleanListener extends ScenarioListener{
 		for(int i = 0 ; i < e.getDrops().size(); i++) {
 			// Cloned because we may end up having to mutate it, see below
 			final ItemStack drop = e.getDrops().get(i).clone();
-			// Note: On modern Minecraft versions, we could probably use Server#craftItem,
-			// but it doesn't exist on older game versions such as 1.8.8.
 			for (Iterator<Recipe> recipes = Bukkit.recipeIterator(); recipes.hasNext();) {
 				final Recipe recipe = recipes.next();
 				if (recipe instanceof FurnaceRecipe) {
-					// Note: getInputChoice would be more future-proof, but it doesn't exist on
-					// older Minecraft versions such as 1.8.8. Should be fine to ignore it for now.
-					final ItemStack smeltInput = ((FurnaceRecipe) recipe).getInput();
-					// Note	: On older game versions such as 1.8.8, the recipe input ItemStack
-					// may have a damage value of 32767, i.e. Short.MAX_VALUE (for a special reason),
-					// so ItemStack#isSimilar will always return false.
-					// For reference, see: https://www.spigotmc.org/threads/malformed-itemstack.60990/#post-677215
-					if (smeltInput.getDurability() == Short.MAX_VALUE) {
-						drop.setDurability(Short.MAX_VALUE);
-					}
-					if (smeltInput.isSimilar(drop)) {
+					if (((FurnaceRecipe) recipe).getInputChoice().test(drop)) {
 						final ItemStack smeltResult = recipe.getResult();
 						smeltResult.setAmount(drop.getAmount());
 						e.getDrops().set(i, smeltResult);
@@ -156,9 +142,7 @@ public class CutCleanListener extends ScenarioListener{
 		if (inv == null || item == null) return;
 
 		if (inv instanceof EnchantingInventory){
-			// Lapis slot was introduced in Minecraft 1.8. For raw/protocol slot numbers,
-			// see https://minecraft.wiki/w/Minecraft_Wiki:Projects/wiki.vg_merge/Inventory
-			if (PaperLib.isVersion(8) && e.getRawSlot() == 1) {
+			if (e.getRawSlot() == 1) {
 				e.setCancelled(true);
 			}
 		}

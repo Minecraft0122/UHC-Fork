@@ -58,7 +58,7 @@ public class TeleportListener implements Listener{
 				return;
 			}
 
-			// Handle event using versions utils as on 1.14+ PortalTravelAgent got removed.
+			// Apply UhcCore's custom nether scale and target worlds.
 			VersionUtils.getVersionUtils().handleNetherPortalEvent(event);
 
 		}else if (event.getCause() == TeleportCause.END_PORTAL){

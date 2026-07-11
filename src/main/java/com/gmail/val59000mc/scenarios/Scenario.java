@@ -5,8 +5,6 @@ import com.gmail.val59000mc.scenarios.scenariolisteners.*;
 import com.gmail.val59000mc.utils.UniversalMaterial;
 import com.google.common.collect.MultimapBuilder;
 
-import io.papermc.lib.PaperLib;
-
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -117,7 +115,6 @@ public class Scenario {
 	private final String key;
 	private final UniversalMaterial material;
 	private final Class<? extends ScenarioListener> listener;
-	private final int fromVersion;
 
 	private Info info;
 
@@ -133,7 +130,6 @@ public class Scenario {
 		this.key = key;
 		this.material = material;
 		this.listener = listener;
-		this.fromVersion = fromVersion;
 	}
 
 	public String getKey() {
@@ -163,10 +159,7 @@ public class Scenario {
 		// Remove/hide all attribute modifiers (including defaults), we don't want that text on the display item and the modifiers don't matter here.
 		// Note: The ItemFlag API on its own can't be used to hide the text anymore, on Paper for Minecraft 1.20.5 (see https://github.com/PaperMC/Paper/issues/10693).
 		// That's why we first have to use setAttributeModifiers, to create the underlying attribute_modifiers data component to which the hide flag can be added.
-		// Having said that, setAttributeModifiers doesn't exist on older Minecraft versions (e.g. 1.8.8), and it isn't needed until 1.20.5, hence the version check.
-		if (PaperLib.isVersion(20, 5)) {
-			meta.setAttributeModifiers(MultimapBuilder.hashKeys().arrayListValues().build());
-		}
+		meta.setAttributeModifiers(MultimapBuilder.hashKeys().arrayListValues().build());
 		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 
 		item.setItemMeta(meta);
@@ -174,7 +167,7 @@ public class Scenario {
 	}
 
 	public boolean isCompatibleWithVersion(){
-		return fromVersion <= PaperLib.getMinecraftVersion();
+		return true;
 	}
 
 	public static class Info {

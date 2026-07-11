@@ -9,6 +9,9 @@ plugins {
 group = "net.zerodind"
 version = "1.20.16-SNAPSHOT"
 
+def supportedMinecraftVersion = "26.1.2"
+def spigotApiVersion = "${supportedMinecraftVersion}-R0.1-SNAPSHOT"
+
 repositories {
 	mavenCentral()
 	maven { // For Spigot API
@@ -55,9 +58,6 @@ repositories {
 			includeGroup "me.clip"
 		}
 	}
-	flatDir { // For BiomeMapping
-		dirs "$rootDir/libs"
-	}
 }
 
 // Configuration for dependencies that need to be included in the shadow JAR for use at runtime.
@@ -68,44 +68,21 @@ repositories {
 configurations.register("shadowJar")
 
 dependencies {
-	compileOnly "org.spigotmc:spigot-api:1.15.2-R0.1-SNAPSHOT"
+	compileOnly "org.spigotmc:spigot-api:${spigotApiVersion}"
 	compileOnly "com.google.code.findbugs:jsr305:3.0.2"
 	compileOnly "com.github.MilkBowl:VaultAPI:1.7"
 	compileOnly "me.clip:placeholderapi:2.11.5"
 	compileOnly "net.dmulloy2:ProtocolLib:5.3.0"
 	implementation "net.wesjd:anvilgui:1.10.10-SNAPSHOT"
 	implementation "io.papermc:paperlib:1.0.8"
-	implementation project(":Support-WorldEdit-6")
 	implementation project(":Support-WorldEdit-7")
 	implementation project(":version-adapters")
-	shadowJar project(":version-adapters:spigot_1_8_8")
-	shadowJar project(":version-adapters:spigot_1_12")
-	shadowJar project(":version-adapters:spigot_1_17")
-	shadowJar project(":version-adapters:spigot_1_17_1")
-	shadowJar project(":version-adapters:spigot_1_20_5")
 	shadowJar project(":version-adapters:chunky")
-	implementation ":BiomeMapping-1.3"
 	implementation "net.zerodind:uhccore-nms:1.1.2"
-	shadowJar "net.zerodind:uhccore-nms-1_18_R1:1.0.0"
-	shadowJar "net.zerodind:uhccore-nms-1_18_R2:1.0.0"
-	shadowJar "net.zerodind:uhccore-nms-1_19_R1:1.0.0"
-	shadowJar "net.zerodind:uhccore-nms-1_19_R2:1.0.0"
-	shadowJar "net.zerodind:uhccore-nms-1_19_R3:1.0.0"
-	shadowJar "net.zerodind:uhccore-nms-1_20_R1:1.0.0"
-	shadowJar "net.zerodind:uhccore-nms-1_20_R2:1.0.0"
-	shadowJar "net.zerodind:uhccore-nms-1_20_R3:1.0.0"
-	shadowJar "net.zerodind:uhccore-nms-1_20_R4:1.0.0"
-	shadowJar "net.zerodind:uhccore-nms-1_21_R1:1.0.0"
-	shadowJar "net.zerodind:uhccore-nms-1_21_R2:1.0.0"
-	shadowJar "net.zerodind:uhccore-nms-1_21_R3:1.0.0"
-	shadowJar "net.zerodind:uhccore-nms-1_21_R4:1.0.0"
-	shadowJar "net.zerodind:uhccore-nms-1_21_R5:1.0.0"
-	shadowJar "net.zerodind:uhccore-nms-1_21_R6:1.0.0"
 }
 
 java {
-	// Target Java 8 for Minecraft 1.8 support
-	toolchain.languageVersion = JavaLanguageVersion.of(8)
+	toolchain.languageVersion = JavaLanguageVersion.of(25)
 
 	withJavadocJar()
 	withSourcesJar()
@@ -168,12 +145,12 @@ tasks.named("processResources") {
 
 tasks.named("runServer") {
 	// The minecraft version to use can be changed via the mcVersion property
-	// For example: gradlew runServer -PmcVersion=1.8.8
-	def mcVersion = project.findProperty("mcVersion") ?: "1.21.10"
+	// For example: gradlew runServer -PmcVersion=26.1.2
+	def mcVersion = project.findProperty("mcVersion") ?: supportedMinecraftVersion
 	minecraftVersion mcVersion
 	runDirectory rootProject.file("run/$mcVersion")
 	javaLauncher = javaToolchains.launcherFor {
-		languageVersion = JavaLanguageVersion.of(getJavaVersionFor(mcVersion))
+		languageVersion = JavaLanguageVersion.of(25)
 	}
 	// These options enable remote debugging via JDWP on localhost:5005
 	// See "Testing your changes" in CONTRIBUTING.md for more details
@@ -181,7 +158,7 @@ tasks.named("runServer") {
 
 	// Uncomment the lines below to use a custom server jar in the project root folder.
 	// Legacy plugin loading is needed on Spigot servers.
-	//serverJar rootProject.file("spigot-1.21.jar")
+	//serverJar rootProject.file("spigot-${supportedMinecraftVersion}.jar")
 	//legacyPluginLoading()
 }
 
@@ -211,19 +188,6 @@ publishing {
 				header(HttpHeaderAuthentication)
 			}
 		}
-	}
-}
-
-int getJavaVersionFor(String mcVersion) {
-	String[] versionNumbers = mcVersion.split("\\.")
-	int minorVersion = Integer.parseInt(versionNumbers[1])
-	int patchVersion = versionNumbers.length >= 3 ? Integer.parseInt(versionNumbers[2]) : 0
-	switch (minorVersion) {
-		case 8..16: return 8
-		case 17: return 16
-		case 18..19: return 17
-		case 20: return patchVersion <= 4 ? 17 : 21
-		default: return 21
 	}
 }
 

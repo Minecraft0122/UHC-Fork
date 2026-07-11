@@ -7,10 +7,6 @@ import java.util.Map;
 import java.util.ServiceLoader;
 
 import com.gmail.val59000mc.versionadapters.adapters.ChunkyPreGenerator;
-import com.gmail.val59000mc.versionadapters.adapters.GetWorldMinHeightAdapter;
-import com.gmail.val59000mc.versionadapters.adapters.SetBiomeProviderAdapter;
-import com.gmail.val59000mc.versionadapters.adapters.SetMaxStackSizeAdapter;
-import com.gmail.val59000mc.versionadapters.adapters.SetTeamColorAdapter;
 
 public class VersionAdapterLoader {
 
@@ -22,11 +18,6 @@ public class VersionAdapterLoader {
 
 	public static VersionAdapterLoader loadAll(ClassLoader classLoader) {
 		final HashMap<Class<?>, VersionAdapter> loadedAdapters = new HashMap<>();
-
-		requireVersionAdapter(loadedAdapters, classLoader, SetMaxStackSizeAdapter.class, true);
-		requireVersionAdapter(loadedAdapters, classLoader, SetBiomeProviderAdapter.class, true);
-		requireVersionAdapter(loadedAdapters, classLoader, SetTeamColorAdapter.class, true);
-		requireVersionAdapter(loadedAdapters, classLoader, GetWorldMinHeightAdapter.class, true);
 
 		requireVersionAdapter(loadedAdapters, classLoader, ChunkyPreGenerator.class, false);
 
@@ -43,7 +34,7 @@ public class VersionAdapterLoader {
 					return;
 				}
 			} catch (UnsupportedClassVersionError e) {
-				// Ignore Commodore ASM errors on 1.13.2 and possibly other versions
+				// Ignore optional adapters compiled for an incompatible runtime.
 				// Note that the exception is still logged to the console even if we catch it here
 				continue;
 			}

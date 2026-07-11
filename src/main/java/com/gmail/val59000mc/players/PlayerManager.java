@@ -24,8 +24,6 @@ import com.gmail.val59000mc.utils.snapshot.ItemStackSnapshot;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
-import io.papermc.lib.PaperLib;
-
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
@@ -360,11 +358,6 @@ public class PlayerManager {
 
 	private void clearPlayerInventory(Player player) {
 		player.getInventory().clear();
-
-		// PlayerInventory#clear does not clear armor contents on Spigot < 1.9
-		if (!PaperLib.isVersion(9)) {
-			player.getInventory().setArmorContents(new ItemStack[4]);
-		}
 	}
 
 	public void setPlayerSpectateAtLobby(UhcPlayer uhcPlayer){
@@ -620,7 +613,6 @@ public class PlayerManager {
 		Zombie zombie = (Zombie) player.getWorld().spawnEntity(player.getLocation(), EntityType.ZOMBIE);
 		zombie.setCustomName(uhcPlayer.getDisplayName());
 		zombie.setCustomNameVisible(true);
-		// 1.8 doesn't have setAI method so use VersionUtils.
 		VersionUtils.getVersionUtils().setEntityAI(zombie, false);
 		zombie.setBaby(false);
 		zombie.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 1, true, true));
@@ -638,16 +630,6 @@ public class PlayerManager {
 				uhcPlayer.getStoredItems().add(ItemStackSnapshot.of(item));
 			}
 		}
-		// PlayerInventory#getContents does not include armor contents on Spigot < 1.9
-		if (!PaperLib.isVersion(9)) {
-			for (ItemStack item : player.getInventory().getArmorContents()) {
-				// PlayerInventory#getArmorContents maps null items to AIR on Spigot < 1.9
-				if (item.getType() != Material.AIR) {
-					uhcPlayer.getStoredItems().add(ItemStackSnapshot.of(item));
-				}
-			}
-		}
-
 		uhcPlayer.setOfflineZombieUuid(zombie.getUniqueId());
 	}
 

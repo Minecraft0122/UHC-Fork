@@ -12,7 +12,6 @@ import com.gmail.val59000mc.utils.FileUtils;
 import com.gmail.val59000mc.utils.NMSUtils;
 import com.gmail.val59000mc.utils.OreType;
 import com.gmail.val59000mc.utils.UniversalMaterial;
-import com.gmail.val59000mc.versionadapters.adapters.SetMaxStackSizeAdapter;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
@@ -57,6 +56,14 @@ public class ScenarioManager {
 	 */
 	public boolean isRegistered(Scenario scenario) {
 		return registeredScenarios.contains(scenario);
+	}
+
+	/**
+	 * Used to obtain all registered scenarios.
+	 * @return Returns an immutable snapshot of registered scenarios.
+	 */
+	public synchronized List<Scenario> getRegisteredScenarios() {
+		return Collections.unmodifiableList(new ArrayList<>(registeredScenarios));
 	}
 
 	/**
@@ -304,10 +311,10 @@ public class ScenarioManager {
 
 			ItemStack scenarioItem = scenario.getScenarioItem();
 			if (isEnabled(scenario)){
-				scenarioItem.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+				scenarioItem.addUnsafeEnchantment(Enchantment.UNBREAKING, 1);
 
 				final ItemMeta stackSizeMeta = scenarioItem.getItemMeta();
-				UhcCore.getVersionAdapterLoader().getVersionAdapter(SetMaxStackSizeAdapter.class).setMaxStackSize(stackSizeMeta, 64);
+				stackSizeMeta.setMaxStackSize(64);
 				scenarioItem.setItemMeta(stackSizeMeta);
 				scenarioItem.setAmount(2);
 
@@ -337,10 +344,10 @@ public class ScenarioManager {
 			ItemStack item = scenario.getScenarioItem();
 
 			if (playerVotes.contains(scenario)) {
-				item.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+				item.addUnsafeEnchantment(Enchantment.UNBREAKING, 1);
 
 				final ItemMeta stackSizeMeta = item.getItemMeta();
-				UhcCore.getVersionAdapterLoader().getVersionAdapter(SetMaxStackSizeAdapter.class).setMaxStackSize(stackSizeMeta, 64);
+				stackSizeMeta.setMaxStackSize(64);
 				item.setItemMeta(stackSizeMeta);
 				item.setAmount(2);
 			}

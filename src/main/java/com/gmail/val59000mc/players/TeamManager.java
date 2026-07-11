@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 
 public class TeamManager{
 
-	// This limit is imposed by Minecraft 1.8 - 1.17.
+	// Keep team names short enough for scoreboard internals and tab ordering.
 	private static final int TEAM_NAME_MAX_LENGTH = 16;
 
 	// Allow space-separated alphanumeric Unicode words (excluding the Connector Punctuation category).

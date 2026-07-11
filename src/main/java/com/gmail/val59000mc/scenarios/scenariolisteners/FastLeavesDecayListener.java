@@ -21,8 +21,6 @@ import com.gmail.val59000mc.utils.UniversalMaterial;
 import com.gmail.val59000mc.utils.UniversalSound;
 import com.gmail.val59000mc.utils.VersionUtils;
 
-import io.papermc.lib.PaperLib;
-
 public class FastLeavesDecayListener extends ScenarioListener{
 
 	// Leaf decay uses 6-connectivity
@@ -67,7 +65,7 @@ public class FastLeavesDecayListener extends ScenarioListener{
 
 	private void decayNeighbors(Block block) {
 		// See https://minecraft.wiki/w/History_of_leaf_decay
-		final int decayRange = PaperLib.isVersion(13) ? 6 : 4;
+		final int decayRange = 6;
 
 		for (BlockFace face : NEIGHBOURS) {
 			final Block relative = block.getRelative(face);
@@ -93,8 +91,7 @@ public class FastLeavesDecayListener extends ScenarioListener{
 	private boolean isConnectedToLog(Block leaf, int maxDistance) {
 		// Search for any leaf-connected log block within maxDistance blocks of this leaf block.
 		// We need to avoid re-visiting the same block twice in different paths,
-		// since this leads to performance issues, especially on Minecraft 1.8,
-		// where block access seems to be quite slow. BFS works well in this case.
+		// since this leads to performance issues. BFS works well in this case.
 		final Set<Vector> visited = new HashSet<>();
 		final Queue<Block> queue = new ArrayDeque<>();
 		queue.add(leaf);

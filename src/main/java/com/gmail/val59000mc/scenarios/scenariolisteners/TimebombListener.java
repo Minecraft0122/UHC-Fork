@@ -96,7 +96,7 @@ public class TimebombListener extends ScenarioListener{
 			VersionUtils.getVersionUtils().setChestName(chest1, chestName);
 			VersionUtils.getVersionUtils().setChestName(chest2, chestName);
 
-			// Make double chest for 1.13 and up
+			// Make a double chest.
 			VersionUtils.getVersionUtils().setChestSide(chest1, false);
 			VersionUtils.getVersionUtils().setChestSide(chest2, true);
 

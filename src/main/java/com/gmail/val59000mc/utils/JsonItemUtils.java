@@ -3,8 +3,6 @@ package com.gmail.val59000mc.utils;
 import com.gmail.val59000mc.exceptions.ParseException;
 import com.google.gson.*;
 
-import io.papermc.lib.PaperLib;
-
 import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -22,7 +20,6 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
@@ -81,7 +78,7 @@ public class JsonItemUtils{
 				json.add("flags", jsonFlags);
 			}
 
-			if (PaperLib.isVersion(14) && meta.hasCustomModelData()) {
+			if (meta.hasCustomModelData()) {
 				json.addProperty("custom-model-data", meta.getCustomModelData());
 			}
 
@@ -140,8 +137,7 @@ public class JsonItemUtils{
 			}
 
 			// BannerMeta is used by banner items, but not shields.
-			// The color is based on the damage value (1.8 - 1.12) or material type (1.13+),
-			// so BannerMeta is only used to get/set the patterns, not the color.
+			// BannerMeta is only used to get/set the patterns, not the color.
 			if (meta instanceof BannerMeta) {
 				BannerMeta bannerMeta = (BannerMeta) meta;
 				savePatterns(json, bannerMeta.getPatterns());
@@ -237,9 +233,7 @@ public class JsonItemUtils{
 						meta = parseFlags(meta, entry.getValue().getAsJsonArray());
 						break;
 					case "custom-model-data":
-						if (PaperLib.isVersion(14)) {
-							meta.setCustomModelData(entry.getValue().getAsInt());
-						}
+						meta.setCustomModelData(entry.getValue().getAsInt());
 						break;
 					case "base-effect":
 						meta = parseBasePotionEffect(meta, entry.getValue().getAsJsonObject());
@@ -370,10 +364,24 @@ public class JsonItemUtils{
 		jsonElement = jsonObject.get("upgraded");
 		boolean upgraded = jsonElement != null && jsonElement.getAsBoolean();
 
-		PotionData potionData = new PotionData(type, extended, upgraded);
-		potionMeta = VersionUtils.getVersionUtils().setBasePotionEffect(potionMeta, potionData);
+		potionMeta.setBasePotionType(getPotionType(type, extended, upgraded));
 
 		return potionMeta;
+	}
+
+	private static PotionType getPotionType(PotionType type, boolean extended, boolean upgraded) throws ParseException {
+		String typeName = type.name();
+		if (extended && !typeName.startsWith("LONG_")) {
+			typeName = "LONG_" + typeName;
+		} else if (upgraded && !typeName.startsWith("STRONG_")) {
+			typeName = "STRONG_" + typeName;
+		}
+
+		try {
+			return PotionType.valueOf(typeName);
+		} catch (IllegalArgumentException ex) {
+			throw new ParseException(ex.getMessage());
+		}
 	}
 
 	private static ItemMeta parseCustomPotionEffects(ItemMeta meta, JsonArray jsonArray) throws ParseException{

@@ -7,7 +7,6 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerAchievementAwardedEvent;
 import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.plugin.EventExecutor;
@@ -22,8 +21,6 @@ import com.gmail.val59000mc.scenarios.Option;
 import com.gmail.val59000mc.scenarios.ScenarioListener;
 import com.gmail.val59000mc.utils.VersionUtils;
 
-import io.papermc.lib.PaperLib;
-
 public class AchievementHunter extends ScenarioListener implements EventExecutor {
 
 	@Option(key = "health-at-start")
@@ -33,14 +30,7 @@ public class AchievementHunter extends ScenarioListener implements EventExecutor
 
 	@Override
 	public void onEnable() {
-		final Class<? extends Event> eventType;
-		if (PaperLib.getMinecraftVersion() < 12) {
-			eventType = PlayerAchievementAwardedEvent.class;
-		} else {
-			eventType = PlayerAdvancementDoneEvent.class;
-		}
-
-		Bukkit.getPluginManager().registerEvent(eventType, this, EventPriority.NORMAL, this, UhcCore.getPlugin());
+		Bukkit.getPluginManager().registerEvent(PlayerAdvancementDoneEvent.class, this, EventPriority.NORMAL, this, UhcCore.getPlugin());
 	}
 
 	@Override
@@ -88,11 +78,7 @@ public class AchievementHunter extends ScenarioListener implements EventExecutor
 	}
 
 	private boolean shouldAddHeart(Event event) {
-		if (PaperLib.getMinecraftVersion() < 12) {
-			return event instanceof PlayerAchievementAwardedEvent;
-		} else {
-			return event instanceof PlayerAdvancementDoneEvent && isValidAdvancement(event);
-		}
+		return event instanceof PlayerAdvancementDoneEvent && isValidAdvancement(event);
 	}
 
 	private boolean isValidAdvancement(Event event) {

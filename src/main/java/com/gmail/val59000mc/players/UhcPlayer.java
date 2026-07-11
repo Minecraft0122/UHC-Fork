@@ -7,7 +7,6 @@ import com.gmail.val59000mc.exceptions.UhcPlayerNotOnlineException;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.scenarios.Scenario;
-import com.gmail.val59000mc.utils.LocationUtils;
 import com.gmail.val59000mc.utils.SpigotUtils;
 import com.gmail.val59000mc.utils.TimeUtils;
 import com.gmail.val59000mc.utils.UniversalMaterial;
@@ -410,7 +409,7 @@ public class UhcPlayer {
 		this.browsingPage = browsingPage;
 	}
 
-	@SuppressWarnings("deprecation") // Can't use attributes in 1.8
+	@SuppressWarnings("deprecation") // Player#getMaxHealth is still used by surrounding Bukkit APIs.
 	public void healFully() throws UhcPlayerNotOnlineException {
 		final Player player = getPlayer();
 		player.setHealth(player.getMaxHealth());
@@ -426,15 +425,15 @@ public class UhcPlayer {
 
 		// Step 1: Save and remove original resistance and protection
 		final Optional<PotionEffect> originalResistance = player.getActivePotionEffects().stream()
-			.filter(p -> p.getType().equals(PotionEffectType.DAMAGE_RESISTANCE)).findAny();
-		player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+			.filter(p -> p.getType().equals(PotionEffectType.RESISTANCE)).findAny();
+		player.removePotionEffect(PotionEffectType.RESISTANCE);
 
 		final ItemStack[] originalArmor = player.getInventory().getArmorContents();
 		final ItemStack[] armorWithoutProtection = Arrays.stream(originalArmor)
 			.map(item -> {
 				if (item == null) return item;
 				final ItemStack newItem = new ItemStack(item);
-				newItem.removeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL);
+				newItem.removeEnchantment(Enchantment.PROTECTION);
 				return newItem;
 			})
 			.toArray(ItemStack[]::new);
@@ -464,21 +463,10 @@ public class UhcPlayer {
 	}
 
 	private static boolean shouldBreak(ItemStack item) {
-		// Behavior is different on older Minecraft versions, see https://bugs.mojang.com/browse/MC-120664
-		if (PaperLib.isVersion(13, 1)) { // 1.13.1+
-			return item.getDurability() >= item.getType().getMaxDurability();
-		} else { // 1.8.8 - 1.13
-			return item.getDurability() > item.getType().getMaxDurability();
-		}
+		return item.getDurability() >= item.getType().getMaxDurability();
 	}
 
 	public static void teleport(Player player, Location location) {
-		// On Minecraft < 1.9, the player may fall through the ground if teleported to a location
-		// where the chunk is not loaded, due to vanilla movement code bugs.
-		// See also: https://gitlab.com/uhccore/uhccore/-/issues/81
-		if (!PaperLib.isVersion(9)) { // 1.9+
-			LocationUtils.fullyPopulateChunk(location.getChunk());
-		}
 		player.teleport(location);
 	}
 

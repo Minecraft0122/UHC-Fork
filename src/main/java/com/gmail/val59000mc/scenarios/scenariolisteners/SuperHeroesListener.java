@@ -38,16 +38,16 @@ public class SuperHeroesListener extends ScenarioListener{
 				forceApplyPotionEffect(player, new PotionEffect(PotionEffectType.SPEED, 999999,0));
 				break;
 			case 1:
-				forceApplyPotionEffect(player, new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 999999,0));
+				forceApplyPotionEffect(player, new PotionEffect(PotionEffectType.STRENGTH, 999999,0));
 				break;
 			case 2:
-				forceApplyPotionEffect(player, new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 999999,1));
+				forceApplyPotionEffect(player, new PotionEffect(PotionEffectType.RESISTANCE, 999999,1));
 				break;
 			case 3:
 				forceApplyPotionEffect(player, new PotionEffect(PotionEffectType.INVISIBILITY, 999999,0));
 				break;
 			case 4:
-				forceApplyPotionEffect(player, new PotionEffect(PotionEffectType.JUMP, 999999,3));
+				forceApplyPotionEffect(player, new PotionEffect(PotionEffectType.JUMP_BOOST, 999999,3));
 				break;
 			case 5:
 				forceApplyPotionEffect(player, new PotionEffect(PotionEffectType.HEALTH_BOOST, 999999, 4));

@@ -3,7 +3,6 @@ package com.gmail.val59000mc.maploader;
 import com.gmail.val59000mc.utils.UniversalMaterial;
 import com.gmail.val59000mc.utils.VersionUtils;
 
-import io.papermc.lib.PaperLib;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -25,12 +24,11 @@ public class SugarCanePopulator extends BlockPopulator{
 
 	@Override
 	public void populate(World world, Random random, Chunk chunk){
-		// Iterates through 1-14 to ensure block checks do not load adjacent unloaded chunks which could lead to a stack overflow
+		// Keep checks away from chunk edges to avoid loading adjacent chunks from the populator.
 		for (int x = 1; x < 15; x++) {
 			for (int z = 1; z < 15; z++) {
 				Location loc = world.getHighestBlockAt(chunk.getBlock(x, 0, z).getLocation()).getLocation();
-				// Increase loc offset by 1 to ensure newer versions generate sugar cane properly as there exists a bug with getHighestBlockAt in older versions where it is +1 offset
-				// The while loop below will then trim any remaining air spaces to properly generate sugar cane
+				// Start above the highest block, then trim air/leaves to find ground.
 				loc.add(0, 1, 0);
 				Block below = loc.getBlock().getRelative(BlockFace.DOWN);
 
@@ -71,12 +69,8 @@ public class SugarCanePopulator extends BlockPopulator{
 			// Skip non-water blocks
 			if (neighbor.getType() != UniversalMaterial.STATIONARY_WATER.getType()) continue;
 			// Skip non-source blocks (e.g. flowing water)
-			if (PaperLib.getMinecraftVersion() > 12) {
-				Levelled data = (Levelled) neighbor.getBlockData();
-				if (data.getLevel() != 0) continue;
-			} else {
-				if (neighbor.getData() != 0) continue;
-			}
+			Levelled data = (Levelled) neighbor.getBlockData();
+			if (data.getLevel() != 0) continue;
 			return true; // Found an adjacent water source block!
 		}
 		return false;

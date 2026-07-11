@@ -81,23 +81,23 @@ gradlew runServer
 ./gradlew runServer
 ```
 
-You can also specify a Minecraft version for the server. Any Minecraft version
-for which there exists a build of Paper will work, from 1.8.8 and up.
+The project targets Minecraft 26.1.2 only. The `mcVersion` property is retained
+for local experiments, but other Minecraft versions are unsupported.
 
-**Build and run for Minecraft 1.8.8 on Windows**
-
-```
-gradlew runServer -PmcVersion=1.8.8
-```
-
-**Build and run for Minecraft 1.8.8 on Linux or macOS**
+**Build and run for Minecraft 26.1.2 on Windows**
 
 ```
-./gradlew runServer -PmcVersion=1.8.8
+gradlew runServer -PmcVersion=26.1.2
+```
+
+**Build and run for Minecraft 26.1.2 on Linux or macOS**
+
+```
+./gradlew runServer -PmcVersion=26.1.2
 ```
 
 The server files will be stored under the `run/<version>/` folder (relative to
-the base of this repository), such as `run/1.19.3/` or `run/1.8.8/`. Note that
+the base of this repository), such as `run/26.1.2/`. Note that
 you will need to edit the `run/<version>/eula.txt` file manually the first time
 you run a server, in order to agree to the Minecraft EULA.
 

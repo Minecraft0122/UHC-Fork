@@ -25,7 +25,7 @@ public class GoneFishingListener extends ScenarioListener{
 	public void onGameStarted(UhcStartedEvent e){
 		ItemStack rod = new ItemStack(Material.FISHING_ROD);
 		rod.addUnsafeEnchantment(Enchantment.LURE, lureLevel);
-		rod.addUnsafeEnchantment(Enchantment.LUCK, luckLevel);
+		rod.addUnsafeEnchantment(Enchantment.LUCK_OF_THE_SEA, luckLevel);
 
 		ItemMeta meta = rod.getItemMeta();
 		VersionUtils.getVersionUtils().setItemUnbreakable(meta, true);

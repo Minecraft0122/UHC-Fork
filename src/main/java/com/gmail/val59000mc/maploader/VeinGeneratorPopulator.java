@@ -1,10 +1,8 @@
 package com.gmail.val59000mc.maploader;
 
-import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.configuration.VeinConfiguration;
 import com.gmail.val59000mc.utils.RandomUtils;
 import com.gmail.val59000mc.utils.UniversalMaterial;
-import com.gmail.val59000mc.versionadapters.adapters.GetWorldMinHeightAdapter;
 
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -98,7 +96,7 @@ public class VeinGeneratorPopulator extends BlockPopulator {
 			// RandomFace
 			BlockFace face = RandomUtils.randomAdjacentFace();
 			if (
-				(face == BlockFace.DOWN && block.getY() <= UhcCore.getVersionAdapterLoader().getVersionAdapter(GetWorldMinHeightAdapter.class).getWorldMinHeight(block.getWorld()) + 1) ||
+				(face == BlockFace.DOWN && block.getY() <= block.getWorld().getMinHeight() + 1) ||
 				(face == BlockFace.UP && block.getY() >= block.getWorld().getMaxHeight() - 1) ||
 				// Make sure to stay within bounds of the source chunk to avoid infinite recursion
 				// Using Math.floorMod instead of % (remainder) to handle negative coordinates correctly

@@ -4,8 +4,6 @@ import java.util.Optional;
 
 import org.bukkit.Sound;
 
-import io.papermc.lib.PaperLib;
-
 public enum UniversalSound {
 	CLICK("CLICK", "UI_BUTTON_CLICK", "UI_BUTTON_CLICK"),
 	ENDERDRAGON_GROWL("ENDERDRAGON_GROWL", "ENTITY_ENDERDRAGON_GROWL", "ENTITY_ENDER_DRAGON_GROWL"),
@@ -13,26 +11,18 @@ public enum UniversalSound {
 	FIREWORK_LAUNCH("FIREWORK_LAUNCH", "ENTITY_FIREWORK_LAUNCH", "ENTITY_FIREWORK_ROCKET_LAUNCH"),
 	BLOCK_GRASS_BREAK("DIG_GRASS", "BLOCK_GRASS_BREAK", "BLOCK_GRASS_BREAK");
 
-	private final String name8, name9, name13;
+	private final String name;
 	private Sound sound;
 
 	UniversalSound(String name8, String name9, String name13){
-		this.name8 = name8;
-		this.name9 = name9;
-		this.name13 = name13;
+		this.name = name13;
 
 		sound = null;
 	}
 
 	public Sound getSound(){
 		if (sound == null){
-			if (PaperLib.getMinecraftVersion() < 9){
-				sound = Sound.valueOf(name8);
-			}else if (PaperLib.getMinecraftVersion() < 13){
-				sound = Sound.valueOf(name9);
-			}else {
-				sound = Sound.valueOf(name13);
-			}
+			sound = Sound.valueOf(name);
 		}
 
 		return sound;

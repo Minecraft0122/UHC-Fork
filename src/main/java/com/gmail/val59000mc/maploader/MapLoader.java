@@ -37,9 +37,6 @@ import com.gmail.val59000mc.tasks.ChunkLoaderTask;
 import com.gmail.val59000mc.tasks.WorldBorderTask;
 import com.gmail.val59000mc.utils.FileUtils;
 import com.gmail.val59000mc.utils.VersionUtils;
-import com.gmail.val59000mc.versionadapters.adapters.SetBiomeProviderAdapter;
-import com.pieterdebot.biomemapping.Biome;
-import com.pieterdebot.biomemapping.BiomeMappingAPI;
 
 import io.papermc.lib.PaperLib;
 
@@ -84,27 +81,11 @@ public class MapLoader {
 		return overworld.getWorldBorder().getSize()/2;
 	}
 
-	private void removeOceansUsingBiomeMapping() throws Exception {
-		final BiomeMappingAPI biomeMapping = new BiomeMappingAPI();
-		Biome replacementBiome = Biome.PLAINS;
-
-		for (Biome biome : Biome.values()) {
-			if (biome.isOcean() && biomeMapping.biomeSupported(biome)) {
-				biomeMapping.replaceBiomes(biome, replacementBiome);
-
-				replacementBiome = replacementBiome == Biome.PLAINS ? Biome.FOREST : Biome.PLAINS;
-			}
-		}
-	}
-
 	private void removeOceans() {
 		try {
 			if (UhcCore.getNmsAdapter().isPresent()) {
 				LOGGER.fine("Removing oceans using NMS adapter");
 				UhcCore.getNmsAdapter().get().removeOceans();
-			} else if (PaperLib.getMinecraftVersion() < 18) {
-				LOGGER.fine("Removing oceans using BiomeMapping");
-				removeOceansUsingBiomeMapping();
 			} else {
 				LOGGER.warning("The 'replace-ocean-biomes' setting is not supported on this Minecraft version");
 			}
@@ -178,8 +159,7 @@ public class MapLoader {
 			}
 			final String bpOverworld = config.get(MainConfig.BIOME_PROVIDER_OVERWORLD);
 			if (!bpOverworld.isEmpty()) {
-				UhcCore.getVersionAdapterLoader().getVersionAdapter(SetBiomeProviderAdapter.class)
-					.setBiomeProvider(wc, bpOverworld);
+				wc.biomeProvider(bpOverworld);
 			}
 		} else if (env == Environment.NETHER) {
 			final String cgNether = config.get(MainConfig.CHUNK_GENERATOR_NETHER);
@@ -188,8 +168,7 @@ public class MapLoader {
 			}
 			final String bpNether = config.get(MainConfig.BIOME_PROVIDER_NETHER);
 			if (!bpNether.isEmpty()) {
-				UhcCore.getVersionAdapterLoader().getVersionAdapter(SetBiomeProviderAdapter.class)
-					.setBiomeProvider(wc, bpNether);
+				wc.biomeProvider(bpNether);
 			}
 		} else if (env == Environment.THE_END) {
 			final String cgEnd = config.get(MainConfig.CHUNK_GENERATOR_END);
@@ -198,8 +177,7 @@ public class MapLoader {
 			}
 			final String bpEnd = config.get(MainConfig.BIOME_PROVIDER_END);
 			if (!bpEnd.isEmpty()) {
-				UhcCore.getVersionAdapterLoader().getVersionAdapter(SetBiomeProviderAdapter.class)
-					.setBiomeProvider(wc, bpEnd);
+				wc.biomeProvider(bpEnd);
 			}
 		}
 		wc.environment(env);
@@ -391,10 +369,10 @@ public class MapLoader {
 		if (!healthRegen){
 			VersionUtils.getVersionUtils().setGameRuleValue(world, NATURAL_REGENERATION, false);
 		}
-		if (!locatorBar && PaperLib.isVersion(21, 6)) {
+		if (!locatorBar) {
 			VersionUtils.getVersionUtils().setGameRuleValue(world, LOCATOR_BAR, false);
 		}
-		if (!announceAdvancements && PaperLib.getMinecraftVersion() >= 12){
+		if (!announceAdvancements) {
 			VersionUtils.getVersionUtils().setGameRuleValue(world, ANNOUNCE_ADVANCEMENTS, false);
 		}
 		VersionUtils.getVersionUtils().setGameRuleValue(world, COMMAND_BLOCK_OUTPUT, false);
@@ -488,7 +466,7 @@ public class MapLoader {
 
 		chunkLoaderTask.printSettings();
 
-		if (PaperLib.isPaper() && PaperLib.getMinecraftVersion() >= 13){
+		if (PaperLib.isPaper()){
 			Bukkit.getScheduler().runTaskAsynchronously(UhcCore.getPlugin(), chunkLoaderTask);
 		}else {
 			Bukkit.getScheduler().runTask(UhcCore.getPlugin(), chunkLoaderTask);
