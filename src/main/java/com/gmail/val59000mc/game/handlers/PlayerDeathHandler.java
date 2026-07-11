@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.configuration.MainConfig;
 import com.gmail.val59000mc.customitems.UhcItems;
+import com.gmail.val59000mc.events.UHCPlayerDeathEvent;
 import com.gmail.val59000mc.events.UhcPlayerKillEvent;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.languages.Lang;
@@ -98,9 +99,11 @@ public class PlayerDeathHandler {
 
 		playerManager.setLastDeathTime();
 
+		UhcPlayer uhcKiller = null;
+
 		// kill event
 		if(killer != null){
-			UhcPlayer uhcKiller = playerManager.getUhcPlayer(killer);
+			uhcKiller = playerManager.getUhcPlayer(killer);
 
 			uhcKiller.addKill();
 
@@ -151,6 +154,7 @@ public class PlayerDeathHandler {
 		}
 
 		uhcPlayer.setState(PlayerState.DEAD);
+		Bukkit.getPluginManager().callEvent(new UHCPlayerDeathEvent(UhcCore.getPlugin().getApi(), uhcPlayer, uhcKiller, killer, location, true));
 
 		if (config.get(MainConfig.STRIKE_LIGHTNING_ON_DEATH)) {
 			playerManager.strikeLightning(uhcPlayer);

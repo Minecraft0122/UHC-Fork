@@ -9,6 +9,10 @@ import com.gmail.val59000mc.customitems.KitsManager;
 import com.gmail.val59000mc.events.UhcGameStateChangedEvent;
 import com.gmail.val59000mc.events.UhcStartingEvent;
 import com.gmail.val59000mc.events.UhcStartedEvent;
+import com.gmail.val59000mc.events.UHCGameEndEvent;
+import com.gmail.val59000mc.events.UHCGamePauseEvent;
+import com.gmail.val59000mc.events.UHCGameResumeEvent;
+import com.gmail.val59000mc.events.UHCGameStartEvent;
 import com.gmail.val59000mc.game.handlers.*;
 import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.listeners.*;
@@ -43,6 +47,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,9 +77,11 @@ public class GameManager{
 	private GameState gameState;
 	private boolean pvp;
 	private boolean gameIsEnding;
+	private boolean gamePaused;
 	private int episodeNumber;
 	private long remainingTime;
 	private long elapsedTime;
+	private long gameStartTimeMillis;
 
 	static{
 		gameManager = null;
@@ -97,6 +104,8 @@ public class GameManager{
 
 		episodeNumber = 0;
 		elapsedTime = 0;
+		gameStartTimeMillis = -1;
+		gamePaused = false;
 	}
 
 	public static GameManager getGameManager(){
@@ -133,6 +142,18 @@ public class GameManager{
 
 	public boolean getGameIsEnding() {
 		return gameIsEnding;
+	}
+
+	public boolean isGameRunning() {
+		return gameState == GameState.PLAYING || gameState == GameState.DEATHMATCH;
+	}
+
+	public boolean isGamePaused() {
+		return gamePaused;
+	}
+
+	public long getGameStartTimeMillis() {
+		return gameStartTimeMillis;
 	}
 
 	public synchronized long getRemainingTime(){
@@ -173,6 +194,25 @@ public class GameManager{
 
 	public void setPvp(boolean state) {
 		pvp = state;
+	}
+
+	public void pauseGame(String reason) {
+		Validate.notNull(reason);
+		if (!isGameRunning() || gamePaused) {
+			return;
+		}
+
+		gamePaused = true;
+		Bukkit.getPluginManager().callEvent(new UHCGamePauseEvent(UhcCore.getPlugin().getApi(), reason));
+	}
+
+	public void resumeGame() {
+		if (!gamePaused) {
+			return;
+		}
+
+		gamePaused = false;
+		Bukkit.getPluginManager().callEvent(new UHCGameResumeEvent(UhcCore.getPlugin().getApi()));
 	}
 
 	public void setGameState(GameState gameState){
@@ -262,6 +302,8 @@ public class GameManager{
 
 	public void startWatchingEndOfGame(){
 		setGameState(GameState.PLAYING);
+		gameStartTimeMillis = System.currentTimeMillis();
+		gamePaused = false;
 
 		mapLoader.setWorldsStartGame();
 
@@ -285,6 +327,7 @@ public class GameManager{
 			Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new FinalHealTask(this, playerManager), config.get(MainConfig.FINAL_HEAL_DELAY)*20);
 		}
 
+		Bukkit.getPluginManager().callEvent(new UHCGameStartEvent(UhcCore.getPlugin().getApi(), gameStartTimeMillis));
 		Bukkit.getPluginManager().callEvent(new UhcStartedEvent());
 	}
 
@@ -404,9 +447,11 @@ public class GameManager{
 			setGameState(GameState.ENDED);
 			pvp = false;
 			gameIsEnding = true;
+			gamePaused = false;
 			broadcastInfoMessage(Lang.GAME_FINISHED);
 			playerManager.playSoundToAll(UniversalSound.ENDERDRAGON_GROWL.getSound(), 1, 2);
-			playerManager.setAllPlayersEndGame();
+			Set<UhcPlayer> winners = playerManager.setAllPlayersEndGame();
+			Bukkit.getPluginManager().callEvent(new UHCGameEndEvent(UhcCore.getPlugin().getApi(), winners));
 			Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new StopRestartTask(),20);
 		}
 	}

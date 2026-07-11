@@ -469,6 +469,94 @@ Below are Gradle/Maven dependency snippets for compiling against the API:
     }
     ```
 
+The API also implements `UHCMatchService`, which is the recommended layer for
+world-event addons. It contains the stable match-scope checks:
+
+- `isRunning()`, `isPaused()`, `getState()`, `getElapsedSeconds()`
+- `getGameStartTimeMillis()`
+- `getGameWorlds()`, `isGameWorld(World)`
+- `isParticipant(Player)`, `isAlive(Player)`, `isSpectator(Player)`
+- `getAlivePlayers()`, `getTeam(Player)`, `getAliveTeams()`
+- `getWorldBorder(World)`
+- `getWeatherState(World)`, `setTemporaryWeather(...)`,
+  `claimWeatherControl(World)`, `releaseWeatherControl(World, boolean)`
+
+UhcCore fires addon-friendly lifecycle and hook events:
+
+- `UHCGameStartEvent`
+- `UHCGameEndEvent`
+- `UHCGameStopEvent`
+- `UHCGamePauseEvent`
+- `UHCGameResumeEvent`
+- `UHCPlayerDeathEvent`
+- `UHCBlockDropModifyEvent`
+- `UHCEntityDropModifyEvent`
+- `UHCExperienceModifyEvent`
+
+!!! example "Snippet: Match checks for a world-event addon"
+
+    ```java
+    import com.gmail.val59000mc.api.UhcCoreApi;
+    import com.gmail.val59000mc.api.UhcCoreProvider;
+
+    import org.bukkit.entity.Player;
+
+    public boolean canAffect(Player player) {
+        UhcCoreApi api = UhcCoreProvider.require();
+
+        return api.isRunning()
+            && !api.isPaused()
+            && api.isGameWorld(player.getWorld())
+            && api.isAlive(player)
+            && api.getElapsedSeconds() >= 300;
+    }
+    ```
+
+!!! example "Snippet: Listen for match lifecycle"
+
+    ```java
+    import com.gmail.val59000mc.events.UHCGameEndEvent;
+    import com.gmail.val59000mc.events.UHCGameStartEvent;
+    import com.gmail.val59000mc.events.UHCGameStopEvent;
+
+    import org.bukkit.event.EventHandler;
+    import org.bukkit.event.Listener;
+
+    public final class WorldEventListener implements Listener {
+
+        @EventHandler
+        public void onMatchStart(UHCGameStartEvent event) {
+            startWorldEvents(event.getMatch());
+        }
+
+        @EventHandler
+        public void onMatchEnd(UHCGameEndEvent event) {
+            cleanupWorldEvents();
+        }
+
+        @EventHandler
+        public void onMatchStop(UHCGameStopEvent event) {
+            cleanupWorldEvents();
+        }
+
+    }
+    ```
+
+!!! example "Snippet: Temporary weather control"
+
+    ```java
+    import com.gmail.val59000mc.api.UHCWeatherState;
+    import com.gmail.val59000mc.api.UhcCoreApi;
+    import com.gmail.val59000mc.api.UhcCoreProvider;
+
+    import org.bukkit.World;
+
+    public void startStorm(World world) {
+        UhcCoreApi api = UhcCoreProvider.require();
+        api.setTemporaryWeather(world, UHCWeatherState.thunder(20 * 60), 20 * 60);
+    }
+    ```
+
 ## Can I add my own custom scenarios?
 
 Yes. Create a `Scenario`, give it display information, and register it through

@@ -24,6 +24,11 @@ public class EnablePVPTask implements Runnable{
 			return; // Stop task
 		}
 
+		if (gameManager.isGamePaused()) {
+			Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), this, 20);
+			return;
+		}
+
 		if(timeBeforePvp == 0){
 			GameManager.getGameManager().setPvp(true);
 			GameManager.getGameManager().broadcastInfoMessage(Lang.PVP_ENABLED);

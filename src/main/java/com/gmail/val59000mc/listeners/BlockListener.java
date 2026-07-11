@@ -1,13 +1,16 @@
 package com.gmail.val59000mc.listeners;
 
 import com.gmail.val59000mc.UhcCore;
+import com.gmail.val59000mc.api.UhcCoreApi;
 import com.gmail.val59000mc.configuration.LootConfiguration;
 import com.gmail.val59000mc.configuration.MainConfig;
 import com.gmail.val59000mc.customitems.UhcItems;
+import com.gmail.val59000mc.events.UHCBlockDropModifyEvent;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.players.PlayerManager;
 import com.gmail.val59000mc.players.UhcPlayer;
+import com.gmail.val59000mc.utils.JsonItemStack;
 import com.gmail.val59000mc.utils.UniversalMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -24,7 +27,9 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -77,13 +82,27 @@ public class BlockListener implements Listener{
 		if(blockLoots.containsKey(material)){
 			LootConfiguration<Material> lootConfig = blockLoots.get(material);
 			Location loc = event.getBlock().getLocation().add(.5,.5,.5);
+			List<ItemStack> drops = new ArrayList<>();
+			for (JsonItemStack item : lootConfig.getLoot()) {
+				drops.add(item.rollStack());
+			}
+			int experience = lootConfig.getAddXp();
+
+			if (shouldCallUhcDropHooks(event.getBlock())) {
+				UHCBlockDropModifyEvent modifyEvent = new UHCBlockDropModifyEvent(UhcCore.getPlugin().getApi(), event.getBlock(), event.getPlayer(), drops, experience);
+				Bukkit.getPluginManager().callEvent(modifyEvent);
+				if (modifyEvent.isCancelled()) {
+					return;
+				}
+				drops = modifyEvent.getDrops();
+				experience = modifyEvent.getExperience();
+			}
 
 			event.getBlock().setType(Material.AIR);
+			drops.forEach(item -> loc.getWorld().dropItem(loc, item));
 
-			lootConfig.getLoot().forEach(item -> loc.getWorld().dropItem(loc, item.rollStack()));
-
-			if (lootConfig.getAddXp() > 0) {
-				UhcItems.spawnExtraXp(loc, lootConfig.getAddXp());
+			if (experience > 0) {
+				UhcItems.spawnExtraXp(loc, experience);
 			}
 		}
 	}
@@ -155,11 +174,37 @@ public class BlockListener implements Listener{
 
 		final double random = ThreadLocalRandom.current().nextDouble(100);
 		if (random < dropPercentage) {
+			List<ItemStack> drops = new ArrayList<>();
+			drops.add(new ItemStack(Material.APPLE));
+			int experience = 0;
+
+			if (shouldCallUhcDropHooks(block)) {
+				UHCBlockDropModifyEvent modifyEvent = new UHCBlockDropModifyEvent(UhcCore.getPlugin().getApi(), block, e instanceof BlockBreakEvent ? ((BlockBreakEvent) e).getPlayer() : null, drops, experience);
+				Bukkit.getPluginManager().callEvent(modifyEvent);
+				if (modifyEvent.isCancelled()) {
+					return;
+				}
+				drops = modifyEvent.getDrops();
+				experience = modifyEvent.getExperience();
+			}
+
+			List<ItemStack> finalDrops = drops;
+			int finalExperience = experience;
 			// Add apple to drops
 			Bukkit.getScheduler().runTask(UhcCore.getPlugin(),
-				() -> block.getWorld().dropItem(block.getLocation().add(.5, .5, .5),
-			new ItemStack(Material.APPLE)));
+				() -> {
+					Location dropLocation = block.getLocation().add(.5, .5, .5);
+					finalDrops.forEach(item -> block.getWorld().dropItem(dropLocation, item));
+					if (finalExperience > 0) {
+						UhcItems.spawnExtraXp(dropLocation, finalExperience);
+					}
+				});
 		}
+	}
+
+	private boolean shouldCallUhcDropHooks(Block block) {
+		UhcCoreApi api = UhcCore.getPlugin().getApi();
+		return api != null && api.isRunning() && api.isGameWorld(block.getWorld());
 	}
 
 }

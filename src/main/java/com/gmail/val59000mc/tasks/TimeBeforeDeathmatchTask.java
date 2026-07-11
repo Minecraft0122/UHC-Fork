@@ -21,6 +21,11 @@ public class TimeBeforeDeathmatchTask implements Runnable{
 
 	@Override
 	public void run() {
+		if (gameManager.isGamePaused()) {
+			Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), this, TimeUtils.SECOND_TICKS);
+			return;
+		}
+
 		long remainingTime = gameManager.getRemainingTime();
 
 		remainingTime--;

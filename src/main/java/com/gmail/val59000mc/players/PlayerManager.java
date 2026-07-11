@@ -390,14 +390,14 @@ public class PlayerManager {
 		}
 	}
 
-	public void setAllPlayersEndGame() {
+	public Set<UhcPlayer> setAllPlayersEndGame() {
 		GameManager gm = GameManager.getGameManager();
 		MainConfig cfg = gm.getConfig();
 
-		List<UhcPlayer> winners = getWinners();
+		Set<UhcPlayer> winners = new HashSet<>(getWinners());
 
 		if (!winners.isEmpty()) {
-			UhcPlayer player1 = winners.get(0);
+			UhcPlayer player1 = winners.iterator().next();
 			if (winners.size() == 1) {
 				gm.broadcastInfoMessage(Lang.PLAYERS_WON_SOLO.replace("%player%", player1.getDisplayName()));
 			} else {
@@ -412,13 +412,14 @@ public class PlayerManager {
 			}
 		}
 
-		UhcWinEvent event = new UhcWinEvent(new HashSet<>(winners));
+		UhcWinEvent event = new UhcWinEvent(winners);
 		Bukkit.getServer().getPluginManager().callEvent(event);
 
-		customEventHandler.handleWinEvent(new HashSet<>(winners));
+		customEventHandler.handleWinEvent(winners);
 
 		// When the game finished set all player states to DEAD
 		getPlayersList().forEach(player -> player.setState(PlayerState.DEAD));
+		return Collections.unmodifiableSet(winners);
 	}
 
 	private List<UhcPlayer> getWinners(){

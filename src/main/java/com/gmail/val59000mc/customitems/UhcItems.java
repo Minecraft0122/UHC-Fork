@@ -1,6 +1,9 @@
 package com.gmail.val59000mc.customitems;
 
+import com.gmail.val59000mc.UhcCore;
+import com.gmail.val59000mc.api.UhcCoreApi;
 import com.gmail.val59000mc.configuration.MainConfig;
+import com.gmail.val59000mc.events.UHCExperienceModifyEvent;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.players.PlayerState;
@@ -319,6 +322,20 @@ public class UhcItems{
 	}
 
 	public static void spawnExtraXp(Location location, int quantity) {
+		if (quantity <= 0) {
+			return;
+		}
+
+		UhcCoreApi api = UhcCore.getPlugin().getApi();
+		if (api != null && api.isRunning() && api.isGameWorld(location.getWorld())) {
+			UHCExperienceModifyEvent event = new UHCExperienceModifyEvent(api, location, quantity);
+			Bukkit.getPluginManager().callEvent(event);
+			if (event.isCancelled() || event.getExperience() <= 0) {
+				return;
+			}
+			quantity = event.getExperience();
+		}
+
 		ExperienceOrb orb = (ExperienceOrb) location.getWorld().spawnEntity(location, EntityType.EXPERIENCE_ORB);
 		orb.setExperience(quantity);
 	}

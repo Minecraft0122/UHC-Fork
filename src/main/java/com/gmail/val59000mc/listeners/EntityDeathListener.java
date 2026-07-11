@@ -3,10 +3,14 @@ package com.gmail.val59000mc.listeners;
 import com.gmail.val59000mc.configuration.LootConfiguration;
 import com.gmail.val59000mc.configuration.MainConfig;
 import com.gmail.val59000mc.customitems.UhcItems;
+import com.gmail.val59000mc.UhcCore;
+import com.gmail.val59000mc.api.UhcCoreApi;
+import com.gmail.val59000mc.events.UHCEntityDropModifyEvent;
 import com.gmail.val59000mc.game.handlers.PlayerDeathHandler;
 import com.gmail.val59000mc.players.PlayerManager;
 import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.utils.RandomUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Zombie;
@@ -40,7 +44,9 @@ public class EntityDeathListener implements Listener {
 		handleMobLoot(event);
 		handleGoldDrop(event);
 		handleGhastTearDrop(event);
-		handleOfflineZombieDeath(event);
+		if (!handleOfflineZombieDeath(event)) {
+			callDropModifyEvent(event);
+		}
 	}
 
 	private void handleMobLoot(EntityDeathEvent event){
@@ -92,15 +98,15 @@ public class EntityDeathListener implements Listener {
 		event.getDrops().removeIf(item -> item.getType() == Material.GHAST_TEAR);
 	}
 
-	private void handleOfflineZombieDeath(EntityDeathEvent event){
+	private boolean handleOfflineZombieDeath(EntityDeathEvent event){
 		if (event.getEntityType() != EntityType.ZOMBIE){
-			return;
+			return false;
 		}
 
 		Zombie zombie = (Zombie) event.getEntity();
 
 		if (zombie.getCustomName() == null){
-			return;
+			return false;
 		}
 
 		UhcPlayer uhcPlayer = null;
@@ -113,12 +119,38 @@ public class EntityDeathListener implements Listener {
 		}
 
 		if (uhcPlayer == null){
-			return;
+			return false;
 		}
 
 		event.getDrops().clear();
 		uhcPlayer.setOfflineZombieUuid(null);
 		playerDeathHandler.handleOfflinePlayerDeath(uhcPlayer, zombie.getLocation(), zombie.getKiller());
+		return true;
+	}
+
+	private void callDropModifyEvent(EntityDeathEvent event) {
+		UhcCoreApi api = UhcCore.getPlugin().getApi();
+		if (api == null || !api.isRunning() || !api.isGameWorld(event.getEntity().getWorld())) {
+			return;
+		}
+
+		UHCEntityDropModifyEvent modifyEvent = new UHCEntityDropModifyEvent(
+			api,
+			event.getEntity(),
+			event.getEntity().getKiller(),
+			event.getDrops(),
+			event.getDroppedExp()
+		);
+		Bukkit.getPluginManager().callEvent(modifyEvent);
+		event.getDrops().clear();
+
+		if (modifyEvent.isCancelled()) {
+			event.setDroppedExp(0);
+			return;
+		}
+
+		event.getDrops().addAll(modifyEvent.getDrops());
+		event.setDroppedExp(modifyEvent.getExperience());
 	}
 
 }

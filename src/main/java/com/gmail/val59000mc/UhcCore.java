@@ -12,8 +12,11 @@ import com.gmail.val59000mc.utils.PluginForwardingHandler;
 import com.gmail.val59000mc.versionadapters.VersionAdapterLoader;
 
 import org.bukkit.Bukkit;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.gmail.val59000mc.events.UHCGameStopEvent;
 
 import net.zerodind.uhccore.nms.CreateNmsAdapterException;
 import net.zerodind.uhccore.nms.NmsAdapter;
@@ -28,7 +31,7 @@ public class UhcCore extends JavaPlugin{
 	private static VersionAdapterLoader versionAdapterLoader;
 	private Logger forwardingLogger;
 	private GameManager gameManager;
-	private UhcCoreApi api;
+	private UhcCoreApiImpl api;
 
 	@Override
 	public void onEnable(){
@@ -53,6 +56,11 @@ public class UhcCore extends JavaPlugin{
 	@Override
 	public void onDisable() {
 		if (api != null) {
+			if (gameManager != null && gameManager.isGameRunning()) {
+				getServer().getPluginManager().callEvent(new UHCGameStopEvent(api, "Plugin disabled"));
+			}
+			api.releaseAllWeatherControls(true);
+			HandlerList.unregisterAll(api);
 			getServer().getServicesManager().unregister(UhcCoreApi.class, api);
 			api = null;
 		}
@@ -65,6 +73,7 @@ public class UhcCore extends JavaPlugin{
 	private void registerApi() {
 		api = new UhcCoreApiImpl(this, gameManager);
 		getServer().getServicesManager().register(UhcCoreApi.class, api, this, ServicePriority.Normal);
+		getServer().getPluginManager().registerEvents(api, this);
 	}
 
 	private void loadNmsAdapter() {

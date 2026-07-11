@@ -11,6 +11,7 @@ import com.gmail.val59000mc.players.UhcTeam;
 import com.gmail.val59000mc.scenarios.Scenario;
 import com.gmail.val59000mc.scenarios.ScenarioManager;
 
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.UUID;
  * <p>Prefer obtaining this API through {@link UhcCoreProvider} or Bukkit's
  * ServicesManager instead of depending on UhcCore internals directly.</p>
  */
-public interface UhcCoreApi {
+public interface UhcCoreApi extends UHCMatchService {
 
 	UhcCore getPlugin();
 
@@ -76,6 +77,9 @@ public interface UhcCoreApi {
 
 	Optional<UhcTeam> getTeam(String name);
 
+	@Override
+	Optional<UhcTeam> getTeam(Player player);
+
 	List<Scenario> getRegisteredScenarios();
 
 	Set<Scenario> getEnabledScenarios();
@@ -111,5 +115,21 @@ public interface UhcCoreApi {
 	void startGame();
 
 	void endGame();
+
+	void pauseGame(String reason);
+
+	void resumeGame();
+
+	void setTemporaryWeather(World world, UHCWeatherState weatherState, long durationTicks);
+
+	void claimWeatherControl(World world);
+
+	void releaseWeatherControl(World world, boolean restore);
+
+	boolean registerAddon(UHCAddon addon);
+
+	boolean unregisterAddon(UHCAddon addon);
+
+	Set<UHCAddon> getAddons();
 
 }
