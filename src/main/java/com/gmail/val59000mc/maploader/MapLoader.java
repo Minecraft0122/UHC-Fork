@@ -365,7 +365,6 @@ public class MapLoader {
 	}
 
 	private void prepareWorld(World world, Difficulty difficulty, boolean healthRegen, boolean locatorBar, boolean announceAdvancements, double borderSideLength) {
-		world.save();
 		if (!healthRegen){
 			VersionUtils.getVersionUtils().setGameRuleValue(world, NATURAL_REGENERATION, false);
 		}

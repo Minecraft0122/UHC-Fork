@@ -104,12 +104,42 @@ public class VersionUtils {
 		player.getAttribute(Attribute.MAX_HEALTH).setBaseValue(maxHealth);
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void setGameRuleValue(World world, String name, Object value) {
-		GameRule gameRule = GameRule.getByName(name);
-		if (gameRule != null) {
-			world.setGameRule(gameRule, value);
+		switch (name) {
+			case MapLoader.DO_DAYLIGHT_CYCLE:
+				setBooleanGameRule(world, GameRule.ADVANCE_TIME, value);
+				break;
+			case MapLoader.DO_MOB_SPAWNING:
+				setBooleanGameRule(world, GameRule.SPAWN_MOBS, value);
+				break;
+			case MapLoader.NATURAL_REGENERATION:
+				setBooleanGameRule(world, GameRule.NATURAL_HEALTH_REGENERATION, value);
+				break;
+			case MapLoader.LOCATOR_BAR:
+				setBooleanGameRule(world, GameRule.LOCATOR_BAR, value);
+				break;
+			case MapLoader.ANNOUNCE_ADVANCEMENTS:
+				setBooleanGameRule(world, GameRule.SHOW_ADVANCEMENT_MESSAGES, value);
+				break;
+			case MapLoader.COMMAND_BLOCK_OUTPUT:
+				setBooleanGameRule(world, GameRule.COMMAND_BLOCK_OUTPUT, value);
+				break;
+			case MapLoader.LOG_ADMIN_COMMANDS:
+				setBooleanGameRule(world, GameRule.LOG_ADMIN_COMMANDS, value);
+				break;
+			default:
+				UhcCore.getPlugin().getLogger().warning("Unsupported gamerule: " + name);
+				break;
 		}
+	}
+
+	private void setBooleanGameRule(World world, GameRule<Boolean> gameRule, Object value) {
+		if (value instanceof Boolean) {
+			world.setGameRule(gameRule, (Boolean) value);
+			return;
+		}
+
+		world.setGameRule(gameRule, Boolean.parseBoolean(String.valueOf(value)));
 	}
 
 	public boolean hasEye(Block block) {
