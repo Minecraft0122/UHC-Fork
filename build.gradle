@@ -7,7 +7,10 @@ plugins {
 }
 
 group = "io.github.minecraft0122"
-version = "2.0.0-SNAPSHOT"
+
+def gitCommit = indraGit.commit()?.getName()
+def releaseVersion = findProperty("releaseVersion") ?: System.getenv("CI_COMMIT_TAG")
+version = releaseVersion ?: "beta-${gitCommit ?: "local"}"
 
 def supportedMinecraftVersion = "26.1.2"
 def spigotApiVersion = "${supportedMinecraftVersion}-R0.1-SNAPSHOT"
@@ -96,11 +99,10 @@ tasks.named("jar") {
 		)
 	}
 
-	def commit = indraGit.commit()
-	if (commit != null) {
+	if (gitCommit != null) {
 		manifest {
 			attributes(
-				"Git-Commit": commit.getName()
+				"Git-Commit": gitCommit
 			)
 		}
 	}
@@ -188,15 +190,6 @@ publishing {
 	}
 }
 
-boolean isSnapshot() {
-	return project.version.endsWith("-SNAPSHOT");
-}
-
 String getPluginVersion() {
-	def commit = indraGit.commit()
-	if (commit != null && isSnapshot()) {
-		return project.version + "-" + commit.getName()
-	} else {
-		return project.version
-	}
+	return project.version.toString()
 }
