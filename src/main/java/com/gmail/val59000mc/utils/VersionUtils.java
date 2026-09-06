@@ -107,25 +107,25 @@ public class VersionUtils {
 	public void setGameRuleValue(World world, String name, Object value) {
 		switch (name) {
 			case MapLoader.DO_DAYLIGHT_CYCLE:
-				setBooleanGameRule(world, GameRule.ADVANCE_TIME, value);
+				setBooleanGameRule(world, value, "do_daylight_cycle", "advance_time");
 				break;
 			case MapLoader.DO_MOB_SPAWNING:
-				setBooleanGameRule(world, GameRule.SPAWN_MOBS, value);
+				setBooleanGameRule(world, value, "do_mob_spawning", "spawn_mobs");
 				break;
 			case MapLoader.NATURAL_REGENERATION:
-				setBooleanGameRule(world, GameRule.NATURAL_HEALTH_REGENERATION, value);
+				setBooleanGameRule(world, value, "natural_regeneration", "natural_health_regeneration");
 				break;
 			case MapLoader.LOCATOR_BAR:
-				setBooleanGameRule(world, GameRule.LOCATOR_BAR, value);
+				setBooleanGameRule(world, value, "locator_bar");
 				break;
 			case MapLoader.ANNOUNCE_ADVANCEMENTS:
-				setBooleanGameRule(world, GameRule.SHOW_ADVANCEMENT_MESSAGES, value);
+				setBooleanGameRule(world, value, "announce_advancements", "show_advancement_messages");
 				break;
 			case MapLoader.COMMAND_BLOCK_OUTPUT:
-				setBooleanGameRule(world, GameRule.COMMAND_BLOCK_OUTPUT, value);
+				setBooleanGameRule(world, value, "command_block_output");
 				break;
 			case MapLoader.LOG_ADMIN_COMMANDS:
-				setBooleanGameRule(world, GameRule.LOG_ADMIN_COMMANDS, value);
+				setBooleanGameRule(world, value, "log_admin_commands");
 				break;
 			default:
 				UhcCore.getPlugin().getLogger().warning("Unsupported gamerule: " + name);
@@ -133,13 +133,24 @@ public class VersionUtils {
 		}
 	}
 
-	private void setBooleanGameRule(World world, GameRule<Boolean> gameRule, Object value) {
-		if (value instanceof Boolean) {
-			world.setGameRule(gameRule, (Boolean) value);
+	@SuppressWarnings("unchecked")
+	private void setBooleanGameRule(World world, Object value, String... names) {
+		GameRule<Boolean> gameRule = null;
+		for (String name : names) {
+			gameRule = (GameRule<Boolean>) org.bukkit.Registry.GAME_RULE.get(NamespacedKey.minecraft(name));
+			if (gameRule != null) {
+				break;
+			}
+		}
+
+		if (gameRule == null) {
+			UhcCore.getPlugin().getLogger().warning("Unsupported gamerule names: " + String.join(", ", names));
 			return;
 		}
 
-		world.setGameRule(gameRule, Boolean.parseBoolean(String.valueOf(value)));
+		world.setGameRule(gameRule, value instanceof Boolean
+			? (Boolean) value
+			: Boolean.parseBoolean(String.valueOf(value)));
 	}
 
 	public boolean hasEye(Block block) {
