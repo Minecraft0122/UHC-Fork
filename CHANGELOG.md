@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.0.0] - 2026-09-06
+
+First release of UHC-Fork. The fork targets modern Minecraft/Paper servers and
+adds an addon API on top of UhcCore `1.20.15`.
+
+### New features
+
+- Support Minecraft 26.1.2 and Paper 26.2 (Java 25)
+- Addon API for match lifecycle and extension hooks
+- GitHub Actions builds on every push; beta builds are named after the commit hash
+
+### Bug fixes
+
+- [#1][GH-1] - `NoSuchFieldError` on `GameRule` during world preparation left the server stuck in the loading state on Paper 26.2
+
+### Other
+
+- Renamed the artifact to `UHC-Fork` and reset the version line to `2.x`
+
+[GH-1]: https://github.com/Minecraft0122/UHC-Fork/issues/1
+
 ## [1.20.15] - 2025-10-12
 
 UhcCore version `1.20.15` is now here! The update brings a few small fixes,
