@@ -33,9 +33,19 @@ over 10 years ago, but this plugin adds many new features:
 
 ## Downloads
 
-Build this fork from source with `gradlew build`. The plugin JAR is written to
-`build/libs/` and uses the `UHC-Fork-2.x.x` artifact name. GitHub Actions also
-builds the plugin on pushes, pull requests, and manual workflow runs.
+Stable builds are published on the
+[GitHub Releases](https://github.com/Minecraft0122/UHC-Fork/releases) page.
+Download the `UHC-Fork-<version>.jar` asset from the latest release. See
+[CHANGELOG.md](CHANGELOG.md) for the changes in each release.
+
+Development builds are produced by GitHub Actions on every push and can be
+downloaded as workflow artifacts from the
+[Actions](https://github.com/Minecraft0122/UHC-Fork/actions) page. These beta
+builds are named after the commit hash (`UHC-Fork-beta-<commit>.jar`).
+
+You can also build from source with `gradlew build`. The plugin JAR is written
+to `build/libs/`; pass `-PreleaseVersion=<version>` to produce a release-named
+jar instead of a beta build.
 
 The original public UhcCore release page is still available on
 [Spigot](https://www.spigotmc.org/resources/uhccore.102507/history), but this
