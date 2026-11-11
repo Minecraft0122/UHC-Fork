@@ -189,9 +189,6 @@ public class ScoreboardHandler {
 		if (UhcCore.getNmsAdapter().isPresent()) {
 			// On Minecraft 1.20.3+, we need to use NMS
 			UhcCore.getNmsAdapter().get().setReadOnlyPlayerScore(score, value);
-		} else {
-			// Works on Minecraft 1.20.2 and below, before the fix of https://bugs.mojang.com/browse/MC-163943.
-			score.setScore(value);
 		}
 	}
 

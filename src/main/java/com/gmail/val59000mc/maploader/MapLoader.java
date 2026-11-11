@@ -132,8 +132,16 @@ public class MapLoader {
 		}else{
 			final File worldDir = new File(Bukkit.getWorldContainer(), uuid);
 			if(worldDir.exists()){
-				LOGGER.info("Deleting last world : "+uuid);
-				FileUtils.deleteFile(worldDir);
+				World world = Bukkit.getWorld(uuid);
+				if (world != null && !Bukkit.unloadWorld(world, false)) {
+					LOGGER.warning("Unable to unload last world " + uuid + "; keeping its files");
+					return;
+				}
+
+				LOGGER.info("Deleting last world : " + uuid);
+				if (!FileUtils.deleteFile(worldDir)) {
+					LOGGER.warning("Unable to completely delete last world " + uuid);
+				}
 			}else{
 				LOGGER.info("World "+uuid+" can't be removed, directory not found");
 			}

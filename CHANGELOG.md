@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1] - 2026-11-12
+
+### Bug fixes
+
+- Fixed a read-only scoreboard score error that interrupted player joins on Minecraft 26.1.2 and 26.2.
+- Fixed previous UHC worlds not being removed before a new game starts.
+
 ## [2.0.0] - 2026-09-06
 
 First release of UHC-Fork. The fork targets modern Minecraft/Paper servers and
