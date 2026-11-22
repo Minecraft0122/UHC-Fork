@@ -259,7 +259,10 @@ public class GameManager{
 				}
 
 				CompletableFuture.allOf(preGenerationTasks.stream().toArray(CompletableFuture[]::new))
-					.thenRun(() -> Bukkit.getScheduler().runTask(UhcCore.getPlugin(), () -> {
+					.whenComplete((ignored, throwable) -> Bukkit.getScheduler().runTask(UhcCore.getPlugin(), () -> {
+						if (throwable != null) {
+							LOGGER.log(Level.WARNING, "Chunk pre-generation did not complete cleanly; continuing", throwable);
+						}
 						startWaitingPlayers();
 					}));
 			} else {

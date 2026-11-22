@@ -1,6 +1,7 @@
 package com.gmail.val59000mc.versionadapters.chunky.adapters;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.popcraft.chunky.api.ChunkyAPI;
@@ -22,11 +23,28 @@ public class ChunkyPreGeneratorImpl implements ChunkyPreGenerator {
 		final ChunkyAPI chunky = Bukkit.getServer().getServicesManager().load(ChunkyAPI.class);
 
 		chunky.onGenerationComplete(e -> {
-			if (e.world().equals(world)) {
+			if (world.equals(e.world())) {
 				generationComplete.complete(null);
 			}
 		});
-		chunky.startTask(world, "square", 0, 0, size, size, "region");
+
+		try {
+			if (!chunky.startTask(world, "square", 0, 0, size, size, "region")
+					&& !chunky.isRunning(world)) {
+				// Chunky rejects a task when there is nothing left to generate (or
+				// when the requested task cannot be created). Do not leave UHC in
+				// the loading state forever in either case.
+				Bukkit.getLogger().log(Level.WARNING,
+						"Chunky did not start pre-generation for world " + world
+								+ "; continuing with the existing world data");
+				generationComplete.complete(null);
+			}
+		} catch (RuntimeException ex) {
+			Bukkit.getLogger().log(Level.WARNING,
+						"Unable to start Chunky pre-generation for world " + world
+								+ "; continuing with the existing world data", ex);
+			generationComplete.complete(null);
+		}
 
 		return generationComplete;
 	}
