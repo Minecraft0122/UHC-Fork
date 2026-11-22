@@ -55,7 +55,14 @@ public class PlayerManager {
 	}
 
 	public boolean isPlayerAllowedToJoin(Player player) throws UhcPlayerJoinException {
-		GameManager gm = GameManager.getGameManager();
+		return isPlayerAllowedToJoin(GameManager.getGameManager(), player);
+	}
+
+	/**
+	 * Checks a login against the manager that owns this player manager. Using the
+	 * owning instance avoids a stale global manager after a plugin reload.
+	 */
+	public boolean isPlayerAllowedToJoin(GameManager gm, Player player) throws UhcPlayerJoinException {
 		UhcPlayer uhcPlayer;
 
 		switch(gm.getGameState()){

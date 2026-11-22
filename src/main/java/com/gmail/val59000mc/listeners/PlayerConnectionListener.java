@@ -45,7 +45,14 @@ public class PlayerConnectionListener implements Listener{
 		}
 
 		try{
-			boolean allowedToJoin = playerManager.isPlayerAllowedToJoin(event.getPlayer());
+			GameState listenerState = gameManager.getGameState();
+			GameState globalState = GameManager.getGameManager().getGameState();
+			if (listenerState != globalState) {
+				UhcCore.getPlugin().getLogger().warning("Game state mismatch during login: listener="
+						+ listenerState + ", global=" + globalState);
+			}
+
+			boolean allowedToJoin = playerManager.isPlayerAllowedToJoin(gameManager, event.getPlayer());
 
 			if (allowedToJoin){
 				// Create player if not existent.
