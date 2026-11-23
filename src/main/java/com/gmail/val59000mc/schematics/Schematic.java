@@ -93,7 +93,7 @@ public class Schematic {
 			dimensions = SchematicHandler13.pasteSchematic(location, schematicFile.getPath());
 
 			build = true;
-		} catch (Exception e) {
+		} catch (Exception | LinkageError e) {
 			LOGGER.log(Level.WARNING, "An error occurred while pasting the schematic " + schematicFile.getPath(), e);
 			build = false;
 			return;

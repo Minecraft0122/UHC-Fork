@@ -4,6 +4,14 @@
 # server, not to an existing server where you have important player data.
 enable-uhc: false
 
+# Packet backend used by the Anonymous and Silent Night scenarios.
+# auto: prefer PacketEvents, fall back to ProtocolLib if unavailable or incompatible.
+# PacketEvents: use only PacketEvents (2.14.0+); never fall back to ProtocolLib.
+# ProtocolLib: use only ProtocolLib (5.4.0+); never fall back to PacketEvents.
+# If the selected backend is unavailable, only the nickname scenarios are disabled.
+# Values are case-insensitive. Restart the server after changing this setting.
+packet-backend: auto
+
 #Choose the percentage threshold of ready teams at which the game should start (Ignored when 'team-always-ready' is set to true)
 minimal-ready-teams-percentage-to-start: 60
 

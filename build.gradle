@@ -17,6 +17,11 @@ def spigotApiVersion = "${supportedMinecraftVersion}-R0.1-SNAPSHOT"
 
 repositories {
 	mavenCentral()
+	maven { // For PacketEvents
+		name = "codemc-releases"
+		url = "https://repo.codemc.io/repository/maven-releases/"
+		content { includeGroup "com.github.retrooper" }
+	}
 	maven { // For Spigot API
 		name = "spigotmc"
 		url = "https://hub.spigotmc.org/nexus/content/groups/public/"
@@ -48,8 +53,8 @@ repositories {
 		}
 	}
 	maven { // For AnvilGUI
-		name = "codemc"
-		url = "https://repo.codemc.io/repository/maven-snapshots/"
+		name = "wesjd"
+		url = "https://mvn.wesjd.net/"
 		content {
 			includeGroup "net.wesjd"
 		}
@@ -75,13 +80,22 @@ dependencies {
 	compileOnly "com.google.code.findbugs:jsr305:3.0.2"
 	compileOnly "com.github.MilkBowl:VaultAPI:1.7"
 	compileOnly "me.clip:placeholderapi:2.11.5"
-	compileOnly "net.dmulloy2:ProtocolLib:5.3.0"
-	implementation "net.wesjd:anvilgui:1.10.10-SNAPSHOT"
+	compileOnly "net.dmulloy2:ProtocolLib:5.4.0"
+	compileOnly "com.github.retrooper:packetevents-spigot:2.14.0"
+	implementation "net.wesjd:anvilgui:1.10.13-SNAPSHOT"
 	implementation "io.papermc:paperlib:1.0.8"
 	implementation project(":Support-WorldEdit-7")
 	implementation project(":version-adapters")
 	shadowJar project(":version-adapters:chunky")
 	implementation "net.zerodind:uhccore-nms:1.1.2"
+	testImplementation "org.junit.jupiter:junit-jupiter:5.11.4"
+	testImplementation("org.spigotmc:spigot-api:" + spigotApiVersion)
+	testImplementation "com.github.retrooper:packetevents-spigot:2.14.0"
+	testRuntimeOnly "org.junit.platform:junit-platform-launcher"
+}
+
+tasks.named("test") {
+	useJUnitPlatform()
 }
 
 java {

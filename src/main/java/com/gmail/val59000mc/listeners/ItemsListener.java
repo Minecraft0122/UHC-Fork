@@ -298,7 +298,11 @@ public class ItemsListener implements Listener {
 				UhcItems.openTeamColorInventory(player);
 				break;
 			case TEAM_RENAME:
-				openTeamRenameGUI(player, uhcPlayer.getTeam());
+				Bukkit.getScheduler().runTask(UhcCore.getPlugin(), () -> {
+					if (player.isOnline() && gameManager.getGameState() == GameState.WAITING) {
+						openTeamRenameGUI(player, uhcPlayer.getTeam());
+					}
+				});
 				break;
 			case SCENARIO_VIEWER:
 				Inventory inv;
@@ -324,7 +328,11 @@ public class ItemsListener implements Listener {
 				UhcItems.openTeamInviteInventory(player);
 				break;
 			case TEAM_INVITE_PLAYER_SEARCH:
-				openTeamInviteGUI(player);
+				Bukkit.getScheduler().runTask(UhcCore.getPlugin(), () -> {
+					if (player.isOnline() && gameManager.getGameState() == GameState.WAITING) {
+						openTeamInviteGUI(player);
+					}
+				});
 				break;
 			case TEAM_VIEW_INVITES:
 				UhcItems.openTeamInvitesInventory(player, uhcPlayer);

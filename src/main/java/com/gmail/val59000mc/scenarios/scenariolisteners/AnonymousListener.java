@@ -18,13 +18,11 @@ public class AnonymousListener extends ScenarioListener{
 
 	@Override
 	public void onEnable(){
-		if (!Dependencies.getProtocolLibLoaded()){
-			Bukkit.broadcastMessage(ChatColor.RED + "[UhcCore] For Anonymous ProtocolLib needs to be installed!");
+		if (!Dependencies.getNicknameSupportLoaded()){
+			Bukkit.broadcastMessage(ChatColor.RED + "[UhcCore] Anonymous requires PacketEvents (recommended) or ProtocolLib 5.4.0+!");
 			getScenarioManager().disableScenario(Scenario.ANONYMOUS);
 			return;
 		}
-
-		ProtocolUtils.registerNickNameListener();
 
 		for (UhcPlayer uhcPlayer : getPlayerManager().getAllPlayingPlayers()){
 			ProtocolUtils.setPlayerNickName(uhcPlayer, getPlayerNickName(uhcPlayer.getName()));
@@ -34,7 +32,7 @@ public class AnonymousListener extends ScenarioListener{
 
 	@Override
 	public void onDisable(){
-		if (!Dependencies.getProtocolLibLoaded()){
+		if (!Dependencies.getNicknameSupportLoaded()){
 			return; // Never enabled so don't disable.
 		}
 
@@ -43,7 +41,7 @@ public class AnonymousListener extends ScenarioListener{
 			getScoreboardManager().updatePlayerOnTab(uhcPlayer);
 		}
 
-		ProtocolUtils.unregisterNickNameListener();
+		ProtocolUtils.clearNickNames();
 	}
 
 	@EventHandler
@@ -67,6 +65,7 @@ public class AnonymousListener extends ScenarioListener{
 				getScoreboardManager().updatePlayerOnTab(uhcPlayer);
 			}
 		}
+		ProtocolUtils.clearNickNames();
 	}
 
 	@EventHandler

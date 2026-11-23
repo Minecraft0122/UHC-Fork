@@ -75,6 +75,20 @@ effect by restarting the server.
 Make sure to read [the FAQ][faq] if you're having trouble, or you can also
 ask for help on [the Discord server][discord].
 
+Optional nickname scenarios (Anonymous and Silent Night) prefer the standalone
+PacketEvents plugin (2.14.0 or newer). With the default `packet-backend: auto`, if
+PacketEvents is missing, too old, or cannot initialize, UHC-Fork falls back to
+ProtocolLib 5.4.0 or newer. When both are
+available, only PacketEvents handles nickname packets. Install a packet plugin
+build compatible with your server version; UHC-Fork bundles neither dependency.
+Without either backend, only the nickname scenarios are unavailable.
+
+Set `packet-backend` in `plugins/UhcCore/config.yml` to `auto`, `PacketEvents`, or
+`ProtocolLib` (case-insensitive). An explicit backend never falls back to the
+other library; if it cannot be used, nickname scenarios remain unavailable.
+Existing configurations without this option default to `auto`. Invalid values
+produce a warning and use `auto`. Restart the server after changing the setting.
+
 [faq]: https://uhccore.zerodind.net/faq/
 [discord]: https://discord.gg/fDCaKMX
 

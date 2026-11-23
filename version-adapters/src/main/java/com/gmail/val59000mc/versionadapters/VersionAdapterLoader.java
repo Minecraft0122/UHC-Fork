@@ -5,10 +5,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.ServiceConfigurationError;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.gmail.val59000mc.versionadapters.adapters.ChunkyPreGenerator;
 
 public class VersionAdapterLoader {
+	private static final Logger LOGGER = Logger.getLogger(VersionAdapterLoader.class.getName());
 
 	private final Map<Class<?>, VersionAdapter> adapters;
 
@@ -26,17 +30,23 @@ public class VersionAdapterLoader {
 
 	private static <T extends VersionAdapter> void requireVersionAdapter(Map<Class<?>, VersionAdapter> adapters, ClassLoader classLoader, Class<T> adapterClass, boolean required) {
 		final Iterator<T> adapterIterator = ServiceLoader.load(adapterClass, classLoader).iterator();
-		while (adapterIterator.hasNext()) {
+		while (true) {
+			try {
+				if (!adapterIterator.hasNext()) {
+					break;
+				}
+			} catch (ServiceConfigurationError | LinkageError e) {
+				LOGGER.log(Level.WARNING, "Unable to discover version adapter for " + adapterClass.getName(), e);
+				break;
+			}
 			try {
 				final T adapter = adapterIterator.next();
 				if (adapter.isCompatible()) {
 					adapters.put(adapterClass, adapter);
 					return;
 				}
-			} catch (UnsupportedClassVersionError e) {
-				// Ignore optional adapters compiled for an incompatible runtime.
-				// Note that the exception is still logged to the console even if we catch it here
-				continue;
+			} catch (ServiceConfigurationError | LinkageError | RuntimeException e) {
+				LOGGER.log(Level.WARNING, "Skipping incompatible version adapter for " + adapterClass.getName(), e);
 			}
 		}
 		if (required) {

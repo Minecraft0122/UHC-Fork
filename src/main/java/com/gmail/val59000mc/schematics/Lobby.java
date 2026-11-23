@@ -26,12 +26,15 @@ public class Lobby extends Schematic {
 		if (canBePasted()){
 			super.build();
 
-			height = getHeight();
-			length = getLength();
-			width = getWidth();
+			if (isBuild()) {
+				height = getHeight();
+				length = getLength();
+				width = getWidth();
+				return;
+			}
 		}
 		// Build glass box
-		else {
+		{
 			int x = getLocation().getBlockX(), y=getLocation().getBlockY(), z=getLocation().getBlockZ();
 			World world = getLocation().getWorld();
 			for(int i = -10; i <= 10; i++){

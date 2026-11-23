@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.0.3] - 2026-11-23
+
+### Features
+
+- Add packet-backend configuration: auto (PacketEvents first), PacketEvents only, or ProtocolLib only.
+
+### Bug fixes
+
+- Update AnvilGUI and its Maven repository to include the Minecraft 26 adapter used by team invite and rename menus.
+- Defer anvil menu opening until after inventory clicks finish.
+- Prefer PacketEvents 2.14.0+ for Anonymous/Silent Night nickname packets, with ProtocolLib 5.4.0+ as an optional fallback.
+- Preserve player-info metadata and skin properties without reading Bukkit game state from packet threads.
+- Use the Bukkit API for tab headers and footers.
+- Skip incompatible optional version adapters and ignore disabled dependency plugins.
+- Fall back to the glass lobby when a WorldEdit schematic fails to paste, including linkage failures.
+
 ## [2.0.2] - 2026-11-23
 
 ### Bug fixes

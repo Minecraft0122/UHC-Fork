@@ -34,9 +34,9 @@ public class SilentNightListener extends ScenarioListener{
 			getScenarioManager().disableScenario(Scenario.ANONYMOUS);
 		}
 
-		// Check for ProtocolLib
-		if (!Dependencies.getProtocolLibLoaded()){
-			Bukkit.broadcastMessage(ChatColor.RED + "[UhcCore] For Silent Night ProtocolLib needs to be installed!");
+		// Check for a compatible nickname packet backend.
+		if (!Dependencies.getNicknameSupportLoaded()){
+			Bukkit.broadcastMessage(ChatColor.RED + "[UhcCore] Silent Night requires PacketEvents (recommended) or ProtocolLib 5.4.0+!");
 			getScenarioManager().disableScenario(Scenario.SILENT_NIGHT);
 		}
 	}

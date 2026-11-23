@@ -9,6 +9,7 @@ import com.gmail.val59000mc.api.internal.UhcCoreApiImpl;
 import com.gmail.val59000mc.configuration.MainConfig;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.utils.PluginForwardingHandler;
+import com.gmail.val59000mc.utils.ProtocolUtils;
 import com.gmail.val59000mc.versionadapters.VersionAdapterLoader;
 
 import org.bukkit.Bukkit;
@@ -55,6 +56,7 @@ public class UhcCore extends JavaPlugin{
 
 	@Override
 	public void onDisable() {
+		ProtocolUtils.shutdownPacketSupport();
 		if (api != null) {
 			if (gameManager != null && gameManager.isGameRunning()) {
 				getServer().getPluginManager().callEvent(new UHCGameStopEvent(api, "Plugin disabled"));
@@ -81,7 +83,7 @@ public class UhcCore extends JavaPlugin{
 			final NmsAdapter adapter = NmsAdapterFactory.create();
 			LOGGER.config(() -> "Loaded NMS adapter: " + adapter.getClass().getName());
 			nmsAdapter = Optional.of(adapter);
-		} catch (CreateNmsAdapterException e) {
+		} catch (CreateNmsAdapterException | LinkageError e) {
 			LOGGER.log(Level.CONFIG, "Unable to create NMS adapter", e);
 			nmsAdapter = Optional.empty();
 		}

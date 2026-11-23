@@ -369,7 +369,7 @@ public class GameManager{
 		// Dependencies
 		Dependencies.loadWorldEdit();
 		Dependencies.loadVault();
-		Dependencies.loadProtocolLib();
+		Dependencies.loadPacketSupport(config.get(MainConfig.PACKET_BACKEND));
 
 		// Map loader
 		mapLoader.loadWorldUuids();
