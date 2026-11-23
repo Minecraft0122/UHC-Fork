@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.2] - 2026-11-23
+
+### Bug fixes
+
+- Handle rejected Chunky pre-generation tasks and startup exceptions instead of waiting indefinitely for completion.
+- Continue world preparation after an exceptional pre-generation result, with a warning in the server log.
+- Check player logins against the connection listener's owning game manager and log mismatched global game states.
+
 ## [2.0.1] - 2026-11-12
 
 ### Bug fixes
